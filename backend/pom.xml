@@ -76,7 +76,6 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
                     <packagingExcludes>WEB-INF/lib/tomcat-*.jar</packagingExcludes>
-                    <warName>brain-duel-app</warName>
                 </configuration>
             </plugin>
         </plugins>
