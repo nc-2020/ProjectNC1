@@ -3,8 +3,8 @@ target/
 !**/src/main/**
 !**/src/test/**
 
+.DS_Store
 ### STS ###
-/.DS_Store/
 .apt_generated
 .classpath
 .factorypath
