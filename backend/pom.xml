@@ -79,6 +79,6 @@
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>brain-duel-backend</finalName>
+        <finalName>brain-duel-app</finalName>
     </build>
 </project>
