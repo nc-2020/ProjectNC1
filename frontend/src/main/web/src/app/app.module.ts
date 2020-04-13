@@ -12,7 +12,7 @@ import {
 } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import {AppService} from "./app.service";
+import {AppService} from './app.service';
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {

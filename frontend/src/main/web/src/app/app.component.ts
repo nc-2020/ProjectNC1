@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
 import {AppService} from "./app.service";
-import 'rxjs/add/operator/finally';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
