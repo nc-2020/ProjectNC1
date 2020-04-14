@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
+import {RegistrationComponent} from "./registration/registration.component";
 import {
   HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS
 } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import {AppService} from './app.service';
+
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -28,7 +30,8 @@ export class XhrInterceptor implements HttpInterceptor {
   declarations: [
     AppComponent,
     AuthorizationComponent,
-    HomeComponent
+    HomeComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
