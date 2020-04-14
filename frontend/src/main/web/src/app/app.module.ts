@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
-import {RegistrationComponent} from "./registration/registration.component";
+import {RegistrationComponent} from './registration/registration.component';
 import {
   HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS
 } from '@angular/common/http';
