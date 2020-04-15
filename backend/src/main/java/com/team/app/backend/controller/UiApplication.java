@@ -6,11 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -45,6 +47,7 @@ public class UiApplication {
     @Configuration
     protected static class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+        @Override
         protected void configure(HttpSecurity http) throws Exception {
             // @formatter:off
             http
@@ -58,15 +61,17 @@ public class UiApplication {
             // @formatter:on
         }
 
+
         @Override
         public void configure(WebSecurity web) throws Exception {
-            web.ignoring().antMatchers("/favicon.ico",
-                    "/polyfills.js*",
-                    "/runtime.js*",
-                    "/styles.js*",
+            web.ignoring().antMatchers("/*.bundle.*","/favicon.ico",
+                    "/polyfills*.js",
+                    "/runtime*.js",
+                    "/styles*.js",
                     "/scripts.js",
-                    "/main.js*",
-                    "/vendor.js*"
+                    "/main*.js",
+                    "/vendor*.js",
+                    "/index.html"
             );
         }
     }

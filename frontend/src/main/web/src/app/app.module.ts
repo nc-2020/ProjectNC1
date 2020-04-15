@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClientModule, HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import {RegistrationComponent} from './registration/registration.component';
 import {
@@ -14,6 +14,7 @@ import {
 
 import { Observable } from 'rxjs';
 import {AppService} from './app.service';
+import {tap} from "rxjs/operators";
 
 
 @Injectable()
@@ -26,6 +27,7 @@ export class XhrInterceptor implements HttpInterceptor {
     return next.handle(xhr);
   }
 }
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -10,14 +10,8 @@ export class AppService {
 
   constructor(private http: HttpClient) {
   }
-
-  authenticate(credentials, callback) {
-
-    const headers = new HttpHeaders(credentials ? {
-      authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
-    } : {});
-
-    this.http.get('user', {headers: headers}).subscribe(response => {
+  signUp(user, callback) {
+    this.http.post('user', user).subscribe(response => {
       if (response['name']) {
         this.authenticated = true;
       } else {
@@ -27,4 +21,37 @@ export class AppService {
     });
 
   }
+  login(user, callback) {
+
+    // const headers = new HttpHeaders(credentials ? {
+    //   authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
+    // } : {});
+
+    this.http.get('user', user).subscribe(response => {
+      if (response['name']) {
+        this.authenticated = true;
+      } else {
+        this.authenticated = false;
+      }
+      return callback && callback();
+    });
+
+  }
+
+  // authenticate(credentials, callback) {
+  //
+  //   const headers = new HttpHeaders(credentials ? {
+  //     authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
+  //   } : {});
+  //
+  //   this.http.get('user', { headers: headers}).subscribe(response => {
+  //     if (response['name']) {
+  //       this.authenticated = true;
+  //     } else {
+  //       this.authenticated = false;
+  //     }
+  //     return callback && callback();
+  //   });
+  //
+  // }
 }

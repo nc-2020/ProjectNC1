@@ -3,6 +3,7 @@ import { User } from '../entities/user';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MustMatchValidator} from './_helpers/must-match.validator';
 import {Router} from "@angular/router";
+import {AppService} from "../app.service";
 
 @Component({
   selector: 'app-registration',
@@ -13,7 +14,7 @@ export class RegistrationComponent implements OnInit {
   registrationForm: FormGroup;
   user: User = new User();
 
-  constructor(private router: Router) { }
+  constructor(private app: AppService, private router: Router) { }
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
@@ -45,6 +46,8 @@ export class RegistrationComponent implements OnInit {
     this.user.lastName = this.registrationForm.get('lastName').value;
     this.user.email = this.registrationForm.get('email').value;
     this.user.password = this.registrationForm.get('password').value;
-    this.router.navigateByUrl('/home');
+    this.app.signUp(this.user,() => {
+      this.router.navigateByUrl('/login');
+    });
   }
 }
