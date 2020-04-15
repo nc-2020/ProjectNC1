@@ -9,4 +9,5 @@ public interface UserService {
     User registerNewUserAccount(UserDto userDto)
             throws UserAlreadyExistsException;
 
+    boolean isUserRegistered(UserDto userDto);
 }
