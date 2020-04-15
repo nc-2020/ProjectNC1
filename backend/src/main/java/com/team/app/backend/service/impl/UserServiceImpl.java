@@ -28,4 +28,14 @@ public class UserServiceImpl implements UserService {
         userDao.save(user);
         return user;
     }
+
+    /**
+     * checks if user exists in the database
+     * @param userDto user data transfer object
+     * @return true if user exists in the database; otherwise false
+     */
+    @Override
+    public boolean isUserRegistered(UserDto userDto) {
+        return userDao.findByEmail(userDto.getEmail()) != null;
+    }
 }
