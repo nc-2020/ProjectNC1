@@ -1,7 +1,8 @@
 package com.team.app.backend.service.impl;
 
+import com.team.app.backend.dto.UserLoginDto;
 import com.team.app.backend.exception.UserAlreadyExistsException;
-import com.team.app.backend.dto.UserDto;
+import com.team.app.backend.dto.UserRegistrationDto;
 import com.team.app.backend.persistance.dao.UserDao;
 import com.team.app.backend.persistance.model.User;
 import com.team.app.backend.service.UserService;
@@ -16,8 +17,12 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public User registerNewUserAccount(UserDto userDto)
+    public void registerNewUserAccount(UserRegistrationDto userDto)
             throws UserAlreadyExistsException {
+
+        if (isUserRegistered(userDto.getUsername())) {
+            throw new UserAlreadyExistsException();
+        }
 
         User user = new User();
 
@@ -26,16 +31,20 @@ public class UserServiceImpl implements UserService {
                 .setPassword(userDto.getPassword())
                 .setEnabled(false);
         userDao.save(user);
-        return user;
     }
 
     /**
      * checks if user exists in the database
-     * @param userDto user data transfer object
+     * @param username user's username
      * @return true if user exists in the database; otherwise false
      */
     @Override
-    public boolean isUserRegistered(UserDto userDto) {
-        return userDao.findByEmail(userDto.getEmail()) != null;
+    public boolean isUserRegistered(String username) {
+        return userDao.findByUsername(username) != null;
+    }
+
+    @Override
+    public String getUserPassword(String username) {
+        return userDao.getUserPasswordByUsername(username);
     }
 }
