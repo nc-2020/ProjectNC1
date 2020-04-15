@@ -62,4 +62,24 @@ public class UserDaoImpl implements UserDao {
                 }
         );
     }
+
+    @Override
+    public User findByEmail(String email) {
+        return jdbcTemplate.query(
+                "select * from users where email = '" + email + "'",
+                resultSet -> {
+                    if (resultSet.next()) {
+                        return new User(
+                                (long) resultSet.getInt("id"),
+                                resultSet.getString("username"),
+                                resultSet.getString("email"),
+                                resultSet.getString("password"),
+                                resultSet.getBoolean("status")
+                        );
+                    } else {
+                        return null;
+                    }
+                }
+        );
+    }
 }
