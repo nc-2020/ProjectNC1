@@ -43,7 +43,7 @@ public class RegistrationController {
             );
         }
         return new ResponseEntity<>(
-                registered.toString(),
+                "User with email " + userDto.getEmail() + " successfully registered.",
                 HttpStatus.OK
         );
     }
