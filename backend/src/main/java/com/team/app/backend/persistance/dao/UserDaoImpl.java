@@ -64,9 +64,9 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findByEmail(String email) {
+    public User findByUsername(String username) {
         return jdbcTemplate.query(
-                "select * from users where email = '" + email + "'",
+                "select * from users where USERNAME = '" + username + "'",
                 resultSet -> {
                     if (resultSet.next()) {
                         return new User(
@@ -76,6 +76,20 @@ public class UserDaoImpl implements UserDao {
                                 resultSet.getString("password"),
                                 resultSet.getBoolean("status")
                         );
+                    } else {
+                        return null;
+                    }
+                }
+        );
+    }
+
+    @Override
+    public String getUserPasswordByUsername(String username) {
+        return jdbcTemplate.query(
+                "select PASSWORD from users where USERNAME = '" + username + "'",
+                resultSet -> {
+                    if (resultSet.next()) {
+                        return resultSet.getString("password");
                     } else {
                         return null;
                     }
