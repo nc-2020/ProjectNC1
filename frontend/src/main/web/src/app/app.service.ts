@@ -11,7 +11,7 @@ export class AppService {
   constructor(private http: HttpClient) {
   }
   signUp(user, callback) {
-    this.http.post('user', user).subscribe(response => {
+    this.http.post('api/signup', user).subscribe(response => {
       if (response['name']) {
         this.authenticated = true;
       } else {
@@ -27,7 +27,7 @@ export class AppService {
     //   authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
     // } : {});
 
-    this.http.get('user', user).subscribe(response => {
+    this.http.get('api/login', user).subscribe(response => {
       if (response['name']) {
         this.authenticated = true;
       } else {

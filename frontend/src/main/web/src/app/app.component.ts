@@ -13,7 +13,7 @@ export class AppComponent {
 
   title = 'ui-app';
   constructor( private http: HttpClient, private app: AppService, private router: Router) {
-    this.app.authenticate(undefined, undefined);
+    this.app.login(undefined, undefined);
   }
   logout() {
     this.http.post('logout', {}).pipe(finalize(() => {
