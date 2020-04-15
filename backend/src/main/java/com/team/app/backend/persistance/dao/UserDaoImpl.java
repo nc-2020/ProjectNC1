@@ -16,7 +16,9 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void save(User user) {
         jdbcTemplate.update(
-                "INSERT INTO users(username, email, password, STATUS) VALUES ( ?, ?, ?, ? )",
+                "INSERT INTO users(firstname, lastname, username, email, password, STATUS) VALUES ( ?, ?, ?, ?, ?, ? )",
+                user.getFirstName(),
+                user.getLastName(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
@@ -26,7 +28,9 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void update(User user) {
         jdbcTemplate.update(
-                "UPDATE USERS set USERNAME = ?, EMAIL = ?, PASSWORD = ?, STATUS = ? where id = ?",
+                "UPDATE USERS set firstname = ?, lastname = ?, USERNAME = ?, EMAIL = ?, PASSWORD = ?, STATUS = ? where id = ?",
+                user.getFirstName(),
+                user.getLastName(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
@@ -51,6 +55,8 @@ public class UserDaoImpl implements UserDao {
                     if (resultSet.next()) {
                         return new User(
                                 (long) resultSet.getInt("id"),
+                                resultSet.getString("firstname"),
+                                resultSet.getString("lastname"),
                                 resultSet.getString("username"),
                                 resultSet.getString("email"),
                                 resultSet.getString("password"),
@@ -71,6 +77,8 @@ public class UserDaoImpl implements UserDao {
                     if (resultSet.next()) {
                         return new User(
                                 (long) resultSet.getInt("id"),
+                                resultSet.getString("firstname"),
+                                resultSet.getString("lastname"),
                                 resultSet.getString("username"),
                                 resultSet.getString("email"),
                                 resultSet.getString("password"),
