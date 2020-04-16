@@ -197,7 +197,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.app = app;
         this.router = router;
         this.title = 'ui-app';
-        this.app.login(undefined, undefined);
+        this.app.login(undefined);
       }
 
       _createClass(AppComponent, [{
@@ -316,19 +316,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     !*** ./src/app/app.module.ts ***!
     \*******************************/
 
-  /*! exports provided: XhrInterceptor, AppModule */
+  /*! exports provided: AppModule */
 
   /***/
   function srcAppAppModuleTs(module, __webpack_exports__, __webpack_require__) {
     "use strict";
 
     __webpack_require__.r(__webpack_exports__);
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "XhrInterceptor", function () {
-      return XhrInterceptor;
-    });
     /* harmony export (binding) */
 
 
@@ -389,48 +383,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var _registration_registration_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
     /*! ./registration/registration.component */
     "./src/app/registration/registration.component.ts");
-    /* harmony import */
-
-
-    var _app_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
-    /*! ./app.service */
-    "./src/app/app.service.ts");
-
-    var XhrInterceptor =
-    /*#__PURE__*/
-    function () {
-      function XhrInterceptor() {
-        _classCallCheck(this, XhrInterceptor);
-      }
-
-      _createClass(XhrInterceptor, [{
-        key: "intercept",
-        value: function intercept(req, next) {
-          var xhr = req.clone({
-            headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
-          });
-          return next.handle(xhr);
-        }
-      }]);
-
-      return XhrInterceptor;
-    }();
-
-    XhrInterceptor.ɵfac = function XhrInterceptor_Factory(t) {
-      return new (t || XhrInterceptor)();
-    };
-
-    XhrInterceptor.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"]({
-      token: XhrInterceptor,
-      factory: XhrInterceptor.ɵfac
-    });
-    /*@__PURE__*/
-
-    (function () {
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](XhrInterceptor, [{
-        type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"]
-      }], null, null);
-    })();
 
     var AppModule = function AppModule() {
       _classCallCheck(this, AppModule);
@@ -444,11 +396,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       factory: function AppModule_Factory(t) {
         return new (t || AppModule)();
       },
-      providers: [_app_service__WEBPACK_IMPORTED_MODULE_9__["AppService"], {
-        provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HTTP_INTERCEPTORS"],
-        useClass: XhrInterceptor,
-        multi: true
-      }],
+      providers: [],
       imports: [[_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ReactiveFormsModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HttpClientModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"]]]
     });
 
@@ -467,11 +415,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         args: [{
           declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"], _authorization_authorization_component__WEBPACK_IMPORTED_MODULE_5__["AuthorizationComponent"], _home_home_component__WEBPACK_IMPORTED_MODULE_7__["HomeComponent"], _registration_registration_component__WEBPACK_IMPORTED_MODULE_8__["RegistrationComponent"]],
           imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ReactiveFormsModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HttpClientModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"]],
-          providers: [_app_service__WEBPACK_IMPORTED_MODULE_9__["AppService"], {
-            provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HTTP_INTERCEPTORS"],
-            useClass: XhrInterceptor,
-            multi: true
-          }],
+          providers: [],
           bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
         }]
       }], null, null);
@@ -508,7 +452,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! rxjs */
+    "./node_modules/rxjs/_esm2015/index.js");
+    /* harmony import */
+
+
+    var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! rxjs/operators */
+    "./node_modules/rxjs/_esm2015/operators/index.js");
+    /* harmony import */
+
+
+    var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! @angular/common/http */
     "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
 
@@ -523,37 +479,24 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }
 
       _createClass(AppService, [{
+        key: "handleError",
+        value: function handleError() {
+          var operation = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'opeartion';
+          var result = arguments.length > 1 ? arguments[1] : undefined;
+          return function (error) {
+            console.error(error);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(result);
+          };
+        }
+      }, {
         key: "signUp",
-        value: function signUp(user, callback) {
-          var _this2 = this;
-
-          this.http.post('api/signup', user).subscribe(function (response) {
-            if (response['name']) {
-              _this2.authenticated = true;
-            } else {
-              _this2.authenticated = false;
-            }
-
-            return callback && callback();
-          });
+        value: function signUp(user) {
+          return this.http.post('api/signup', user).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError('signUp')));
         }
       }, {
         key: "login",
-        value: function login(user, callback) {
-          var _this3 = this;
-
-          // const headers = new HttpHeaders(credentials ? {
-          //   authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
-          // } : {});
-          this.http.get('api/login', user).subscribe(function (response) {
-            if (response['name']) {
-              _this3.authenticated = true;
-            } else {
-              _this3.authenticated = false;
-            }
-
-            return callback && callback();
-          });
+        value: function login(user) {
+          return this.http.post('http://localhost:8080/api/login', user);
         }
       }]);
 
@@ -561,7 +504,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }();
 
     AppService.ɵfac = function AppService_Factory(t) {
-      return new (t || AppService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]));
+      return new (t || AppService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"]));
     };
 
     AppService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
@@ -579,7 +522,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }]
       }], function () {
         return [{
-          type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]
+          type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"]
         }];
       }, null);
     })();
@@ -621,25 +564,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var _entities_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! ../entities/user */
-    "./src/app/entities/user.ts");
-    /* harmony import */
-
-
-    var _app_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    var _app_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! ../app.service */
     "./src/app/app.service.ts");
     /* harmony import */
 
 
-    var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! @angular/common/http */
     "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
     /* harmony import */
 
 
-    var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
     /*! @angular/router */
     "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
 
@@ -653,27 +590,43 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.app = app;
         this.http = http;
         this.router = router;
-        this.user = new _entities_user__WEBPACK_IMPORTED_MODULE_2__["User"]();
+        this.user = {
+          username: '',
+          firstname: '',
+          lastname: '',
+          email: '',
+          password: ''
+        };
+        this.error = false;
         this.credentials = {
           username: '',
           password: ''
         };
         this.check = false;
         this.userForm = this.fb.group({
-          username: [this.credentials.username, [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(3)]],
-          password: [this.credentials.password, [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(3)]]
+          username: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(3)]],
+          password: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(3)]]
         });
       }
 
       _createClass(AuthorizationComponent, [{
         key: "login",
         value: function login() {
-          var _this4 = this;
+          var _this2 = this;
 
-          this.app.login(this.credentials, function () {
-            _this4.router.navigateByUrl('/home');
+          this.credentials.password = this.userForm.get('password').value;
+          this.credentials.username = this.userForm.get('username').value;
+          this.app.login(this.credentials).subscribe(function (res) {}, function (response) {
+            if (response.status === 200) {
+              _this2.app.authenticated = true;
+
+              _this2.router.navigateByUrl('/home');
+
+              _this2.error = false;
+            }
+
+            _this2.error = true;
           });
-          return false;
         }
       }, {
         key: "ngOnInit",
@@ -684,15 +637,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }();
 
     AuthorizationComponent.ɵfac = function AuthorizationComponent_Factory(t) {
-      return new (t || AuthorizationComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_app_service__WEBPACK_IMPORTED_MODULE_3__["AppService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]));
+      return new (t || AuthorizationComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_app_service__WEBPACK_IMPORTED_MODULE_2__["AppService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]));
     };
 
     AuthorizationComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
       type: AuthorizationComponent,
       selectors: [["app-authorization"]],
       decls: 27,
-      vars: 2,
-      consts: [["id", "cover", 1, "min-vh-100"], [1, "container"], [1, "row", "text-white"], [1, "col-xl-5", "col-lg-6", "col-md-8", "col-sm-10", "mx-auto", "text-center", "form", "p-4"], ["src", "https://img.icons8.com/plasticine/100/000000/user-male-circle.png"], [3, "formGroup", "ngSubmit"], [1, "form-group"], ["type", "text", "formControlName", "username", "placeholder", "USERNAME", "required", "", "maxlength", "20", 1, "form-control", "text-center"], ["type", "password", "formControlName", "password", "id", "exampleInputPassword1", "placeholder", "PASSWORD", "required", "", "maxlength", "20", 1, "form-control", "text-center"], [1, "form-check"], ["type", "checkbox", "id", "autoSizingCheck2", 1, "form-check-input"], ["for", "autoSizingCheck2", 1, "form-check-label"], ["type", "submit", 1, "btn", "btn-secondary", "btn-lg", 3, "disabled"], [1, "text-center"], [1, "btn", 2, "color", "white"], ["routerLinkActive", "active", "routerLink", "/signup"]],
+      vars: 3,
+      consts: [["id", "cover", 1, "min-vh-100"], [1, "container"], [1, "row", "text-white"], [1, "col-xl-5", "col-lg-6", "col-md-8", "col-sm-10", "mx-auto", "text-center", "form", "p-4"], ["src", "https://img.icons8.com/plasticine/100/000000/user-male-circle.png"], [1, "alert", "alert-danger", 3, "hidden"], [3, "formGroup", "ngSubmit"], [1, "form-group"], ["type", "text", "formControlName", "username", "placeholder", "USERNAME", "required", "", "maxlength", "20", 1, "form-control", "text-center"], ["type", "password", "formControlName", "password", "id", "exampleInputPassword1", "placeholder", "PASSWORD", "required", "", "maxlength", "20", 1, "form-control", "text-center"], [1, "form-check"], ["type", "checkbox", "id", "autoSizingCheck2", 1, "form-check-input"], ["for", "autoSizingCheck2", 1, "form-check-label"], ["type", "submit", 1, "btn", "btn-secondary", "btn-lg", 3, "disabled"], [1, "text-center"], [1, "btn", 2, "color", "white"], ["routerLinkActive", "active", "routerLink", "/signup"]],
       template: function AuthorizationComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "section", 0);
@@ -705,43 +658,43 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "h3");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "div", 2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5, "Welcome to BrainDuel!");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "div", 3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](6, "img", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "div", 5);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](8, " There was a problem logging in. Please try again. ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "div", 2);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "div", 3);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](8, "img", 4);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "form", 5);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "form", 6);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngSubmit", function AuthorizationComponent_Template_form_ngSubmit_9_listener() {
             return ctx.login();
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "div", 6);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "div", 7);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](11, "input", 7);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](12, "div", 6);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](13, "input", 8);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](11, "input", 8);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](14, "div", 6);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](12, "div", 7);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "div", 9);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](13, "input", 9);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](16, "input", 10);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](17, "label", 11);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](14, "div", 7);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "div", 10);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](16, "input", 11);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](17, "label", 12);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](18, " Remember me ");
 
@@ -751,7 +704,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](19, "button", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](19, "button", 13);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](20, "LOGIN");
 
@@ -759,17 +712,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](21, "div", 13);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](21, "div", 14);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](22, "label", 14);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](22, "label", 15);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](23, "Forgot password?");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](24, "a", 15);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](24, "a", 16);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](25, "label", 14);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](25, "label", 15);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](26, "Sign Up");
 
@@ -789,7 +742,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
 
         if (rf & 2) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](9);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](7);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("hidden", !ctx.error);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("formGroup", ctx.userForm);
 
@@ -798,7 +755,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("disabled", !ctx.userForm.valid);
         }
       },
-      directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["RequiredValidator"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["MaxLengthValidator"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterLinkWithHref"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterLinkActive"]],
+      directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["RequiredValidator"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["MaxLengthValidator"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkActive"]],
       styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2F1dGhvcml6YXRpb24vYXV0aG9yaXphdGlvbi5jb21wb25lbnQuY3NzIn0= */"]
     });
     /*@__PURE__*/
@@ -815,41 +772,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return [{
           type: _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]
         }, {
-          type: _app_service__WEBPACK_IMPORTED_MODULE_3__["AppService"]
+          type: _app_service__WEBPACK_IMPORTED_MODULE_2__["AppService"]
         }, {
-          type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"]
+          type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"]
         }, {
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]
         }];
       }, null);
     })();
-    /***/
-
-  },
-
-  /***/
-  "./src/app/entities/user.ts":
-  /*!**********************************!*\
-    !*** ./src/app/entities/user.ts ***!
-    \**********************************/
-
-  /*! exports provided: User */
-
-  /***/
-  function srcAppEntitiesUserTs(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "User", function () {
-      return User;
-    });
-
-    var User = function User() {
-      _classCallCheck(this, User);
-    };
     /***/
 
   },
@@ -896,7 +826,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /*#__PURE__*/
     function () {
       function HomeComponent(http, app) {
-        var _this5 = this;
+        var _this3 = this;
 
         _classCallCheck(this, HomeComponent);
 
@@ -905,7 +835,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.title = 'Demo';
         this.greeting = {};
         http.get('api/resource').subscribe(function (data) {
-          return _this5.greeting = data;
+          return _this3.greeting = data;
         });
       }
 
@@ -1098,37 +1028,31 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var _entities_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! ../entities/user */
-    "./src/app/entities/user.ts");
-    /* harmony import */
-
-
-    var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
     /*! @angular/forms */
     "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
     /* harmony import */
 
 
-    var _helpers_must_match_validator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    var _helpers_must_match_validator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! ./_helpers/must-match.validator */
     "./src/app/registration/_helpers/must-match.validator.ts");
     /* harmony import */
 
 
-    var _app_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    var _app_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! ../app.service */
     "./src/app/app.service.ts");
     /* harmony import */
 
 
-    var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
     /*! @angular/router */
     "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
     /* harmony import */
 
 
-    var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
     /*! @angular/common */
     "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
 
@@ -1290,37 +1214,43 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         this.app = app;
         this.router = router;
-        this.user = new _entities_user__WEBPACK_IMPORTED_MODULE_1__["User"]();
+        this.user = {
+          username: '',
+          firstname: '',
+          lastname: '',
+          email: '',
+          password: ''
+        };
       }
 
       _createClass(RegistrationComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          this.registrationForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
-            userName: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
-            firstName: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
-            lastName: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
-            email: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].email, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]),
-            password: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(3)]),
-            confirmPassword: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(3)]),
-            checkAgreement: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]([true, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].requiredTrue])
+          this.registrationForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+            username: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](''),
+            firstname: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](''),
+            lastname: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](''),
+            email: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].email, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
+            password: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(3)]),
+            confirmPassword: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(3)]),
+            checkAgreement: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]([true, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].requiredTrue])
           }, {
-            validators: _helpers_must_match_validator__WEBPACK_IMPORTED_MODULE_3__["MustMatchValidator"].passwordConfirming
+            validators: _helpers_must_match_validator__WEBPACK_IMPORTED_MODULE_2__["MustMatchValidator"].passwordConfirming
           });
         }
       }, {
         key: "onSubmit",
         value: function onSubmit() {
-          var _this6 = this;
+          var _this4 = this;
 
           console.log(this.user);
-          this.user.userName = this.registrationForm.get('userName').value;
-          this.user.firstName = this.registrationForm.get('firstName').value;
-          this.user.lastName = this.registrationForm.get('lastName').value;
+          this.user.username = this.registrationForm.get('username').value;
+          this.user.firstname = this.registrationForm.get('firstname').value;
+          this.user.lastname = this.registrationForm.get('lastname').value;
           this.user.email = this.registrationForm.get('email').value;
           this.user.password = this.registrationForm.get('password').value;
-          this.app.signUp(this.user, function () {
-            _this6.router.navigateByUrl('/login');
+          this.app.signUp(this.user).subscribe(function (_) {
+            return _this4.router.navigateByUrl('/login');
           });
         }
       }]);
@@ -1329,7 +1259,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }();
 
     RegistrationComponent.ɵfac = function RegistrationComponent_Factory(t) {
-      return new (t || RegistrationComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_app_service__WEBPACK_IMPORTED_MODULE_4__["AppService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]));
+      return new (t || RegistrationComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_app_service__WEBPACK_IMPORTED_MODULE_3__["AppService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]));
     };
 
     RegistrationComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -1337,7 +1267,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       selectors: [["app-registration"]],
       decls: 32,
       vars: 6,
-      consts: [["id", "cover", 1, "min-vh-100"], [1, "container"], [1, "row", "text-white"], [1, "col-xl-5", "col-lg-6", "col-md-8", "col-sm-10", "mx-auto", "text-center", "form", "p-4"], [3, "formGroup", "ngSubmit"], [1, "form-group"], ["type", "text", "formControlName", "userName", "placeholder", "USERNAME", "required", "", "maxlength", "20", 1, "form-control", "text-center"], ["type", "text", "formControlName", "firstName", "placeholder", "FIRST NAME", "required", "", "maxlength", "20", 1, "form-control", "text-center"], ["type", "text", "formControlName", "lastName", "placeholder", "LAST NAME", "required", "", "maxlength", "20", 1, "form-control", "text-center"], ["type", "email", "formControlName", "email", "placeholder", "EMAIL", "required", "", "maxlength", "20", 1, "form-control", "text-center"], ["class", "validation", 4, "ngIf"], ["type", "password", "formControlName", "password", "id", "exampleInputPassword1", "placeholder", "PASSWORD", "required", "", "maxlength", "20", 1, "form-control", "text-center"], ["type", "password", "formControlName", "confirmPassword", "id", "exampleInputPassword2", "placeholder", "CONFIRM PASSWORD", "required", "", "maxlength", "20", 1, "form-control", "text-center"], [1, "form-check"], ["type", "checkbox", "formControlName", "checkAgreement", "required", "", "id", "autoSizingCheck2", 1, "form-check-input"], ["for", "autoSizingCheck2", 1, "form-check-label"], ["type", "submit", 1, "btn", "btn-secondary", "btn-lg", 3, "disabled"], [1, "validation"], [4, "ngIf"]],
+      consts: [["id", "cover", 1, "min-vh-100"], [1, "container"], [1, "row", "text-white"], [1, "col-xl-5", "col-lg-6", "col-md-8", "col-sm-10", "mx-auto", "text-center", "form", "p-4"], [3, "formGroup", "ngSubmit"], [1, "form-group"], ["type", "text", "formControlName", "username", "placeholder", "USERNAME", "required", "", "maxlength", "20", 1, "form-control", "text-center"], ["type", "text", "formControlName", "firstname", "placeholder", "FIRST NAME", "required", "", "maxlength", "20", 1, "form-control", "text-center"], ["type", "text", "formControlName", "lastname", "placeholder", "LAST NAME", "required", "", "maxlength", "20", 1, "form-control", "text-center"], ["type", "email", "formControlName", "email", "placeholder", "EMAIL", "required", "", "maxlength", "20", 1, "form-control", "text-center"], ["class", "validation", 4, "ngIf"], ["type", "password", "formControlName", "password", "id", "exampleInputPassword1", "placeholder", "PASSWORD", "required", "", "maxlength", "20", 1, "form-control", "text-center"], ["type", "password", "formControlName", "confirmPassword", "id", "exampleInputPassword2", "placeholder", "CONFIRM PASSWORD", "required", "", "maxlength", "20", 1, "form-control", "text-center"], [1, "form-check"], ["type", "checkbox", "formControlName", "checkAgreement", "required", "", "id", "autoSizingCheck2", 1, "form-check-input"], ["for", "autoSizingCheck2", 1, "form-check-label"], ["type", "submit", 1, "btn", "btn-secondary", "btn-lg", 3, "disabled"], [1, "validation"], [4, "ngIf"]],
       template: function RegistrationComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "section", 0);
@@ -1469,7 +1399,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("disabled", ctx.registrationForm.invalid);
         }
       },
-      directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroupDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControlName"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["RequiredValidator"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["MaxLengthValidator"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgIf"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["CheckboxControlValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["CheckboxRequiredValidator"]],
+      directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["RequiredValidator"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["MaxLengthValidator"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgIf"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["CheckboxControlValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["CheckboxRequiredValidator"]],
       styles: ["input.ng-invalid.ng-touched[_ngcontent-%COMP%] {\n  border: 2px solid red;\n}\ninput.ng-valid.ng-touched[_ngcontent-%COMP%] {\n  border: 2px solid green;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcmVnaXN0cmF0aW9uL3JlZ2lzdHJhdGlvbi5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UscUJBQXFCO0FBQ3ZCO0FBQ0E7RUFDRSx1QkFBdUI7QUFDekIiLCJmaWxlIjoic3JjL2FwcC9yZWdpc3RyYXRpb24vcmVnaXN0cmF0aW9uLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJpbnB1dC5uZy1pbnZhbGlkLm5nLXRvdWNoZWQge1xuICBib3JkZXI6IDJweCBzb2xpZCByZWQ7XG59XG5pbnB1dC5uZy12YWxpZC5uZy10b3VjaGVkIHtcbiAgYm9yZGVyOiAycHggc29saWQgZ3JlZW47XG59XG4iXX0= */"]
     });
     /*@__PURE__*/
@@ -1484,9 +1414,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }]
       }], function () {
         return [{
-          type: _app_service__WEBPACK_IMPORTED_MODULE_4__["AppService"]
+          type: _app_service__WEBPACK_IMPORTED_MODULE_3__["AppService"]
         }, {
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]
         }];
       }, null);
     })();

@@ -5,6 +5,7 @@ import { User } from '../entities/user';
 import {AppService} from '../app.service';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-authorization',
@@ -13,12 +14,19 @@ import {Router} from '@angular/router';
 })
 export class AuthorizationComponent implements OnInit {
 
-  user: User = new User();
+  user: User = {
+    username: '',
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: ''
+  };
+  error = false;
   credentials = {username: '', password: ''};
   check = false;
   userForm: FormGroup = this.fb.group({
-    username: [this.credentials.username, [Validators.required, Validators.minLength(3)]],
-    password: [this.credentials.password, [Validators.required, Validators.minLength(3)]]
+    username: ['', [Validators.required, Validators.minLength(3)]],
+    password: ['', [Validators.required, Validators.minLength(3)]]
   });
 
 
@@ -26,10 +34,18 @@ export class AuthorizationComponent implements OnInit {
   }
 
   login() {
-    this.app.login(this.credentials, () => {
-      this.router.navigateByUrl('/home');
-    });
-    return false;
+    this.credentials.password = this.userForm.get('password').value;
+    this.credentials.username = this.userForm.get('username').value;
+    this.app.login(this.credentials).subscribe(
+      res => {},response =>{
+        if(response.status === 200){
+        this.app.authenticated = true;
+        this.router.navigateByUrl('/home');
+        this.error = false;
+      }
+        this.error = true;
+      });
+
   }
   ngOnInit(): void {
 

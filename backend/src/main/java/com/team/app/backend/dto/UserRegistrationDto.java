@@ -1,31 +1,28 @@
 package com.team.app.backend.dto;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
 public class UserRegistrationDto {
 
-    private String firstName;
-    private String lastName;
+    private String firstname;
+    private String lastname;
     private String username;
     private String email;
     private String password;
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public UserRegistrationDto setFirstName(String firstName) {
-        this.firstName = firstName;
+    public UserRegistrationDto setFirstname(String firstname) {
+        this.firstname = firstname;
         return this;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public UserRegistrationDto setLastName(String lastName) {
-        this.lastName = lastName;
+    public UserRegistrationDto setLastname(String lastname) {
+        this.lastname = lastname;
         return this;
     }
 

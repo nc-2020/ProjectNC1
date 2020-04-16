@@ -2,14 +2,13 @@
 <section   class="min-vh-100" id="cover">
   <div class="container">
       <h1>USER LOGIN</h1>
-      <h3>Welcome to BrainDuel!</h3>
-
+<!--      <h3>Welcome to BrainDuel!</h3>-->
       <div class="row text-white">
           <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
               <img  src="https://img.icons8.com/plasticine/100/000000/user-male-circle.png"/>
-  <!--                  <div class="alert alert-danger" [hidden]="!error">-->
-  <!--                    There was a problem logging in. Please try again.-->
-  <!--                  </div>-->
+                    <div class="alert alert-danger" [hidden]="!error">
+                      There was a problem logging in. Please try again.
+                    </div>
               <form [formGroup]="userForm" (ngSubmit)="login()">
                   <div class="form-group ">
                       <input type="text" formControlName="username"  class="form-control text-center"  placeholder="USERNAME" required maxlength="20">

@@ -12,15 +12,21 @@ import {AppService} from "../app.service";
 })
 export class RegistrationComponent implements OnInit {
   registrationForm: FormGroup;
-  user: User = new User();
+  user: User = {
+    username: '',
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: ''
+  };
 
   constructor(private app: AppService, private router: Router) { }
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
-      userName: new FormControl(''),
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
+      username: new FormControl(''),
+      firstname: new FormControl(''),
+      lastname: new FormControl(''),
       email: new FormControl('', [
         Validators.email,
         Validators.required
@@ -41,13 +47,12 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit() {
     console.log(this.user);
-    this.user.userName = this.registrationForm.get('userName').value;
-    this.user.firstName = this.registrationForm.get('firstName').value;
-    this.user.lastName = this.registrationForm.get('lastName').value;
+    this.user.username = this.registrationForm.get('username').value;
+    this.user.firstname = this.registrationForm.get('firstname').value;
+    this.user.lastname = this.registrationForm.get('lastname').value;
     this.user.email = this.registrationForm.get('email').value;
     this.user.password = this.registrationForm.get('password').value;
-    this.app.signUp(this.user,() => {
-      this.router.navigateByUrl('/login');
-    });
+    this.app.signUp(this.user).subscribe(
+      _ => this.router.navigateByUrl('/login'));
   }
 }
