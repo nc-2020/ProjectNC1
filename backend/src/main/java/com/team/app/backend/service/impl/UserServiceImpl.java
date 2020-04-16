@@ -1,6 +1,5 @@
 package com.team.app.backend.service.impl;
 
-import com.team.app.backend.dto.UserLoginDto;
 import com.team.app.backend.exception.UserAlreadyExistsException;
 import com.team.app.backend.dto.UserRegistrationDto;
 import com.team.app.backend.persistance.dao.UserDao;
@@ -27,8 +26,8 @@ public class UserServiceImpl implements UserService {
         User user = new User();
 
         user
-                .setFirstName(userDto.getFirstName())
-                .setLastName(userDto.getLastName())
+                .setFirstName(userDto.getFirstname())
+                .setLastName(userDto.getLastname())
                 .setEmail(userDto.getEmail())
                 .setUsername(userDto.getUsername())
                 .setPassword(userDto.getPassword())

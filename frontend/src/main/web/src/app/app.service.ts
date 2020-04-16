@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {User} from "./entities/user";
+import {Observable, of} from "rxjs";
+import {catchError, tap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -10,48 +13,23 @@ export class AppService {
 
   constructor(private http: HttpClient) {
   }
-  signUp(user, callback) {
-    this.http.post('api/signup', user).subscribe(response => {
-      if (response['name']) {
-        this.authenticated = true;
-      } else {
-        this.authenticated = false;
-      }
-      return callback && callback();
-    });
-
-  }
-  login(user, callback) {
-
-    // const headers = new HttpHeaders(credentials ? {
-    //   authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
-    // } : {});
-
-    this.http.get('api/login', user).subscribe(response => {
-      if (response['name']) {
-        this.authenticated = true;
-      } else {
-        this.authenticated = false;
-      }
-      return callback && callback();
-    });
-
+  private handleError<T>(operation= 'opeartion', result?: T ) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      return of(result as T);
+    };
   }
 
-  // authenticate(credentials, callback) {
-  //
-  //   const headers = new HttpHeaders(credentials ? {
-  //     authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
-  //   } : {});
-  //
-  //   this.http.get('user', { headers: headers}).subscribe(response => {
-  //     if (response['name']) {
-  //       this.authenticated = true;
-  //     } else {
-  //       this.authenticated = false;
-  //     }
-  //     return callback && callback();
-  //   });
-  //
-  // }
+  signUp(user: User,): Observable<any> {
+    return this.http.post<User>('api/signup', user).pipe(
+      catchError(this.handleError<User>('signUp'))
+    );
+
+  }
+  login(user):Observable<any> {
+
+    return this.http.post<any>('http://localhost:8080/api/login', user);
+  }
+
+
 }

@@ -12,21 +12,8 @@ import {
   HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS
 } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
-import {AppService} from './app.service';
-import {tap} from "rxjs/operators";
 
 
-@Injectable()
-export class XhrInterceptor implements HttpInterceptor {
-
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const xhr = req.clone({
-      headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
-    });
-    return next.handle(xhr);
-  }
-}
 
 @NgModule({
   declarations: [
@@ -42,8 +29,7 @@ export class XhrInterceptor implements HttpInterceptor {
     HttpClientModule,
     AppRoutingModule
   ],
-
-  providers: [AppService, { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true }],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
