@@ -4,6 +4,10 @@ public class User {
 
     private Long id;
 
+    private String firstName;
+
+    private String lastName;
+
     private String username;
 
     private String email;
@@ -16,8 +20,10 @@ public class User {
         enabled = false;
     }
 
-    public User(Long id, String username, String email, String password, boolean enabled) {
+    public User(Long id, String firstName, String lastName, String username, String email, String password, boolean enabled) {
         this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -69,14 +75,21 @@ public class User {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
-                '}';
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public User setFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public User setLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
     }
 }

@@ -16,21 +16,22 @@ export class AuthorizationComponent implements OnInit {
   user: User = new User();
   credentials = {username: '', password: ''};
   check = false;
-  userForm: FormGroup;
+  userForm: FormGroup = this.fb.group({
+    username: [this.credentials.username, [Validators.required, Validators.minLength(3)]],
+    password: [this.credentials.password, [Validators.required, Validators.minLength(3)]]
+  });
+
 
   constructor(private fb: FormBuilder, private app: AppService, private http: HttpClient, private router: Router) {
   }
 
   login() {
-    this.app.authenticate(this.credentials, () => {
+    this.app.login(this.credentials, () => {
       this.router.navigateByUrl('/home');
     });
     return false;
   }
   ngOnInit(): void {
-    this.userForm = this.fb.group({
-      username: [this.credentials.username, [Validators.required, Validators.minLength(3)]],
-      password: [this.credentials.password, [Validators.required, Validators.minLength(3)]]
-    });
+
   }
 }
