@@ -316,19 +316,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     !*** ./src/app/app.module.ts ***!
     \*******************************/
 
-  /*! exports provided: XhrInterceptor, AppModule */
+  /*! exports provided: AppModule */
 
   /***/
   function srcAppAppModuleTs(module, __webpack_exports__, __webpack_require__) {
     "use strict";
 
     __webpack_require__.r(__webpack_exports__);
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "XhrInterceptor", function () {
-      return XhrInterceptor;
-    });
     /* harmony export (binding) */
 
 
@@ -390,42 +384,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /*! ./registration/registration.component */
     "./src/app/registration/registration.component.ts");
 
-    var XhrInterceptor =
-    /*#__PURE__*/
-    function () {
-      function XhrInterceptor() {
-        _classCallCheck(this, XhrInterceptor);
-      }
-
-      _createClass(XhrInterceptor, [{
-        key: "intercept",
-        value: function intercept(req, next) {
-          var xhr = req.clone({
-            headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
-          });
-          return next.handle(xhr);
-        }
-      }]);
-
-      return XhrInterceptor;
-    }();
-
-    XhrInterceptor.ɵfac = function XhrInterceptor_Factory(t) {
-      return new (t || XhrInterceptor)();
-    };
-
-    XhrInterceptor.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"]({
-      token: XhrInterceptor,
-      factory: XhrInterceptor.ɵfac
-    });
-    /*@__PURE__*/
-
-    (function () {
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](XhrInterceptor, [{
-        type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"]
-      }], null, null);
-    })();
-
     var AppModule = function AppModule() {
       _classCallCheck(this, AppModule);
     };
@@ -457,7 +415,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         args: [{
           declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"], _authorization_authorization_component__WEBPACK_IMPORTED_MODULE_5__["AuthorizationComponent"], _home_home_component__WEBPACK_IMPORTED_MODULE_7__["HomeComponent"], _registration_registration_component__WEBPACK_IMPORTED_MODULE_8__["RegistrationComponent"]],
           imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ReactiveFormsModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HttpClientModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"]],
-          // [AppService, { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true }]
           providers: [],
           bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
         }]
@@ -519,7 +476,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         this.http = http;
         this.authenticated = false;
-        this.str = "";
       }
 
       _createClass(AppService, [{
@@ -878,7 +834,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.app = app;
         this.title = 'Demo';
         this.greeting = {};
-        this.status = "";
         http.get('api/resource').subscribe(function (data) {
           return _this3.greeting = data;
         });
@@ -887,7 +842,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(HomeComponent, [{
         key: "authenticated",
         value: function authenticated() {
-          this.status = this.app.str;
           return this.app.authenticated;
         }
       }, {
@@ -905,8 +859,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     HomeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
       type: HomeComponent,
       selectors: [["app-home"]],
-      decls: 14,
-      vars: 5,
+      decls: 12,
+      vars: 4,
       consts: [["id", "cover", 1, "min-vh-100"], [1, "col", "text-center", "text-white"], [1, "container", 3, "hidden"], [3, "hidden"]],
       template: function HomeComponent_Template(rf, ctx) {
         if (rf & 1) {
@@ -948,12 +902,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](12, "h1");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](13);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         }
 
@@ -973,10 +921,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("hidden", ctx.authenticated());
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.status);
         }
       },
       styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2hvbWUvaG9tZS5jb21wb25lbnQuY3NzIn0= */"]
@@ -1578,7 +1522,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
   /***/
   function _(module, exports, __webpack_require__) {
     module.exports = __webpack_require__(
-    /*! /Users/dimazhuravlyov/Desktop/Anton/ProjectNC1/frontend/src/main/web/src/main.ts */
+    /*! /Users/dimazhuravlyov/Desktop/ProjectNC1/frontend/src/main/web/src/main.ts */
     "./src/main.ts");
     /***/
   }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" version="4">
   <component name="FacetManager">
     <facet type="Spring" name="Spring">
       <configuration />
@@ -9,21 +9,6 @@
         <webroots>
           <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
         </webroots>
-<<<<<<< HEAD
-      </configuration>
-    </facet>
-    <facet type="jpa" name="JPA">
-      <configuration>
-        <setting name="validation-enabled" value="true" />
-        <setting name="provider-name" value="Hibernate" />
-        <datasource-mapping />
-        <naming-strategy-map />
-=======
-        <sourceRoots>
-          <root url="file://$MODULE_DIR$/src/main/java" />
-          <root url="file://$MODULE_DIR$/src/main/resources" />
-        </sourceRoots>
->>>>>>> Connect front and back, add Postgres
       </configuration>
     </facet>
   </component>
@@ -33,10 +18,6 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
-<<<<<<< HEAD
-=======
-      <sourceFolder url="file://$MODULE_DIR$/src/main/test" isTestSource="true" />
->>>>>>> Connect front and back, add Postgres
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

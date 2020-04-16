@@ -150,12 +150,11 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
 /*!*******************************!*\
   !*** ./src/app/app.module.ts ***!
   \*******************************/
-/*! exports provided: XhrInterceptor, AppModule */
+/*! exports provided: AppModule */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "XhrInterceptor", function() { return XhrInterceptor; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function() { return AppModule; });
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/__ivy_ngcc__/fesm2015/platform-browser.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
@@ -177,19 +176,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-class XhrInterceptor {
-    intercept(req, next) {
-        const xhr = req.clone({
-            headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
-        });
-        return next.handle(xhr);
-    }
-}
-XhrInterceptor.ɵfac = function XhrInterceptor_Factory(t) { return new (t || XhrInterceptor)(); };
-XhrInterceptor.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"]({ token: XhrInterceptor, factory: XhrInterceptor.ɵfac });
-/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](XhrInterceptor, [{
-        type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"]
-    }], null, null); })();
 class AppModule {
 }
 AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]] });
@@ -224,7 +210,6 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
                     _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HttpClientModule"],
                     _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"]
                 ],
-                // [AppService, { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true }]
                 providers: [],
                 bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
             }]
@@ -256,7 +241,6 @@ class AppService {
     constructor(http) {
         this.http = http;
         this.authenticated = false;
-        this.str = "";
     }
     handleError(operation = 'opeartion', result) {
         return (error) => {
@@ -431,18 +415,16 @@ class HomeComponent {
         this.app = app;
         this.title = 'Demo';
         this.greeting = {};
-        this.status = "";
         http.get('api/resource').subscribe(data => this.greeting = data);
     }
     authenticated() {
-        this.status = this.app.str;
         return this.app.authenticated;
     }
     ngOnInit() {
     }
 }
 HomeComponent.ɵfac = function HomeComponent_Factory(t) { return new (t || HomeComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_app_service__WEBPACK_IMPORTED_MODULE_2__["AppService"])); };
-HomeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HomeComponent, selectors: [["app-home"]], decls: 14, vars: 5, consts: [["id", "cover", 1, "min-vh-100"], [1, "col", "text-center", "text-white"], [1, "container", 3, "hidden"], [3, "hidden"]], template: function HomeComponent_Template(rf, ctx) { if (rf & 1) {
+HomeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HomeComponent, selectors: [["app-home"]], decls: 12, vars: 4, consts: [["id", "cover", 1, "min-vh-100"], [1, "col", "text-center", "text-white"], [1, "container", 3, "hidden"], [3, "hidden"]], template: function HomeComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "section", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "h1");
@@ -462,9 +444,6 @@ HomeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComp
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](12, "h1");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](13);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
@@ -475,8 +454,6 @@ HomeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComp
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("The content is ", ctx.greeting["content"], "");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("hidden", ctx.authenticated());
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.status);
     } }, styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2hvbWUvaG9tZS5jb21wb25lbnQuY3NzIn0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](HomeComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
@@ -798,7 +775,7 @@ _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["platformBrowser"]().boot
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/dimazhuravlyov/Desktop/Anton/ProjectNC1/frontend/src/main/web/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/dimazhuravlyov/Desktop/ProjectNC1/frontend/src/main/web/src/main.ts */"./src/main.ts");
 
 
 /***/ })
