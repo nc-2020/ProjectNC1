@@ -11,6 +11,7 @@ import {RegistrationComponent} from './registration/registration.component';
 import {
   HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS
 } from '@angular/common/http';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 
@@ -20,7 +21,8 @@ import {
     AppComponent,
     AuthorizationComponent,
     HomeComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

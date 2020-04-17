@@ -34,18 +34,13 @@ export class AuthorizationComponent implements OnInit {
   }
 
   login() {
-    this.credentials.password = this.userForm.get('password').value;
-    this.credentials.username = this.userForm.get('username').value;
-    this.app.login(this.credentials).subscribe(
-      res => {},response =>{
-        if(response.status === 200){
-        this.app.authenticated = true;
-        this.router.navigateByUrl('/home');
-        this.error = false;
-      }
-        this.error = true;
-      });
-
+    // this.credentials.password = this.userForm.get('password').value;
+    // this.credentials.username = this.userForm.get('username').value;
+    if (this.app.login(this.userForm.value)) {
+      this.error = false;
+    } else {
+      this.error = true;
+    }
   }
   ngOnInit(): void {
 
