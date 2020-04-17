@@ -9,6 +9,7 @@ import {catchError, tap} from "rxjs/operators";
 })
 export class AppService {
   authenticated = false;
+  role = 'super admin';
 
 
   constructor(private http: HttpClient) {
@@ -20,15 +21,23 @@ export class AppService {
     };
   }
 
-  signUp(user: User,): Observable<any> {
+  signUp(user: User, ): Observable<any> {
     return this.http.post<User>('api/signup', user).pipe(
       catchError(this.handleError<User>('signUp'))
     );
 
   }
-  login(user):Observable<any> {
-
-    return this.http.post<any>('http://localhost:8080/api/login', user);
+  login(user): any {
+    this.http.post<any>('api/login', user).subscribe(
+      res => {}, response => {
+        if (response.status === 200) {
+          this.authenticated = true;
+          // recieve user role (admin, user, super admin)
+          // this.role = response.body.role ....
+          return true;
+        }
+        return false;
+      });
   }
 
 
