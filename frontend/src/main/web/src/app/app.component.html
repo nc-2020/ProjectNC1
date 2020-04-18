@@ -14,7 +14,7 @@
       </li>
     </ul>
     <form class="form-inline  mt-2 mt-md-0">
-      <a class="btn bg-secondary btn-sm"  (click)="logout()">Logout</a>
+      <a *ngIf="authenticated()" class="btn bg-secondary btn-sm"  (click)="logout()">Logout</a>
     </form>
   </div>
 </nav>

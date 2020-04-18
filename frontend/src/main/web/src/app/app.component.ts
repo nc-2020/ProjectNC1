@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import { catchError, tap, finalize } from 'rxjs/operators';
@@ -12,14 +12,25 @@ import {AppService} from "./app.service";
 export class AppComponent {
 
   title = 'ui-app';
+
   constructor( private http: HttpClient, private app: AppService, private router: Router) {
     this.app.login(undefined);
   }
+
   logout() {
     this.http.post('logout', {}).pipe(finalize(() => {
       this.app.authenticated = false;
       this.router.navigateByUrl('/login');
     })).subscribe();
+
+  }
+  authenticated() {
+
+    return this.app.authenticated;
+
+  }
+
+  ngOnInit(): void {
 
   }
 }
