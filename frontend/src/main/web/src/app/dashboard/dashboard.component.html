@@ -1,15 +1,15 @@
 <section   class="min-vh-100" id="cover">
   <div class="container-fluid text-white">
     <div class="row">
-      <nav class="col-md-2 d-none d-md-block sidebar navbar-expand-md">
+      <nav class="col-md-2 col-sm-2  d-none d-md-block sidebar navbar-expand-md">
         <div class="sidebar-sticky">
           <img  src="https://img.icons8.com/plasticine/100/000000/user-male-circle.png"/>
-          <h4>
+          <h5>
             <span class="badge bg-primary">User/Admin Name</span>
-          </h4>
-           <ul class="nav flex-column text-white">
-            <li  class="nav-item text-center border-bottom border-top">
-              <a class="nav-link active" href="#">
+          </h5>
+           <ul class="nav flex-column">
+            <li  class="nav-item active text-center border-bottom border-top">
+              <a class="nav-link active" href="/home">
                 Quizzes
               </a>
             </li>
@@ -18,22 +18,22 @@
                 Friends
               </a>
             </li>
-             <li *ngIf="role==='admin'" class="nav-item border-bottom">
+             <li *ngIf="role==='admin' || role=='super admin'" class="nav-item border-bottom">
                <a class="nav-link" href="#">
                  Users
                </a>
              </li>
-             <li *ngIf="role!=='user' && role!=='moderator'" class="nav-item border-bottom">
+             <li *ngIf="role=='admin'"  class="nav-item border-bottom">
                <a class="nav-link" href="#">
                  Moderators
                </a>
              </li>
              <li *ngIf="role=='super admin'" class="nav-item border-bottom">
                <a class="nav-link" href="#">
-                 Admins
+                 Admins/Moderators
                </a>
              </li>
-            <li *ngIf="role==='user'" class="nav-item border-bottom">
+            <li class="nav-item border-bottom">
               <a class="nav-link" href="#">
                 News
               </a>
@@ -43,7 +43,7 @@
                  Announcement
                </a>
              </li>
-            <li *ngIf="role==='user'" class="nav-item border-bottom">
+            <li *ngIf="role==='user' || role==='super admin'" class="nav-item border-bottom">
               <a class="nav-link" href="#">
                 <span data-feather="users"></span>
                 Profile
@@ -60,14 +60,12 @@
       </nav>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCol"
-                aria-controls="navbarCol" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+
+           <app-user-card></app-user-card>
 <!--        your code goes here-->
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">your text goes here</h1>
-        </div>
+<!--        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">-->
+<!--          <h1 class="h2">your text goes here</h1>-->
+<!--        </div>-->
       </main>
     </div>
   </div>

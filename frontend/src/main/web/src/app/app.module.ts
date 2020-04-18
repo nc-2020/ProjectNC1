@@ -12,6 +12,9 @@ import {
   HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS
 } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserCardComponent } from './user-card/user-card.component';
+
 
 
 
@@ -22,7 +25,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     AuthorizationComponent,
     HomeComponent,
     RegistrationComponent,
-    DashboardComponent
+    DashboardComponent,
+    UserProfileComponent,
+    UserCardComponent
+
   ],
   imports: [
     BrowserModule,
