@@ -14,9 +14,8 @@ import {
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserCardComponent } from './user-card/user-card.component';
-import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import {UserProfileRoutingModule} from "./user-profile/user-profile-routing.module";
-import {EditProfileRoutingModule} from "./edit-profile/edit-profile-routing.module";
+
 
 
 
@@ -29,8 +28,7 @@ import {EditProfileRoutingModule} from "./edit-profile/edit-profile-routing.modu
     RegistrationComponent,
     DashboardComponent,
     UserProfileComponent,
-    UserCardComponent,
-    EditProfileComponent
+    UserCardComponent
   ],
   imports: [
     BrowserModule,
@@ -38,8 +36,7 @@ import {EditProfileRoutingModule} from "./edit-profile/edit-profile-routing.modu
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    UserProfileRoutingModule,
-    EditProfileRoutingModule
+    UserProfileRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

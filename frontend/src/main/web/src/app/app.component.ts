@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import { catchError, tap, finalize } from 'rxjs/operators';
-import {AppService} from "./app.service";
+import {UserService} from "./user.service";
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ export class AppComponent {
 
   title = 'ui-app';
 
-  constructor( private http: HttpClient, private app: AppService, private router: Router) {
+  constructor(private http: HttpClient, private app: UserService, private router: Router) {
     this.app.login(undefined);
   }
 

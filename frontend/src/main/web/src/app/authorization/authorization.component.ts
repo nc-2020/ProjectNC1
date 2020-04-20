@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { User } from '../entities/user';
-import {AppService} from '../app.service';
+import {UserService} from '../user.service';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {tap} from "rxjs/operators";
@@ -24,7 +24,7 @@ export class AuthorizationComponent implements OnInit {
   });
 
 
-  constructor(private fb: FormBuilder, private app: AppService, private http: HttpClient, private router: Router) {
+  constructor(private fb: FormBuilder, private app: UserService, private http: HttpClient, private router: Router) {
   }
 
   login() {
