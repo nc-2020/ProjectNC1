@@ -35,7 +35,7 @@ export class AuthorizationComponent implements OnInit {
           // recieve user role (admin, user, super admin)
           // this.role = response.body.role ....
           this.error =  false;
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/dashboard');
         } else {
           this.error =  true;
         }
