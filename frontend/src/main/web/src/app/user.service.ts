@@ -23,7 +23,7 @@ export class UserService {
       catchError(this.handleError<string>('signUp'))
     );
   }
-  //user id!!!!
+
   deleteUser(user: User) {
     return this.http.delete<User>('api/user/delete/' + user).pipe(
       catchError(this.handleError<string>('signUp'))

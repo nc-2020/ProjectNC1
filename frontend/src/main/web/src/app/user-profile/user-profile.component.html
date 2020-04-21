@@ -81,9 +81,7 @@
                       <input class="form-control" type="password" >
                   </div>
               </div>
-<!--              <div *ngIf="editOnly && role==='super admin'" class="form-group row">-->
                 <div *ngIf="editOnly && role==='super admin'" class="form-group row">
-<!--                  <legend class="col-form-label col-sm-2 pt-0">Status</legend>-->
                   <div class="col-sm-10">
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
@@ -104,7 +102,7 @@
                   <div class="col-lg-9">
                       <input  *ngIf="!editOnly"  type="button" class="btn btn-primary" (click)="update()" value="Save Changes">
                       <input *ngIf="!editOnly" type="button" class="btn btn-danger" (click)="delete()" value="Delete Account">
-                      <input *ngIf="editOnly" type="button" class="btn btn-success" (click)="add()" ) value="Add">
+                      <input *ngIf="editOnly" type="button" class="btn btn-success" (click)="add()"  value="Add">
                   </div>
               </div>
 						</form>

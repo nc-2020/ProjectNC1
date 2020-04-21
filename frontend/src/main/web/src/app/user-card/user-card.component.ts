@@ -7,7 +7,7 @@ import {UserService} from "../user.service";
   styleUrls: ['./user-card.component.css']
 })
 export class UserCardComponent implements OnInit {
-  role = 'user';
+  role = '';
   constructor(private user: UserService) { }
 
   ngOnInit(): void {
