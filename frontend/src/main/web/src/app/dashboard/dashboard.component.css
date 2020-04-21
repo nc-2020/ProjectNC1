@@ -4,7 +4,7 @@ body {
 
 .feather {
   width: 16px;
-  height: 16px;
+  height: auto;
   vertical-align: text-bottom;
 }
 
@@ -25,13 +25,22 @@ body {
 .sidebar-sticky {
   position: relative;
   top: 0;
+  bottom: 0;
+  left: 0;
   background-color: rgba(0,0,0,0.3);
   height: calc(100vh - 48px);
   padding-top: .5rem;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
-
+.main-frame  {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+}
 h2{
   font-size: x-large;
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AppService} from "../app.service";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -8,11 +8,17 @@ import {AppService} from "../app.service";
 })
 export class DashboardComponent implements OnInit {
 
+  tab = 'Quizzes';
+  param = '';
   role = '';
-  constructor(private appService: AppService) { }
+  constructor(private appService: UserService) { }
 
   ngOnInit(): void {
     this.role = this.appService.role;
+  }
+  changeTab(tab: string, param?: string) {
+    this.tab = tab;
+    this.param = param;
   }
 
 }
