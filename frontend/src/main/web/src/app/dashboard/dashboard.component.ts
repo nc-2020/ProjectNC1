@@ -10,6 +10,7 @@ export class DashboardComponent implements OnInit {
 
   tab = 'Quizzes';
   role = '';
+  showUserProfile: boolean = false;
   constructor(private appService: UserService) { }
 
   ngOnInit(): void {
