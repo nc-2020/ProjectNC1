@@ -60,16 +60,19 @@
       </nav>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-9 px-1 align-self-start" >
+<!--        Users search menu-->
         <div *ngIf="tab === 'Users' || tab === 'Friends' || tab === 'Admins/Moderators' || tab==='Moderators'" class="main-frame container-fluid my-5 ">
           <form class="form-inline ml-3 my-2 my-lg-0" >
             <input class="form-control my-2" type="text" placeholder="Search" style="width: 75%">
             <button class="btn btn-secondary my-2 mx-auto my-sm-0" type="submit" style="width: auto">Search</button>
-            <button *ngIf="role==='admin' || role==='super admin'" class="btn btn-success my-2 mx-auto my-sm-0"  style="width: auto">Add</button>
+            <button *ngIf="role==='admin' || role==='super admin'" class="btn btn-success my-2 mx-auto my-sm-0"
+                    (click)="changeTab('Profile','true')"  style="width: auto">Add</button>
           </form>
           <app-user-card></app-user-card>
         </div>
-        <app-user-profile *ngIf="tab === 'Profile'"></app-user-profile>
-<!--        your code goes here-->
+<!--        Profile-->
+        <app-user-profile [editOnly]="param" *ngIf="tab === 'Profile'"></app-user-profile>
+
 
       </main>
     </div>

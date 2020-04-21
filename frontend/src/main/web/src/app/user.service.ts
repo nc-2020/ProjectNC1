@@ -9,7 +9,7 @@ import {catchError, tap} from "rxjs/operators";
 })
 export class UserService {
   authenticated = false;
-  role = 'user';
+  role = 'super admin';
 
   constructor(private http: HttpClient) {
   }
@@ -20,6 +20,12 @@ export class UserService {
   }
   createUser(user: User) {
     return this.http.post<User>('api/user/create', user).pipe(
+      catchError(this.handleError<string>('signUp'))
+    );
+  }
+  //user id!!!!
+  deleteUser(user: User) {
+    return this.http.delete<User>('api/user/delete/' + user).pipe(
       catchError(this.handleError<string>('signUp'))
     );
   }

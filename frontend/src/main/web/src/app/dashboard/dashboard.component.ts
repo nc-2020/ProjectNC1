@@ -9,6 +9,7 @@ import {UserService} from "../user.service";
 export class DashboardComponent implements OnInit {
 
   tab = 'Quizzes';
+  param = '';
   role = '';
   showUserProfile: boolean = false;
   constructor(private appService: UserService) { }
@@ -16,8 +17,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.role = this.appService.role;
   }
-  changeTab(tab: string) {
+  changeTab(tab: string, param?: string) {
     this.tab = tab;
+    this.param = param;
   }
 
 }
