@@ -9,6 +9,7 @@ import {UserService} from "../user.service";
 export class DashboardComponent implements OnInit {
 
   role = '';
+  showUserProfile: boolean = false;
   constructor(private appService: UserService) { }
 
   ngOnInit(): void {

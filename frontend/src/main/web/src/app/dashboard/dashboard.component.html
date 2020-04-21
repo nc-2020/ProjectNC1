@@ -44,7 +44,7 @@
                </a>
              </li>
             <li *ngIf="role==='user' || role==='super admin'" class="nav-item border-bottom">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="#" [(ngModel)]="showUserProfile" (click)="showUserProfile = !showUserProfile" onclick="return false;">
                 <span data-feather="users"></span>
                 Profile
               </a>
@@ -64,6 +64,7 @@
           <app-user-card></app-user-card>
           <app-user-card></app-user-card>
         </div>
+		<app-user-profile *ngIf="showUserProfile"></app-user-profile>
 <!--        your code goes here-->
 
       </main>
