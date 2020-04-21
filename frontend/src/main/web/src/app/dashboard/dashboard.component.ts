@@ -8,11 +8,15 @@ import {UserService} from "../user.service";
 })
 export class DashboardComponent implements OnInit {
 
+  tab = 'Quizzes';
   role = '';
   constructor(private appService: UserService) { }
 
   ngOnInit(): void {
     this.role = this.appService.role;
+  }
+  changeTab(tab: string) {
+    this.tab = tab;
   }
 
 }
