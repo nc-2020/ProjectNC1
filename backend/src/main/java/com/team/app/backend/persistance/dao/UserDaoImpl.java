@@ -1,40 +1,56 @@
 package com.team.app.backend.persistance.dao;
 
+import com.team.app.backend.persistance.dao.mappers.UserRowMapper;
 import com.team.app.backend.persistance.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
+import java.sql.PreparedStatement;
+import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    private UserRowMapper userRowMapper=new UserRowMapper();
     public UserDaoImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+
     @Override
     public void save(User user) {
         jdbcTemplate.update(
-                "INSERT INTO users(firstname, lastname, username, email, password, STATUS) VALUES ( ?, ?, ?, ?, ?, ? )",
+                "INSERT INTO users(firstname, lastname, username, password, email, image, registr_date, activate_link, status_id, role_id) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 user.getFirstName(),
                 user.getLastName(),
                 user.getUsername(),
-                user.getEmail(),
                 user.getPassword(),
-                user.isEnabled());
+                user.getEmail(),
+                user.getImage(),
+                user.getRegistr_date(),
+                user.getActivate_link(),
+                user.getStatus().getId(),
+                user.getRole().getId()
+        );
     }
 
     @Override
     public void update(User user) {
         jdbcTemplate.update(
-                "UPDATE USERS set firstname = ?, lastname = ?, USERNAME = ?, EMAIL = ?, PASSWORD = ?, STATUS = ? where id = ?",
+                "UPDATE USERS set firstname = ? , lastname = ? , username = ? , password = ? , email = ? , image = ? , registr_date = ? , activate_link = ? , status_id = ? , role_id = ? where id = ?",
                 user.getFirstName(),
                 user.getLastName(),
                 user.getUsername(),
-                user.getEmail(),
                 user.getPassword(),
-                user.isEnabled(),
+                user.getEmail(),
+                user.getImage(),
+                user.getRegistr_date(),
+                user.getActivate_link(),
+                user.getStatus().getId(),
+                user.getRole().getId(),
                 user.getId()
         );
     }
@@ -47,61 +63,34 @@ public class UserDaoImpl implements UserDao {
         );
     }
 
+
     @Override
     public User get(Long id) {
-        return jdbcTemplate.query(
-                "select * from users where id = " + id.toString(),
-                resultSet -> {
-                    if (resultSet.next()) {
-                        return new User(
-                                (long) resultSet.getInt("id"),
-                                resultSet.getString("firstname"),
-                                resultSet.getString("lastname"),
-                                resultSet.getString("username"),
-                                resultSet.getString("email"),
-                                resultSet.getString("password"),
-                                resultSet.getBoolean("status")
-                        );
-                    } else {
-                        return null;
-                    }
-                }
-        );
+        return jdbcTemplate.queryForObject(
+                "select U.id,U.firstname,U.lastname,U.username,U.image,U.password,U.email,U.registr_date,U.activate_link,U.status_id,US.name as status_name,U.role_id,R.name as role_name from users U INNER JOIN user_status US ON U.status_id = US.id INNER JOIN role R ON R.id = U.role_id where id = ? ",
+                new Object[]{id},
+                userRowMapper);
     }
 
     @Override
     public User findByUsername(String username) {
-        return jdbcTemplate.query(
-                "select * from users where USERNAME = '" + username + "'",
-                resultSet -> {
-                    if (resultSet.next()) {
-                        return new User(
-                                (long) resultSet.getInt("id"),
-                                resultSet.getString("firstname"),
-                                resultSet.getString("lastname"),
-                                resultSet.getString("username"),
-                                resultSet.getString("email"),
-                                resultSet.getString("password"),
-                                resultSet.getBoolean("status")
-                        );
-                    } else {
-                        return null;
-                    }
-                }
-        );
+        String sql="select U.id,U.firstname,U.lastname,U.username,U.image,U.password,U.email,U.registr_date,U.activate_link,U.status_id,US.name as status_name,U.role_id,R.name as role_name from users U INNER JOIN user_status US ON U.status_id = US.id INNER JOIN role R ON R.id = U.role_id where username = ? ";
+        List<User> userslist=jdbcTemplate.query(sql,
+                new Object[]{username},
+                userRowMapper);
+        if(userslist.size()==0){
+            return null;
+        }else{
+            return userslist.get(0);
+        }
+
     }
 
     @Override
     public String getUserPasswordByUsername(String username) {
-        return jdbcTemplate.query(
-                "select PASSWORD from users where USERNAME = '" + username + "'",
-                resultSet -> {
-                    if (resultSet.next()) {
-                        return resultSet.getString("password");
-                    } else {
-                        return null;
-                    }
-                }
+        return jdbcTemplate.queryForObject(
+                "select PASSWORD from users where USERNAME = ? ",
+                new Object[]{username},String.class
         );
     }
 }

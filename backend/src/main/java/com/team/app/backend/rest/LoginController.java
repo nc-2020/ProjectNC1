@@ -23,7 +23,7 @@ public class LoginController {
     public ResponseEntity<String> login(
             @RequestBody UserLoginDto userDto
             ) {
-
+        System.out.println("login");
         if (userService.isUserRegistered(userDto.getUsername())) {
             if (userService.getUserPassword(userDto.getUsername())
                     .equals(userDto.getPassword())) {
