@@ -3,11 +3,15 @@ package com.team.app.backend.service.impl;
 import com.team.app.backend.exception.UserAlreadyExistsException;
 import com.team.app.backend.dto.UserRegistrationDto;
 import com.team.app.backend.persistance.dao.UserDao;
+import com.team.app.backend.persistance.model.Role;
 import com.team.app.backend.persistance.model.User;
+import com.team.app.backend.persistance.model.UserStatus;
 import com.team.app.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 
 @Service
 @Transactional
@@ -25,13 +29,17 @@ public class UserServiceImpl implements UserService {
 
         User user = new User();
 
-        user
-                .setFirstName(userDto.getFirstname())
-                .setLastName(userDto.getLastname())
-                .setEmail(userDto.getEmail())
-                .setUsername(userDto.getUsername())
-                .setPassword(userDto.getPassword())
-                .setEnabled(false);
+        user.setFirstName(userDto.getFirstname());
+        user.setLastName(userDto.getLastname());
+        user.setFirstName(userDto.getFirstname());
+        user.setEmail(userDto.getEmail());
+        user.setUsername(userDto.getUsername());
+        user.setPassword(userDto.getPassword());
+        //user.setImage(userDto.getImage());
+        user.setActivate_link("ttest");
+        user.setRegistr_date(new Date());
+        user.setRole(new Role(1L,"USER"));
+        user.setStatus(new UserStatus(1L,"REGISTERED"));
         userDao.save(user);
     }
 
