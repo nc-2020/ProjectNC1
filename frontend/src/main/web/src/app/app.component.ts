@@ -18,16 +18,11 @@ export class AppComponent {
   }
 
   logout() {
-    this.http.post('logout', {}).pipe(finalize(() => {
-      this.app.authenticated = false;
-      this.router.navigateByUrl('/login');
-    })).subscribe();
-
+    this.app.logout().subscribe(
+      _=>this.router.navigateByUrl('/login'))
   }
   authenticated() {
-
     return this.app.authenticated;
-
   }
 
   ngOnInit(): void {

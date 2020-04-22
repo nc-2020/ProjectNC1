@@ -10,7 +10,8 @@ import {UserProfileComponent} from "./user-profile/user-profile.component"
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home'},
-  { path: 'dashboard', component: DashboardComponent},
+  { path: 'dashboard/:tab', component: DashboardComponent},
+  { path: 'dashboard', pathMatch: 'full', redirectTo: '/dashboard/quizzes'},
   { path: 'home', component: HomeComponent},
   { path: 'login', component: AuthorizationComponent},
   { path: 'signup', component: RegistrationComponent },
