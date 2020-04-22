@@ -7,16 +7,15 @@
       </div>
         <div class="col-2 col-sm-5 col-md-auto col-lg-6 text-center align-self-center">
           <h2>
-            <label class="card-title">Use</label>
+            <label class="card-title">{{user.username+' '+user.firstname+' '+user.lastname}}</label>
           </h2>
         </div>
         <div class="col-12 col-sm-6 col-md-7 col-lg-5 align-self-center">
           <div class="btn-group text-right">
-            <a *ngIf="role ==='user'" href="#" class="btn btn-outline-primary">Message</a>
-            <a *ngIf="role ==='user'" href="#" class="btn   btn-outline-success">Send invitation</a>
-            <a *ngIf="role ==='user'" href="#" class="btn  btn-outline-danger">Unfollow</a>
-            <a *ngIf="role ==='super admin'" href="#" class="btn   btn-outline-primary">Edit profile</a>
-            <a *ngIf="role ==='admin'" href="#" class="btn   btn-outline-primary">Edit profile</a>
+            <a *ngIf="userRole() ==='user'" href="#" class="btn btn-outline-primary">Message</a>
+            <a *ngIf="userRole() ==='user'" href="#" class="btn   btn-outline-success">Send invitation</a>
+            <a *ngIf="userRole() ==='user'" href="#" class="btn  btn-outline-danger">Unfollow</a>
+            <a *ngIf="userRole() ==='super admin' || userRole() ==='admin'" (click)="goToProfile()" class="btn  btn-outline-primary">Edit profile</a>
           </div>
         </div>
     </div>

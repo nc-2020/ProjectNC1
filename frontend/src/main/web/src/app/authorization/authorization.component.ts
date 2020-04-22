@@ -43,6 +43,11 @@ export class AuthorizationComponent implements OnInit {
       });
 
   }
+  login2() {
+    this.app.login(this.userForm.value).subscribe(
+      res => {}, error => {this.error = true});
+
+  }
 
   ngOnInit(): void {
 

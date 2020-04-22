@@ -13,10 +13,12 @@ import {UserService} from "../user.service";
 export class RegistrationComponent implements OnInit {
   registrationForm: FormGroup;
   user: User = {
+    id:'',
     username: '',
     firstname: '',
     lastname: '',
     email: '',
+    role:'user',
     password: ''
   };
 

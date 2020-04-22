@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UserService} from "../user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { User } from '../entities/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -8,31 +10,45 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
+  @Input()
+  user: User;
 
-  role = '';
-  userForm: FormGroup = this.fb.group({
-    firstname: ['', [Validators.required, Validators.minLength(3)]],
-    lastname: ['', [Validators.required, Validators.minLength(3)]],
-    email: ['', [Validators.required, Validators.minLength(3), Validators.email]],
-    username: ['', [Validators.required, Validators.minLength(3)]],
-    password: ['', [Validators.required, Validators.minLength(3)]]
-  });
   @Input()
   editOnly = false;
-  constructor(private fb: FormBuilder, private userService: UserService) { }
+
+  error = '';
+  message = '';
+  userForm: FormGroup;
+  
+ 
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    this.role = this.userService.role;
+    this.userForm = this.fb.group({
+      firstname: [this.user.firstname, [Validators.required, Validators.minLength(3)]],
+      lastname: [this.user.lastname, [Validators.required, Validators.minLength(3)]],
+      email: [this.user.email, [Validators.required, Validators.minLength(3), Validators.email]],
+      username: [this.user.username, [Validators.required, Validators.minLength(3)]],
+      password: [this.user.password, [Validators.required, Validators.minLength(3)]],
+      role: [this.user.role]
+    });
+    
+  }
+  userRole() {
+    return this.userService.user.role;
   }
   add() {
-    this.userService.createUser(this.userForm.value).subscribe();
+    this.user = this.userForm.value;
+    this.userService.createUser(this.user).subscribe(response=>{this.message = 'User has been added!'},error=>{this.error=error.message});
   }
 
   update() {
-    this.userService.updateUser(this.userForm.value).subscribe();
+    this.user = this.userForm.value;
+    this.userService.updateUser(this.user).subscribe(response=>{this.message = 'User has been updated!'},error=>{this.error=error.message});
   }
   delete() {
-    this.userService.deleteUser(this.userForm.value).subscribe();
+    this.userService.deleteUser(this.user).subscribe(response=>{this.message = 'User has been deleted!';this.userService.logout().subscribe(
+      _=>this.router.navigateByUrl('/login'))},error=>{this.error=error.message});
   }
 
 }
