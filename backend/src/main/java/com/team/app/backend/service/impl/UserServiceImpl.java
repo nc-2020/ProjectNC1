@@ -12,12 +12,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
+
+
+    @Override
+    public List<User> searchUsers(String string) {
+        return userDao.searchByString(string);
+    }
 
     @Override
     public void registerNewUserAccount(UserRegistrationDto userDto)

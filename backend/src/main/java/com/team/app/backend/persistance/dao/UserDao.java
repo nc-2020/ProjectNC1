@@ -2,7 +2,11 @@ package com.team.app.backend.persistance.dao;
 
 import com.team.app.backend.persistance.model.User;
 
+import java.util.List;
+
 public interface UserDao {
+
+    List<User> searchByString(String searchstring);
 
     void save(User user);
 
