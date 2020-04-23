@@ -29,10 +29,10 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String username, String password, String email, byte[] image, Date registr_date, String activate_link, UserStatus status, Role role) {
+    public User(Long id, String firstname, String lastname, String username, String password, String email, byte[] image, Date registr_date, String activate_link, UserStatus status, Role role) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstName = firstname;
+        this.lastName = lastname;
         this.username = username;
         this.password = password;
         this.email = email;

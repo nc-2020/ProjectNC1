@@ -27,25 +27,25 @@ export class AuthorizationComponent implements OnInit {
   constructor(private fb: FormBuilder, private app: UserService, private http: HttpClient, private router: Router) {
   }
 
+  // login() {
+  //   this.app.login(this.userForm.value).subscribe(
+  //     res => {}, response => {
+  //       if (response.status === 200) {
+  //         this.app.authenticated = true;
+  //         // recieve user role (admin, user, super admin)
+  //         // this.role = response.body.role ....
+  //         this.error =  false;
+  //         this.router.navigateByUrl('/dashboard');
+  //       } else {
+  //         this.error =  true;
+  //       }
+  //
+  //     });
+  //
+  // }
   login() {
     this.app.login(this.userForm.value).subscribe(
-      res => {}, response => {
-        if (response.status === 200) {
-          this.app.authenticated = true;
-          // recieve user role (admin, user, super admin)
-          // this.role = response.body.role ....
-          this.error =  false;
-          this.router.navigateByUrl('/dashboard');
-        } else {
-          this.error =  true;
-        }
-
-      });
-
-  }
-  login2() {
-    this.app.login(this.userForm.value).subscribe(
-      res => {}, error => {this.error = true});
+      res => {this.router.navigateByUrl('/dashboard');}, error => {this.error = true});
 
   }
 

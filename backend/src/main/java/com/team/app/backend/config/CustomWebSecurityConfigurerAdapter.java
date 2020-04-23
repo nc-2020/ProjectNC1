@@ -47,6 +47,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
                 BasicAuthenticationFilter.class);
     }
 
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

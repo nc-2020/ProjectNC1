@@ -10,15 +10,16 @@ import { error } from 'protractor';
 })
 export class UserService {
   authenticated = false;
-  user: User = {
-    id: '123',
-    username: 'lol',
-    firstname: 'lol',
-    lastname: 'kek',
-    email: 'sdad@sdasd.com',
-    role: {name: 'super admin'},
-    password: 'lol'
-  };
+  user: User;
+  // user: User = {
+  //   id: '123',
+  //   username: 'lol',
+  //   firstname: 'lol',
+  //   lastname: 'kek',
+  //   email: 'sdad@sdasd.com',
+  //   role: {name: 'user'},
+  //   password: 'lol'
+  // };
 
   constructor(private http: HttpClient) {
   }
@@ -58,7 +59,7 @@ export class UserService {
     );
   }
   logout() {
-    return this.http.post<User>('logout', this.user).pipe(finalize(() => {
+    return this.http.post<User>('api/logout', this.user).pipe(finalize(() => {
       this.authenticated = false;
     }), catchError(this.handleError<any>('logout')))
   }

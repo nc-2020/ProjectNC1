@@ -69,8 +69,8 @@
                     (click)="changeTab('Profile','true')"  style="width: auto">Add</button>
           </form>
           <app-user-card *ngFor="let user of users$ | async" [user]="user"></app-user-card>
-          <app-user-card></app-user-card>
-          
+          <!--<app-user-card></app-user-card>-->
+
         </div>
 <!--        Profile-->
         <app-user-profile [user]="getUser(param)" [editOnly]="param" *ngIf="tab === 'Profile'"></app-user-profile>

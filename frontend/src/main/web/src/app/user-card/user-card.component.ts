@@ -12,15 +12,16 @@ import { SharedUserDataService } from '../shared-user-data.service';
 export class UserCardComponent implements OnInit {
 
   @Input()
-  user: User = {
-    id: '12',
-    username: 'lol',
-    firstname: 'lol',
-    lastname: 'kjk',
-    email: 'mompop@sdasd.com',
-    role: {name: 'user'},
-    password: 'lol'
-  };
+  user: User;
+  // user: User = {
+  //   id: '12',
+  //   username: 'lol',
+  //   firstname: 'lol',
+  //   lastname: 'kjk',
+  //   email: 'mompop@sdasd.com',
+  //   role: {name: 'user'},
+  //   password: 'lol'
+  // };
   constructor(private userService: UserService,private router: Router,private sharedData: SharedUserDataService) { }
 
   ngOnInit(): void {
