@@ -54,10 +54,10 @@ export class UserProfileComponent implements OnInit {
     this.user.email = this.userForm.get('email').value;
     this.user.username = this.userForm.get('username').value;
     this.user.password = this.userForm.get('password').value;
-    this.user.role.name = this.user.role.name === "user"?"user":this.userForm.get('role').value;
-    this.message=JSON.stringify(this.user);
-    //this.message = 'User has been updated!'
-    this.userService.updateUser(this.user).subscribe(response =>{this.user = response; },error=>{this.error=error.message});
+    this.user.role.name = this.user.role.name === "user" ? "user":this.userForm.get('role').value;
+
+
+    this.userService.updateUser(this.user).subscribe(response =>{this.user = response; this.message = 'User has been updated!'},error=>{this.error=error.message});
   }
   delete() {
     this.userService.deleteUser(this.user).subscribe(response => {this.message = 'User has been deleted!';
