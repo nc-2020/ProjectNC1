@@ -13,26 +13,26 @@ export class UserCardComponent implements OnInit {
 
   @Input()
   user: User = {
-    id:'12',
+    id: '12',
     username: 'lol',
     firstname: 'lol',
     lastname: 'kjk',
     email: 'mompop@sdasd.com',
-    role:'user',
+    role: {name: 'user'},
     password: 'lol'
   };
   constructor(private userService: UserService,private router: Router,private sharedData: SharedUserDataService) { }
 
   ngOnInit(): void {
-   
+
   }
-  goToProfile(){
+  goToProfile() {
     this.sharedData.setUserData(this.user);
     this.router.navigateByUrl('dashboard/Profile');
-    
+
   }
   userRole() {
-    return this.userService.user.role;
+    return this.userService.user.role.name;
   }
 
 }

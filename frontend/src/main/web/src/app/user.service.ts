@@ -11,19 +11,19 @@ import { error } from 'protractor';
 export class UserService {
   authenticated = false;
   user: User = {
-    id:'123',
+    id: '123',
     username: 'lol',
     firstname: 'lol',
     lastname: 'kek',
     email: 'sdad@sdasd.com',
-    role:'super admin',
+    role: {name: 'super admin'},
     password: 'lol'
   };
 
   constructor(private http: HttpClient) {
   }
-  getUser(user:User) {
-    return this.http.get<User>(`api/user/get?id=${user.id}`).pipe(
+  getUser(user: User) {
+    return this.http.get<User>(`api/user/get/${user.id}`).pipe(
       catchError(this.handleError<any>('getUser'))
     );
   }
@@ -39,7 +39,7 @@ export class UserService {
   }
 
   deleteUser(user: User) {
-    return this.http.delete<User>(`api/user/delete/?id=${user.id}`).pipe(
+    return this.http.delete<User>(`api/user/delete/${user.id}`).pipe(
       catchError(this.handleError<any>('signUp'))
     );
   }
@@ -52,7 +52,7 @@ export class UserService {
   login(user): Observable<User> {
     return this.http.post<any>('api/login', user).pipe(
       tap(response => {
-        this.user = response; 
+        this.user = response;
         this.authenticated = true}),
       catchError(this.handleError<any>('login'))
     );
@@ -65,17 +65,17 @@ export class UserService {
 
   private handleError<T>(operation= 'opeartion') {
     return (error: any): Observable<T> => {
-      console.log(operation+' '+error); 
-      return throwError(error);;
+      console.log(operation + ' ' + error);
+      return throwError(error);
     };
   }
   searchUsers(term: string): Observable<User[]> {
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.get<User[]>(`api/user/get?name=${term}`).pipe(
-    
-      catchError(error=>{return of([])})
+    return this.http.get<User[]>(`api/user/search/${term}`).pipe(
+
+      catchError(error => {return of([])})
     );
   }
 

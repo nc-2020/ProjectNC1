@@ -13,7 +13,7 @@ import { SharedUserDataService } from '../shared-user-data.service';
 })
 export class DashboardComponent implements OnInit {
 
-  @Input()tab :string = 'Quizzes';
+  @Input()tab: string = 'Quizzes';
   param = '';
   users$: Observable<User[]>;
   private searchTerms = new Subject<string>();
@@ -29,8 +29,8 @@ export class DashboardComponent implements OnInit {
       switchMap((term: string) => this.userService.searchUsers(term)),
     );
   }
-  ngOnChanges(changes: SimpleChanges): void{
-   
+  ngOnChanges(changes: SimpleChanges): void {
+
 
   }
 
@@ -44,13 +44,13 @@ export class DashboardComponent implements OnInit {
     this.param = param;
   }
   userRole() {
-    return this.userService.user.role;
+    return this.userService.user.role.name;
   }
   getUser(empty?: string) {
     if(empty) {
-      return {role:'moderator'} as User;
+      return {role: {name: 'moderator'}} as User;
     }
-      
+
     return this.userService.user;
   }
 }

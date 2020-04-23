@@ -19,7 +19,7 @@ export class AppComponent {
 
   logout() {
     this.app.logout().subscribe(
-      _=>this.router.navigateByUrl('/login'))
+      _ => this.router.navigateByUrl('/login'));
   }
   authenticated() {
     return this.app.authenticated;
