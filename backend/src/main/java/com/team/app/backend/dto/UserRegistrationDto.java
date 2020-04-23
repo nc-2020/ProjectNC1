@@ -2,27 +2,27 @@ package com.team.app.backend.dto;
 
 public class UserRegistrationDto {
 
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
     private String username;
     private String email;
     private String password;
 
     public String getFirstname() {
-        return firstname;
+        return firstName;
     }
 
     public UserRegistrationDto setFirstname(String firstname) {
-        this.firstname = firstname;
+        this.firstName = firstname;
         return this;
     }
 
     public String getLastname() {
-        return lastname;
+        return lastName;
     }
 
     public UserRegistrationDto setLastname(String lastname) {
-        this.lastname = lastname;
+        this.lastName = lastname;
         return this;
     }
 

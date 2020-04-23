@@ -15,8 +15,8 @@ export class RegistrationComponent implements OnInit {
   user: User = {
     id: '',
     username: '',
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     email: '',
     role: {name: 'user'},
     password: ''
@@ -49,8 +49,8 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit() {
     this.user.username = this.registrationForm.get('username').value;
-    this.user.firstname = this.registrationForm.get('firstname').value;
-    this.user.lastname = this.registrationForm.get('lastname').value;
+    this.user.firstName = this.registrationForm.get('firstname').value;
+    this.user.lastName = this.registrationForm.get('lastname').value;
     this.user.email = this.registrationForm.get('email').value;
     this.user.password = this.registrationForm.get('password').value;
     this.app.signUp(this.user).subscribe(

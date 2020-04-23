@@ -3,6 +3,7 @@ package com.team.app.backend.rest;
 
 import com.team.app.backend.dto.QuizAddDto;
 import com.team.app.backend.dto.UserCreateDto;
+import com.team.app.backend.dto.UserUpdateDto;
 import com.team.app.backend.persistance.model.Quiz;
 import com.team.app.backend.persistance.model.User;
 import com.team.app.backend.service.QuizService;
@@ -58,12 +59,14 @@ public class UserController {
         System.out.println(id);
         return quizService.getQuiz(id);
     }
-    //to odo
+
+
     @PutMapping("/user/update")
-    public Quiz createUser( @PathVariable("id") long id) {
-        System.out.println(id);
-        return quizService.getQuiz(id);
-    }
+    public User createUser(
+                           @RequestBody UserUpdateDto userUpdateDto) {
+        System.out.println(userUpdateDto.getFirstName()+"   "+userUpdateDto.getLastName());
+        return userService.updateUser(userUpdateDto);
+    };
 
 
     @PostMapping("user/create")
@@ -71,20 +74,29 @@ public class UserController {
             @RequestBody UserCreateDto userDto){
         return userService.createNewUser(userDto);
     }
-    @PostMapping("user/delete/{id}")
-    public ResponseEntity<String> deleteUser( @PathVariable("id") long id){
+
+    @DeleteMapping("user/delete/{id}")
+    public Map<String,Object> deleteUser( @PathVariable("id") long id){
+        Map<String, Object> model = new HashMap<String, Object>();
         if(userService.deleteUser(id)){
-            return new ResponseEntity<>(
-                    "User was deleted!",
-                    HttpStatus.OK
-            );
+
+            model.put("message", "User was deleted");
         }else{
-            return new ResponseEntity<>(
-                    "Some error while deleting!",
-                    HttpStatus.CONFLICT);
+            model.put("message", "Exseption while deleted");
         }
+            //{
+//            return new ResponseEntity<>(
+//                    "User was deleted!",
+//                    HttpStatus.OK
+//            );
+//        }else{
+//            return new ResponseEntity<>(
+//                    "Some error while deleting!",
+//                    HttpStatus.CONFLICT);
+//        }
 
 
+        return model;
     }
 
     @GetMapping("/quiz")
