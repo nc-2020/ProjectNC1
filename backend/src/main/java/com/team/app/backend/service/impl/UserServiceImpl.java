@@ -1,5 +1,6 @@
 package com.team.app.backend.service.impl;
 
+import com.team.app.backend.dto.UserCreateDto;
 import com.team.app.backend.exception.UserAlreadyExistsException;
 import com.team.app.backend.dto.UserRegistrationDto;
 import com.team.app.backend.persistance.dao.UserDao;
@@ -26,6 +27,35 @@ public class UserServiceImpl implements UserService {
         return userDao.searchByString(string);
     }
 
+
+    @Override
+    public boolean deleteUser(Long id) {
+        if (userDao.get(id)!=null){
+            userDao.delete(id);
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    public User createNewUser(UserCreateDto userCreateDto){
+        User user = new User();
+
+        user.setFirstName(userCreateDto.getFirstname());
+        user.setLastName(userCreateDto.getLastname());
+        user.setUsername(userCreateDto.getUsername());
+        user.setEmail(userCreateDto.getEmail());
+        user.setUsername(userCreateDto.getUsername());
+        user.setPassword(userCreateDto.getPassword());
+        //user.setImage(userDto.getImage());
+        user.setActivate_link("ttest");
+        user.setRegistr_date(new Date());
+        user.setRole(new Role(1L,userCreateDto.getRole().getName()));
+        user.setStatus(new UserStatus(1L,"REGISTERED"));
+        userDao.save(user);
+        return userDao.findByUsername(userCreateDto.getUsername());
+    }
     @Override
     public void registerNewUserAccount(UserRegistrationDto userDto)
             throws UserAlreadyExistsException {

@@ -75,14 +75,14 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User get(Long id) {
         return jdbcTemplate.queryForObject(
-                "select U.id,U.firstname,U.lastname,U.username,U.image,U.password,U.email,U.registr_date,U.activate_link,U.status_id,US.name as status_name,U.role_id,R.name as role_name from users U INNER JOIN user_status US ON U.status_id = US.id INNER JOIN role R ON R.id = U.role_id where id = ? ",
+                "select U.id,U.firstname,U.lastname,U.username,U.image,U.password,U.email,U.registr_date,U.activate_link,U.status_id,US.name as status_name,U.role_id,R.name as role_name from users U INNER JOIN user_status US ON U.status_id = US.id INNER JOIN role R ON R.id = U.role_id where U.id = ? ",
                 new Object[]{id},
                 userRowMapper);
     }
 
     @Override
     public User findByUsername(String username) {
-        String sql="select U.id,U.firstname,U.lastname,U.username,U.image,U.password,U.email,U.registr_date,U.activate_link,U.status_id,US.name as status_name,U.role_id,R.name as role_name from users U INNER JOIN user_status US ON U.status_id = US.id INNER JOIN role R ON R.id = U.role_id where username = ? ";
+        String sql="select U.id,U.firstname,U.lastname,U.username,U.image,U.password,U.email,U.registr_date,U.activate_link,U.status_id,US.name as status_name,U.role_id,R.name as role_name from users U INNER JOIN user_status US ON U.status_id = US.id INNER JOIN role R ON R.id = U.role_id where U.username = ? ";
         List<User> userslist=jdbcTemplate.query(sql,
                 new Object[]{username},
                 userRowMapper);
