@@ -14,10 +14,10 @@ export class UserService {
   // user: User = {
   //   id: '123',
   //   username: 'lol',
-  //   firstname: 'lol',
-  //   lastname: 'kek',
+  //   firstName: 'lol',
+  //   lastName: 'kek',
   //   email: 'sdad@sdasd.com',
-  //   role: {name: 'user'},
+  //   role: {name: 'super admin'},
   //   password: 'lol'
   // };
 

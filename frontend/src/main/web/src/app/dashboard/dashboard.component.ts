@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
+import {Component, OnInit, Input, ViewChild, AfterViewChecked, AfterViewInit} from '@angular/core';
 import {UserService} from "../user.service";
 import { User } from '../entities/user';
 import { Observable, Subject } from 'rxjs';
@@ -6,17 +6,19 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Location} from '@angular/common';
 import { SharedUserDataService } from '../shared-user-data.service';
+import {UserCardComponent} from "../user-card/user-card.component";
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewInit {
 
   @Input()tab: string = 'Quizzes';
   param = '';
   users$: Observable<User[]>;
   private searchTerms = new Subject<string>();
+  @ViewChild(UserCardComponent) viewChild: UserCardComponent;
 
   constructor(private userService: UserService,private location: Location, private route: ActivatedRoute,private router: Router,private sharedData: SharedUserDataService) { }
 
@@ -29,15 +31,35 @@ export class DashboardComponent implements OnInit {
       switchMap((term: string) => this.userService.searchUsers(term)),
     );
   }
-  ngOnChanges(changes: SimpleChanges): void {
+  ngAfterViewInit() {
 
 
   }
+
+  ngAfterViewChecked() {
+    // viewChild is updated after the view has been checked
+    if (true === this.viewChild.edit) {
+      this.tab = 'Profile';
+      // this.sharedData
+
+    }
+  }
+
 
   search(term: string): void {
     this.searchTerms.next(term);
   }
+profile()
+{
+  this.tab = 'Profile';
+  this.sharedData.setUserData(this.userService.user);
 
+}
+emptyProfile() {
+  this.tab = 'Profile';
+  this.param = 'true'
+  this.sharedData.setUserData({role: {name: 'moderator'}} as User);
+}
   changeTab(tab: string, param?: string) {
     this.tab = tab;
     this.router.navigateByUrl(`dashboard/${tab}`);
@@ -47,10 +69,7 @@ export class DashboardComponent implements OnInit {
     return this.userService.user.role.name;
   }
   getUser(empty?: string) {
-    if(empty) {
-      return {role: {name: 'moderator'}} as User;
-    }
 
-    return this.userService.user;
+    return this.sharedData.getUserData();
   }
 }

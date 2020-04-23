@@ -16,6 +16,7 @@ import {stringify} from "querystring";
 })
 export class AuthorizationComponent implements OnInit {
 
+
   error = false;
 
   userForm: FormGroup = this.fb.group({
