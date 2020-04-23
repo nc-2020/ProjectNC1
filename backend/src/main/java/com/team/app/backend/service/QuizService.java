@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface QuizService {
 
+    void addQuiz();
+
     List<Quiz> getAllQuizes();
 
     Quiz getQuiz(Long id);

@@ -1,8 +1,10 @@
 package com.team.app.backend.rest;
 
 
+import com.team.app.backend.dto.QuizAddDto;
 import com.team.app.backend.persistance.model.Quiz;
 import com.team.app.backend.persistance.model.User;
+import com.team.app.backend.service.QuizService;
 import com.team.app.backend.service.UserService;
 import org.h2.util.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,22 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    QuizService quizService;
+
+
+
+    //TO DO
+    @PostMapping("/quiz")
+    public ResponseEntity<String> registerUserAccount(
+            @RequestBody QuizAddDto quizDto) {
+
+        return new ResponseEntity<>(
+                "Quiz was created!",
+                HttpStatus.OK
+        );
+    }
+
 
     @GetMapping("/search")
     public List<User> searchUser(@RequestBody  String searchString) {
@@ -32,19 +50,14 @@ public class UserController {
         return userService.searchUsers(searchString);
     }
 
-    //TO DO
-    @GetMapping("/quiz/id")
-    public Quiz quiz() {
-        Quiz quiz = new Quiz();
-
-        return quiz;
+    @GetMapping("/quiz/{id}")
+    public Quiz quiz( @PathVariable("id") long id) {
+        System.out.println(id);
+        return quizService.getQuiz(id);
     }
-    //TO DO
+
     @GetMapping("/quiz")
-    public Map<String, Object> qui() {
-        Map<String, Object> model = new HashMap<String, Object>();
-        model.put("id", "test");
-        model.put("content", "Hello World");
-        return model;
+    public List<Quiz> quizes() {
+       return quizService.getAllQuizes();
     }
 }

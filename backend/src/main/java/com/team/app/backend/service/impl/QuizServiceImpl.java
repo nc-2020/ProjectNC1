@@ -19,12 +19,20 @@ public class QuizServiceImpl implements QuizService {
     private QuizDao quizDao;
 
     @Override
+    public void addQuiz() {
+        quizDao.save(new Quiz()
+        );
+    }
+
+    @Override
     public List<Quiz> getAllQuizes() {
-        return null;
+        List<Quiz> list =  quizDao.getAll();
+        System.out.println(list.size());
+        return list;
     }
 
     @Override
     public Quiz getQuiz(Long id) {
-        return null;
+        return quizDao.get(id);
     }
 }

@@ -20,7 +20,7 @@ public class QuizDaoImpl implements QuizDao{
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private QuizRowMapper userRowMapper=new QuizRowMapper();
+    private QuizRowMapper quizRowMapper=new QuizRowMapper();
 
     public QuizDaoImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
@@ -29,37 +29,24 @@ public class QuizDaoImpl implements QuizDao{
 
     @Override
     public Quiz get(Long id) {
-        return jdbcTemplate.query(
-                "select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QC.name as cat_name from quiz Q INNER JOIN quiz_category QC ON QC.id = Q.status_id where id = ?",
+        return jdbcTemplate.queryForObject(
+                "select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id where Q.id = ?",
                 new Object[]{id},
-                resultSet -> {
-                    if (resultSet.next()) {
-                        return new Quiz(
-                                (long) resultSet.getInt("id"),
-                                resultSet.getString("title"),
-                                resultSet.getDate("date"),
-                                resultSet.getString("description"),
-                                resultSet.getBytes("image"),
-                                new QuizStatus((long)resultSet.getInt("role_id"),resultSet.getString("cat_name")),
-                                (long) resultSet.getInt("user_id")
-                        );
-                    } else {
-                        return null;
-                    }
-                }
+                quizRowMapper
         );
     }
 
     @Override
     public List<Quiz> getByUserId(Long id) {
-        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QC.name as cat_name from quiz Q INNER JOIN quiz_category QC ON QC.id = Q.status_id  where user_id = ? "
-                ,new Object[] { id },new QuizRowMapper());
+        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id where user_id = ? "
+                ,new Object[] { id },
+                quizRowMapper);
     }
 
     @Override
     public List<Quiz> getAll() {
-        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QC.name as cat_name from quiz Q INNER JOIN quiz_category QC ON QC.id = Q.status_id"
-                ,new QuizRowMapper());
+        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id"
+                ,quizRowMapper);
     }
 
 
