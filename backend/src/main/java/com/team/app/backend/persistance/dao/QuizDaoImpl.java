@@ -2,6 +2,7 @@ package com.team.app.backend.persistance.dao;
 
 import com.team.app.backend.persistance.dao.mappers.QuizRowMapper;
 
+import com.team.app.backend.persistance.model.Question;
 import com.team.app.backend.persistance.model.Quiz;
 import com.team.app.backend.persistance.model.QuizStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class QuizDaoImpl implements QuizDao{
         );
     }
 
+
+
     @Override
     public List<Quiz> getByUserId(Long id) {
         return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id where user_id = ? "
@@ -53,10 +56,10 @@ public class QuizDaoImpl implements QuizDao{
     @Override
     public void save(Quiz quiz) {
         jdbcTemplate.update(
-                "INSERT INTO quiz (title,date,desription,image,status_id,user_id VALUES (?, ?, ?, ?, ?, ?)",
+                "INSERT INTO quiz( title, date, description, image, status_id, user_id) VALUES (?, ?, ?, ?, ?, ?);",
                 quiz.getTitle(),
                 quiz.getDate(),
-                quiz.getDiscription(),
+                quiz.getDescription(),
                 quiz.getImage(),
                 quiz.getStatus().getId(),
                 quiz.getUser()
@@ -69,7 +72,7 @@ public class QuizDaoImpl implements QuizDao{
                 "UPDATE quiz set title = ?, date = ?, desription = ?, image = ?, status_id = ?, user_id = ?  where id = ?",
                 quiz.getTitle(),
                 quiz.getDate(),
-                quiz.getDiscription(),
+                quiz.getDescription(),
                 quiz.getImage(),
                 quiz.getStatus().getId(),
                 quiz.getUser(),
