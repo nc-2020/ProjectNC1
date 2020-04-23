@@ -6,7 +6,7 @@ public class Quiz {
     private Long id;
     private String title;
     private Date date;
-    private String discription;
+    private String description;
     private byte[] image;
     private QuizStatus status;
     private Long user_id;
@@ -14,11 +14,11 @@ public class Quiz {
     public Quiz() {
     }
 
-    public Quiz(Long id, String title, Date date, String discription, byte[] image, QuizStatus status, Long user_id) {
+    public Quiz(Long id, String title, Date date, String description, byte[] image, QuizStatus status, Long user_id) {
         this.id = id;
         this.title = title;
         this.date = date;
-        this.discription = discription;
+        this.description = description;
         this.image = image;
         this.status = status;
         this.user_id = user_id;
@@ -48,12 +48,12 @@ public class Quiz {
         this.date = date;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDiscription(String discription) {
-        this.discription = discription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public byte[] getImage() {
