@@ -6,6 +6,7 @@ import {AppComponent} from "./app.component";
 import {RegistrationComponent} from "./registration/registration.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {UserProfileComponent} from "./user-profile/user-profile.component"
+import {QuizCreateComponent} from "./quiz-create/quiz-create.component";
 
 
 const routes: Routes = [
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent},
   { path: 'login', component: AuthorizationComponent},
   { path: 'signup', component: RegistrationComponent },
-  { path: 'profile', component: UserProfileComponent }
+  { path: 'profile', component: UserProfileComponent },
+  { path: 'quiz-create', component: QuizCreateComponent }
 ];
 
 @NgModule({
