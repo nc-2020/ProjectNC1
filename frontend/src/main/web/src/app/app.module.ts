@@ -15,6 +15,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserCardComponent } from './user-card/user-card.component';
 import {UserProfileRoutingModule} from "./user-profile/user-profile-routing.module";
+import { QuizCreateComponent } from './quiz-create/quiz-create.component';
 
 
 
@@ -28,7 +29,8 @@ import {UserProfileRoutingModule} from "./user-profile/user-profile-routing.modu
     RegistrationComponent,
     DashboardComponent,
     UserProfileComponent,
-    UserCardComponent
+    UserCardComponent,
+    QuizCreateComponent
   ],
   imports: [
     BrowserModule,
