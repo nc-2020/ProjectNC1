@@ -11,20 +11,22 @@
 				<div class="quiz-name-wrapper">
 					<div class="quiz-name-input kr2-textfield">
 						<label>1. Name this quiz</label>
-						<input type="text" id="name-input" placeholder="Quiz name" data-qtest="quiz-name-input-field" maxlength="60">
+						<input [(ngModel)]="quiz.title" type="text" id="name-input" placeholder="Quiz name" data-qtest="quiz-name-input-field" maxlength="60">
 						<div class="quiz-name-error"><span class="hidden">Please enter a quiz name</span></div>
 					</div>
 				</div>
 				<div class="quiz-name-wrapper">
 					<div class="quiz-name-input kr2-textfield">
-						<label>2. Description</label>
-						<input type="text" id="name-input" placeholder="Quiz description" data-qtest="quiz-name-input-field" maxlength="60">
+						<label>2. Description </label>
+						<input [(ngModel)]="quiz.description" type="text" id="name-input" placeholder="Quiz description" data-qtest="quiz-name-input-field" maxlength="60">
 					</div>
 				</div>
 			</div>
 			<div class="action-btns-wrapper">
-				<button class="cancel-btn" data-qtest="cancel-create-quiz-btn">Cancel</button>
-				<button class="save-btn" data-qtest="create-quiz-btn"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Next</span></button>
+				<button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="goBack()">Cancel</button>
+        <a routerLink="/quiz-edit/{{quiz.id}}">
+          <button class="save-btn" data-qtest="create-quiz-btn"><i class="fas fa-spinner kr-anim-spin hidden" (click)="createQuiz(quiz)"></i><span class="">Next</span></button>
+        </a>
 			</div>
 		</div>
 	</div>

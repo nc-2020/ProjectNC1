@@ -3,6 +3,8 @@ import {QuizService} from "../services/quiz.service";
 import {Category} from "../entities/category";
 import {Quiz} from "../entities/quiz";
 import {CategoryService} from "../services/category.service";
+import {ActivatedRoute} from "@angular/router";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-quiz-create',
@@ -16,21 +18,37 @@ export class QuizCreateComponent implements OnInit {
     description: '',
     userId: ''
   };
+  isIdGet = false;
   receivedQuiz: Quiz;
   categories: Category[] = [];
 
-  constructor(private quizService: QuizService, private categoryService: CategoryService) { }
+  constructor(
+    private location: Location,
+    private route: ActivatedRoute,
+    private quizService: QuizService,
+    private categoryService: CategoryService) { }
 
   ngOnInit(): void {
     // this.getData();
   }
 
-  createQuiz(quiz: Quiz) {
-    this.quizService.createQuiz(quiz)
-      .subscribe(data  => {
-        this.quiz.id = data;
-      });
+  goBack(): void {
+    this.location.back();
   }
+
+  createQuiz(quiz: Quiz) {
+    this.quiz.id = '5';
+    this.isIdGet = true;
+  }
+
+
+
+  // createQuiz(quiz: Quiz) {
+  //   this.quizService.createQuiz(quiz)
+  //     .subscribe(data  => {
+  //       this.quiz.id = data;
+  //     });
+  // }
 
   // getCategories(): void {
   //   this.categoryService.getCategories()
