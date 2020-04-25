@@ -18,6 +18,8 @@ import {UserProfileRoutingModule} from "./user-profile/user-profile-routing.modu
 import { QuizCreateComponent } from './quiz-create/quiz-create.component';
 import { QuizEditComponent } from './quiz-edit/quiz-edit.component';
 import { QuizDashboardComponent } from './quiz-dashboard/quiz-dashboard.component';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import {InMemoryDataService} from "./services/in-memory-data.service";
 
 
 
@@ -42,7 +44,13 @@ import { QuizDashboardComponent } from './quiz-dashboard/quiz-dashboard.componen
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    UserProfileRoutingModule
+    UserProfileRoutingModule,
+    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+    // and returns simulated server responses.
+    // Remove it when a real server is ready to receive requests.
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
 export interface Option {
-  id: string;
-  correct: string;
+  id: number;
+  correct: boolean;
   text: string;
 }
