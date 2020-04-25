@@ -31,7 +31,6 @@ export class QuizCreateComponent implements OnInit {
 
   ngOnInit(): void {
     // this.getData();
-    this.createQuiz(this.quiz);
   }
 
   goBack(): void {
