@@ -35,6 +35,12 @@ export class QuizService {
     );
   }
 
+  getQuizes() {
+    return this.http.get<Quiz[]>(`api/quiz`).pipe(
+      catchError(this.handleError<any>('getQuizes'))
+    );
+  }
+
   private handleError<T>(operation= 'operation') {
     return (error: any): Observable<T> => {
       console.log(operation + ' ' + error);

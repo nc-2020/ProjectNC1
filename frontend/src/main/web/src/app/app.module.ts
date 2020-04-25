@@ -17,6 +17,7 @@ import { UserCardComponent } from './user-card/user-card.component';
 import {UserProfileRoutingModule} from "./user-profile/user-profile-routing.module";
 import { QuizCreateComponent } from './quiz-create/quiz-create.component';
 import { QuizEditComponent } from './quiz-edit/quiz-edit.component';
+import { QuizDashboardComponent } from './quiz-dashboard/quiz-dashboard.component';
 
 
 
@@ -32,7 +33,8 @@ import { QuizEditComponent } from './quiz-edit/quiz-edit.component';
     UserProfileComponent,
     UserCardComponent,
     QuizCreateComponent,
-    QuizEditComponent
+    QuizEditComponent,
+    QuizDashboardComponent
   ],
   imports: [
     BrowserModule,
