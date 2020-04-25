@@ -14,8 +14,9 @@ import {UserCardComponent} from "../user-card/user-card.component";
 })
 export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewInit {
 
-  @Input()tab: string = 'Quizzes';
+  tab: string = '';
   param = '';
+  user: User;
   users$: Observable<User[]>;
   private searchTerms = new Subject<string>();
   @ViewChild(UserCardComponent) viewChild: UserCardComponent;
@@ -24,6 +25,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
 
   ngOnInit(): void {
     this.tab = this.route.snapshot.paramMap.get('tab');
+    this.user = this.userService.user;
     this.users$ = this.searchTerms.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -65,9 +67,8 @@ emptyProfile() {
     this.router.navigateByUrl(`dashboard/${tab}`);
     this.param = param;
   }
-  userRole() {
-    return this.userService.user.role.name;
-  }
+
+
   getUser(empty?: string) {
 
     return this.sharedData.getUserData();
