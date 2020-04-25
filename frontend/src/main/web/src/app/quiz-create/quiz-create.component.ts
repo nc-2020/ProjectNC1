@@ -13,10 +13,10 @@ import { Location } from '@angular/common';
 })
 export class QuizCreateComponent implements OnInit {
   quiz: Quiz = {
-    id: 0,
-    title: '',
-    description: '',
-    status: '',
+    id: null,
+    title: 'dsadasd',
+    description: 'sadas',
+    status: 'asdas',
     userId: ''
   };
   isIdGet = false;
@@ -31,25 +31,28 @@ export class QuizCreateComponent implements OnInit {
 
   ngOnInit(): void {
     // this.getData();
+    this.createQuiz(this.quiz);
   }
 
   goBack(): void {
     this.location.back();
   }
 
-  createQuiz(quiz: Quiz) {
-    this.quiz.id = 5;
-    this.isIdGet = true;
-  }
-
-
-
   // createQuiz(quiz: Quiz) {
-  //   this.quizService.createQuiz(quiz)
-  //     .subscribe(data  => {
-  //       this.quiz.id = data;
-  //     });
+  //   this.quiz.id = 5;
+  //   this.isIdGet = true;
   // }
+
+
+
+  createQuiz(quiz: Quiz) {
+    console.log("quiz created");
+    this.quizService.createQuiz(quiz)
+      .subscribe(data  => {
+        console.log(data);
+        this.quiz = data;
+      });
+  }
 
   // getCategories(): void {
   //   this.categoryService.getCategories()

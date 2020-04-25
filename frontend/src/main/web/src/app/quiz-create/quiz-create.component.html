@@ -17,14 +17,14 @@
 				</div>
 				<div class="quiz-name-wrapper">
 					<div class="quiz-name-input kr2-textfield">
-						<label>2. Description </label>
+						<label>2. Description</label>
 						<input [(ngModel)]="quiz.description" type="text" id="name-input" placeholder="Quiz description" data-qtest="quiz-name-input-field" maxlength="60">
 					</div>
 				</div>
 			</div>
 			<div class="action-btns-wrapper">
 				<button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="goBack()">Cancel</button>
-        <a routerLink="/quiz-edit/{{quiz.id}}">
+        <a routerLink="/quiz-dashboard">
           <button class="save-btn" data-qtest="create-quiz-btn"><i class="fas fa-spinner kr-anim-spin hidden" (click)="createQuiz(quiz)"></i><span class="">Next</span></button>
         </a>
 			</div>
