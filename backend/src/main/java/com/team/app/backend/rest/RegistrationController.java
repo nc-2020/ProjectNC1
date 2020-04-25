@@ -27,7 +27,7 @@ public class RegistrationController {
     @Autowired
     UserDao userDao;
 
-    @PostMapping("/signup")
+    @PostMapping("/sign-up")
     public ResponseEntity<String> registerUserAccount(
             @RequestBody UserRegistrationDto userDto) {
 
