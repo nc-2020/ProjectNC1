@@ -13,9 +13,10 @@ import { Location } from '@angular/common';
 })
 export class QuizCreateComponent implements OnInit {
   quiz: Quiz = {
-    id: '',
+    id: 0,
     title: '',
     description: '',
+    status: '',
     userId: ''
   };
   isIdGet = false;
@@ -37,7 +38,7 @@ export class QuizCreateComponent implements OnInit {
   }
 
   createQuiz(quiz: Quiz) {
-    this.quiz.id = '5';
+    this.quiz.id = 5;
     this.isIdGet = true;
   }
 

@@ -75,6 +75,9 @@
 <!--        Profile-->
         <app-user-profile [user]="getUser(param)" [editOnly]="param" *ngIf="tab === 'Profile'"></app-user-profile>
 
+        <!-- Quizzes -->
+        <app-quiz-dashboard></app-quiz-dashboard>
+
       </main>
     </div>
   </div>

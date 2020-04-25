@@ -3,5 +3,5 @@ export interface Quiz {
   title: string;
   description: string;
   status: string;
-  userId: number;
+  userId: string;
 }
