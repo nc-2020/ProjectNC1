@@ -9,7 +9,13 @@ import {Quiz} from "../entities/quiz";
   styleUrls: ['./quiz-create.component.css']
 })
 export class QuizCreateComponent implements OnInit {
-
+  quiz: Quiz = {
+    id: '',
+    title: '',
+    description: '',
+    userId: ''
+  };
+  receivedQuiz: Quiz;
   categories: Category[];
 
   constructor(private quizService: QuizService) { }
@@ -17,12 +23,11 @@ export class QuizCreateComponent implements OnInit {
   ngOnInit(): void {
     // this.categories = getCategories();
   }
-  add(quiz: Quiz): void {
-    this.quizService.createQuiz(quiz as Quiz)
-      .subscribe(quizId => {
-        quiz.id = quizId;
+
+  createQuiz(quiz: Quiz) {
+    this.quizService.createQuiz(quiz)
+      .subscribe((data: Quiz) => {
+        this.receivedQuiz = data;
       });
   }
-
-
 }
