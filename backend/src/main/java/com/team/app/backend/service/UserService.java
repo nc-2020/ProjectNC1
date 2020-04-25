@@ -30,4 +30,6 @@ public interface UserService {
     boolean isUserRegistered(String username);
 
     String getUserPassword(String username);
+
+    User findByUsername(String username);
 }
