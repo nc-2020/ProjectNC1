@@ -9,6 +9,7 @@ import {UserService} from "../user.service";
   providedIn: 'root'
 })
 export class QuizService {
+
   constructor(private http: HttpClient, private userService: UserService) {
   }
   getQuiz(quiz: Quiz) {
