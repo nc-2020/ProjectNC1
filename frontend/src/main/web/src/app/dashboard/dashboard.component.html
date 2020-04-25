@@ -68,8 +68,8 @@
             <button *ngIf="userRole()==='admin' || userRole()==='super admin'" class="btn btn-success my-2 mx-auto my-sm-0"
                     (click)="emptyProfile()"  style="width: auto">Add</button>
           </form>
-<!--          <app-user-card *ngFor="let user of users$ | async" [user]="user"></app-user-card>-->
-          <app-user-card></app-user-card>
+          <app-user-card *ngFor="let user of users$ | async" [user]="user"></app-user-card>
+
 
         </div>
 <!--        Profile-->
