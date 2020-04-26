@@ -70,12 +70,13 @@ public class LoginController {
         }
     }
 
-    @GetMapping("/get-user/{id}")
-    public ResponseEntity<String> getUser(@PathVariable Long id) {
-        return new ResponseEntity<>(
-                userService.getUserById(id).toString(),
-                HttpStatus.OK);
-    }
+    //testing jwt
+//    @GetMapping("/get-user/{id}")
+//    public ResponseEntity<String> getUser(@PathVariable Long id) {
+//        return new ResponseEntity<>(
+//                userService.getUserById(id).toString(),
+//                HttpStatus.OK);
+//    }
 
     //TO DO
     @PostMapping("/logout")
