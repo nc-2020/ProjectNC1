@@ -75,6 +75,21 @@ label {
   border: 1px solid rgba(0,0,0,0.2);
 }
 
+.true-false {
+  -webkit-writing-mode: horizontal-tb !important;
+  text-rendering: auto;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  text-align: start;
+  -webkit-appearance: textfield;
+  -webkit-rtl-ordering: logical;
+  cursor: pointer;
+  font: 100 13.3333px Arial;
+}
+
 input, textarea, select, button {
   font-family: Quicksand;
 }
@@ -151,12 +166,7 @@ button {
   min-width: 124px;
 }
 
-.add-btn {
-  font-family: Quicksand;
-  background-color: #04B404;
-  margin-left: 16px;
-  min-width: 124px;
-  padding: 8px 16px;
+.add-btn, .delete-btn, .true-btn, .false-btn {
   border: none;
   outline: none;
   cursor: pointer;
@@ -168,21 +178,36 @@ button {
   transition: all 0.1s ease-in-out;
 }
 
+.add-btn {
+  font-family: Quicksand;
+  background-color: #00C985;
+  margin-left: 16px;
+  min-width: 124px;
+  padding: 8px 16px;
+}
+
 .delete-btn {
   font-family: Quicksand;
   background-color: #FE2E2E;
   margin-left: 16px;
   min-width: 20px;
   padding: 0;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-size: 16px;
-  color: #fff;
-  font-weight: 500;
-  border-radius: 4px;
-  text-align: center;
-  transition: all 0.1s ease-in-out;
+}
+
+.true-btn {
+  font-family: Quicksand;
+  background-color: #00C985;
+  margin-left: 16px;
+  min-width: 124px;
+  padding: 8px 16px;
+}
+
+.false-btn {
+  font-family: Quicksand;
+  background-color: #00C985;
+  margin-left: 16px;
+  min-width: 124px;
+  padding: 8px 16px;
 }
 
 .kr-anim-spin {

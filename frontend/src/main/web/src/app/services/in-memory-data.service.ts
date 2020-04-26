@@ -10,11 +10,11 @@ import {Question} from "../entities/question";
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
     const quizes: Quiz[] = [
-      { id: 1, title: 'Java', description: '', status: '', userId: '1' },
-      { id: 2, title: 'Angular', description: '', status: '', userId: '1' },
-      { id: 3, title: 'SQL', description: '', status: '', userId: '2' },
-      { id: 4, title: 'Spring', description: '', status: '', userId: '2' },
-      { id: 5, title: 'JDBC', description: '', status: '', userId: '4' },
+      { id: 1, title: 'Java', description: 'Quiz about Java', status: '', userId: '1' },
+      { id: 2, title: 'Angular', description: 'Quiz about Angular', status: '', userId: '1' },
+      { id: 3, title: 'SQL', description: 'Quiz about SQL', status: '', userId: '2' },
+      { id: 4, title: 'Spring', description: 'Quiz about Spring', status: '', userId: '2' },
+      { id: 5, title: 'JDBC', description: 'Quiz about JDBC', status: '', userId: '4' },
     ];
 
     const questions: Question[] = [

@@ -23,7 +23,7 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     quiz_id: null,
     image: ''
   };
-  answerTrueFalse
+  answerTrueFalse = 'False';
   isAddQuestion = false;
   selectedLevel: any;
   private routeSub: Subscription;
