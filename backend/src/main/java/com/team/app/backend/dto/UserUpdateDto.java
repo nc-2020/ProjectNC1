@@ -1,6 +1,7 @@
 package com.team.app.backend.dto;
 
 import com.team.app.backend.persistance.model.Role;
+import com.team.app.backend.persistance.model.User;
 import com.team.app.backend.persistance.model.UserStatus;
 
 public class UserUpdateDto {
@@ -13,6 +14,19 @@ public class UserUpdateDto {
     private byte[] image;
     private Role role;
     private UserStatus status = new UserStatus(2L,"ACTIVATED");
+
+    public UserUpdateDto() {}
+
+    public UserUpdateDto(User user) {
+        id = user.getId();
+        firstName = user.getFirstName();
+        lastName = user.getLastName();
+        username = user.getUsername();
+        email = user.getEmail();
+        password = user.getPassword();
+        image = user.getImage();
+        role = user.getRole();
+    }
 
     public UserStatus getStatus() {
         return status;
