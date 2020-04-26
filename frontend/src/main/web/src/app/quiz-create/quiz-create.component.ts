@@ -14,9 +14,9 @@ import { Location } from '@angular/common';
 export class QuizCreateComponent implements OnInit {
   quiz: Quiz = {
     id: null,
-    title: 'dsadasd',
-    description: 'sadas',
-    status: 'asdas',
+    title: '',
+    description: '',
+    status: 'not active',
     userId: ''
   };
   isIdGet = false;
@@ -36,14 +36,6 @@ export class QuizCreateComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
-
-  // createQuiz(quiz: Quiz) {
-  //   this.quiz.id = 5;
-  //   this.isIdGet = true;
-  // }
-
-
-
   createQuiz(quiz: Quiz) {
     console.log("quiz created");
     this.quizService.createQuiz(quiz)
@@ -57,13 +49,5 @@ export class QuizCreateComponent implements OnInit {
   //   this.categoryService.getCategories()
   //     .subscribe((categories: Category) =>
   //       this.categories = categories);
-  // }
-
-  // getData() {
-  //   this.categoryService.getData().subscribe((data:Category) => {
-  //       console.log(data);
-  //       this.categories = data;
-  //     }
-  //   )
   // }
 }

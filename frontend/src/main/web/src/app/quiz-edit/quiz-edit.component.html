@@ -1,3 +1,40 @@
 <section class="min-vh-100" id="cover">
-<p>quiz-edit works!</p>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+  <div class="container">
+    <div class="kr-modal-body">
+      <div class="banner">
+        <div class="title">
+          Add a question
+        </div>
+      </div>
+      <div class="form">
+        <div class="quiz-name-wrapper">
+          <div class="quiz-name-input kr2-textfield">
+            <label>1. Question</label>
+            <input [(ngModel)]="question.text" type="text" id="name-input" placeholder="Quiz name" data-qtest="quiz-name-input-field" maxlength="60">
+            <div class="quiz-name-error"><span class="hidden">Please enter a question</span></div>
+          </div>
+        </div>
+        <div class="quiz-name-wrapper">
+          <div class="quiz-name-input kr2-textfield">
+            <label>
+              Select type of question
+              <select [(ngModel)]="question.type.name" >
+                <option value="Select option">Select option</option>
+                <option value="True/False">True/False</option>
+                <option value="Type answer">Type answer</option>
+                <option value="Select sequence">Select sequence</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="action-btns-wrapper">
+        <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="goBack()">Cancel</button>
+        <a routerLink="/quiz-dashboard">
+          <button class="save-btn" data-qtest="create-quiz-btn" (click)="createQuestion(question)"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Next</span></button>
+        </a>
+      </div>
+    </div>
+  </div>
 </section>

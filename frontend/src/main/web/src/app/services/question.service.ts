@@ -1,45 +1,71 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {UserService} from "../user.service";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Question} from "../entities/question";
 import {catchError} from "rxjs/operators";
-import {Observable, throwError} from "rxjs";
-import {QuizService} from "./quiz.service";
+import {Observable, of} from "rxjs";
+
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionService {
-
+  private questionsUrl = 'api/questions';  // URL to web api
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
   constructor(private http: HttpClient) {
   }
-  getQuestion(question: Question) {
-    return this.http.get<Question>(`api/question/get/${question.id}`).pipe(
-      catchError(this.handleError<any>('getQuestion'))
+  // getQuestion(question: Question) {
+  //   return this.http.get<Question>(`api/question/get/${question.id}`).pipe(
+  //     catchError(this.handleError<any>('getQuestion'))
+  //   );
+  // }
+  //
+  // updateQuestion(question: Question) {
+  //   return this.http.put<Question>('api/question/update', question).pipe(
+  //     catchError(this.handleError<any>('editQuestion'))
+  //   );
+  // }
+  // createQuestion(question: Question, quiz_id) {
+  //   question.quiz_id = quiz_id;
+  //   return this.http.post<Question>('api/question/create', question).pipe(
+  //     catchError(this.handleError<any>('createQuestion'))
+  //   );
+  // }
+  //
+  // deleteQuestion(question: Question) {
+  //   return this.http.delete<Question>(`api/question/delete/${question.id}`).pipe(
+  //     catchError(this.handleError<any>('deleteQuestion'))
+  //   );
+  // }
+  //
+  // private handleError<T>(operation= 'operation') {
+  //   return (error: any): Observable<T> => {
+  //     console.log(operation + ' ' + error);
+  //     return throwError(error);
+  //   };
+  // }
+  ///FOR TESTING
+  getQuestions(): Observable<Question[]> {
+
+    return this.http.get<Question[]>(this.questionsUrl)
+      .pipe(
+        catchError(this.handleError<Question[]>('getQuestions', []))
+      );
+  }
+
+  /** POST: add a new question to the server */
+  createQuestion(question: Question): Observable<Question> {
+    return this.http.post<Question>(this.questionsUrl, question, this.httpOptions).pipe(
+      catchError(this.handleError<Question>('createQuestion'))
     );
   }
 
-  updateQuestion(question: Question) {
-    return this.http.put<Question>('api/question/update', question).pipe(
-      catchError(this.handleError<any>('editQuestion'))
-    );
-  }
-  createQuestion(question: Question, quiz_id) {
-    question.quiz_id = quiz_id;
-    return this.http.post<Question>('api/question/create', question).pipe(
-      catchError(this.handleError<any>('createQuestion'))
-    );
-  }
-
-  deleteQuestion(question: Question) {
-    return this.http.delete<Question>(`api/question/delete/${question.id}`).pipe(
-      catchError(this.handleError<any>('deleteQuestion'))
-    );
-  }
-
-  private handleError<T>(operation= 'operation') {
+  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.log(operation + ' ' + error);
-      return throwError(error);
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
     };
   }
 }
