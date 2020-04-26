@@ -1,16 +1,17 @@
 <section class="min-vh-100" id="cover">
   <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-  <h2>My Questions</h2>
-  <ul class="questions">
-    <li *ngFor="let question of questions">
+  <h2>My Questions
+  <h5 style="margin-top: 50px;"><ol class="questions">
+    <li *ngFor="let question of questions" style="margin-top: 10px;">
       <a>
-        <span class="badge">{{question.id}}</span> {{question.text}}
+        <!-- <span class="badge">{{question.id}}</span>  -->{{question.text}}
       </a>
-      <button class="delete" title="delete question"
+      <button class="delete-btn" title="delete question"
               (click)="deleteQuestion(question)">x</button>
     </li>
-  </ul>
-  <button class="save-btn" data-qtest="create-quiz-btn" (click)="addQuestion()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Add question</span></button>
+  </ol></h5>
+    <button class="add-btn" data-qtest="create-quiz-btn" (click)="addQuestion()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Add question</span></button>
+  </h2>
   <div *ngIf="isAddQuestion" class="container">
     <div class="kr-modal-body">
       <div class="banner">

@@ -151,6 +151,40 @@ button {
   min-width: 124px;
 }
 
+.add-btn {
+  font-family: Quicksand;
+  background-color: #04B404;
+  margin-left: 16px;
+  min-width: 124px;
+  padding: 8px 16px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 4px;
+  text-align: center;
+  transition: all 0.1s ease-in-out;
+}
+
+.delete-btn {
+  font-family: Quicksand;
+  background-color: #FE2E2E;
+  margin-left: 16px;
+  min-width: 20px;
+  padding: 0;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 4px;
+  text-align: center;
+  transition: all 0.1s ease-in-out;
+}
+
 .kr-anim-spin {
   animation: spin 1s linear infinite;
 }
