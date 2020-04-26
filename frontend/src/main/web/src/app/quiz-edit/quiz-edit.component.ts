@@ -51,13 +51,12 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     this.questionService.getQuestions()
       .subscribe(questions => this.questions = questions);
   }
-  createQuestion(question: Question) {
+  createQuestion(text, type) {
     console.log("question created");
-    this.questionService.createQuestion(question)
+    this.questionService.createQuestion({text, type: {id: type}} as Question)
       .subscribe(data  => {
-        console.log(data);
         this.question = data;
-        this.questions.push(question);
+        this.questions.push(this.question);
       });
   }
 
