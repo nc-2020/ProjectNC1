@@ -55,6 +55,24 @@
           </div>
           <div *ngIf="selectedLevel === '3'" class="quiz-name-input kr2-textfield">
             <p>Select option</p>
+            <ol>
+              <li>
+                <input type="text" id="name-input1" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
+                <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="isCorrectOption(0)">*</button>
+              </li>
+              <li>
+                <input type="text" id="name-input2" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
+                <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="isCorrectOption(1)">*</button>
+              </li>
+              <li>
+                <input type="text" id="name-input3" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
+                <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="isCorrectOption(2)">*</button>
+              </li>
+              <li>
+                <input type="text" id="name-input4" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
+                <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="isCorrectOption(3)">*</button>
+              </li>
+            </ol>
           </div>
           <div *ngIf="selectedLevel === '4'" class="quiz-name-input kr2-textfield">
             <p>Select sequence</p>

@@ -23,7 +23,9 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     quiz_id: null,
     image: ''
   };
-  answerTrueFalse
+  numberOfOptions = 4;
+  options: Option[] = new Array(this.numberOfOptions).fill(Option);
+  answerTrueFalse;
   isAddQuestion = false;
   selectedLevel: any;
   private routeSub: Subscription;
@@ -60,6 +62,7 @@ export class QuizEditComponent implements OnInit, OnDestroy {
         console.log(data);
         this.questions.push(this.question);
       });
+    this.showArray();
   }
 
   addQuestion() {
@@ -69,5 +72,16 @@ export class QuizEditComponent implements OnInit, OnDestroy {
   deleteQuestion(question: Question): void {
     this.questions = this.questions.filter(q => q !== question);
     this.questionService.deleteQuestion(question.id).subscribe();
+  }
+
+  isCorrectOption(index: number) {
+    this.options[index].text = 'hello' + index;
+    console.log(this.options[index].text);
+  }
+
+  showArray() {
+    for (let i = 0; i < 4; i++) {
+      console.log ("Block statement execution no." + this.options[i].text);
+    }
   }
 }
