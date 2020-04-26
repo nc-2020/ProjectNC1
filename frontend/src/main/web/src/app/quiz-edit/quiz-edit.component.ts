@@ -23,10 +23,11 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     quiz_id: null,
     image: ''
   };
-
+  answerTrueFalse
   isAddQuestion = false;
-
+  selectedLevel: any;
   private routeSub: Subscription;
+
   constructor(
     private route: ActivatedRoute,
     private questionService: QuestionService,
@@ -56,6 +57,7 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     this.questionService.createQuestion({text, type: {id: type}} as Question)
       .subscribe(data  => {
         this.question = data;
+        console.log(data);
         this.questions.push(this.question);
       });
   }

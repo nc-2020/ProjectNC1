@@ -3,7 +3,7 @@ import {Option} from "./option";
 export interface Question {
   id: number;
   time: number;
-  options: Option[];
+  options: any;
   type: {id?: string, name: string};
   text: string;
   quiz_id: number;
