@@ -53,7 +53,7 @@
           </div>
           <div *ngIf="selectedLevel === '2'" class="quiz-name-input kr2-textfield">
             <p>Type answer</p>
-            <input #typeAnswer type="text" id="name-input" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
+            <input #typeAnswer type="text" id="name-input" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60" [(ngModel)]="answerTypeAnswer">
           </div>
           <div *ngIf="selectedLevel === '3'" class="quiz-name-input kr2-textfield">
             <p>Select option</p>
