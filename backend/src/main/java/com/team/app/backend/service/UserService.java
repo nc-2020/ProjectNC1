@@ -1,10 +1,10 @@
 package com.team.app.backend.service;
 
 
-import com.team.app.backend.dto.UserCreateDto;
-import com.team.app.backend.dto.UserUpdateDto;
+import com.team.app.backend.dto.user.UserCreateDto;
+import com.team.app.backend.dto.user.UserUpdateDto;
 import com.team.app.backend.exception.UserAlreadyExistsException;
-import com.team.app.backend.dto.UserRegistrationDto;
+import com.team.app.backend.dto.user.UserRegistrationDto;
 import com.team.app.backend.persistance.model.User;
 
 import java.util.List;

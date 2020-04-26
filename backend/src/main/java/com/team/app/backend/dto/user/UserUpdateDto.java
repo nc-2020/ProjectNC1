@@ -1,9 +1,10 @@
-package com.team.app.backend.dto;
+package com.team.app.backend.dto.user;
 
 import com.team.app.backend.persistance.model.Role;
+import com.team.app.backend.persistance.model.UserStatus;
 
-public class UserCreateDto {
-
+public class UserUpdateDto {
+    private Long id;
     private String firstName;
     private String lastName;
     private String username;
@@ -11,6 +12,23 @@ public class UserCreateDto {
     private String password;
     private byte[] image;
     private Role role;
+    private UserStatus status = new UserStatus(2L,"ACTIVATED");
+
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;

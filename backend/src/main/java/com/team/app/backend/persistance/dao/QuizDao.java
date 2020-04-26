@@ -13,7 +13,7 @@ public interface QuizDao {
 
     List<Quiz> getAll();
 
-    void save(Quiz quiz);
+    Long save(Quiz quiz);
 
     void update(Quiz quiz);
 

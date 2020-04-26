@@ -1,4 +1,4 @@
-package com.team.app.backend.dto;
+package com.team.app.backend.dto.user;
 
 public class UserRegistrationDto {
 
@@ -8,21 +8,21 @@ public class UserRegistrationDto {
     private String email;
     private String password;
 
-    public String getFirstname() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public UserRegistrationDto setFirstname(String firstname) {
-        this.firstName = firstname;
+    public UserRegistrationDto setFirstName(String firstName) {
+        this.firstName = firstName;
         return this;
     }
 
-    public String getLastname() {
+    public String getLastName() {
         return lastName;
     }
 
-    public UserRegistrationDto setLastname(String lastname) {
-        this.lastName = lastname;
+    public UserRegistrationDto setLastName(String lastName) {
+        this.lastName = lastName;
         return this;
     }
 

@@ -5,11 +5,19 @@ public class SeqOption {
     private Integer serial_num;
     private String text;
     private byte[] image;
-    private Integer quest_id;
+    private Long quest_id;
 
 
     public SeqOption() {
 
+    }
+
+    public SeqOption(Long id, Integer serial_num, String text, byte[] image, Long quest_id) {
+        this.id = id;
+        this.serial_num = serial_num;
+        this.text = text;
+        this.image = image;
+        this.quest_id = quest_id;
     }
 
     public Long getId() {
@@ -44,11 +52,11 @@ public class SeqOption {
         this.image = image;
     }
 
-    public Integer getQuest_id() {
+    public Long getQuest_id() {
         return quest_id;
     }
 
-    public void setQuest_id(Integer quest_id) {
+    public void setQuest_id(Long quest_id) {
         this.quest_id = quest_id;
     }
 }

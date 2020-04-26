@@ -1,9 +1,8 @@
 package com.team.app.backend.rest;
 
 import com.team.app.backend.exception.UserAlreadyExistsException;
-import com.team.app.backend.dto.UserRegistrationDto;
+import com.team.app.backend.dto.user.UserRegistrationDto;
 import com.team.app.backend.persistance.dao.UserDao;
-import com.team.app.backend.persistance.model.User;
 import com.team.app.backend.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @RestController
