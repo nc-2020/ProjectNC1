@@ -14,8 +14,7 @@ export class AnnouncementComponent implements OnInit {
     id: '1',
     title: 'New epic big super announcement',
     text: 'Some quick example text to build on the card title and make up the bulk of the card`s content.',
-    date: '23.03.2020',
-    image: 'https://cdn.pixabay.com/photo/2020/04/09/12/28/dog-5021242_1280.jpg',
+    date: '',
     userId: '1'
   };
   error = '';

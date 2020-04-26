@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("api")
 public class RegistrationController {

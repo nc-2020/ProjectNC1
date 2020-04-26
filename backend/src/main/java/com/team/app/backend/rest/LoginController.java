@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class LoginController {
@@ -50,20 +51,20 @@ public class LoginController {
             String token = jwtTokenProvider.createToken(user);
 
             Map<Object, Object> response = new HashMap<>();
-//            response.put("id", user.getId());
-//            response.put("firstName", user.getFirstName());
-//            response.put("lastName", user.getLastName());
-//            response.put("email", user.getEmail());
-//            response.put("password", user.getPassword());
-//            response.put("image", user.getImage());
+            response.put("id", user.getId());
+            response.put("firstName", user.getFirstName());
+            response.put("lastName", user.getLastName());
+            response.put("email", user.getEmail());
+            response.put("password", user.getPassword());
+            response.put("image", user.getImage());
 //            response.put("activate_link", user.getActivate_link());
-//            response.put("status", user.getStatus());
-//            response.put("role", user.getRole());
+            response.put("status", user.getStatus());
+            response.put("role", user.getRole());
 //            response.put("registr_date", user.getRegistr_date());
             response.put("username", username);
             response.put("token", token);
 
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok().body(response);
         } catch (AuthenticationException e) {
             e.printStackTrace();
             throw new BadCredentialsException("Username or password are not valid");

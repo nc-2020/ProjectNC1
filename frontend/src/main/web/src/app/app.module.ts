@@ -17,9 +17,24 @@ import { UserCardComponent } from './user-card/user-card.component';
 import {UserProfileRoutingModule} from "./user-profile/user-profile-routing.module";
 import { AnnouncementComponent } from './announcement/announcement.component';
 import { AnnouncementEditComponent } from './announcement-edit/announcement-edit.component';
+import {Observable} from "rxjs";
+import {UserService} from "./user.service";
 
 
-
+// @Injectable()
+// export class AuthInterceptor implements HttpInterceptor {
+//   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+//     req = req.clone({
+//       setHeaders: {
+//         'Content-Type' : 'application/json; charset=utf-8',
+//         'Accept'       : 'application/json',
+//         'Authorization': `Bearer_${UserService.getToken()}`,
+//       },
+//     });
+//
+//     return next.handle(req);
+//   }
+// }
 
 
 @NgModule({
