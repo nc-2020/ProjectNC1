@@ -1,5 +1,5 @@
 export interface Option {
-  id: number;
+  id?: number;
   correct: boolean;
   text: string;
   image?: string;

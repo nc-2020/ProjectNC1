@@ -25,14 +25,18 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     image: ''
   };
   numberOfOptions = 4;
-  options: Option[] = new Array(this.numberOfOptions).fill(Option);
+  options: Option[] = Array.from({length: this.numberOfOptions},()=>
+    ({
+      correct: false,
+      text: ''
+    }))
   answerTrueFalse = 'False';
   answerTypeAnswer = '';
   isAddQuestion = false;
   selectedLevel: any;
   private routeSub: Subscription;
   defaultOption: DefaultOption = {text: ''};
-  someOption: any;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -59,15 +63,18 @@ export class QuizEditComponent implements OnInit, OnDestroy {
       .subscribe(questions => this.questions = questions);
   }
   createQuestion(text, type) {
-    if (type === "1") {
+    let someOption;
+    if (type === '1') {
       this.defaultOption.text = this.answerTrueFalse;
-      this.someOption = this.defaultOption;
-    } else if (type === "2") {
+      someOption = this.defaultOption;
+    } else if (type === '2') {
       this.defaultOption.text = this.answerTypeAnswer;
-      this.someOption = this.defaultOption;
+      someOption = this.defaultOption;
+    } else if (type === '3') {
+      someOption = this.options;
     }
     console.log("question created");
-    this.questionService.createQuestion({options: this.someOption, text, type: {id: type}} as Question)
+    this.questionService.createQuestion({options: someOption, text: text, type: {id: type}} as Question)
       .subscribe(data  => {
         this.question = data;
         console.log(data);
@@ -85,9 +92,8 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     this.questionService.deleteQuestion(question.id).subscribe();
   }
 
-  isCorrectOption(index: number) {
-    this.options[index].text = 'hello' + index;
-    console.log(this.options[index].text);
+  isCorrectOption(option: Option) {
+    option.correct = !option.correct;
   }
 
   showArray() {

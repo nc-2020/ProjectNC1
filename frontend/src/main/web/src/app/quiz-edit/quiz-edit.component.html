@@ -10,7 +10,10 @@
               (click)="deleteQuestion(question)">x</button>
     </li>
   </ol></h5>
-    <button class="add-btn" data-qtest="create-quiz-btn" (click)="addQuestion()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Add question</span></button>
+    <div class="action-btns-wrapper">
+      <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="goBack()">Back</button>
+      <button class="add-btn" data-qtest="create-quiz-btn" (click)="addQuestion()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Add question</span></button>
+    </div>
   </h2>
   <div *ngIf="isAddQuestion" class="container">
     <div class="kr-modal-body">
@@ -58,21 +61,9 @@
           <div *ngIf="selectedLevel === '3'" class="quiz-name-input kr2-textfield">
             <p>Select option</p>
             <ol>
-              <li>
-                <input type="text" id="name-input1" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
-                <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="isCorrectOption(0)">*</button>
-              </li>
-              <li>
-                <input type="text" id="name-input2" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
-                <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="isCorrectOption(1)">*</button>
-              </li>
-              <li>
-                <input type="text" id="name-input3" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
-                <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="isCorrectOption(2)">*</button>
-              </li>
-              <li>
-                <input type="text" id="name-input4" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
-                <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="isCorrectOption(3)">*</button>
+              <li *ngFor="let option of options">
+                <label for="select-option-input"><button class="delete-btn" title="delete question" (click)="isCorrectOption(option)">{{option.correct}}*</button></label>
+                <input [(ngModel)]="option.text" type="text" id="select-option-input" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
               </li>
             </ol>
           </div>
