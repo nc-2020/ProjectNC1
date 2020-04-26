@@ -3,15 +3,14 @@
   <h2>My Questions</h2>
   <ul class="questions">
     <li *ngFor="let question of questions">
-      <a routerLink="/quiz-edit/{{question.id}}">
+      <a>
         <span class="badge">{{question.id}}</span> {{question.text}}
       </a>
       <button class="delete" title="delete question"
               (click)="deleteQuestion(question)">x</button>
     </li>
   </ul>
-  <button class="save-btn" data-qtest="create-quiz-btn" (click)="addQuestion()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Next</span></button>
-
+  <button class="save-btn" data-qtest="create-quiz-btn" (click)="addQuestion()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Add question</span></button>
 
   <div *ngIf="isAddQuestion" class="container">
     <div class="kr-modal-body">
@@ -34,9 +33,9 @@
             <label>
               Select type of question
               <select [(ngModel)]="question.type.id" >
-                <option value="3" selected>Select option</option>
                 <option value="1">True/False</option>
                 <option value="2">Type answer</option>
+                <option value="3" selected>Select option</option>
                 <option value="4">Select sequence</option>
               </select>
             </label>
@@ -44,10 +43,8 @@
         </div>
       </div>
       <div class="action-btns-wrapper">
-        <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="goBack()">Cancel</button>
-        <a routerLink="/quiz-dashboard">
-          <button class="save-btn" data-qtest="create-quiz-btn" (click)="createQuestion(question)"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Next</span></button>
-        </a>
+        <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="addQuestion()">Cancel</button>
+        <button class="save-btn" data-qtest="create-quiz-btn" (click)="createQuestion(question)"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Next</span></button>
       </div>
     </div>
   </div>
