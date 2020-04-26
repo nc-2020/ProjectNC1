@@ -46,7 +46,6 @@ export class QuestionService {
   // }
   ///FOR TESTING
   getQuestions(): Observable<Question[]> {
-
     return this.http.get<Question[]>(this.questionsUrl)
       .pipe(
         catchError(this.handleError<Question[]>('getQuestions', []))
@@ -57,6 +56,11 @@ export class QuestionService {
   createQuestion(question: Question): Observable<Question> {
     return this.http.post<Question>(this.questionsUrl, question, this.httpOptions).pipe(
       catchError(this.handleError<Question>('createQuestion'))
+    );
+  }
+  deleteQuestion(question: Question | number): Observable<Question> {
+    return this.http.delete<Question>(this.questionsUrl, this.httpOptions).pipe(
+      catchError(this.handleError<Question>('deleteQuestion'))
     );
   }
 

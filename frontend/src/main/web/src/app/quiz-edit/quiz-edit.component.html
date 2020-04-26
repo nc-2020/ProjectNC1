@@ -1,10 +1,24 @@
 <section class="min-vh-100" id="cover">
   <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-  <div class="container">
+  <h2>My Questions</h2>
+  <ul class="questions">
+    <li *ngFor="let question of questions">
+      <a routerLink="/quiz-edit/{{question.id}}">
+        <span class="badge">{{question.id}}</span> {{question.text}}
+      </a>
+      <button class="delete" title="delete question"
+              (click)="deleteQuestion(question)">x</button>
+    </li>
+  </ul>
+  <button class="save-btn" data-qtest="create-quiz-btn" (click)="addQuestion()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Next</span></button>
+
+
+  <div *ngIf="isAddQuestion" class="container">
     <div class="kr-modal-body">
       <div class="banner">
         <div class="title">
           Add a question
+          <p>{{questions.length}}</p>
         </div>
       </div>
       <div class="form">
@@ -20,7 +34,7 @@
             <label>
               Select type of question
               <select [(ngModel)]="question.type.name" >
-                <option value="Select option">Select option</option>
+                <option value="Select option" selected>Select option</option>
                 <option value="True/False">True/False</option>
                 <option value="Type answer">Type answer</option>
                 <option value="Select sequence">Select sequence</option>

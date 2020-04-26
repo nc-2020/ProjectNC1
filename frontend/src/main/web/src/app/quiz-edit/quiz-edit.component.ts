@@ -13,7 +13,7 @@ import {Subscription} from "rxjs";
   styleUrls: ['./quiz-edit.component.css']
 })
 export class QuizEditComponent implements OnInit, OnDestroy {
-  questions: Question[];
+  questions: Question[] = [];
   question: Question = {
     id: null,
     time: null,
@@ -23,6 +23,9 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     quiz_id: null,
     image: ''
   };
+
+  isAddQuestion = false;
+
   private routeSub: Subscription;
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +38,7 @@ export class QuizEditComponent implements OnInit, OnDestroy {
       // console.log(params); //log the entire params object
       // console.log(params['id']); //log the value of id
       this.question.quiz_id = params['id'];
-      console.log(this.question.quiz_id);
+      this.getQuestions();
     });
   }
   ngOnDestroy() {
@@ -44,12 +47,26 @@ export class QuizEditComponent implements OnInit, OnDestroy {
   goBack(): void {
     this.location.back();
   }
+  getQuestions(): void {
+    this.questionService.getQuestions()
+      .subscribe(questions => this.questions = questions);
+  }
   createQuestion(question: Question) {
     console.log("question created");
     this.questionService.createQuestion(question)
       .subscribe(data  => {
         console.log(data);
         this.question = data;
+        this.questions.push(question);
       });
+  }
+
+  addQuestion() {
+    this.isAddQuestion = !this.isAddQuestion;
+  }
+
+  deleteQuestion(question: Question): void {
+    this.questions = this.questions.filter(q => q !== question);
+    this.questionService.deleteQuestion(question).subscribe();
   }
 }
