@@ -25,7 +25,7 @@ export class QuizEditComponent implements OnInit, OnDestroy {
   };
   numberOfOptions = 4;
   options: Option[] = new Array(this.numberOfOptions).fill(Option);
-  answerTrueFalse;
+  answerTrueFalse = 'False';
   isAddQuestion = false;
   selectedLevel: any;
   private routeSub: Subscription;
