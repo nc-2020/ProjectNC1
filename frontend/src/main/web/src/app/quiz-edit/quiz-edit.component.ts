@@ -67,6 +67,6 @@ export class QuizEditComponent implements OnInit, OnDestroy {
 
   deleteQuestion(question: Question): void {
     this.questions = this.questions.filter(q => q !== question);
-    this.questionService.deleteQuestion(question).subscribe();
+    this.questionService.deleteQuestion(question.id).subscribe();
   }
 }

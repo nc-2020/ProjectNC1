@@ -20,4 +20,6 @@ export class QuizDashboardComponent implements OnInit {
     this.quizService.getQuizes()
       .subscribe(quizes => this.quizes = quizes);
   }
+
+
 }

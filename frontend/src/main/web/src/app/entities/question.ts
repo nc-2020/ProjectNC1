@@ -7,5 +7,5 @@ export interface Question {
   type: {id?: string, name: string};
   text: string;
   quiz_id: number;
-  image: string;
+  image?: string;
 }
