@@ -5,6 +5,7 @@ import {Quiz} from "../entities/quiz";
 import {Question} from "../entities/question";
 import {QuestionService} from "../services/question.service";
 import {Option} from "../entities/option";
+import {DefaultOption} from "../entities/default-option"
 import {Subscription} from "rxjs";
 
 @Component({
@@ -17,16 +18,19 @@ export class QuizEditComponent implements OnInit, OnDestroy {
   question: Question = {
     id: null,
     time: null,
-    options: [],
+    options: null,
     type: {id: null, name: ''},
     text: '',
     quiz_id: null,
     image: ''
   };
   answerTrueFalse = 'False';
+  answerTypeAnswer = '';
   isAddQuestion = false;
   selectedLevel: any;
   private routeSub: Subscription;
+  defaultOption: DefaultOption = {text: ''};
+  someOption: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -53,8 +57,15 @@ export class QuizEditComponent implements OnInit, OnDestroy {
       .subscribe(questions => this.questions = questions);
   }
   createQuestion(text, type) {
+    if (type === "1") {
+      this.defaultOption.text = this.answerTrueFalse;
+      this.someOption = this.defaultOption;
+    } else if (type === "2") {
+      this.defaultOption.text = this.answerTypeAnswer;
+      this.someOption = this.defaultOption;
+    }
     console.log("question created");
-    this.questionService.createQuestion({text, type: {id: type}} as Question)
+    this.questionService.createQuestion({options: this.someOption, text, type: {id: type}} as Question)
       .subscribe(data  => {
         this.question = data;
         console.log(data);
