@@ -69,6 +69,13 @@
           </div>
           <div *ngIf="selectedLevel === '4'" class="quiz-name-input kr2-textfield">
             <p>Select sequence</p>
+            <ol>
+            <div cdkDropList (cdkDropListDropped)="drop($event)">
+                <li *ngFor="let option of optionsSequence; let i = index" class="pop" cdkDrag>
+                  <input [(ngModel)]="option.text" type="text" id="select-sequence-input" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
+                </li>
+            </div>
+            </ol>
           </div>
         </div>
       </div>

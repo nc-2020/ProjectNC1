@@ -19,7 +19,9 @@ import { QuizCreateComponent } from './quiz-create/quiz-create.component';
 import { QuizEditComponent } from './quiz-edit/quiz-edit.component';
 import { QuizDashboardComponent } from './quiz-dashboard/quiz-dashboard.component';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import {InMemoryDataService} from "./services/in-memory-data.service";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -45,12 +47,14 @@ import {InMemoryDataService} from "./services/in-memory-data.service";
     HttpClientModule,
     AppRoutingModule,
     UserProfileRoutingModule,
+    DragDropModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    )
+    ),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

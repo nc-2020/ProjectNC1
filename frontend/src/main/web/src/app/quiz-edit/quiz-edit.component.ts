@@ -7,6 +7,8 @@ import {QuestionService} from "../services/question.service";
 import {Option} from "../entities/option";
 import {DefaultOption} from "../entities/default-option"
 import {Subscription} from "rxjs";
+import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
+import {SequenceOption} from "../entities/sequence-option";
 
 @Component({
   selector: 'app-quiz-edit',
@@ -32,6 +34,14 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     }))
   answerTrueFalse = 'False';
   answerTypeAnswer = '';
+  optionsSequence: SequenceOption[] = Array.from({length: this.numberOfOptions},()=>
+    ({
+      serial_num: null,
+      text: ''
+    }))
+
+
+
   isAddQuestion = false;
   selectedLevel: any;
   private routeSub: Subscription;
@@ -72,15 +82,24 @@ export class QuizEditComponent implements OnInit, OnDestroy {
       someOption = this.defaultOption;
     } else if (type === '3') {
       someOption = this.options;
+    } else if (type === '4') {
+      for (let i = 0; i < this.optionsSequence.length; i++) {
+        this.optionsSequence[i].serial_num = i + 1;
+      }
+      someOption = this.optionsSequence;
     }
     console.log("question created");
-    this.questionService.createQuestion({options: someOption, text: text, type: {id: type}} as Question)
+    this.questionService.createQuestion({
+        options: someOption,
+        text: text,
+        type: {id: type},
+        quiz_id: this.question.quiz_id
+    } as Question)
       .subscribe(data  => {
         this.question = data;
         console.log(data);
         this.questions.push(this.question);
       });
-    this.showArray();
   }
 
   addQuestion() {
@@ -96,9 +115,7 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     option.correct = !option.correct;
   }
 
-  showArray() {
-    for (let i = 0; i < 4; i++) {
-      console.log ("Block statement execution no." + this.options[i].text);
-    }
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.optionsSequence, event.previousIndex, event.currentIndex);
   }
 }
