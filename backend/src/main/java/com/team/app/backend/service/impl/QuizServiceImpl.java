@@ -36,7 +36,7 @@ public class QuizServiceImpl implements QuizService {
 
 
     @Override
-    public void addDefQuestion(QuestionDefAddDto questionDefAddDto) {
+    public Long addDefQuestion(QuestionDefAddDto questionDefAddDto) {
 //        Question question = new Question();
 //        question.setQuiz_id((long)questionDefAddDto.getQuiz_id());
 //        question.setType(questionDefAddDto.getType());
@@ -54,23 +54,28 @@ public class QuizServiceImpl implements QuizService {
             defaultQuest.setQuest_id(id);
             optionDao.addDefaultOption(defaultQuest);
         }
+        return id;
 
     }
 
     @Override
-    public long addQuestion(QuestionDto questionDto){
+    public Long addQuestion(QuestionDto questionDto){
         Question question = new Question();
         question.setQuiz_id((long)questionDto.getQuiz_id());
         question.setType(questionDto.getType());
         question.setImage(questionDto.getImage());
         question.setText(questionDto.getText());
-        question.setMax_points(questionDto.getMax_points());
+        if(questionDto.getMax_points()==null){
+            question.setMax_points(10);
+        }else{
+            question.setMax_points(questionDto.getMax_points());
+        }
         question.setTime(questionDto.getTime());
         return questionDao.save(question);
     }
 
     @Override
-    public void addOptQuestion(QuestionOptAddDto questionOptAddDto) {
+    public Long addOptQuestion(QuestionOptAddDto questionOptAddDto) {
 //        Question question = new Question();
 //        question.setQuiz_id((long)questionOptAddDto.getQuiz_id());
 //        question.setType(questionOptAddDto.getType());
@@ -88,10 +93,11 @@ public class QuizServiceImpl implements QuizService {
             option.setText(optionDto.getText());
             optionDao.addOption(option);
         }
+        return id;
     }
 
     @Override
-    public void addSeqOptQuestion(QuestionSeqAddDto questionSeqAddDto) {
+    public Long addSeqOptQuestion(QuestionSeqAddDto questionSeqAddDto) {
 //        Question question = new Question();
 //        question.setQuiz_id((long)questionSeqAddDto.getQuiz_id());
 //        question.setType(questionSeqAddDto.getType());
@@ -109,6 +115,7 @@ public class QuizServiceImpl implements QuizService {
             seqOption.setText(seqOptionDto.getText());
             optionDao.addSeqOption(seqOption);
         }
+        return id;
     }
 
     @Override

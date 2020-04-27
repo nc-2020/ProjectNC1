@@ -8,7 +8,7 @@ import {Observable, of} from "rxjs";
   providedIn: 'root'
 })
 export class QuestionService {
-  private questionsUrl = 'api/questions';  // URL to web api
+  private questionsUrl = 'api/question';  // URL to web api
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -54,7 +54,8 @@ export class QuestionService {
 
   /** POST: add a new question to the server */
   createQuestion(question: Question): Observable<Question> {
-    return this.http.post<Question>(this.questionsUrl, question, this.httpOptions).pipe(
+    console.table(question);
+    return this.http.post<Question>(this.questionsUrl+'/'+question.type.id, question, this.httpOptions).pipe(
       catchError(this.handleError<Question>('createQuestion'))
     );
   }

@@ -10,6 +10,7 @@ import com.team.app.backend.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -23,10 +24,12 @@ public class QuizController {
 
 
     @PostMapping("/quiz")
-    public Long createMewQuiz(
+    public HashMap<String,Long> createMewQuiz(
             @RequestBody QuizAddDto quizDto) {
         System.out.println(quizDto.getUser_id());
-        return quizService.addQuiz(quizDto);
+        HashMap<String,Long>result = new HashMap<String,Long>();
+        result.put("id",quizService.addQuiz(quizDto));
+        return result;
     }
 
     @DeleteMapping("/quiz/{id}")
@@ -42,21 +45,30 @@ public class QuizController {
 
  //   @PostMapping("/question/1")
     @RequestMapping(value={ "/question/1", "/question/2" },method = { RequestMethod.POST })
-    public void createNewQuestion(@RequestBody QuestionDefAddDto questionDefAddDto) {
+    public HashMap<String,Long>  createNewQuestion(@RequestBody QuestionDefAddDto questionDefAddDto) {
         System.out.println("add question1");
-        quizService.addDefQuestion(questionDefAddDto);
+        HashMap<String,Long>result = new HashMap<String,Long>();
+        result.put("id",quizService.addDefQuestion(questionDefAddDto));
+        return result;
+
     }
 
     @PostMapping("/question/3")
-    public void createNewQuestion(@RequestBody QuestionOptAddDto questionOptAddDto) {
+    public HashMap<String,Long> createNewQuestion(@RequestBody QuestionOptAddDto questionOptAddDto) {
         System.out.println("add question3");
-        quizService.addOptQuestion(questionOptAddDto);
+        HashMap<String,Long>result = new HashMap<String,Long>();
+        result.put("id",quizService.addOptQuestion(questionOptAddDto));
+        return result;
+
     }
 
     @PostMapping("/question/4")
-    public void createNewQuestion(@RequestBody QuestionSeqAddDto questionSeqAddDto) {
+    public HashMap<String,Long> createNewQuestion(@RequestBody QuestionSeqAddDto questionSeqAddDto) {
         System.out.println("add question4");
-        quizService.addSeqOptQuestion(questionSeqAddDto);
+        HashMap<String,Long>result = new HashMap<String,Long>();
+        result.put("id",quizService.addSeqOptQuestion(questionSeqAddDto));
+        return result;
+
     }
 
     @DeleteMapping("/question/{id}")

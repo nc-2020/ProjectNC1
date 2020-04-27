@@ -9,7 +9,7 @@ import {UserService} from "../user.service";
   providedIn: 'root'
 })
 export class QuizService {
-  private quizesUrl = 'api/quizes';  // URL to web api
+  private quizesUrl = 'api/quiz';  // URL to web api
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };

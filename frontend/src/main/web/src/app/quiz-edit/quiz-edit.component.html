@@ -76,7 +76,7 @@
             <p>Select option</p>
             <ol>
               <li *ngFor="let option of options">
-                <label for="select-option-input"><button class="delete-btn" title="delete question" (click)="isCorrectOption(option)">{{option.correct}}*</button></label>
+                <label for="select-option-input"><button class="delete-btn" title="delete question" (click)="isCorrectOption(option)">{{option.is_correct}}*</button></label>
                 <input [(ngModel)]="option.text" type="text" id="select-option-input" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
               </li>
             </ol>

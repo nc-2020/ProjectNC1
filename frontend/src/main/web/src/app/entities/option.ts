@@ -1,6 +1,6 @@
 export interface Option {
   id?: number;
-  correct: boolean;
+  is_correct: boolean;
   text: string;
   image?: string;
 }

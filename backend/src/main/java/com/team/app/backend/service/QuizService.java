@@ -11,13 +11,13 @@ import com.team.app.backend.persistance.model.Quiz;
 import java.util.List;
 
 public interface QuizService {
-    long addQuestion(QuestionDto questionDto);
+    Long addQuestion(QuestionDto questionDto);
 
-    void addDefQuestion(QuestionDefAddDto questionDefAddDto);
+    Long addDefQuestion(QuestionDefAddDto questionDefAddDto);
 
-    void addOptQuestion(QuestionOptAddDto questionOptAddDto);
+    Long addOptQuestion(QuestionOptAddDto questionOptAddDto);
 
-    void addSeqOptQuestion(QuestionSeqAddDto questionSeqAddDto);
+    Long addSeqOptQuestion(QuestionSeqAddDto questionSeqAddDto);
 
     void deleteQuiz(Long id);
 

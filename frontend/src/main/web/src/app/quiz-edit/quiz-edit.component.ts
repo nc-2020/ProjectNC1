@@ -39,7 +39,7 @@ export class QuizEditComponent implements OnInit, OnDestroy {
   numberOfOptions = 4;
   options: Option[] = Array.from({length: this.numberOfOptions},()=>
     ({
-      correct: false,
+      is_correct: false,
       text: ''
     }))
   answerTrueFalse = 'False';
@@ -55,7 +55,7 @@ export class QuizEditComponent implements OnInit, OnDestroy {
   isAddQuestion = false;
   selectedLevel: any;
   private routeSub: Subscription;
-  defaultOption: DefaultOption = {text: ''};
+  defaultOption: DefaultOption = {answer: ''};
 
 
   constructor(
@@ -65,12 +65,13 @@ export class QuizEditComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.routeSub = this.route.params.subscribe(params => {
+
       // console.log(params); //log the entire params object
-      // console.log(params['id']); //log the value of id
-      this.question.quiz_id = params['id'];
-      this.getQuestions();
-    });
+      //console.log(params['id']); //log the value of id
+
+      //console.log(this.question.quiz_id);
+       this.getQuestions();
+
   }
   ngOnDestroy() {
     this.routeSub.unsubscribe();
@@ -102,13 +103,13 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     );
   }
   createQuestion() {
-    let someOption;
+    let someOption=[];
     if (this.question.type.id === '1') {
-      this.defaultOption.text = this.answerTrueFalse;
-      someOption = this.defaultOption;
+      this.defaultOption.answer = this.answerTrueFalse;
+      someOption.push(this.defaultOption);
     } else if (this.question.type.id === '2') {
-      this.defaultOption.text = this.answerTypeAnswer;
-      someOption = this.defaultOption;
+      this.defaultOption.answer = this.answerTypeAnswer;
+      someOption.push(this.defaultOption);
     } else if (this.question.type.id === '3') {
       someOption = this.options;
     } else if (this.question.type.id === '4') {
@@ -118,16 +119,20 @@ export class QuizEditComponent implements OnInit, OnDestroy {
       someOption = this.optionsSequence;
     }
     console.log("question created");
+    this.routeSub = this.route.params.subscribe(params => {
+      this.question.quiz_id = params['id'];
+    });
     this.questionService.createQuestion({
         options: someOption,
         text: this.question.text,
         type: {id: this.question.type.id},
         time: this.question.time,
+        max_points:null,
         quiz_id: this.question.quiz_id
     } as Question)
       .subscribe(data  => {
-        this.question = data;
-        console.log(data);
+        this.question.id = data.id;
+        console.log(data.id);
         this.questions.push(this.question);
       });
   }
@@ -139,7 +144,7 @@ export class QuizEditComponent implements OnInit, OnDestroy {
   }
 
   isCorrectOption(option: Option) {
-    option.correct = !option.correct;
+    option.is_correct = !option.is_correct;
   }
 
   drop(event: CdkDragDrop<string[]>) {

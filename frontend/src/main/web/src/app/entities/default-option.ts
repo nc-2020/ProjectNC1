@@ -1,5 +1,5 @@
 export interface DefaultOption {
   id?: number;
-  text: string;
+  answer: string;
   image?: string;
 }

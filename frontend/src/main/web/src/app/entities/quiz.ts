@@ -3,6 +3,6 @@ export interface Quiz {
   title: string;
   description: string;
   status?: string;
-  userId: string;
+  user_id: string;
   image?: string;
 }
