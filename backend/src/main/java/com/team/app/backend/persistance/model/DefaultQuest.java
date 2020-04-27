@@ -1,21 +1,27 @@
 package com.team.app.backend.persistance.model;
 
-public class DefaultQuest {
-    private Long id;
+public class DefaultQuest extends OptionObj  {
+
     private String answer;
     private byte[] image;
-    private Integer quest_id;
 
     public DefaultQuest() {
     }
 
-    public Long getId() {
-        return id;
+    public DefaultQuest(String answer, byte[] image) {
+        //this.id = id;
+        this.answer = answer;
+        this.image = image;
+        //this.quest_id = quest_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 
     public String getAnswer() {
         return answer;
@@ -33,11 +39,11 @@ public class DefaultQuest {
         this.image = image;
     }
 
-    public Integer getQuest_id() {
-        return quest_id;
-    }
-
-    public void setQuest_id(Integer quest_id) {
-        this.quest_id = quest_id;
-    }
+//    public Long getQuest_id() {
+//        return quest_id;
+//    }
+//
+//    public void setQuest_id(Long quest_id) {
+//        this.quest_id = quest_id;
+//    }
 }

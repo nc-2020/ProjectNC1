@@ -1,20 +1,22 @@
 package com.team.app.backend.service.impl;
 
-import com.team.app.backend.dto.QuestionAddDto;
+import com.team.app.backend.dto.DefOptionDto;
+import com.team.app.backend.dto.OptionDto;
+import com.team.app.backend.dto.SeqOptionDto;
+import com.team.app.backend.dto.QuestionDefAddDto;
+import com.team.app.backend.dto.QuestionDto;
+import com.team.app.backend.dto.QuestionOptAddDto;
+import com.team.app.backend.dto.QuestionSeqAddDto;
 import com.team.app.backend.dto.QuizAddDto;
+import com.team.app.backend.persistance.dao.OptionDao;
 import com.team.app.backend.persistance.dao.QuestionDao;
 import com.team.app.backend.persistance.dao.QuizDao;
-import com.team.app.backend.persistance.dao.UserDao;
-import com.team.app.backend.persistance.model.Question;
-import com.team.app.backend.persistance.model.QuestionType;
-import com.team.app.backend.persistance.model.Quiz;
-import com.team.app.backend.persistance.model.QuizStatus;
+import com.team.app.backend.persistance.model.*;
 import com.team.app.backend.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 
@@ -28,17 +30,101 @@ public class QuizServiceImpl implements QuizService {
     @Autowired
     private QuestionDao questionDao;
 
-    //TO DO
+    @Autowired
+    private OptionDao optionDao;
+
+
+
     @Override
-    public void addQuestion(QuestionAddDto questionAddDto) {
-        Question quest=new Question();
-        quest.setTime(questionAddDto.getTime());
-        quest.setText(questionAddDto.getText());
-        quest.setMax_points(questionAddDto.getMax_points());
-        quest.setImage(questionAddDto.getImage());
-        quest.setType(questionAddDto.getType());
-        quest.setQuiz_id(questionAddDto.getQuiz_id());
-        questionDao.save(quest);
+    public void addDefQuestion(QuestionDefAddDto questionDefAddDto) {
+//        Question question = new Question();
+//        question.setQuiz_id((long)questionDefAddDto.getQuiz_id());
+//        question.setType(questionDefAddDto.getType());
+//        question.setImage(questionDefAddDto.getImage());
+//        question.setText(questionDefAddDto.getText());
+//        question.setMax_points(questionDefAddDto.getMax_points());
+//        question.setTime(questionDefAddDto.getTime());
+//        Long id = questionDao.save(question);
+//        System.out.println(id);
+        Long id = addQuestion(questionDefAddDto);
+        for (DefOptionDto defOptionDto: questionDefAddDto.getOptions()) {
+            DefaultQuest defaultQuest=new DefaultQuest();
+            defaultQuest.setAnswer(defOptionDto.getAnswer());
+            defaultQuest.setImage(defOptionDto.getImage());
+            defaultQuest.setQuest_id(id);
+            optionDao.addDefaultOption(defaultQuest);
+        }
+
+    }
+
+    @Override
+    public long addQuestion(QuestionDto questionDto){
+        Question question = new Question();
+        question.setQuiz_id((long)questionDto.getQuiz_id());
+        question.setType(questionDto.getType());
+        question.setImage(questionDto.getImage());
+        question.setText(questionDto.getText());
+        question.setMax_points(questionDto.getMax_points());
+        question.setTime(questionDto.getTime());
+        return questionDao.save(question);
+    }
+
+    @Override
+    public void addOptQuestion(QuestionOptAddDto questionOptAddDto) {
+//        Question question = new Question();
+//        question.setQuiz_id((long)questionOptAddDto.getQuiz_id());
+//        question.setType(questionOptAddDto.getType());
+//        question.setImage(questionOptAddDto.getImage());
+//        question.setText(questionOptAddDto.getText());
+//        question.setMax_points(questionOptAddDto.getMax_points());
+//        question.setTime(questionOptAddDto.getTime());
+        Long id = addQuestion(questionOptAddDto);
+        System.out.println(id);
+        for (OptionDto optionDto: questionOptAddDto.getOptions()) {
+            Option option=new Option();
+            option.setIs_correct(optionDto.getIs_correct());
+            option.setImage(optionDto.getImage());
+            option.setQuest_id(id);
+            option.setText(optionDto.getText());
+            optionDao.addOption(option);
+        }
+    }
+
+    @Override
+    public void addSeqOptQuestion(QuestionSeqAddDto questionSeqAddDto) {
+//        Question question = new Question();
+//        question.setQuiz_id((long)questionSeqAddDto.getQuiz_id());
+//        question.setType(questionSeqAddDto.getType());
+//        question.setImage(questionSeqAddDto.getImage());
+//        question.setText(questionSeqAddDto.getText());
+//        question.setMax_points(questionSeqAddDto.getMax_points());
+//        question.setTime(questionSeqAddDto.getTime());
+        Long id = addQuestion(questionSeqAddDto);
+        System.out.println(id);
+        for (SeqOptionDto seqOptionDto: questionSeqAddDto.getOptions()) {
+            SeqOption seqOption=new SeqOption();
+            seqOption.setImage(seqOptionDto.getImage());
+            seqOption.setQuest_id(id);
+            seqOption.setSerial_num(seqOptionDto.getSerial_num());
+            seqOption.setText(seqOptionDto.getText());
+            optionDao.addSeqOption(seqOption);
+        }
+    }
+
+    @Override
+    public void deleteQuiz(Long id) {
+
+        quizDao.delete(id);
+    }
+
+    @Override
+    public void deleteQuestion(Long id) {
+        questionDao.delete(id);
+    }
+
+    @Override
+    public List<Quiz> getUserQuizes(Long id) {
+        return quizDao.getByUserId(id);
     }
 
     @Override
@@ -46,16 +132,25 @@ public class QuizServiceImpl implements QuizService {
         return questionDao.getQuizQusetions(id);
     }
 
+    @Override
+    public Question getQuestion(Long id) {
+        return questionDao.getQuestion(id);
+    }
+
 
     @Override
-    public void addQuiz(QuizAddDto quizAddDto) {
+    public Long addQuiz(QuizAddDto quizAddDto) {
+        long millis=System.currentTimeMillis();
+        java.sql.Date date=new java.sql.Date(millis);
+        System.out.println((long)quizAddDto.getUser_id());
         Quiz quiz = new Quiz();
         quiz.setTitle(quizAddDto.getTitle());
         quiz.setDescription(quizAddDto.getDescription());
-        quiz.setDate(new Date());
+        quiz.setDate(date);
         quiz.setImage(quizAddDto.getImage());
-        quiz.setStatus_Id(new QuizStatus( 1L,"CREATED"));
-        quizDao.save(quiz);
+        quiz.setUser_id((long)quizAddDto.getUser_id());
+        quiz.setStatus_Id(new QuizStatus( 1L,"created"));
+        return quizDao.save(quiz);
     }
 
 

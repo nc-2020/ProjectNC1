@@ -1,12 +1,19 @@
 package com.team.app.backend.persistance.dao;
 
+import com.team.app.backend.persistance.dao.QuestionDao;
 import com.team.app.backend.persistance.dao.mappers.QuestionRowMapper;
 import com.team.app.backend.persistance.model.Question;
 import com.team.app.backend.persistance.model.QuestionType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 @Component
@@ -17,14 +24,11 @@ public class QuestionDaoImpl implements QuestionDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    private QuestionRowMapper questionRowMapper=new QuestionRowMapper();
+    @Autowired
+    private QuestionRowMapper questionRowMapper;
 
 
-    @Override
-    public QuestionType getType(Long id) {
 
-        return null;
-    }
 
     @Override
     public List<Question> getQuizQusetions(Long id) {
@@ -35,9 +39,9 @@ public class QuestionDaoImpl implements QuestionDao {
     }
 
     @Override
-    public Question get(Long id) {
+    public Question getQuestion(Long id) {
         return jdbcTemplate.queryForObject(
-                "SELECT Q.id, Q.time, Q.text, Q.max_points, Q.image, Q.type_id, QT.name AS type_name, Q.quiz_id FROM question Q INNER JOIN quest_type QT ON Q.type_id=QT.id where Q.id = ?",
+                "SELECT Q.id, Q.time, Q.text, Q.max_points, Q.image, Q.type_id, QT.name AS type_name, Q.quiz_id FROM question Q INNER JOIN quest_type QT ON Q.type_id=QT.id",
                 new Object[]{id},
                 questionRowMapper
         );
@@ -45,17 +49,37 @@ public class QuestionDaoImpl implements QuestionDao {
     }
 
     @Override
-    public void save(Question question) {
+    public Long save(Question question) {
+        String sql="INSERT INTO question( time, text, max_points, image, type_id, quiz_id) VALUES ( ?, ?, ?, ?, ?, ?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(
-                "INSERT INTO question( time, text, max_points, image, type_id, quiz_id) VALUES ( ?, ?, ?, ?, ?, ?)",
-                question.getTime(),
-                question.getText(),
-                question.getMax_points(),
-                question.getImage(),
-                question.getType().getId(),
-                question.getQuiz_id()
-        );
+                connection -> {
+                    PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
+                    ps.setInt(1, question.getTime());
+                    ps.setString(2, question.getText());
+                    ps.setInt(3, question.getMax_points());
+                    ps.setBytes(4, question.getImage());
+                    ps.setLong(5, question.getType().getId());
+                    ps.setLong(6, question.getQuiz_id());
+
+                    return ps;
+                },
+                    keyHolder);
+        return  keyHolder.getKey().longValue();
     }
+
+
+//        Long id =(long) jdbcTemplate.update(
+//                ,
+//                question.getTime(),
+//                question.getText(),
+//                question.getMax_points(),
+//                question.getImage(),
+//                question.getType().getId(),
+//                question.getQuiz_id()
+//        );
+//        return id;
+//    }
 
     @Override
     public void update(Question question) {

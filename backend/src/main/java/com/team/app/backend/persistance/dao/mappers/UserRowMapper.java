@@ -5,11 +5,13 @@ import com.team.app.backend.persistance.model.User;
 import com.team.app.backend.persistance.model.UserStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
+@Component
 public class UserRowMapper implements RowMapper<User> {
 
     @Override

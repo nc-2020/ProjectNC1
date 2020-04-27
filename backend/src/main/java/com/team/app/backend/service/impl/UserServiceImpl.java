@@ -87,6 +87,7 @@ public class UserServiceImpl implements UserService {
         userDao.save(user);
         return userDao.findByUsername(userCreateDto.getUsername());
     }
+
     @Override
     public void registerNewUserAccount(UserRegistrationDto userDto)
             throws UserAlreadyExistsException {
@@ -97,7 +98,6 @@ public class UserServiceImpl implements UserService {
 
         User user = new User();
 
-        user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setFirstName(userDto.getFirstName());
         user.setEmail(userDto.getEmail());
