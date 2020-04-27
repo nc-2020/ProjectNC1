@@ -3,10 +3,12 @@ package com.team.app.backend.persistance.dao.mappers;
 import com.team.app.backend.persistance.model.Quiz;
 import com.team.app.backend.persistance.model.QuizStatus;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Component
 public class QuizRowMapper implements RowMapper<Quiz> {
     @Override
     public Quiz mapRow(ResultSet resultSet, int rownumber) throws SQLException {

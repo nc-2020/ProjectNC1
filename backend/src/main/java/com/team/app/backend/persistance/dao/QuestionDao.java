@@ -6,13 +6,12 @@ import com.team.app.backend.persistance.model.QuestionType;
 import java.util.List;
 
 public interface QuestionDao {
-        QuestionType getType(Long id);
 
         List<Question> getQuizQusetions(Long id);
 
-        Question get(Long id);
+        Question getQuestion(Long id);
 
-        void save(Question question);
+        Long save(Question question);
 
         void update(Question question);
 

@@ -1,6 +1,6 @@
 package com.team.app.backend.persistance.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Quiz {
     private Long id;
@@ -72,11 +72,11 @@ public class Quiz {
         this.status = status;
     }
 
-    public Long getUser() {
+    public Long getUser_id() {
         return user_id;
     }
 
-    public void setUser(Long user) {
+    public void setUser_id(Long user_id) {
         this.user_id = user_id;
     }
 }

@@ -18,8 +18,8 @@ export class QuizCreateComponent implements OnInit {
     id: null,
     title: '',
     description: '',
-    //userId: this.userService.user.id
-    userId: '5'
+    user_id: this.userService.user.id
+    //user_id: '5'
   };
   isIdGet = false;
   receivedQuiz: Quiz;
@@ -36,6 +36,7 @@ export class QuizCreateComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.quiz.user_id=this.userService.user.id;
     // this.getData();
   }
 
@@ -47,7 +48,7 @@ export class QuizCreateComponent implements OnInit {
     this.quizService.createQuiz({
       title: this.quiz.title,
       description: this.quiz.description,
-      userId: this.quiz.userId
+      user_id: this.quiz.user_id
     } as Quiz)
       .subscribe(data  => {
         console.log(data.id);
