@@ -17,11 +17,21 @@ import {SequenceOption} from "../entities/sequence-option";
 })
 export class QuizEditComponent implements OnInit, OnDestroy {
   questions: Question[] = [];
+  titleEditor: any;
   question: Question = {
     id: null,
-    time: null,
-    options: null,
-    type: {id: null, name: ''},
+    time: 15,
+    options: 1,
+    type: {id: '1', name: ''},
+    text: '',
+    quiz_id: null,
+    image: ''
+  };
+  questionToAdd: Question = {
+    id: null,
+    time: 15,
+    options: 1,
+    type: {id: '1', name: ''},
     text: '',
     quiz_id: null,
     image: ''
@@ -65,9 +75,21 @@ export class QuizEditComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.routeSub.unsubscribe();
   }
-  goBack(): void {
-    this.location.back();
+  showAdd() {
+    this.titleEditor = 'Add a question';
+    this.question = this.questionToAdd;
+    this.isAddQuestion = !this.isAddQuestion;
   }
+  showEdit(action: string, question: Question) {
+    this.titleEditor = 'Edit a question';
+    this.question = question;
+    this.isAddQuestion = !this.isAddQuestion;
+  }
+
+
+
+
+  //CRUD
   getQuestions(): void {
     this.questionService.getQuestions()
       .subscribe(questions => {
@@ -79,17 +101,17 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     }
     );
   }
-  createQuestion(text, type) {
+  createQuestion() {
     let someOption;
-    if (type === '1') {
+    if (this.question.type.id === '1') {
       this.defaultOption.text = this.answerTrueFalse;
       someOption = this.defaultOption;
-    } else if (type === '2') {
+    } else if (this.question.type.id === '2') {
       this.defaultOption.text = this.answerTypeAnswer;
       someOption = this.defaultOption;
-    } else if (type === '3') {
+    } else if (this.question.type.id === '3') {
       someOption = this.options;
-    } else if (type === '4') {
+    } else if (this.question.type.id === '4') {
       for (let i = 0; i < this.optionsSequence.length; i++) {
         this.optionsSequence[i].serial_num = i + 1;
       }
@@ -98,8 +120,8 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     console.log("question created");
     this.questionService.createQuestion({
         options: someOption,
-        text: text,
-        type: {id: type},
+        text: this.question.text,
+        type: {id: this.question.type.id},
         time: this.question.time,
         quiz_id: this.question.quiz_id
     } as Question)
@@ -110,9 +132,6 @@ export class QuizEditComponent implements OnInit, OnDestroy {
       });
   }
 
-  addQuestion() {
-    this.isAddQuestion = !this.isAddQuestion;
-  }
 
   deleteQuestion(question: Question): void {
     this.questions = this.questions.filter(q => q !== question);
@@ -126,4 +145,6 @@ export class QuizEditComponent implements OnInit, OnDestroy {
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.optionsSequence, event.previousIndex, event.currentIndex);
   }
+
+
 }

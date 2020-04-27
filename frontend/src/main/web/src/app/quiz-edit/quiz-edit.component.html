@@ -3,30 +3,32 @@
   <h2>My Questions
   <h5 style="margin-top: 50px;"><ol class="questions">
     <li *ngFor="let question of questions" style="margin-top: 10px;">
-      <a>
-        <!-- <span class="badge">{{question.id}}</span>  -->{{question.text}}
-      </a>
-      <button class="delete-btn" title="delete question"
-              (click)="deleteQuestion(question)">x</button>
+        <span (click)="showEdit('edit', question)">
+        <a>
+          <!-- <span class="badge">{{question.id}}</span>  -->{{question.text}}
+        </a>
+        <button class="delete-btn" title="delete question"
+                (click)="deleteQuestion(question)">x</button>
+        </span>
     </li>
   </ol></h5>
     <div class="action-btns-wrapper">
       <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" routerLink="/quiz-dashboard">Done</button>
-      <button class="add-btn" data-qtest="create-quiz-btn" (click)="addQuestion()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Add question</span></button>
+      <button class="add-btn" data-qtest="create-quiz-btn" (click)="showAdd()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Add question</span></button>
     </div>
   </h2>
   <div *ngIf="isAddQuestion" class="container">
     <div class="kr-modal-body">
       <div class="banner">
         <div class="title">
-          <h2>Add a question</h2>
+          <h2>{{titleEditor}}</h2>
         </div>
       </div>
       <div class="form">
         <div class="quiz-name-wrapper">
           <div class="quiz-name-input kr2-textfield">
-            <label>Question</label>
-            <input #questionName type="text" id="name-input" placeholder="Question name" data-qtest="quiz-name-input-field" maxlength="60">
+            <label>Question: {{question.text}}</label>
+            <input [(ngModel)]="question.text" type="text" id="name-input" placeholder="Question name" data-qtest="quiz-name-input-field" maxlength="60">
             <div class="quiz-name-error"><span class="hidden">Please enter a question</span></div>
           </div>
         </div>
@@ -34,7 +36,7 @@
           <div class="quiz-name-input kr2-textfield">
             <label>
               Select type of question
-              <select [(ngModel)]="selectedLevel">
+              <select [(ngModel)]="question.type.id">
                 <option value="not selected" selected disabled hidden>Choose here</option>
                 <option value="1">True/False</option>
                 <option value="2">Type answer</option>
@@ -56,21 +58,21 @@
             </label>
           </div>
         </div>
-        <div *ngIf="selectedLevel" class="quiz-name-wrapper">
-          <div *ngIf="selectedLevel === '1'" class="quiz-name-input kr2-textfield">
+        <div *ngIf="question.type.id" class="quiz-name-wrapper">
+          <div *ngIf="question.type.id === '1'" class="quiz-name-input kr2-textfield">
             <p>True/False!</p>
             <div class="action-btns-wrapper" style="margin-left: 20px;">
               <!-- <button class="true-btn" data-qtest="cancel-create-quiz-btn">True</button>
               <button class="false-btn" data-qtest="cancel-create-quiz-btn">False</button> -->
-              <input class="true-false" name="true-false-opt" type="radio" value="True" [(ngModel)]="answerTrueFalse" style="margin-left: 20px"><label style="margin-right: 100px; font-size: 20px">True</label>
-              <input class="true-false" name="true-false-opt" type="radio" value="False" [(ngModel)]="answerTrueFalse" checked="checked"><label style="margin-right: 100px; font-size: 20px">False</label>
+              <input [(ngModel)]="answerTrueFalse" class="true-false" name="true-false-opt" type="radio" value="True"  style="margin-left: 20px"><label style="margin-right: 100px; font-size: 20px">True</label>
+              <input [(ngModel)]="answerTrueFalse" class="true-false" name="true-false-opt" type="radio" value="False"  checked="checked"><label style="margin-right: 100px; font-size: 20px">False</label>
             </div>
           </div>
-          <div *ngIf="selectedLevel === '2'" class="quiz-name-input kr2-textfield">
+          <div *ngIf="question.type.id === '2'" class="quiz-name-input kr2-textfield">
             <p>Type answer</p>
-            <input #typeAnswer type="text" id="name-input" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60" [(ngModel)]="answerTypeAnswer">
+            <input [(ngModel)]="answerTypeAnswer" type="text" id="name-input" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
           </div>
-          <div *ngIf="selectedLevel === '3'" class="quiz-name-input kr2-textfield">
+          <div *ngIf="question.type.id === '3'" class="quiz-name-input kr2-textfield">
             <p>Select option</p>
             <ol>
               <li *ngFor="let option of options">
@@ -79,7 +81,7 @@
               </li>
             </ol>
           </div>
-          <div *ngIf="selectedLevel === '4'" class="quiz-name-input kr2-textfield">
+          <div *ngIf="question.type.id === '4'" class="quiz-name-input kr2-textfield">
             <p>Select sequence</p>
             <ol>
             <div cdkDropList (cdkDropListDropped)="drop($event)">
@@ -92,8 +94,8 @@
         </div>
       </div>
       <div class="action-btns-wrapper">
-        <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="addQuestion()">Cancel</button>
-        <button class="save-btn" data-qtest="create-quiz-btn" (click)="createQuestion(questionName.value, selectedLevel);questionName.value = '';"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Next</span></button>
+        <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="showAdd()">Cancel</button>
+        <button class="save-btn" data-qtest="create-quiz-btn" (click)="createQuestion()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Next</span></button>
       </div>
     </div>
   </div>
