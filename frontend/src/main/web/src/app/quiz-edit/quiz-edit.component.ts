@@ -93,6 +93,7 @@ export class QuizEditComponent implements OnInit, OnDestroy {
         options: someOption,
         text: text,
         type: {id: type},
+        time: this.question.time,
         quiz_id: this.question.quiz_id
     } as Question)
       .subscribe(data  => {
