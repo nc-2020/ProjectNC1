@@ -58,6 +58,9 @@ export class QuestionService {
       catchError(this.handleError<Question>('createQuestion'))
     );
   }
+
+
+
   deleteQuestion(question: Question | number): Observable<Question> {
     const id = typeof question === 'number' ? question : question.id;
     const url = `${this.questionsUrl}/${id}`;
