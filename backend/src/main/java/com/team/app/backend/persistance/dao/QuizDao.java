@@ -8,7 +8,6 @@ import java.util.List;
 public interface QuizDao {
     Quiz get(Long id);
 
-
     List<Quiz> getByUserId(Long id);
 
     List<Quiz> getAll();

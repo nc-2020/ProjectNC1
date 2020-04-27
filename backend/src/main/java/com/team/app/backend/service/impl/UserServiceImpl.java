@@ -1,9 +1,9 @@
 package com.team.app.backend.service.impl;
 
-import com.team.app.backend.dto.user.UserCreateDto;
-import com.team.app.backend.dto.user.UserUpdateDto;
+import com.team.app.backend.dto.UserCreateDto;
+import com.team.app.backend.dto.UserUpdateDto;
 import com.team.app.backend.exception.UserAlreadyExistsException;
-import com.team.app.backend.dto.user.UserRegistrationDto;
+import com.team.app.backend.dto.UserRegistrationDto;
 import com.team.app.backend.persistance.dao.UserDao;
 import com.team.app.backend.persistance.model.Role;
 import com.team.app.backend.persistance.model.User;

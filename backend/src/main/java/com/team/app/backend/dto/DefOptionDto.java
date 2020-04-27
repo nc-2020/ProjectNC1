@@ -1,4 +1,4 @@
-package com.team.app.backend.dto.options;
+package com.team.app.backend.dto;
 
 public class DefOptionDto {
     private String answer;

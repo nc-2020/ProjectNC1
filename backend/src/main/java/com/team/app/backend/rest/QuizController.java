@@ -1,9 +1,9 @@
 package com.team.app.backend.rest;
 
 import com.team.app.backend.dto.QuizAddDto;
-import com.team.app.backend.dto.questions.QuestionDefAddDto;
-import com.team.app.backend.dto.questions.QuestionOptAddDto;
-import com.team.app.backend.dto.questions.QuestionSeqAddDto;
+import com.team.app.backend.dto.QuestionDefAddDto;
+import com.team.app.backend.dto.QuestionOptAddDto;
+import com.team.app.backend.dto.QuestionSeqAddDto;
 import com.team.app.backend.persistance.model.Question;
 import com.team.app.backend.persistance.model.Quiz;
 import com.team.app.backend.service.QuizService;
@@ -79,6 +79,11 @@ public class QuizController {
     @GetMapping("/quiz")
     public List<Quiz> quizes() {
         return quizService.getAllQuizes();
+    }
+
+    @GetMapping("/user/quiz/{id}")
+    public List<Quiz> userQuizes(@PathVariable("id") long id) {
+        return quizService.getUserQuizes(id);
     }
 
 

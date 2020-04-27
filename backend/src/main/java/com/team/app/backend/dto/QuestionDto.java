@@ -1,4 +1,4 @@
-package com.team.app.backend.dto.questions;
+package com.team.app.backend.dto;
 
 import com.team.app.backend.persistance.model.QuestionType;
 

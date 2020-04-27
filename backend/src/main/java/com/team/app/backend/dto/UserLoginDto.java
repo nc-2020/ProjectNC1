@@ -1,4 +1,4 @@
-package com.team.app.backend.dto.user;
+package com.team.app.backend.dto;
 
 public class UserLoginDto {
 

@@ -1,7 +1,7 @@
 package com.team.app.backend.rest;
 
 import com.team.app.backend.exception.UserAlreadyExistsException;
-import com.team.app.backend.dto.user.UserRegistrationDto;
+import com.team.app.backend.dto.UserRegistrationDto;
 import com.team.app.backend.persistance.dao.UserDao;
 import com.team.app.backend.service.UserService;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
 package com.team.app.backend.rest;
 
-import com.team.app.backend.dto.user.UserLoginDto;
+import com.team.app.backend.dto.UserLoginDto;
 import com.team.app.backend.persistance.model.User;
 import com.team.app.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

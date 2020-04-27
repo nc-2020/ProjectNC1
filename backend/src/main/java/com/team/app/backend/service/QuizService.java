@@ -1,9 +1,9 @@
 package com.team.app.backend.service;
 
-import com.team.app.backend.dto.questions.QuestionDefAddDto;
-import com.team.app.backend.dto.questions.QuestionDto;
-import com.team.app.backend.dto.questions.QuestionOptAddDto;
-import com.team.app.backend.dto.questions.QuestionSeqAddDto;
+import com.team.app.backend.dto.QuestionDefAddDto;
+import com.team.app.backend.dto.QuestionDto;
+import com.team.app.backend.dto.QuestionOptAddDto;
+import com.team.app.backend.dto.QuestionSeqAddDto;
 import com.team.app.backend.dto.QuizAddDto;
 import com.team.app.backend.persistance.model.Question;
 import com.team.app.backend.persistance.model.Quiz;
@@ -22,6 +22,8 @@ public interface QuizService {
     void deleteQuiz(Long id);
 
     void deleteQuestion(Long id);
+
+    List<Quiz> getUserQuizes(Long id);
 
     List<Question> getQuizQuestion(Long id);
 

@@ -1,4 +1,4 @@
-package com.team.app.backend.persistance.dao.impl;
+package com.team.app.backend.persistance.dao;
 
 import com.team.app.backend.persistance.dao.QuestionDao;
 import com.team.app.backend.persistance.dao.mappers.QuestionRowMapper;

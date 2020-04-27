@@ -1,6 +1,4 @@
-package com.team.app.backend.dto.questions;
-
-import com.team.app.backend.dto.options.OptionDto;
+package com.team.app.backend.dto;
 
 import java.util.List;
 

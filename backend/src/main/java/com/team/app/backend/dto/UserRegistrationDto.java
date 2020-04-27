@@ -1,70 +1,55 @@
-package com.team.app.backend.dto.user;
+package com.team.app.backend.dto;
 
-import com.team.app.backend.persistance.model.Role;
-
-public class UserCreateDto {
+public class UserRegistrationDto {
 
     private String firstName;
     private String lastName;
     private String username;
     private String email;
     private String password;
-    private byte[] image;
-    private Role role;
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public UserRegistrationDto setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public UserRegistrationDto setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public UserRegistrationDto setUsername(String username) {
         this.username = username;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public UserRegistrationDto setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public UserRegistrationDto setPassword(String password) {
         this.password = password;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
+        return this;
     }
 }

@@ -1,12 +1,12 @@
 package com.team.app.backend.service.impl;
 
-import com.team.app.backend.dto.options.DefOptionDto;
-import com.team.app.backend.dto.options.OptionDto;
-import com.team.app.backend.dto.options.SeqOptionDto;
-import com.team.app.backend.dto.questions.QuestionDefAddDto;
-import com.team.app.backend.dto.questions.QuestionDto;
-import com.team.app.backend.dto.questions.QuestionOptAddDto;
-import com.team.app.backend.dto.questions.QuestionSeqAddDto;
+import com.team.app.backend.dto.DefOptionDto;
+import com.team.app.backend.dto.OptionDto;
+import com.team.app.backend.dto.SeqOptionDto;
+import com.team.app.backend.dto.QuestionDefAddDto;
+import com.team.app.backend.dto.QuestionDto;
+import com.team.app.backend.dto.QuestionOptAddDto;
+import com.team.app.backend.dto.QuestionSeqAddDto;
 import com.team.app.backend.dto.QuizAddDto;
 import com.team.app.backend.persistance.dao.OptionDao;
 import com.team.app.backend.persistance.dao.QuestionDao;
@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
 import java.util.List;
 
 
@@ -121,6 +120,11 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public void deleteQuestion(Long id) {
         questionDao.delete(id);
+    }
+
+    @Override
+    public List<Quiz> getUserQuizes(Long id) {
+        return quizDao.getByUserId(id);
     }
 
     @Override

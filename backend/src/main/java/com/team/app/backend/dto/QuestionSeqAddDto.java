@@ -1,8 +1,4 @@
-package com.team.app.backend.dto.questions;
-
-import com.team.app.backend.dto.options.DefOptionDto;
-import com.team.app.backend.dto.options.SeqOptionDto;
-import com.team.app.backend.persistance.model.SeqOption;
+package com.team.app.backend.dto;
 
 import java.util.List;
 

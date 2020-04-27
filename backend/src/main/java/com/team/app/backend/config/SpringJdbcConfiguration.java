@@ -1,7 +1,7 @@
 package com.team.app.backend.config;
 
 import com.team.app.backend.persistance.dao.UserDao;
-import com.team.app.backend.persistance.dao.impl.UserDaoImpl;
+import com.team.app.backend.persistance.dao.UserDaoImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

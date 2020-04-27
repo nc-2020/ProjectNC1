@@ -1,19 +1,19 @@
-package com.team.app.backend.dto.options;
+package com.team.app.backend.dto;
 
-public class OptionDto {
-    private Boolean is_correct;
+public class SeqOptionDto {
+    private Integer serial_num;
     private String text;
     private byte[] image;
 
-    public OptionDto() {
+    public SeqOptionDto() {
     }
 
-    public Boolean getIs_correct() {
-        return is_correct;
+    public Integer getSerial_num() {
+        return serial_num;
     }
 
-    public void setIs_correct(Boolean is_correct) {
-        this.is_correct = is_correct;
+    public void setSerial_num(Integer serial_num) {
+        this.serial_num = serial_num;
     }
 
     public String getText() {
