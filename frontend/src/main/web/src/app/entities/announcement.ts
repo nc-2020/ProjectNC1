@@ -6,5 +6,6 @@ export interface Announcement {
   image?: string;
   userId: string;
   categoryId?: string;
+  statusId?: string
 
 }

@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("api")
 public class UserController {
@@ -89,7 +89,7 @@ public class UserController {
 
             model.put("message", "User was deleted");
         }else{
-            model.put("message", "Exseption while deleted");
+            model.put("message", "Exception while deleted");
         }
             //{
 //            return new ResponseEntity<>(

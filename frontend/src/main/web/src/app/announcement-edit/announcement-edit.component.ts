@@ -13,12 +13,15 @@ export class AnnouncementEditComponent implements OnInit {
 
 
   announcement: Announcement = {
-    id: '1',
+    id: '8',
     title: 'New epic big super announcement',
     text: 'Some quick example text to build on the card title and make up the bulk of the card`s content.',
-    date: '23.03.2020',
-    image: 'https://cdn.pixabay.com/photo/2020/04/09/12/28/dog-5021242_1280.jpg',
-    userId: '1'
+    userId: '1',
+    date: '2019-01-21T05:47:08.644',
+    statusId: '1',
+    categoryId: '1'
+
+
   };
   error = ''
   message = '';
@@ -29,11 +32,26 @@ export class AnnouncementEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.announcementForm = this.fb.group({
-      title: [this.announcement.title, [Validators.required, Validators.minLength(3)]],
-      text: [this.announcement.text, [Validators.required, Validators.minLength(3)]],
+      title: [this.announcement.title, [Validators.required, Validators.minLength(3), Validators.maxLength(40)]],
+      text: [this.announcement.text, [Validators.required, Validators.minLength(3), Validators.maxLength(499)]],
       image: [this.announcement.image],
 
     });
+  }
+
+  save() {
+    this.announcement.title = this.announcementForm.get('title').value;
+    this.announcement.text = this.announcementForm.get('text').value;
+    this.announcementService.updateAnnouncement(this.announcement).subscribe(resp => {this.message = resp.message},
+      error => {this.error = error.message});
+  }
+
+  add() {
+    this.announcement.title = this.announcementForm.get('title').value;
+    this.announcement.text = this.announcementForm.get('text').value;
+    this.announcement.userId = this.userService.user.id;
+    this.announcementService.createAnnouncement(this.announcement).subscribe(resp => {this.message = resp.message},
+      error => {this.error = error});
   }
 
 }
