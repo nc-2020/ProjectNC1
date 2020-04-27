@@ -21,7 +21,7 @@ export class RegistrationComponent implements OnInit {
     role: {name: 'user'},
     password: ''
   };
-
+message = ''
   constructor(private app: UserService, private router: Router) { }
 
   ngOnInit(): void {
@@ -54,6 +54,6 @@ export class RegistrationComponent implements OnInit {
     this.user.email = this.registrationForm.get('email').value;
     this.user.password = this.registrationForm.get('password').value;
     this.app.signUp(this.user).subscribe(
-      _ => this.router.navigateByUrl('/login'));
+      _ => this.router.navigateByUrl('/login'), error => this.message = error.message);
   }
 }

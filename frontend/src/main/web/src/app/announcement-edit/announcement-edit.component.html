@@ -2,7 +2,7 @@
   <form [formGroup]="announcementForm" role="form">
     <div class="form-group row">
       <div class="col-lg-11 ml-lg-3 mt-5 alert alert-danger" [hidden]="!error">
-        There was a problem. {{error | json}}.
+        There was a problem. {{error}}.
       </div>
       <div class="col-lg-11 ml-lg-3 alert alert-success" [hidden]="!message">
         {{message}}

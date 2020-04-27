@@ -51,7 +51,7 @@ export class AnnouncementEditComponent implements OnInit {
     this.announcement.text = this.announcementForm.get('text').value;
     this.announcement.userId = this.userService.user.id;
     this.announcementService.createAnnouncement(this.announcement).subscribe(resp => {this.message = resp.message},
-      error => {this.error = error});
+      error => {this.error = error.message});
   }
 
 }
