@@ -70,7 +70,14 @@ export class QuizEditComponent implements OnInit, OnDestroy {
   }
   getQuestions(): void {
     this.questionService.getQuestions()
-      .subscribe(questions => this.questions = questions);
+      .subscribe(questions => {
+        for (let question of questions) {
+          if (question.quiz_id === this.question.quiz_id) {
+            this.questions.push(question);
+          }
+        }
+    }
+    );
   }
   createQuestion(text, type) {
     let someOption;
