@@ -50,7 +50,6 @@ public class QuizController {
         HashMap<String,Long>result = new HashMap<String,Long>();
         result.put("id",quizService.addDefQuestion(questionDefAddDto));
         return result;
-
     }
 
     @PostMapping("/question/3")
@@ -59,7 +58,6 @@ public class QuizController {
         HashMap<String,Long>result = new HashMap<String,Long>();
         result.put("id",quizService.addOptQuestion(questionOptAddDto));
         return result;
-
     }
 
     @PostMapping("/question/4")
@@ -68,7 +66,6 @@ public class QuizController {
         HashMap<String,Long>result = new HashMap<String,Long>();
         result.put("id",quizService.addSeqOptQuestion(questionSeqAddDto));
         return result;
-
     }
 
     @DeleteMapping("/question/{id}")
@@ -93,10 +90,17 @@ public class QuizController {
         return quizService.getAllQuizes();
     }
 
+    //
+    @GetMapping("quiz/approved")
+    public List<Quiz> approvedQuizes() {
+        return quizService.getApprovedQuizes();
+    }
+
     @GetMapping("/user/quiz/{id}")
     public List<Quiz> userQuizes(@PathVariable("id") long id) {
         return quizService.getUserQuizes(id);
     }
 
+    //@GetMapping("/quiz/search/{category}/{searchstring}")
 
 }

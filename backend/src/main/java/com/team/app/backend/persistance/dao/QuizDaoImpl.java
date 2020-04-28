@@ -52,6 +52,12 @@ public class QuizDaoImpl implements QuizDao {
     }
 
     @Override
+    public List<Quiz> getApproved() {
+        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id where status_name = 'approved'"
+                ,quizRowMapper);
+    }
+
+    @Override
     public List<Quiz> getAll() {
         return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id"
                 ,quizRowMapper);

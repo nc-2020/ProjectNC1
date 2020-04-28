@@ -135,6 +135,11 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    public List<Quiz> getApprovedQuizes() {
+        return quizDao.getApproved();
+    }
+
+    @Override
     public List<Question> getQuizQuestion(Long id) {
         return questionDao.getQuizQusetions(id);
     }
