@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final String LOGIN_ENDPOINT = "/api/login";
     private static final String SIGN_UP_ENDPOINT = "/api/sign-up";
+    private static final String ROOT_ENDPOINT = "/";
+
 
     @Autowired
     public SecurityConfiguration(JwtTokenProvider jwtTokenProvider) {
@@ -44,7 +47,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
+                .antMatchers("/index.html", "/").permitAll()
                 .antMatchers(SIGN_UP_ENDPOINT).permitAll()
+                .antMatchers(ROOT_ENDPOINT).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider)).and().cors();
@@ -60,5 +65,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/favicon.ico","/index.html",
+                "/polyfills*.js",
+                "/runtime*.js",
+                "/styles*.js",
+                "/scripts.js",
+                "/main*.js",
+                "/vendor*.js"
+        );
     }
 }
