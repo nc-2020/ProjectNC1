@@ -26,6 +26,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final String LOGIN_ENDPOINT = "/api/login";
     private static final String SIGN_UP_ENDPOINT = "/api/sign-up";
+    private static final String ROOT_ENDPOINT = "/";
+
 
     @Autowired
     public SecurityConfiguration(JwtTokenProvider jwtTokenProvider) {
@@ -47,7 +49,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
+                .antMatchers("/index.html", "/").permitAll()
                 .antMatchers(SIGN_UP_ENDPOINT).permitAll()
+                .antMatchers(ROOT_ENDPOINT).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider)).and().cors();
@@ -63,20 +67,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/vendor.js*"
         );
     }
-
-//        final CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(List.of("*"));
-//        configuration.setAllowedMethods(List.of("HEAD",
-//                "GET", "POST", "PUT", "DELETE", "PATCH"));
-//        // setAllowCredentials(true) is important, otherwise:
-//        // The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
-//        configuration.setAllowCredentials(true);
-//        // setAllowedHeaders is important! Without it, OPTIONS preflight request
-//        // will fail with 403 Invalid CORS request
-//        configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
-//        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
+    
 
 }
