@@ -10,48 +10,57 @@ import { error } from 'protractor';
 })
 export class UserService {
   authenticated = false;
-  user: User;
-  // user: User = {
-  //   id: '123',
-  //   username: 'lol',
-  //   firstName: 'lol',
-  //   lastName: 'kek',
-  //   email: 'sdad@sdasd.com',
-  //   role: {name: 'super admin'},
-  //   password: 'lol'
-  // };
+  // user: User;
+  user: User = {
+    id: '123',
+    username: 'lol',
+    firstName: 'lol',
+    lastName: 'kek',
+    email: 'sdad@sdasd.com',
+    role: {name: 'super admin'},
+    password: 'lol'
+  };
 
+  requestOptions = { headers: new HttpHeaders()
+      .set('Authorization',  `Bearer_${this.getToken()}`)}
   constructor(private http: HttpClient) {
   }
+  getToken() {
+    return this.user.token;
+  }
   getUser(user: User) {
-    return this.http.get<User>(`api/user/get/${user.id}`).pipe(
+    return this.http.get<User>(`http://localhost:8080/api/user/get/${user.id}`, this.requestOptions).pipe(
       catchError(this.handleError<any>('getUser'))
     );
   }
   updateUser(user: User) {
-    return this.http.put<User>('api/user/update', user).pipe(
+    return this.http.put<User>('http://localhost:8080/api/user/update', user, this.requestOptions).pipe(
       catchError(this.handleError<any>('signUp'))
     );
   }
   createUser(user: User) {
-    return this.http.post<User>('api/user/create', user).pipe(
+    return this.http.post<User>('http://localhost:8080/api/user/create', user, this.requestOptions).pipe(
       catchError(this.handleError<any>('signUp'))
     );
   }
 
   deleteUser(user: User) {
-    return this.http.delete<User>(`api/user/delete/${user.id}`).pipe(
+    return this.http.delete<User>(`http://localhost:8080/api/user/delete/${user.id}`, this.requestOptions).pipe(
       catchError(this.handleError<any>('signUp'))
     );
   }
   signUp(user: User): Observable<any> {
-    return this.http.post<User>('api/signup', user).pipe(
+    return this.http.post<User>('http://localhost:8080/api/sign-up', user).pipe(
       catchError(this.handleError<any>('signUp'))
     );
 
   }
+
   login(user): Observable<User> {
-    return this.http.post<any>('api/login', user).pipe(
+    return this.http.post<any>('http://localhost:8080/api/login', user,{
+      headers: new HttpHeaders().set('Content-Type', 'application/json'),
+      responseType: 'json'
+    }).pipe(
       tap(response => {
         this.user = response;
         this.authenticated = true}),
@@ -59,7 +68,7 @@ export class UserService {
     );
   }
   logout() {
-    return this.http.post<User>('api/logout', this.user).pipe(finalize(() => {
+    return this.http.post<User>('http://localhost:8080/api/logout', this.user, this.requestOptions).pipe(finalize(() => {
       this.authenticated = false;
     }), catchError(this.handleError<any>('logout')))
   }
@@ -74,7 +83,7 @@ export class UserService {
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.get<User[]>(`api/user/search/${term}`).pipe(
+    return this.http.get<User[]>(`http://localhost:8080/api/user/search/${term}`, this.requestOptions).pipe(
 
       catchError(error => {return of([])})
     );

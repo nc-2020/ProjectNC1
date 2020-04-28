@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("api")
 public class RegistrationController {
@@ -25,7 +26,7 @@ public class RegistrationController {
     @Autowired
     UserDao userDao;
 
-    @PostMapping("/signup")
+    @PostMapping("/sign-up")
     public ResponseEntity<String> registerUserAccount(
             @RequestBody UserRegistrationDto userDto) {
 

@@ -2,8 +2,16 @@ package com.team.app.backend.rest;
 
 import com.team.app.backend.dto.UserLoginDto;
 import com.team.app.backend.persistance.model.User;
+import com.team.app.backend.security.jwt.JwtTokenProvider;
 import com.team.app.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.*;
@@ -13,51 +21,61 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
+@CrossOrigin("http://localhost:4200")
 @RestController
-@RequestMapping("api")
+@RequestMapping("/api")
 public class LoginController {
 
     @Autowired
     UserService userService;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
-    @ResponseBody
-    public User login(
-            @RequestBody UserLoginDto userDto
-    ) {
-        System.out.println("login");
-        if (userService.isUserRegistered(userDto.getUsername())) {
-            //String pass = passwordEncoder.encode(userDto.getPassword());
-            System.out.println(userDto.getPassword());
-            if (userService.getUserPassword(userDto.getUsername())
-                    .equals(userDto.getPassword())) {
-                return userService.getUserByUsername(userDto.getUsername())
-                        ;
-//            } else {
-//                return new ResponseEntity<>(
-//                        "Wrong password",
-//                        HttpStatus.CONFLICT
-//                );
-//            }
-            }
-        } else {
-            return null;
-        }
-        return null;
-//        else {
-//            return new ResponseEntity<>(
-//                    "There is no user with username '" +
-//                            userDto.getUsername() +
-//                            "' in the database.",
-//                    HttpStatus.CONFLICT
-//            );
-//        }
-//    }
+    public ResponseEntity login(@RequestBody UserLoginDto requestDto) {
+        try {
+            String username = requestDto.getUsername();
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
+            User user = userService.findByUsername(username);
 
+            if (user == null) {
+                throw new UsernameNotFoundException("User with username: " + username + " not found");
+            }
+
+            String token = jwtTokenProvider.createToken(user);
+
+            Map<Object, Object> response = new HashMap<>();
+            response.put("id", user.getId());
+            response.put("firstName", user.getFirstName());
+            response.put("lastName", user.getLastName());
+            response.put("email", user.getEmail());
+            response.put("password", user.getPassword());
+            response.put("image", user.getImage());
+//            response.put("activate_link", user.getActivate_link());
+            response.put("status", user.getStatus());
+            response.put("role", user.getRole());
+//            response.put("registr_date", user.getRegistr_date());
+            response.put("username", username);
+            response.put("token", token);
+
+            return ResponseEntity.ok().body(response);
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+            throw new BadCredentialsException("Username or password are not valid");
+        }
     }
+
+    //testing jwt
+//    @GetMapping("/get-user/{id}")
+//    public ResponseEntity<String> getUser(@PathVariable Long id) {
+//        return new ResponseEntity<>(
+//                userService.getUserById(id).toString(),
+//                HttpStatus.OK);
+//    }
 
     //TO DO
     @PostMapping("/logout")
