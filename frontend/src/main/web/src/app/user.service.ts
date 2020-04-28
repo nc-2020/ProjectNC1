@@ -21,7 +21,8 @@ export class UserService {
     password: 'lol'
   };
 
-  requestOptions = {}
+  requestOptions = { headers: new HttpHeaders()
+      .set('Authorization',  `Bearer_${this.getToken()}`)}
   constructor(private http: HttpClient) {
   }
   getToken() {
