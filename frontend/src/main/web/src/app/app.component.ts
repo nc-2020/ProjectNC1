@@ -13,8 +13,10 @@ export class AppComponent {
 
   title = 'ui-app';
 
+
   constructor(private http: HttpClient, private app: UserService, private router: Router) {
     this.app.login(undefined);
+
   }
 
   logout() {
@@ -25,7 +27,7 @@ export class AppComponent {
     return this.app.authenticated;
   }
 
-  ngOnInit(): void {
-
+  ifUser(): boolean {
+    return this.app.user.role.name === 'user';
   }
 }

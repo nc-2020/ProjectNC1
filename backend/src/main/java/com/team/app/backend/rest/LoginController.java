@@ -1,7 +1,6 @@
 package com.team.app.backend.rest;
 
 import com.team.app.backend.dto.UserLoginDto;
-import com.team.app.backend.dto.UserRegistrationDto;
 import com.team.app.backend.persistance.model.User;
 import com.team.app.backend.security.jwt.JwtTokenProvider;
 import com.team.app.backend.service.UserService;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @CrossOrigin("http://localhost:4200")
 @RestController

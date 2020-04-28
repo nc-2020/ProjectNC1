@@ -2,14 +2,10 @@ package com.team.app.backend.config;
 
 import com.team.app.backend.persistance.dao.UserDao;
 import com.team.app.backend.persistance.dao.UserDaoImpl;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 import javax.sql.DataSource;
 
@@ -21,10 +17,9 @@ public class SpringJdbcConfiguration {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/brain-duel-db");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("");
-
+        dataSource.setUrl("jdbc:postgresql://ec2-54-217-204-34.eu-west-1.compute.amazonaws.com:5432/d2q1r015780tbg");
+        dataSource.setUsername("auewlydijtwktd");
+        dataSource.setPassword("571df7407fd1073d91d2d43e3c085880564337693979e4e00e7bce1771228bf9");
         return dataSource;
     }
 
