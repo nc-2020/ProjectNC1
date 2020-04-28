@@ -101,6 +101,8 @@ public class QuizController {
         return quizService.getUserQuizes(id);
     }
 
-    //@GetMapping("/quiz/search/{category}/{searchstring}")
-
+    @GetMapping("/quiz/search/{category}/{searchstring}")
+    public List<Quiz> searchQuizes(@PathVariable("category") String category,@PathVariable("searchstring") String searchstring) {
+        return quizService.searchQuizes(category,searchstring);
+    }
 }
