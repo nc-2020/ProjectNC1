@@ -8,12 +8,11 @@ import java.util.List;
 public interface QuizDao {
     Quiz get(Long id);
 
-
     List<Quiz> getByUserId(Long id);
 
     List<Quiz> getAll();
 
-    void save(Quiz quiz);
+    Long save(Quiz quiz);
 
     void update(Quiz quiz);
 

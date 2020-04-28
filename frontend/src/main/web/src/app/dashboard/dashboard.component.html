@@ -69,12 +69,22 @@
                     (click)="emptyProfile()"  style="width: auto">Add</button>
           </form>
           <app-user-card *ngFor="let user of users$ | async" [user]="user"></app-user-card>
+
+
+
+        </div>
+<!--        Profile-->
+        <app-user-profile [user]="getUser(param)" [editOnly]="param" *ngIf="tab === 'Profile'"></app-user-profile>
+
+
+
         </div>
 <!--        Profile-->
         <app-user-profile [user]="getUser(param)" [editOnly]="param" *ngIf="tab === 'Profile'"></app-user-profile>
 <!--    Announcement-->
 <!--        <app-announcement *ngIf="tab === 'Announcement'"> </app-announcement>-->
 <app-announcement-edit></app-announcement-edit>
+
       </main>
     </div>
   </div>

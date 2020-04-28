@@ -1,5 +1,6 @@
 package com.team.app.backend.persistance.dao;
 
+import com.team.app.backend.persistance.dao.QuizDao;
 import com.team.app.backend.persistance.dao.mappers.QuizRowMapper;
 
 import com.team.app.backend.persistance.model.Question;
@@ -7,21 +8,25 @@ import com.team.app.backend.persistance.model.Quiz;
 import com.team.app.backend.persistance.model.QuizStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 
 @Component
-public class QuizDaoImpl implements QuizDao{
+public class QuizDaoImpl implements QuizDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private QuizRowMapper quizRowMapper=new QuizRowMapper();
+    @Autowired
+    private QuizRowMapper quizRowMapper;
 
     public QuizDaoImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
@@ -54,16 +59,33 @@ public class QuizDaoImpl implements QuizDao{
 
 
     @Override
-    public void save(Quiz quiz) {
+    public Long save(Quiz quiz) {
+        String sql="INSERT INTO quiz( title, date, description, image, status_id, user_id) VALUES (?, ?, ?, ?, ?, ?);";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(
-                "INSERT INTO quiz( title, date, description, image, status_id, user_id) VALUES (?, ?, ?, ?, ?, ?);",
-                quiz.getTitle(),
-                quiz.getDate(),
-                quiz.getDescription(),
-                quiz.getImage(),
-                quiz.getStatus().getId(),
-                quiz.getUser()
-            );
+                connection -> {
+                    PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
+                    ps.setString(1, quiz.getTitle());
+                    ps.setDate(2,  quiz.getDate());
+                    ps.setString(3, quiz.getDescription());
+                    ps.setBytes(4, quiz.getImage());
+                    ps.setLong(5,quiz.getStatus().getId());
+                    System.out.println( quiz.getUser_id());
+                    ps.setLong(6, quiz.getUser_id());
+
+                    return ps;
+                },
+                keyHolder);
+        return  keyHolder.getKey().longValue();
+//        jdbcTemplate.update(
+//                "INSERT INTO quiz( title, date, description, image, status_id, user_id) VALUES (?, ?, ?, ?, ?, ?);",
+//                quiz.getTitle(),
+//                quiz.getDate(),
+//                quiz.getDescription(),
+//                quiz.getImage(),
+//                quiz.getStatus().getId(),
+//                quiz.getUser()
+//            );
     }
 
     @Override
@@ -75,7 +97,7 @@ public class QuizDaoImpl implements QuizDao{
                 quiz.getDescription(),
                 quiz.getImage(),
                 quiz.getStatus().getId(),
-                quiz.getUser(),
+                quiz.getUser_id(),
                 quiz.getId()
         );
     }

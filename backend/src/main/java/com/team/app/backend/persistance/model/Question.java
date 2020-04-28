@@ -1,5 +1,7 @@
 package com.team.app.backend.persistance.model;
 
+import java.util.List;
+
 public class Question {
     private Long id;
     private Integer time;
@@ -8,6 +10,7 @@ public class Question {
     private byte[] image;
     private QuestionType type;
     private Long quiz_id;
+    private List<OptionObj> options;
 
     public Question(Long id, Integer time, String text, Integer max_points, byte[] image, QuestionType type, Long quiz_id) {
         this.id = id;
@@ -74,5 +77,13 @@ public class Question {
 
     public void setQuiz_id(Long quiz_id) {
         this.quiz_id = quiz_id;
+    }
+
+    public List<OptionObj> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<OptionObj> options) {
+        this.options = options;
     }
 }
