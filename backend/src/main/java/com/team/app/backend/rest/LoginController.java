@@ -55,10 +55,10 @@ public class LoginController {
             response.put("email", user.getEmail());
             response.put("password", user.getPassword());
             response.put("image", user.getImage());
-//            response.put("activate_link", user.getActivate_link());
+
             response.put("status", user.getStatus());
             response.put("role", user.getRole());
-//            response.put("registr_date", user.getRegistr_date());
+
             response.put("username", username);
             response.put("token", token);
 
