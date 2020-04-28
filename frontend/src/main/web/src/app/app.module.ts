@@ -56,7 +56,7 @@ import {UserService} from "./user.service";
     UserCardComponent,
     QuizCreateComponent,
     QuizEditComponent,
-    QuizDashboardComponent
+    QuizDashboardComponent,
     AnnouncementComponent,
     AnnouncementEditComponent
   ],

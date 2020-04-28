@@ -70,20 +70,15 @@
           </form>
           <app-user-card *ngFor="let user of users$ | async" [user]="user"></app-user-card>
 
-
-
         </div>
 <!--        Profile-->
-        <app-user-profile [user]="getUser(param)" [editOnly]="param" *ngIf="tab === 'Profile'"></app-user-profile>
-
-
-
+        <div  *ngIf="tab === 'Profile'" class="main-frame container-fluid my-5 ">
+        <app-user-profile [user]="getUser(param)" [editOnly]="param" ></app-user-profile>
         </div>
-<!--        Profile-->
-        <app-user-profile [user]="getUser(param)" [editOnly]="param" *ngIf="tab === 'Profile'"></app-user-profile>
+
 <!--    Announcement-->
 <!--        <app-announcement *ngIf="tab === 'Announcement'"> </app-announcement>-->
-<app-announcement-edit></app-announcement-edit>
+<!--<app-announcement-edit></app-announcement-edit>-->
 
       </main>
     </div>
