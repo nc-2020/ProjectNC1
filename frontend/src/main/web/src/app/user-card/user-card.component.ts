@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, ContentChild} from '@angular/core';
 import {UserService} from "../user.service";
 import { User } from '../entities/user';
 import { Router } from '@angular/router';
 import { SharedUserDataService } from '../shared-user-data.service';
+import {DashboardComponent} from "../dashboard/dashboard.component";
 
 @Component({
   selector: 'app-user-card',
@@ -22,6 +23,7 @@ edit = false;
   //   role: {name: 'user'},
   //   password: 'lol'
   // };
+
   constructor(private userService: UserService, private router: Router,private sharedData: SharedUserDataService) { }
 
   ngOnInit(): void {

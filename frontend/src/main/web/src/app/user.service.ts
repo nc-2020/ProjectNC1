@@ -4,6 +4,7 @@ import {User} from "./entities/user";
 import {Observable, of, throwError} from "rxjs";
 import {catchError, tap, finalize} from "rxjs/operators";
 import { error } from 'protractor';
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class UserService {
   };
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
   }
   getToken() {
     return this.user.token;

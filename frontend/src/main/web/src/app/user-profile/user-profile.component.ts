@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ContentChild, Input, OnInit} from '@angular/core';
 import {UserService} from "../user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { User } from '../entities/user';
 import { Router } from '@angular/router';
+import {DashboardComponent} from "../dashboard/dashboard.component";
 
 @Component({
   selector: 'app-user-profile',
@@ -18,6 +19,7 @@ export class UserProfileComponent implements OnInit {
 
   error = '';
   message = '';
+
   userForm: FormGroup;
 
 
@@ -59,8 +61,7 @@ export class UserProfileComponent implements OnInit {
   }
   delete() {
     this.userService.deleteUser(this.user).subscribe(response => {this.message = 'User has been deleted!';
-    this.userService.logout().subscribe(
-      _ => this.router.navigateByUrl('/login'))},
+    this.userService.logout().subscribe(resp => window.location.replace('/login')); },
         error => { this.error = error.message});
   }
 

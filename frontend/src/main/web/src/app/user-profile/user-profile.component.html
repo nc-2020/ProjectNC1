@@ -35,7 +35,7 @@
 						</div>
 					</div>
 					<div class="tab-pane" [class.active]="editOnly" id="edit">
-						<form [formGroup]="userForm" role="form">
+						<form [formGroup]="userForm" role="form" method="post">
 							<div class="form-group row">
 								<div class="col-lg-11 ml-lg-3 alert alert-danger" [hidden]="!error">
 									There was a problem. {{error}}.
@@ -97,9 +97,9 @@
               <div class="form-group row">
                   <label class="col-lg-3 col-form-label form-control-label"></label>
                   <div class="col-lg-5">
-                      <input  *ngIf="!editOnly"  type="button" class="btn btn-primary" (click)="update()" value="Save Changes">
-                      <input *ngIf="!editOnly && userRole()==='user'" type="button" class="btn btn-danger" (click)="delete()" value="Delete Account">
-                      <input *ngIf="editOnly" type="submit" class="btn btn-success mt-lg-3" (click)="add()"  value="Add">
+                      <input  *ngIf="!editOnly" name="button_1" type="submit" class="btn btn-primary" (click)="update()" value="Save Changes">
+                      <input *ngIf="!editOnly && userRole()==='user'" name="button_2" type="submit" class="btn btn-danger ml-2" (click)="delete()" value="Delete Account">
+                      <input *ngIf="editOnly" type="submit" name="button_3" class="btn btn-success mt-lg-3" (click)="add()"  value="Add">
                   </div>
               </div>
 						</form>
