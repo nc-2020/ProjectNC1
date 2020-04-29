@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Question} from "../entities/question";
 import {catchError} from "rxjs/operators";
 import {Observable, of} from "rxjs";
+import {UserService} from "../user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class QuestionService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private userService: UserService) {
   }
   // getQuestion(question: Question) {
   //   return this.http.get<Question>(`api/question/get/${question.id}`).pipe(
@@ -46,7 +47,8 @@ export class QuestionService {
   // }
   ///FOR TESTING
   getQuestions(): Observable<Question[]> {
-    return this.http.get<Question[]>(this.questionsUrl)
+    return this.http.get<Question[]>(this.questionsUrl,{ headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(
         catchError(this.handleError<Question[]>('getQuestions', []))
       );
@@ -55,7 +57,8 @@ export class QuestionService {
   /** POST: add a new question to the server */
   createQuestion(question: Question): Observable<Question> {
     console.table(question);
-    return this.http.post<Question>(this.questionsUrl+'/'+question.type.id, question, this.httpOptions).pipe(
+    return this.http.post<Question>(this.questionsUrl+'/'+question.type.id, question, { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
       catchError(this.handleError<Question>('createQuestion'))
     );
   }
@@ -66,7 +69,8 @@ export class QuestionService {
     const id = typeof question === 'number' ? question : question.id;
     const url = `${this.questionsUrl}/${id}`;
 
-    return this.http.delete<Question>(url, this.httpOptions).pipe(
+    return this.http.delete<Question>(url, { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
       catchError(this.handleError<Question>('deleteQuestion'))
     );
   }

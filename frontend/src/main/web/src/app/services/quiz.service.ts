@@ -13,6 +13,7 @@ export class QuizService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
+
   constructor(private http: HttpClient, private userService: UserService) {
   }
   // getQuiz(quiz: Quiz) {
@@ -39,7 +40,8 @@ export class QuizService {
   // }
 ///FOR TESTING
   getQuizes(): Observable<Quiz[]> {
-    return this.http.get<Quiz[]>(this.quizesUrl)
+    return this.http.get<Quiz[]>(this.quizesUrl,{ headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(
         catchError(this.handleError<Quiz[]>('getQuizes', []))
       );
@@ -47,7 +49,8 @@ export class QuizService {
 
   /** POST: add a new quiz to the server */
   createQuiz(quiz: Quiz): Observable<Quiz> {
-    return this.http.post<Quiz>(this.quizesUrl, quiz, this.httpOptions).pipe(
+    return this.http.post<Quiz>(this.quizesUrl, quiz, { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
       catchError(this.handleError<Quiz>('createQuiz'))
     );
   }

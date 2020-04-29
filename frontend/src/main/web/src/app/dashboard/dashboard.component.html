@@ -18,11 +18,6 @@
                 Friends
               </a>
             </li>
-             <!-- <li *ngIf="userRole()=='super admin'" class="nav-item border-bottom">
-               <a class="nav-link"  (click)="changeTab('Users')">
-                 Users
-               </a>
-             </li> -->
              <li *ngIf="user.role.name=='admin'"  class="nav-item border-bottom">
                <a class="nav-link"  (click)="changeTab('Moderators')">
                  Moderators
@@ -72,12 +67,12 @@
 
         </div>
 <!--        Profile-->
-        <div  *ngIf="tab === 'Profile'" class="main-frame container-fluid my-5 ">
-        <app-user-profile [user]="getUser(param)" [editOnly]="param" ></app-user-profile>
-        </div>
+
+        <app-user-profile *ngIf="tab === 'Profile'" [user]="getUser(param)" [editOnly]="param" ></app-user-profile>
+
 
 <!--    Announcement-->
-<!--        <app-announcement *ngIf="tab === 'Announcement'"> </app-announcement>-->
+<app-announcement *ngIf="tab === 'Announcement'"> </app-announcement>
 <!--<app-announcement-edit></app-announcement-edit>-->
 
       </main>
