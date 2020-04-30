@@ -33,7 +33,7 @@
 						</div>
 					</div>
 					<div class="tab-pane" [class.active]="editOnly" id="edit">
-						<form [formGroup]="userForm" role="form" method="post">
+						<form [formGroup]="userForm" role="form" (submit)="submit()">
 							<div class="form-group row">
 								<div class="col-lg-11 ml-lg-3 alert alert-danger" [hidden]="!error">
 									There was a problem. {{error}}.
@@ -48,36 +48,58 @@
 									<input class="form-control" formControlName="firstname" type="text" >
 								</div>
 							</div>
+              <small *ngIf="userForm.get('email').errors.required">
+                First name cannot be empty
+              </small>
 							<div class="form-group row">
 								<label class="col-lg-3 col-form-label form-control-label">Last name</label>
 								<div class="col-lg-9">
 									<input class="form-control" formControlName="lastname" type="text" >
 								</div>
 							</div>
+              <small *ngIf="userForm.get('email').errors.required">
+                Last name cannot be empty
+              </small>
 							<div class="form-group row">
 								<label class="col-lg-3 col-form-label form-control-label">Email</label>
 								<div class="col-lg-9">
 									<input class="form-control" formControlName="email" type="email" >
 								</div>
 							</div>
+              <small *ngIf="userForm.get('email').errors.email">
+                Please fill in a valid email address
+              </small>
+              <small *ngIf="userForm.get('email').errors.required">
+                Email name cannot be empty
+              </small>
 							<div class="form-group row">
 								<label class="col-lg-3 col-form-label form-control-label">Username</label>
 								<div class="col-lg-9">
 									<input class="form-control" formControlName="username" type="text" >
 								</div>
 							</div>
+              <small *ngIf="userForm.get('email').errors.required">
+                Username name cannot be empty
+              </small>
+
 							<div class="form-group row">
                 <label class="col-lg-3 col-form-label form-control-label">Password</label>
                 <div class="col-lg-9">
                     <input class="form-control" formControlName="password" type="password" >
                 </div>
               </div>
+              <small *ngIf="userForm.get('email').errors.required">
+                Password name cannot be empty
+              </small>
               <div class="form-group row">
                   <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
                   <div class="col-lg-9">
                       <input class="form-control" type="password" >
                   </div>
               </div>
+              <small *ngIf="userForm.get('email').errors.required">
+                This field cannot be empty
+              </small>
                 <div *ngIf="editOnly && userRole()==='super admin'" class="form-group row">
                     <div class="form-check">
 						<label class="col-lg-7  form-check-label" for="gridRadios1">
@@ -95,9 +117,9 @@
               <div class="form-group row">
                   <label class="col-lg-3 col-form-label form-control-label"></label>
                   <div class="col-lg-5">
-                      <input  *ngIf="!editOnly" name="button_1" type="submit" class="btn btn-primary" (click)="update()" value="Save Changes">
+                      <input  *ngIf="!editOnly" [disabled]="userForm.invalid" name="button_1" type="submit" class="btn btn-primary" (click)="update()" value="Save Changes">
                       <input *ngIf="!editOnly && userRole()==='user'" name="button_2" type="submit" class="btn btn-danger ml-2" (click)="delete()" value="Delete Account">
-                      <input *ngIf="editOnly" type="submit" name="button_3" class="btn btn-success mt-lg-3" (click)="add()"  value="Add">
+                      <input *ngIf="editOnly" [disabled]="userForm.invalid" type="submit" name="button_3" class="btn btn-success mt-lg-3" (click)="add()"  value="Add">
                   </div>
               </div>
 						</form>
