@@ -35,14 +35,12 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
     );
   }
   ngAfterViewInit() {
-
-
+    this.userCardChild.edit = false;
   }
 
 
   ngAfterViewChecked() {
     if (true === this.userCardChild.edit) {
-
       this.profileSet(false, this.userCardChild.user);
     }
   }
@@ -63,7 +61,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
   }
 
   getUser() {
-
     return this.userService.user;
   }
 

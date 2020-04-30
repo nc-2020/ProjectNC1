@@ -11,16 +11,16 @@ import {Router} from "@angular/router";
 })
 export class UserService {
   authenticated = false;
-  user: User;
-  // user: User = {
-  //   id: '123',
-  //   username: 'lol',
-  //   firstName: 'lol',
-  //   lastName: 'kek',
-  //   email: 'sdad@sdasd.com',
-  //   role: {name: 'super admin'},
-  //   password: 'lol'
-  // };
+  // user: User;
+  user: User = {
+    id: '123',
+    username: 'lol',
+    firstName: 'lol',
+    lastName: 'kek',
+    email: 'sdad@sdasd.com',
+    role: {name: 'super admin'},
+    password: 'lol'
+  };
 
 
   constructor(private http: HttpClient, private router: Router) {
@@ -64,10 +64,7 @@ export class UserService {
   }
 
   login(user): Observable<User> {
-    return this.http.post<any>('http://localhost:8080/api/login', user,{
-      headers: new HttpHeaders().set('Content-Type', 'application/json'),
-      responseType: 'json'
-    }).pipe(
+    return this.http.post<any>('http://localhost:8080/api/login', user).pipe(
       tap(response => {
         this.user = response;
         this.authenticated = true}),

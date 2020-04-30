@@ -11,10 +11,10 @@ import {DashboardComponent} from "../dashboard/dashboard.component";
   styleUrls: ['./user-card.component.css']
 })
 export class UserCardComponent implements OnInit {
-edit = false;
+
+  edit = false;
   @Input()
   user: User;
-
 
   constructor(private userService: UserService, private router: Router,private sharedData: SharedUserDataService) { }
 
