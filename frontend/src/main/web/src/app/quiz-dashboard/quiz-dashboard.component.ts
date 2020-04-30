@@ -23,11 +23,19 @@ export class QuizDashboardComponent implements OnInit {
 
   getUserQuizzes(): void {
     this.quizService.getUserQuizzes()
-      .subscribe(quizess => this.quizzes = quizess);
+      .subscribe(quizzes => this.quizzes = quizzes);
   }
 
   deleteQuiz(quiz: Quiz) {
     this.quizzes = this.quizzes.filter(q => q !== quiz);
     this.quizService.deleteQuiz(quiz);
+  }
+
+  quizTab(tab: string) {
+    if (tab === 'Quizzes') {
+      this.getQuizzes();
+    } else if (tab === 'User quizzes') {
+      this.getUserQuizzes();
+    }
   }
 }
