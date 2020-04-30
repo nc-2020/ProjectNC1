@@ -162,11 +162,3 @@ button {
     text-rendering: auto;
     line-height: 1;
 }
-
-input.ng-touched.ng-invalid {
-  border:solid red 1px;
-}
-
-input.ng-touched.ng-valid {
-  border:solid green 1px;
-}

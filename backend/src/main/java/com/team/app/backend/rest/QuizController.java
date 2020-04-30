@@ -77,10 +77,16 @@ public class QuizController {
     }
 
 
-    @GetMapping("/quiz/quest/{id}")
-    public List<Question> questions(@PathVariable("id") long id) {
+//    @GetMapping("/quiz/quest/{id}")
+//    public List<Question> questions(@PathVariable("id") long id) {
+//        return quizService.getQuizQuestion(id);
+//    }
+
+    @GetMapping("/questions/{quiz_id}")
+    public List<Question> questions(@PathVariable("quiz_id") long id) {
         return quizService.getQuizQuestion(id);
     }
+
 
     @GetMapping("/quiz/{id}")
     public Quiz quiz(@PathVariable("id") long id) {
