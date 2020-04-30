@@ -99,7 +99,7 @@ public class QuizController {
         return quizService.getAllQuizes();
     }
 
-    @GetMapping("/user/quiz/{id}")
+    @GetMapping("/quiz/user/{id}")
     public List<Quiz> userQuizes(@PathVariable("id") long id) {
         return quizService.getUserQuizes(id);
     }
