@@ -6,7 +6,8 @@
 				<div class="title">
 					Create a quiz
 				</div>
-			</div>
+      </div>
+
       <form [formGroup]="quizForm" novalidate (ngSubmit)="submit()">
         <div class="form">
 
@@ -14,7 +15,7 @@
             <div class="quiz-name-wrapper">
               <div class="quiz-name-input kr2-textfield">
                 <label>1. Name this quiz</label>
-                <input class="form-control" name="title" formControlName="title" type="text" id="name-input" placeholder="Quiz name" data-qtest="quiz-name-input-field" maxlength="60">
+                <input class="form-control" name="title" formControlName="title" type="text" id="name-input" placeholder="Quiz name" data-qtest="quiz-name-input-field" maxlength="20">
 
                 <div class="quiz-name-validation"
                      *ngIf="quizForm.controls['title'].invalid && quizForm.controls['title'].touched">
@@ -23,11 +24,12 @@
               </div>
             </div>
           </div>
+
           <div class="form-group">
             <div class="quiz-name-wrapper">
               <div class="quiz-name-input kr2-textfield">
                 <label>2. Description</label>
-                <input class="form-control" name="description" formControlName="description" type="text" id="name-input" placeholder="Quiz description" data-qtest="quiz-name-input-field" maxlength="60">
+                <input class="form-control" name="description" formControlName="description" type="text" id="name-input" placeholder="Quiz description" data-qtest="quiz-name-input-field" maxlength="20">
 
                 <div class="quiz-description-validation"
                      *ngIf="quizForm.controls['description'].invalid && quizForm.controls['description'].touched">
@@ -45,7 +47,6 @@
           </div>
         </div>
       </form>
-
 
 		</div>
 

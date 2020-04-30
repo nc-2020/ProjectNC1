@@ -26,6 +26,13 @@ export class QuizService {
       );
   }
 
+  getUserQuizzes(): Observable<Quiz[]> {
+    return this.http.get<Quiz[]>(this.quizzesUrl + "/user/" + this.userService.user.id,{ headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+      .pipe(
+        catchError(this.handleError<Quiz[]>('getUserQuizzes', []))
+      );
+  }
   /** POST: add a new quiz to the server */
   createQuiz(quiz: Quiz): Observable<Quiz> {
     return this.http.post<Quiz>(this.quizzesUrl, quiz, { headers: new HttpHeaders()
