@@ -14,7 +14,7 @@ import {QuizDashboardComponent} from "./quiz-dashboard/quiz-dashboard.component"
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home'},
   { path: 'dashboard/:tab', component: DashboardComponent},
-  { path: 'dashboard', pathMatch: 'full', redirectTo: '/dashboard/quizzes'},
+  { path: 'dashboard', pathMatch: 'full', redirectTo: '/dashboard/Quizzes'},
   { path: 'home', component: HomeComponent},
   { path: 'login', component: AuthorizationComponent},
   { path: 'signup', component: RegistrationComponent },
