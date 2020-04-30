@@ -14,15 +14,7 @@ export class UserCardComponent implements OnInit {
 edit = false;
   @Input()
   user: User;
-  // user: User = {
-  //   id: '12',
-  //   username: 'lol',
-  //   firstName: 'lol',
-  //   lastName: 'kjk',
-  //   email: 'mompop@sdasd.com',
-  //   role: {name: 'user'},
-  //   password: 'lol'
-  // };
+
 
   constructor(private userService: UserService, private router: Router,private sharedData: SharedUserDataService) { }
 
@@ -31,9 +23,6 @@ edit = false;
   }
   goToProfile() {
     this.edit = true;
-    this.sharedData.setUserData(this.user);
-    this.router.navigateByUrl('dashboard/Profile');
-
   }
   userRole() {
     return this.userService.user.role.name;

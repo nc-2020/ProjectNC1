@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
   user: User;
   users$: Observable<User[]>;
   private searchTerms = new Subject<string>();
-  @ViewChild(UserCardComponent, {static: false}) viewChild: UserCardComponent;
+  @ViewChild(UserCardComponent, {static: false}) userCardChild: UserCardComponent;
 
   constructor(private userService: UserService, private location: Location, private route: ActivatedRoute,
               private router: Router,private sharedData: SharedUserDataService) { }
@@ -39,23 +39,11 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
 
   }
 
-  getUserName() {
-    return this.userService.user.firstName;
-
-  }
-  getUserLastName() {
-    return this.userService.user.lastName;
-  }
-  getUserRole() {
-    return this.userService.user.role.name;
-  }
 
   ngAfterViewChecked() {
-    // viewChild is updated after the view has been checked
-    if (true === this.viewChild.edit) {
+    if (true === this.userCardChild.edit) {
 
-      this.profileSet(false, this.viewChild.user);
-
+      this.profileSet(false, this.userCardChild.user);
     }
   }
 
@@ -77,5 +65,15 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
   getUser() {
 
     return this.userService.user;
+  }
+
+  getUserName() {
+    return this.userService.user.firstName;
+  }
+  getUserLastName() {
+    return this.userService.user.lastName;
+  }
+  getUserRole() {
+    return this.userService.user.role.name;
   }
 }
