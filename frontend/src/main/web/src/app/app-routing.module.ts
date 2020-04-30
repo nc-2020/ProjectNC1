@@ -9,6 +9,7 @@ import {UserProfileComponent} from "./user-profile/user-profile.component"
 import {QuizCreateComponent} from "./quiz-create/quiz-create.component";
 import {QuizEditComponent} from "./quiz-edit/quiz-edit.component";
 import {QuizDashboardComponent} from "./quiz-dashboard/quiz-dashboard.component";
+import {QuizComponent} from "./quiz/quiz.component";
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'quiz-create', component: QuizCreateComponent },
   { path: 'quiz-edit/:id', component: QuizEditComponent },
   { path: 'quiz-dashboard', component: QuizDashboardComponent },
+  { path: 'quiz', component: QuizComponent }
 ];
 
 @NgModule({

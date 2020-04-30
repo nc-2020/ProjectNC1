@@ -38,12 +38,12 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
     );
   }
   ngAfterViewInit() {
-    this.userCardChild.edit = false;
+
   }
 
 
   ngAfterViewChecked() {
-    if (true === this.userCardChild.edit) {
+    if (this.userCardChild && true === this.userCardChild.edit) {
       this.profileSet(false, this.userCardChild.user);
     }
   }
