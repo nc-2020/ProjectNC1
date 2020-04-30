@@ -47,59 +47,74 @@
 								<div class="col-lg-9">
 									<input class="form-control" formControlName="firstname" type="text" >
 								</div>
+<!--                <div *ngIf="userForm.get('firstname').invalid && userForm.get('firstname').touched" class="validation">-->
+<!--                  <small *ngIf="userForm.get('firstname').errors.required">-->
+<!--                    First name cannot be empty-->
+<!--                  </small>-->
+<!--                </div>-->
 							</div>
-              <small *ngIf="userForm.get('email').errors.required">
-                First name cannot be empty
-              </small>
+
 							<div class="form-group row">
 								<label class="col-lg-3 col-form-label form-control-label">Last name</label>
 								<div class="col-lg-9">
 									<input class="form-control" formControlName="lastname" type="text" >
 								</div>
+<!--                <div *ngIf="userForm.get('lastname').invalid && userForm.get('lastname').touched" class="validation">-->
+<!--                  <small *ngIf="userForm.get('lastname').errors.required">-->
+<!--                    Last name cannot be empty-->
+<!--                  </small>-->
+<!--                </div>-->
 							</div>
-              <small *ngIf="userForm.get('email').errors.required">
-                Last name cannot be empty
-              </small>
 							<div class="form-group row">
 								<label class="col-lg-3 col-form-label form-control-label">Email</label>
 								<div class="col-lg-9">
 									<input class="form-control" formControlName="email" type="email" >
 								</div>
+<!--                <div *ngIf="userForm.get('email').invalid && userForm.get('email').touched" class="validation">-->
+<!--                  <small *ngIf="userForm.get('email').errors.email">-->
+<!--                    Please fill in a valid email address-->
+<!--                  </small>-->
+<!--                  <small *ngIf="userForm.get('email').errors.required">-->
+<!--                    Email name cannot be empty-->
+<!--                  </small>-->
+<!--                </div>-->
 							</div>
-              <small *ngIf="userForm.get('email').errors.email">
-                Please fill in a valid email address
-              </small>
-              <small *ngIf="userForm.get('email').errors.required">
-                Email name cannot be empty
-              </small>
 							<div class="form-group row">
 								<label class="col-lg-3 col-form-label form-control-label">Username</label>
 								<div class="col-lg-9">
 									<input class="form-control" formControlName="username" type="text" >
 								</div>
-							</div>
-              <small *ngIf="userForm.get('email').errors.required">
-                Username name cannot be empty
-              </small>
-
+<!--                <div *ngIf="userForm.get('useranme').invalid && userForm.get('useranme').touched" class="validation">-->
+<!--                  <small *ngIf="userForm.get('useranme').errors.required">-->
+<!--                    Username name cannot be empty-->
+<!--                  </small>-->
+<!--                </div>-->
+              </div>
 							<div class="form-group row">
                 <label class="col-lg-3 col-form-label form-control-label">Password</label>
                 <div class="col-lg-9">
                     <input class="form-control" formControlName="password" type="password" >
                 </div>
+<!--                <div *ngIf="userForm.get('password').invalid && userForm.get('password').touched" class="validation">-->
+<!--                  <small *ngIf="userForm.get('password').errors.required">-->
+<!--                    Password name cannot be empty-->
+<!--                  </small>-->
+<!--                </div>-->
               </div>
-              <small *ngIf="userForm.get('email').errors.required">
-                Password name cannot be empty
-              </small>
               <div class="form-group row">
                   <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
                   <div class="col-lg-9">
-                      <input class="form-control" type="password" >
+                      <input class="form-control" formControlName="confirmPassword" type="password" >
                   </div>
+<!--                <div *ngIf="userForm.get('confirmpass').invalid && userForm.get('confirmpass').touched" class="validation">-->
+<!--                  <small *ngIf="userForm.get('confirmpass').errors.required">-->
+<!--                    This field cannot be empty-->
+<!--                  </small>-->
+<!--                <small *ngIf="registrationForm.get('confirmPassword').errors.mustMatch">-->
+<!--                  Passwords must match-->
+<!--                </small>-->
+<!--                </div>-->
               </div>
-              <small *ngIf="userForm.get('email').errors.required">
-                This field cannot be empty
-              </small>
                 <div *ngIf="editOnly && userRole()==='super admin'" class="form-group row">
                     <div class="form-check">
 						<label class="col-lg-7  form-check-label" for="gridRadios1">
