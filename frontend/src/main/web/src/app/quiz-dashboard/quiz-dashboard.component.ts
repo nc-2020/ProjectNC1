@@ -8,18 +8,21 @@ import { QuizService } from '../services/quiz.service';
   styleUrls: ['./quiz-dashboard.component.css']
 })
 export class QuizDashboardComponent implements OnInit {
-  quizes: Quiz[] = [];
+  quizzes: Quiz[] = [];
 
   constructor(private quizService: QuizService) { }
 
   ngOnInit(): void {
-    this.getQuizes();
+    this.getQuizzes();
   }
 
-  getQuizes(): void {
-    this.quizService.getQuizes()
-      .subscribe(quizes => this.quizes = quizes);
+  getQuizzes(): void {
+    this.quizService.getQuizzes()
+      .subscribe(quizzes => this.quizzes = quizzes);
   }
 
-
+  deleteQuiz(quiz: Quiz) {
+    this.quizzes = this.quizzes.filter(q => q !== quiz);
+    this.quizService.deleteQuiz(quiz);
+  }
 }
