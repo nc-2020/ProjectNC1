@@ -9,16 +9,15 @@ import {UserService} from "../user.service";
   providedIn: 'root'
 })
 export class QuestionService {
-  private questionsUrl = 'api/question';  // URL to web api
+  private questionsUrl = 'http://localhost:8080/api/question';  // URL to web api
   constructor(private http: HttpClient, private userService: UserService) {
   }
   // const httpOptions = {
   //   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   //     .set('Authorization',  `Bearer_${this.userService.getToken()}`)
   // };
-
   getQuestions(quiz_id): Observable<Question[]> {
-    return this.http.get<Question[]>(`api/questions/${quiz_id}`, { headers: new HttpHeaders()
+    return this.http.get<Question[]>(`http://localhost:8080/api/questions/${quiz_id}`, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(
         catchError(this.handleError<Question[]>('getQuestions', []))
@@ -39,12 +38,9 @@ export class QuestionService {
     );
   }
 
-
-
   deleteQuestion(question: Question | number): Observable<Question> {
     const id = typeof question === 'number' ? question : question.id;
     const url = `${this.questionsUrl}/${id}`;
-
     return this.http.delete<Question>(url, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
       catchError(this.handleError<Question>('deleteQuestion'))
