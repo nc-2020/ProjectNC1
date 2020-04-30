@@ -64,5 +64,8 @@ export class UserProfileComponent implements OnInit {
     this.userService.logout().subscribe(resp => window.location.replace('/login')); },
         error => { this.error = error.message});
   }
+  submit() {
+
+  }
 
 }
