@@ -7,14 +7,21 @@
         </li>
         <a class="col-lg-4">
           <div *ngFor="let quiz of quizzes" class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-            <a routerLink="/quiz-edit/{{quiz.id}}">
-              <div class="card-header"><img src="../../assets/logo_brainduel.png" width="110" height="122"></div>
-            </a>
+            <div class="card-header"><img src="../../assets/logo_brainduel.png" width="110" height="122"></div>
             <div class="card-body">
               <h5 class="card-title">{{quiz.title}}</h5>
               <p class="card-text">{{quiz.description}}</p>
               <!--        <button class="delete-btn" title="delete question"-->
               <!--                (click)="deleteQuiz(quiz)">x</button>-->
+
+              <div class="btn-group mr-2" role="group" aria-label="First group">
+                <a href="#">
+                  <button type="button" class="btn btn-secondary mr-3">Play</button>
+                </a>
+                <a routerLink="/quiz-edit/{{quiz.id}}">
+                  <button type="button" class="btn btn-secondary">Edit</button>
+                </a>
+              </div>
             </div>
           </div>
         </a>
