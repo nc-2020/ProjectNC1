@@ -11,16 +11,16 @@ import {Router} from "@angular/router";
 })
 export class UserService {
   authenticated = false;
-  // user: User;
-  user: User = {
-    id: '123',
-    username: 'lol',
-    firstName: 'lol',
-    lastName: 'kek',
-    email: 'sdad@sdasd.com',
-    role: {name: 'super admin'},
-    password: 'lol'
-  };
+  user: User;
+  // user: User = {
+  //   id: '123',
+  //   username: 'lol',
+  //   firstName: 'lol',
+  //   lastName: 'kek',
+  //   email: 'sdad@sdasd.com',
+  //   role: {name: 'super admin'},
+  //   password: 'lol'
+  // };
 
 
   constructor(private http: HttpClient, private router: Router) {

@@ -55,6 +55,12 @@
       </nav>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-9 px-1 align-self-start" >
+
+        <!--       Quizzes-->
+        <app-quiz-dashboard *ngIf="tab === 'Quizzes'"></app-quiz-dashboard>
+
+
+
 <!--        Users search menu-->
         <div *ngIf="tab === 'Users' || tab === 'Friends' || tab === 'Admins/Moderators' || tab==='Moderators'" class="main-frame container-fluid my-5 ">
           <form class="form-inline ml-3 my-2 my-lg-0 border-bottom" >
