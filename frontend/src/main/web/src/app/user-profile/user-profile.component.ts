@@ -1,8 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ContentChild, Input, OnInit} from '@angular/core';
 import {UserService} from "../user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { User } from '../entities/user';
 import { Router } from '@angular/router';
+import {DashboardComponent} from "../dashboard/dashboard.component";
+import {MustMatchValidator} from "../registration/_helpers/must-match.validator";
 
 @Component({
   selector: 'app-user-profile',
@@ -18,6 +20,7 @@ export class UserProfileComponent implements OnInit {
 
   error = '';
   message = '';
+
   userForm: FormGroup;
 
 
@@ -30,9 +33,9 @@ export class UserProfileComponent implements OnInit {
       email: [this.user.email, [Validators.required, Validators.minLength(3), Validators.email]],
       username: [this.user.username, [Validators.required, Validators.minLength(3)]],
       password: [this.user.password, [Validators.required, Validators.minLength(3)]],
+      confirmPassword: ['',[Validators.required, Validators.minLength(3)]],
       role: [this.user.role.name]
-    });
-
+    },{ validators: MustMatchValidator.passwordConfirming});
   }
   userRole() {
     return this.userService.user.role.name;
@@ -59,9 +62,11 @@ export class UserProfileComponent implements OnInit {
   }
   delete() {
     this.userService.deleteUser(this.user).subscribe(response => {this.message = 'User has been deleted!';
-    this.userService.logout().subscribe(
-      _ => this.router.navigateByUrl('/login'))},
+    this.userService.logout().subscribe(resp => window.location.replace('/login')); },
         error => { this.error = error.message});
+  }
+  submit() {
+
   }
 
 }

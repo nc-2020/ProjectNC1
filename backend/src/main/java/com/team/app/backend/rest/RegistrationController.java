@@ -27,21 +27,21 @@ public class RegistrationController {
     UserDao userDao;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<String> registerUserAccount(
+    public ResponseEntity registerUserAccount(
             @RequestBody UserRegistrationDto userDto) {
 
         try {
             userService.registerNewUserAccount(userDto);
-        } catch (UserAlreadyExistsException e) {
-            return new ResponseEntity<>(
-                    "User with username " + userDto.getUsername() + " already exists.",
-                    HttpStatus.CONFLICT
-            );
+
         }
-        return new ResponseEntity<>(
-                "User with username " + userDto.getUsername() + " successfully registered.",
-                HttpStatus.OK
-        );
+        catch (UserAlreadyExistsException e) {
+            return  ResponseEntity.badRequest().body(
+                    "User with username " + userDto.getUsername() + " already exists.");
+
+        }
+        return ResponseEntity.ok().body(new HashMap<String,String>());
+
+
     }
 
 

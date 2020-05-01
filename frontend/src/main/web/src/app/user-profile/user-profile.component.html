@@ -1,6 +1,5 @@
-<section class="min-vh-100" style="margin-top: 80px;">
+<section class="min-vh-100" style="margin-top: 100px;">
 	<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-	<!-- <img src="https://img.icons8.com/plasticine/100/000000/user-male-circle.png" width="200" height="200"> -->
 	<div class="container">
 		<div class="row my-2">
 			<div class="col-lg-4 order-lg-1 text-center">
@@ -10,7 +9,7 @@
 	                <input type="file" id="file" class="custom-file-input">
 	                <span class="custom-file-control">Choose file</span>
 	            </label>
-	        </div>
+      </div>
 			<div class="col-lg-8 order-lg-2">
 				<ul class="nav nav-tabs">
 					<li *ngIf="!editOnly" class="nav-item">
@@ -27,16 +26,14 @@
 							<div class="col-md-6">
 								<h6>{{user.username}}</h6>
 								<p>
-
                                 {{user.firstName}}, {{user.lastName}}
-
 								</p>
 								<h6>{{user.email}}</h6>
 							</div>
 						</div>
 					</div>
 					<div class="tab-pane" [class.active]="editOnly" id="edit">
-						<form [formGroup]="userForm" role="form">
+						<form [formGroup]="userForm" role="form" (submit)="submit()">
 							<div class="form-group row">
 								<div class="col-lg-11 ml-lg-3 alert alert-danger" [hidden]="!error">
 									There was a problem. {{error}}.
@@ -50,36 +47,73 @@
 								<div class="col-lg-9">
 									<input class="form-control" formControlName="firstname" type="text" >
 								</div>
+<!--                <div *ngIf="userForm.get('firstname').invalid && userForm.get('firstname').touched" class="validation">-->
+<!--                  <small *ngIf="userForm.get('firstname').errors.required">-->
+<!--                    First name cannot be empty-->
+<!--                  </small>-->
+<!--                </div>-->
 							</div>
+
 							<div class="form-group row">
 								<label class="col-lg-3 col-form-label form-control-label">Last name</label>
 								<div class="col-lg-9">
 									<input class="form-control" formControlName="lastname" type="text" >
 								</div>
+<!--                <div *ngIf="userForm.get('lastname').invalid && userForm.get('lastname').touched" class="validation">-->
+<!--                  <small *ngIf="userForm.get('lastname').errors.required">-->
+<!--                    Last name cannot be empty-->
+<!--                  </small>-->
+<!--                </div>-->
 							</div>
 							<div class="form-group row">
 								<label class="col-lg-3 col-form-label form-control-label">Email</label>
 								<div class="col-lg-9">
 									<input class="form-control" formControlName="email" type="email" >
 								</div>
+<!--                <div *ngIf="userForm.get('email').invalid && userForm.get('email').touched" class="validation">-->
+<!--                  <small *ngIf="userForm.get('email').errors.email">-->
+<!--                    Please fill in a valid email address-->
+<!--                  </small>-->
+<!--                  <small *ngIf="userForm.get('email').errors.required">-->
+<!--                    Email name cannot be empty-->
+<!--                  </small>-->
+<!--                </div>-->
 							</div>
 							<div class="form-group row">
 								<label class="col-lg-3 col-form-label form-control-label">Username</label>
 								<div class="col-lg-9">
 									<input class="form-control" formControlName="username" type="text" >
 								</div>
-							</div>
+<!--                <div *ngIf="userForm.get('useranme').invalid && userForm.get('useranme').touched" class="validation">-->
+<!--                  <small *ngIf="userForm.get('useranme').errors.required">-->
+<!--                    Username name cannot be empty-->
+<!--                  </small>-->
+<!--                </div>-->
+              </div>
 							<div class="form-group row">
                 <label class="col-lg-3 col-form-label form-control-label">Password</label>
                 <div class="col-lg-9">
                     <input class="form-control" formControlName="password" type="password" >
                 </div>
+<!--                <div *ngIf="userForm.get('password').invalid && userForm.get('password').touched" class="validation">-->
+<!--                  <small *ngIf="userForm.get('password').errors.required">-->
+<!--                    Password name cannot be empty-->
+<!--                  </small>-->
+<!--                </div>-->
               </div>
               <div class="form-group row">
                   <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
                   <div class="col-lg-9">
-                      <input class="form-control" type="password" >
+                      <input class="form-control" formControlName="confirmPassword" type="password" >
                   </div>
+<!--                <div *ngIf="userForm.get('confirmpass').invalid && userForm.get('confirmpass').touched" class="validation">-->
+<!--                  <small *ngIf="userForm.get('confirmpass').errors.required">-->
+<!--                    This field cannot be empty-->
+<!--                  </small>-->
+<!--                <small *ngIf="registrationForm.get('confirmPassword').errors.mustMatch">-->
+<!--                  Passwords must match-->
+<!--                </small>-->
+<!--                </div>-->
               </div>
                 <div *ngIf="editOnly && userRole()==='super admin'" class="form-group row">
                     <div class="form-check">
@@ -98,9 +132,9 @@
               <div class="form-group row">
                   <label class="col-lg-3 col-form-label form-control-label"></label>
                   <div class="col-lg-5">
-                      <input  *ngIf="!editOnly"  type="button" class="btn btn-primary" (click)="update()" value="Save Changes">
-                      <input *ngIf="!editOnly && userRole()==='user'" type="button" class="btn btn-danger" (click)="delete()" value="Delete Account">
-                      <input *ngIf="editOnly" type="submit" class="btn btn-success mt-lg-3" (click)="add()"  value="Add">
+                      <input  *ngIf="!editOnly" [disabled]="userForm.invalid" name="button_1" type="submit" class="btn btn-primary" (click)="update()" value="Save Changes">
+                      <input *ngIf="!editOnly && userRole()==='user'" name="button_2" type="submit" class="btn btn-danger ml-2" (click)="delete()" value="Delete Account">
+                      <input *ngIf="editOnly" [disabled]="userForm.invalid" type="submit" name="button_3" class="btn btn-success mt-lg-3" (click)="add()"  value="Add">
                   </div>
               </div>
 						</form>
@@ -112,101 +146,3 @@
 </section>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<hr>-->
-<!--<div class="container bootstrap snippet">-->
-<!--  <div class="row">-->
-<!--    <div class="col-sm-10"><h1>User name</h1></div>-->
-<!--  </div>-->
-<!--  <div class="row">-->
-<!--    <div class="col-sm-3">&lt;!&ndash;left col&ndash;&gt;-->
-<!--      <div class="text-center">-->
-<!--        <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">-->
-<!--        <h6>Upload a different photo...</h6>-->
-<!--        <input type="file" class="text-center center-block file-upload">-->
-<!--      </div><br>-->
-<!--    </div>&lt;!&ndash;/col-3&ndash;&gt;-->
-<!--    <div class="col-sm-9">-->
-<!--          <hr>-->
-<!--          <form class="form" action="##" method="post" id="profileForm">-->
-<!--            <div class="row form-group">-->
-<!--              <div class="col-xs-6">-->
-<!--                <label for="first_name"><h4>First name</h4></label>-->
-<!--                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name" title="enter your first name if any.">-->
-<!--              </div>-->
-<!--              <div class="col-xs-6">-->
-<!--                <label for="last_name"><h4>Last name</h4></label>-->
-<!--                <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name" title="enter your last name if any.">-->
-<!--              </div>-->
-<!--            </div>-->
-
-<!--            <div class="row">-->
-<!--              <div class="col-xs-6">-->
-<!--                <label for="phone"><h4>Phone</h4></label>-->
-<!--                <input type="text" class="form-control" name="phone" id="phone" placeholder="enter phone" title="enter your phone number if any.">-->
-<!--              </div>-->
-<!--              <div class="col-xs-6">-->
-<!--                <label for="email"><h4>Email</h4></label>-->
-<!--                <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com" title="enter your email.">-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-
-<!--              <div class="col-xs-6">-->
-<!--                <label for="email"><h4>Location</h4></label>-->
-<!--                <input type="email" class="form-control" id="location" placeholder="somewhere" title="enter a location">-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-
-<!--              <div class="col-xs-6">-->
-<!--                <label for="password"><h4>Password</h4></label>-->
-<!--                <input type="password" class="form-control" name="password" id="password" placeholder="password" title="enter your password.">-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-
-<!--              <div class="col-xs-6">-->
-<!--                <label for="password2"><h4>Verify</h4></label>-->
-<!--                <input type="password" class="form-control" name="password2" id="password2" placeholder="password2" title="enter your password2.">-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--              <div class="col-xs-12">-->
-<!--                <br>-->
-<!--                <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>-->
-<!--                <button class="btn bg-danger btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </form>-->
-
-<!--          <hr>-->
-
-
-<!--  </div>&lt;!&ndash;/col-9&ndash;&gt;-->
-<!--</div>&lt;!&ndash;/row&ndash;&gt;-->
