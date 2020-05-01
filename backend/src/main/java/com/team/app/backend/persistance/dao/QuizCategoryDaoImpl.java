@@ -50,4 +50,14 @@ public class QuizCategoryDaoImpl implements QuizCategoryDao {
     public void delete(Long id) {
 
     }
+
+    @Override
+    public void addQuizToCategory(Long quiz_id, Long cat_id) {
+        jdbcTemplate.update(
+                "INSERT INTO quiz_to_categ(cat_id, quiz_id)VALUES (?, ?)"
+                ,cat_id
+                ,quiz_id
+                );
+
+    }
 }

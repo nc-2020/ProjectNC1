@@ -10,13 +10,13 @@ public class QuizAddDto {
     private String description;
     private byte[] image;
     private int user_id;
-    private List<QuizCategory> categories;
+    private List<Long> categories;
 
-    public List<QuizCategory> getCategories() {
+    public List<Long> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<QuizCategory> categories) {
+    public void setCategories(List<Long> categories) {
         this.categories = categories;
     }
 

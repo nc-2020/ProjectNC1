@@ -10,4 +10,6 @@ public interface QuizCategoryDao {
     List<QuizCategory> getAll();
     void update(QuizCategory announcement);
     void delete(Long id);
+
+    void addQuizToCategory(Long quiz_id,Long cat_id);
 }
