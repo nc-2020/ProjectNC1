@@ -68,16 +68,10 @@
           <app-quiz-dashboard *ngIf="tab === 'Quizzes'" class="mt-5"></app-quiz-dashboard>
         </div>
 <!--        Profile-->
-<<<<<<< HEAD
-        <app-user-profile [user]="getUser(param)" [editOnly]="param" *ngIf="tab === 'Profile'"></app-user-profile>
-        <div  *ngIf="tab === 'Profile'" class="main-frame container-fluid my-5 ">
-        <app-user-profile [user]="getUser(param)" [editOnly]="param" ></app-user-profile>
-        </div>
-=======
 
         <app-user-profile *ngIf="tab === 'Profile' || tab === 'AddProfile'" [user]="user" [editOnly]="tab === 'Profile'? false : true" ></app-user-profile>
 
->>>>>>> upstream/dev
+
 
 <!--    Announcement-->
 <app-announcement *ngIf="tab === 'Announcement'"> </app-announcement>
