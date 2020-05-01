@@ -41,7 +41,7 @@ public class QuestionDaoImpl implements QuestionDao {
     @Override
     public Question getQuestion(Long id) {
         return jdbcTemplate.queryForObject(
-                "SELECT Q.id, Q.time, Q.text, Q.max_points, Q.image, Q.type_id, QT.name AS type_name, Q.quiz_id FROM question Q INNER JOIN quest_type QT ON Q.type_id=QT.id",
+                "SELECT Q.id, Q.time, Q.text, Q.max_points, Q.image, Q.type_id, QT.name AS type_name, Q.quiz_id FROM question Q INNER JOIN quest_type QT ON Q.type_id=QT.id WHERE Q.id = ?",
                 new Object[]{id},
                 questionRowMapper
         );

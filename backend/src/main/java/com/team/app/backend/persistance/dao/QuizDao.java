@@ -12,6 +12,8 @@ public interface QuizDao {
 
     List<Quiz> getApproved();
 
+    List<Quiz> getCategoryQuizes(String category);
+
     List<Quiz> searchQuizes(String category, String searchstring);
 
     List<Quiz> getAll();

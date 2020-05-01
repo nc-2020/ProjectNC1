@@ -95,6 +95,10 @@ public class QuizController {
     public List<Quiz> approvedQuizes() {
         return quizService.getApprovedQuizes();
     }
+    @GetMapping("quiz/category/{category}")
+    public List<Quiz> categoryQuizes(@PathVariable("category") String category) {
+        return quizService.getCategoryQuizes(category);
+    }
 
     @GetMapping("/user/quiz/{id}")
     public List<Quiz> userQuizes(@PathVariable("id") long id) {
@@ -103,6 +107,7 @@ public class QuizController {
 
     @GetMapping("/quiz/search/{category}/{searchstring}")
     public List<Quiz> searchQuizes(@PathVariable("category") String category,@PathVariable("searchstring") String searchstring) {
+        System.out.println(category+" "+searchstring);
         return quizService.searchQuizes(category,searchstring);
     }
 }
