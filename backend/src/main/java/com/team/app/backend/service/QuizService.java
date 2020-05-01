@@ -25,6 +25,12 @@ public interface QuizService {
 
     List<Quiz> getUserQuizes(Long id);
 
+    List<Quiz> getApprovedQuizes();
+
+    List<Quiz> getCategoryQuizes(String category);
+
+    List<Quiz> searchQuizes(String category,String searchstring);
+
     List<Question> getQuizQuestion(Long id);
 
     Question getQuestion(Long id);

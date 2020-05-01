@@ -10,6 +10,19 @@ public class Quiz {
     private byte[] image;
     private QuizStatus status;
     private Long user_id;
+    private String quiz_author;
+
+    public void setStatus(QuizStatus status) {
+        this.status = status;
+    }
+
+    public String getQuiz_author() {
+        return quiz_author;
+    }
+
+    public void setQuiz_author(String quiz_author) {
+        this.quiz_author = quiz_author;
+    }
 
     public Quiz() {
     }
