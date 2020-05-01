@@ -20,6 +20,9 @@ export class QuizCreateComponent implements OnInit {
     'description': ['', [Validators.required, Validators.maxLength(30)]]
   })
 
+  toppings = new FormControl();
+  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+
   constructor(
     private fb: FormBuilder,
     private location: Location,

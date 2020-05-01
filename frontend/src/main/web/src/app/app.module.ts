@@ -25,6 +25,8 @@ import { AnnouncementEditComponent } from './announcement-edit/announcement-edit
 import {Observable} from "rxjs";
 import {UserService} from "./user.service";
 import { QuizComponent } from './quiz/quiz.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
 
 
 
@@ -68,7 +70,9 @@ import { QuizComponent } from './quiz/quiz.component';
     AppRoutingModule,
     UserProfileRoutingModule,
     DragDropModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

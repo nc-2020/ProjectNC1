@@ -46,6 +46,13 @@
             <button [disabled]="quizForm.invalid" class="save-btn" data-qtest="create-quiz-btn" (click)="createQuiz()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Next</span></button>
           </div>
         </div>
+
+        <mat-form-field>
+          <mat-label>Toppings</mat-label>
+          <mat-select [formControl]="toppings" multiple>
+            <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </form>
 
 		</div>
