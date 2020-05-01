@@ -17,7 +17,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 export class QuizCreateComponent implements OnInit {
   quizForm = this.fb.group({
     'title': ['', [Validators.required, Validators.maxLength(20)]],
-    'description': ['', Validators.required, Validators.maxLength(30)]
+    'description': ['', [Validators.required, Validators.maxLength(30)]]
   })
 
   constructor(

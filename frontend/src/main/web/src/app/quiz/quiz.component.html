@@ -4,7 +4,7 @@
     <nav class="w-100 navbar-expand-md">
         <ul class="navbar-nav  justify-content-between">
           <li class="nav-item">
-            <label class="ml-2">Question 1/10</label>
+            <label class="ml-2">Question {{indexQuestion + 1}}/{{questions.length}}</label>
           </li>
           <li class="nav-item">
             <label class="mr-2"> Time left 00:00</label>
@@ -16,23 +16,24 @@
         <div class="container " id="bod2">
           <div class="row mt-2">
             <div class="col text-right">
-            <button class="btn text-right my-1 btn-primary">Skip</button>
+            <button (click)="nextQuestion()" class="btn text-right my-1 btn-primary">Skip</button>
             </div>
           </div>
           <div class="row mt-1 justify-content-center">
-            <div calss="col-3  col-sm-2 col-md-2 col-lg-2">
-              <img src="https://cdn.pixabay.com/photo/2020/04/09/12/28/dog-5021242_1280.jpg" style="max-height: 200px;max-width: 100px" class="my-2 img-fluid rounded" alt="news">
+            <div class="col-3  col-sm-2 col-md-2 col-lg-2 text-center" >
+<!--              <img src="https://cdn.pixabay.com/photo/2020/04/09/12/28/dog-5021242_1280.jpg" style="max-height: 200px;max-width: 100px" class="my-2 img-fluid rounded" alt="news">-->
+              <h3 style="color:black">{{questions[indexQuestion].text}}</h3>
             </div>
           </div>
           <div class="row mb-2">
             <div class="col-12 ">
               <div class="row justify-content-between">
-              <button class="col btn mx-1 btn-success">Option 1</button>
-              <button class="col btn mx-1 btn-success">Option 2</button>
+                <button (click)="nextQuestion()" class="col btn mx-1 btn-success">Option 1</button>
+                <button (click)="nextQuestion()" class="col btn mx-1 btn-success">Option 2</button>
               </div>
               <div class="row  my-2 justify-content-between">
-              <button class="col btn mx-1 btn-success">Option 3</button>
-              <button class="col btn mx-1 btn-success">Option 4</button>
+                <button (click)="nextQuestion()" class="col btn mx-1 btn-success">Option 3</button>
+                <button (click)="nextQuestion()" class="col btn mx-1 btn-success">Option 4</button>
               </div>
             </div>
           </div>
