@@ -24,6 +24,7 @@ import { AnnouncementComponent } from './announcement/announcement.component';
 import { AnnouncementEditComponent } from './announcement-edit/announcement-edit.component';
 import {Observable} from "rxjs";
 import {UserService} from "./user.service";
+import { QuizComponent } from './quiz/quiz.component';
 
 
 
@@ -56,7 +57,8 @@ import {UserService} from "./user.service";
     QuizEditComponent,
     QuizDashboardComponent,
     AnnouncementComponent,
-    AnnouncementEditComponent
+    AnnouncementEditComponent,
+    QuizComponent
   ],
   imports: [
     BrowserModule,

@@ -8,6 +8,8 @@ import {Location} from '@angular/common';
 import { SharedUserDataService } from '../shared-user-data.service';
 import {UserCardComponent} from "../user-card/user-card.component";
 import {UserProfileComponent} from "../user-profile/user-profile.component";
+import * as bcrypt from 'bcryptjs';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -18,6 +20,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
   tab: string = '';
   user: User;
   users$: Observable<User[]>;
+
   private searchTerms = new Subject<string>();
   @ViewChild(UserCardComponent, {static: false}) userCardChild: UserCardComponent;
 
@@ -35,12 +38,12 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
     );
   }
   ngAfterViewInit() {
-    this.userCardChild.edit = false;
+
   }
 
 
   ngAfterViewChecked() {
-    if (true === this.userCardChild.edit) {
+    if (this.userCardChild && true === this.userCardChild.edit) {
       this.profileSet(false, this.userCardChild.user);
     }
   }

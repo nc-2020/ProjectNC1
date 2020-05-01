@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { User } from '../entities/user';
 import { Router } from '@angular/router';
 import {DashboardComponent} from "../dashboard/dashboard.component";
+import {MustMatchValidator} from "../registration/_helpers/must-match.validator";
 
 @Component({
   selector: 'app-user-profile',
@@ -32,9 +33,9 @@ export class UserProfileComponent implements OnInit {
       email: [this.user.email, [Validators.required, Validators.minLength(3), Validators.email]],
       username: [this.user.username, [Validators.required, Validators.minLength(3)]],
       password: [this.user.password, [Validators.required, Validators.minLength(3)]],
+      confirmPassword: ['',[Validators.required, Validators.minLength(3)]],
       role: [this.user.role.name]
-    });
-
+    },{ validators: MustMatchValidator.passwordConfirming});
   }
   userRole() {
     return this.userService.user.role.name;
