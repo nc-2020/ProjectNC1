@@ -94,6 +94,4 @@ export class UserService {
       catchError(error => {return of([])})
     );
   }
-
-
 }

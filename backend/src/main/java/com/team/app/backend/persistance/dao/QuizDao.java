@@ -10,6 +10,12 @@ public interface QuizDao {
 
     List<Quiz> getByUserId(Long id);
 
+    List<Quiz> getApproved();
+
+    List<Quiz> getCategoryQuizes(String category);
+
+    List<Quiz> searchQuizes(String category, String searchstring);
+
     List<Quiz> getAll();
 
     Long save(Quiz quiz);
@@ -17,6 +23,8 @@ public interface QuizDao {
     void update(Quiz quiz);
 
     void delete(Long id);
+
+
 
 
 }
