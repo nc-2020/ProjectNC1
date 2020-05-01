@@ -29,7 +29,6 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 
 
-
 // @Injectable()
 // export class AuthInterceptor implements HttpInterceptor {
 //   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -72,7 +71,7 @@ import {MatSelectModule} from "@angular/material/select";
     DragDropModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
