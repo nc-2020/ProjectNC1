@@ -7,6 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {Location} from '@angular/common';
 import { SharedUserDataService } from '../shared-user-data.service';
 import {UserCardComponent} from "../user-card/user-card.component";
+import {UserProfileComponent} from "../user-profile/user-profile.component";
+import * as bcrypt from 'bcryptjs';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -15,13 +18,14 @@ import {UserCardComponent} from "../user-card/user-card.component";
 export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewInit {
 
   tab: string = '';
-  param = '';
   user: User;
   users$: Observable<User[]>;
-  private searchTerms = new Subject<string>();
-  @ViewChild(UserCardComponent) viewChild: UserCardComponent;
 
-  constructor(private userService: UserService,private location: Location, private route: ActivatedRoute,private router: Router,private sharedData: SharedUserDataService) { }
+  private searchTerms = new Subject<string>();
+  @ViewChild(UserCardComponent, {static: false}) userCardChild: UserCardComponent;
+
+  constructor(private userService: UserService, private location: Location, private route: ActivatedRoute,
+              private router: Router,private sharedData: SharedUserDataService) { }
 
   ngOnInit(): void {
     this.tab = this.route.snapshot.paramMap.get('tab');
@@ -35,15 +39,12 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
   }
   ngAfterViewInit() {
 
-
   }
 
-  ngAfterViewChecked() {
-    // viewChild is updated after the view has been checked
-    if (true === this.viewChild.edit) {
-      this.tab = 'Profile';
-      // this.sharedData
 
+  ngAfterViewChecked() {
+    if (this.userCardChild && true === this.userCardChild.edit) {
+      this.profileSet(false, this.userCardChild.user);
     }
   }
 
@@ -51,26 +52,28 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
   search(term: string): void {
     this.searchTerms.next(term);
   }
-profile()
-{
-  this.tab = 'Profile';
-  this.sharedData.setUserData(this.userService.user);
-
-}
-emptyProfile() {
-  this.tab = 'Profile';
-  this.param = 'true'
-  this.sharedData.setUserData({role: {name: 'moderator'}} as User);
-}
-  changeTab(tab: string, param?: string) {
-    this.tab = tab;
-    this.router.navigateByUrl(`dashboard/${tab}`);
-    this.param = param;
+  profileSet( editOnly?: boolean, user?: User)
+  {
+    this.user = (user ? user : {role: {name: 'moderator'}} as User)
+    this.changeTab(editOnly ? 'AddProfile' : 'Profile');
   }
 
+  changeTab(tab: string) {
+    this.tab = tab;
+    this.router.navigateByUrl(`dashboard/${tab}`);
+  }
 
-  getUser(empty?: string) {
+  getUser() {
+    return this.userService.user;
+  }
 
-    return this.sharedData.getUserData();
+  getUserName() {
+    return this.userService.user.firstName;
+  }
+  getUserLastName() {
+    return this.userService.user.lastName;
+  }
+  getUserRole() {
+    return this.userService.user.role.name;
   }
 }

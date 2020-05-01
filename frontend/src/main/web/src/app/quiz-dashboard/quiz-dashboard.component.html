@@ -1,23 +1,56 @@
-<section class="min-vh-100" id="cover">
-	<div class="container">
-		<h3 style="color: white;">Top Quizes</h3>
-	  <!-- <div class="grid grid-pad">
-	    <a *ngFor="let quiz of quizes" class="col-1-4"
-	       routerLink="/quiz-edit/{{quiz.id}}">
-	      <div class="module hero">
-	        <h4>{{quiz.title}}</h4>
-	      </div>
-	    </a>
-	  </div> -->
-	  <a *ngFor="let quiz of quizes" class="col-lg-4"
-	       routerLink="/quiz-edit/{{quiz.id}}">
-		<div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-		  <div class="card-header"><img src="../../assets/logo_brainduel.png" width="110" height="122"></div>
-		  <div class="card-body">
-		    <h5 class="card-title">{{quiz.title}}</h5>
-		    <p class="card-text">{{quiz.description}}</p>
-		  </div>
-		</div>
-	  </a>
-	</div>
-</section>
+  <div class="container-fluid">
+    <div class= "raw">
+      <div class="col-lg-12 order-lg-2">
+        <ul class="nav nav-tabs">
+          <li class="nav-item" (click)="quizTab('Quizzes')">
+            <a  data-target="#quizzes" data-toggle="tab" class="nav-link active show">Quizzes</a>
+          </li>
+          <li class="nav-item" (click)="quizTab('User quizzes')">
+            <a  data-target="#userQuizzes" data-toggle="tab" class="nav-link">My Quizzes</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+      <div class="tab-content pt-4">
+        <div class="tab-pane active show" id="quizzes">
+          <div class="raw">
+            <a *ngFor="let quiz of quizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center">
+              <div  class="card  text-center text-white bg-primary mx-2 mx-sm-2 mx-md-2" style="width: 14rem; height: 17rem">
+                <a routerLink="/quiz-edit/{{quiz.id}}">
+                  <div class="card-header"><img src="../../assets/logo_brainduel.png" width="110" height="122"></div>
+                </a>
+                <div class="card-body">
+                  <h5 class="card-title">{{quiz.title}}</h5>
+                  <p class="card-text">{{quiz.description}}</p>
+                </div>
+                <div class="btn-group" role="group" aria-label="First group">
+                  <a routerLink="/quiz/{{quiz.id}}" class="btn btn-secondary ">Play</a>
+                  <a routerLink="/quiz-edit/{{quiz.id}}" class="btn btn-secondary">Edit</a>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="tab-pane active show" id="userQuizzes">
+          <div class="raw">
+            <a *ngFor="let quiz of quizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center">
+              <div  class="card  text-center text-white bg-primary mx-2 mx-sm-2 mx-md-2" style="width: 14rem; height: 17rem">
+                <a routerLink="/quiz-edit/{{quiz.id}}">
+                  <div class="card-header"><img src="../../assets/logo_brainduel.png" width="110" height="122"></div>
+                </a>
+                <div class="card-body">
+                  <h5 class="card-title">{{quiz.title}}</h5>
+                  <p class="card-text">{{quiz.description}}</p>
+                </div>
+                <div class="btn-group" role="group" aria-label="First group">
+                  <a routerLink="/quiz/{{quiz.id}}" class="btn btn-secondary ">Play</a>
+                  <a routerLink="/quiz-edit/{{quiz.id}}" class="btn btn-secondary">Edit</a>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+  </div>
+

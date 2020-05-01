@@ -21,7 +21,7 @@ public class AnnouncementController {
 
     @CrossOrigin
     @PostMapping("/create")
-    public Map<String, String> createAnnouncement(@RequestBody Announcement announcement) {
+    public ResponseEntity createAnnouncement(@RequestBody Announcement announcement) {
         Map<String, String> response = new HashMap<>();
         try {
             announcementService.createAnnouncement(announcement);
@@ -29,10 +29,10 @@ public class AnnouncementController {
         catch(DataAccessException sqlEx){
             System.out.println(sqlEx);
             response.put("message","There is a problem while creating announcement");
-            return  response;
+            ResponseEntity.badRequest().body(response);
         }
         response.put("message","Created!");
-        return  response;
+        return  ResponseEntity.ok(response);
     }
 
     @PutMapping("/update")

@@ -1,0 +1,11 @@
+ #bod1{
+  background-color: rgba(0,0,0,0.5);
+  /*border-radius: 10px;*/
+}
+ #bod2{
+   background-color: rgb(250, 255, 255);
+   border-radius: 10px;
+ }
+ nav{
+   background-color: rgb(88, 110, 255);
+ }

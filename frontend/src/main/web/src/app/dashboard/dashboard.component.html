@@ -5,7 +5,7 @@
         <div class="sidebar-sticky">
           <img  src="https://img.icons8.com/plasticine/100/000000/user-male-circle.png"/>
           <h5>
-            <span class="badge bg-primary">{{user.firstName}} {{user.lastName}}</span>
+            <span class="badge bg-primary">{{getUserName()}} {{getUserLastName()}}</span>
           </h5>
            <ul class="nav flex-column">
             <li  class="nav-item active text-center border-bottom border-top">
@@ -13,23 +13,18 @@
                 Quizzes
               </a>
             </li>
-            <li *ngIf="user.role.name==='user'" class="nav-item border-bottom">
+            <li *ngIf="getUserRole()==='user'" class="nav-item border-bottom">
               <a class="nav-link" (click)="changeTab('Friends')">
                 Friends
               </a>
             </li>
-             <!-- <li *ngIf="userRole()=='super admin'" class="nav-item border-bottom">
-               <a class="nav-link"  (click)="changeTab('Users')">
-                 Users
-               </a>
-             </li> -->
-             <li *ngIf="user.role.name=='admin'"  class="nav-item border-bottom">
+             <li *ngIf="getUserRole()=='admin'"  class="nav-item border-bottom">
                <a class="nav-link"  (click)="changeTab('Moderators')">
                  Moderators
                </a>
              </li>
-             <li *ngIf="user.role.name=='super admin'" class="nav-item border-bottom">
-               <a class="nav-link"  (click)="changeTab('Admins/Moderators')">
+             <li *ngIf="getUserRole()=='super admin'" class="nav-item border-bottom">
+               <a class="nav-link"  (click)="changeTab('Admins-Moderators')">
                  Admins/Moderators
                </a>
              </li>
@@ -43,8 +38,8 @@
                  Announcement
                </a>
              </li>
-            <li *ngIf="user.role.name==='user' || user.role.name==='super admin'" class="nav-item border-bottom">
-              <a class="nav-link" (click)="profile()">
+            <li *ngIf="getUserRole()==='user' || getUserRole()==='super admin'" class="nav-item border-bottom">
+              <a class="nav-link" (click)="profileSet(false, getUser())">
                 <span data-feather="users"></span>
                 Profile
               </a>
@@ -61,24 +56,31 @@
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-9 px-1 align-self-start" >
 <!--        Users search menu-->
-        <div *ngIf="tab === 'Users' || tab === 'Friends' || tab === 'Admins/Moderators' || tab==='Moderators'" class="main-frame container-fluid my-5 ">
+        <div *ngIf="tab === 'Users' || tab === 'Friends' || tab === 'Admins-Moderators' || tab==='Moderators' || tab === 'Quizzes' " class=" main-frame container-fluid my-5 ">
           <form class="form-inline ml-3 my-2 my-lg-0 border-bottom" >
             <input #searchBox id="search-box"  class="form-control my-2" type="text" placeholder="Search" style="width: 75%">
             <button for="search-box" class="btn btn-secondary my-2 mx-auto my-sm-0" (click)="search(searchBox.value)" type="submit" style="width: auto">Search</button>
-            <button *ngIf="user.role.name==='admin' || user.role.name==='super admin'" class="btn btn-success my-2 mx-auto my-sm-0"
-                    (click)="emptyProfile()"  style="width: auto">Add</button>
+            <button *ngIf="getUserRole()==='admin' || getUserRole()==='super admin'" class="btn btn-success my-2 mx-auto my-sm-0"
+                    (click)="profileSet(true)"  style="width: auto">Add</button>
           </form>
           <app-user-card *ngFor="let user of users$ | async" [user]="user"></app-user-card>
 
+          <app-quiz-dashboard *ngIf="tab === 'Quizzes'" class="mt-5"></app-quiz-dashboard>
         </div>
 <!--        Profile-->
+<<<<<<< HEAD
         <app-user-profile [user]="getUser(param)" [editOnly]="param" *ngIf="tab === 'Profile'"></app-user-profile>
         <div  *ngIf="tab === 'Profile'" class="main-frame container-fluid my-5 ">
         <app-user-profile [user]="getUser(param)" [editOnly]="param" ></app-user-profile>
         </div>
+=======
+
+        <app-user-profile *ngIf="tab === 'Profile' || tab === 'AddProfile'" [user]="user" [editOnly]="tab === 'Profile'? false : true" ></app-user-profile>
+
+>>>>>>> upstream/dev
 
 <!--    Announcement-->
-<!--        <app-announcement *ngIf="tab === 'Announcement'"> </app-announcement>-->
+<app-announcement *ngIf="tab === 'Announcement'"> </app-announcement>
 <!--<app-announcement-edit></app-announcement-edit>-->
 
       </main>

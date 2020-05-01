@@ -4,6 +4,7 @@ import {User} from "./entities/user";
 import {Observable, of, throwError} from "rxjs";
 import {catchError, tap, finalize} from "rxjs/operators";
 import { error } from 'protractor';
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class UserService {
   };
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
   }
   getToken() {
     return this.user.token;
@@ -63,10 +64,7 @@ export class UserService {
   }
 
   login(user): Observable<User> {
-    return this.http.post<any>('http://localhost:8080/api/login', user,{
-      headers: new HttpHeaders().set('Content-Type', 'application/json'),
-      responseType: 'json'
-    }).pipe(
+    return this.http.post<any>('http://localhost:8080/api/login', user).pipe(
       tap(response => {
         this.user = response;
         this.authenticated = true}),
@@ -96,6 +94,4 @@ export class UserService {
       catchError(error => {return of([])})
     );
   }
-
-
 }
