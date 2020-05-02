@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ContentChild} from '@angular/core';
+import {Component, OnInit, Input, ContentChild, EventEmitter, Output} from '@angular/core';
 import {UserService} from "../user.service";
 import { User } from '../entities/user';
 import { Router } from '@angular/router';
@@ -12,17 +12,19 @@ import {DashboardComponent} from "../dashboard/dashboard.component";
 })
 export class UserCardComponent implements OnInit {
 
-  edit = false;
+
   @Input()
   user: User;
+  @Output()
+  onChanged = new EventEmitter<User>();
 
-  constructor(private userService: UserService, private router: Router,private sharedData: SharedUserDataService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
 
   }
   goToProfile() {
-    this.edit = true;
+    this.onChanged.emit(this.user);
   }
   userRole() {
     return this.userService.user.role.name;

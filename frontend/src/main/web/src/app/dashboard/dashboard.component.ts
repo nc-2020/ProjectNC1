@@ -15,7 +15,7 @@ import * as bcrypt from 'bcryptjs';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewInit {
+export class DashboardComponent implements OnInit {
 
   tab: string = '';
   user: User;
@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
   @ViewChild(UserCardComponent, {static: false}) userCardChild: UserCardComponent;
 
   constructor(private userService: UserService, private location: Location, private route: ActivatedRoute,
-              private router: Router,private sharedData: SharedUserDataService) { }
+              private router: Router) { }
 
   ngOnInit(): void {
     this.tab = this.route.snapshot.paramMap.get('tab');
@@ -37,17 +37,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
       switchMap((term: string) => this.userService.searchUsers(term)),
     );
   }
-  ngAfterViewInit() {
-
-  }
-
-
-  ngAfterViewChecked() {
-    if (this.userCardChild && true === this.userCardChild.edit) {
-      this.profileSet(false, this.userCardChild.user);
-    }
-  }
-
 
   search(term: string): void {
     this.searchTerms.next(term);

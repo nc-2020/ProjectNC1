@@ -12,7 +12,7 @@ import {Router} from "@angular/router";
 export class UserService {
   authenticated = false;
   // user: User;
-  user: User = {
+   user: User = {
     id: '123',
     username: 'lol',
     firstName: 'lol',
@@ -74,7 +74,7 @@ export class UserService {
   logout() {
     return this.http.post<User>('http://localhost:8080/api/logout', this.user, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(finalize(() => {
-      this.authenticated = false;
+      this.authenticated = false; window.location.replace('/login')
     }), catchError(this.handleError<any>('logout')))
   }
 
