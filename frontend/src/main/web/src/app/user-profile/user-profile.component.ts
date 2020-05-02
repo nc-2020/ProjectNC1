@@ -62,7 +62,7 @@ export class UserProfileComponent implements OnInit {
   }
   delete() {
     this.userService.deleteUser(this.user).subscribe(response => {this.message = 'User has been deleted!';
-    this.userService.logout().subscribe(resp => window.location.replace('/login')); },
+    this.userService.logout().subscribe(resp => {},error => this.error = error.message); },
         error => { this.error = error.message});
   }
   submit() {
