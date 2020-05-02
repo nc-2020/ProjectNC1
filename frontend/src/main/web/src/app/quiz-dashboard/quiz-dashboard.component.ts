@@ -9,11 +9,13 @@ import { QuizService } from '../services/quiz.service';
 })
 export class QuizDashboardComponent implements OnInit {
   quizzes: Quiz[] = [];
-
+  userQuizzes: Quiz[] = [];
+  currentTab = 'Quizzes';
   constructor(private quizService: QuizService) { }
 
   ngOnInit(): void {
     this.getQuizzes();
+    this.getUserQuizzes();
   }
 
   getQuizzes(): void {
@@ -23,7 +25,7 @@ export class QuizDashboardComponent implements OnInit {
 
   getUserQuizzes(): void {
     this.quizService.getUserQuizzes()
-      .subscribe(quizzes => this.quizzes = quizzes);
+      .subscribe(quizzes => this.userQuizzes = quizzes);
   }
 
   deleteQuiz(quiz: Quiz) {
@@ -32,10 +34,6 @@ export class QuizDashboardComponent implements OnInit {
   }
 
   quizTab(tab: string) {
-    if (tab === 'Quizzes') {
-      this.getQuizzes();
-    } else if (tab === 'User quizzes') {
-      this.getUserQuizzes();
-    }
+      this.currentTab = tab;
   }
 }
