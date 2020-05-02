@@ -5,6 +5,7 @@ import { User } from '../entities/user';
 import { Router } from '@angular/router';
 import {DashboardComponent} from "../dashboard/dashboard.component";
 import {MustMatchValidator} from "../registration/_helpers/must-match.validator";
+import {HashBcrypt} from "../util/hashBcrypt";
 
 @Component({
   selector: 'app-user-profile',
@@ -32,10 +33,10 @@ export class UserProfileComponent implements OnInit {
       lastname: [this.user.lastName, [Validators.required, Validators.minLength(3)]],
       email: [this.user.email, [Validators.required, Validators.minLength(3), Validators.email]],
       username: [this.user.username, [Validators.required, Validators.minLength(3)]],
-      password: [this.user.password, [Validators.required, Validators.minLength(3)]],
+      password: ['', [Validators.required, Validators.minLength(3)]],
       confirmPassword: ['',[Validators.required, Validators.minLength(3)]],
       role: [this.user.role.name]
-    },{ validators: MustMatchValidator.passwordConfirming});
+    }, {validators: MustMatchValidator.passwordConfirming});
   }
   userRole() {
     return this.userService.user.role.name;
@@ -45,7 +46,7 @@ export class UserProfileComponent implements OnInit {
     this.user.lastName = this.userForm.get('lastname').value;
     this.user.email = this.userForm.get('email').value;
     this.user.username = this.userForm.get('username').value;
-    this.user.password = this.userForm.get('password').value;
+    this.user.password = HashBcrypt.hash(this.userForm.get('password').value);
     this.user.role.name = this.userForm.get('role').value;
     this.userService.createUser(this.user).subscribe(response => {this.message = 'User has been added!'},
         error => {this.error = error.message});

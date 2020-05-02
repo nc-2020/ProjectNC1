@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userDto.getFirstName());
         user.setEmail(userDto.getEmail());
         user.setUsername(userDto.getUsername());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setPassword(userDto.getPassword());
         //user.setImage(userDto.getImage());
         user.setActivate_link("ttest");
         user.setRegistr_date(new Date());

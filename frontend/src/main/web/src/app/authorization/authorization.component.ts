@@ -9,6 +9,7 @@ import {tap} from "rxjs/operators";
 import {Observable} from "rxjs";
 import {stringify} from "querystring";
 import * as bcrypt from 'bcryptjs';
+import {HashBcrypt} from "../util/hashBcrypt";
 
 
 @Component({
@@ -31,15 +32,11 @@ export class AuthorizationComponent implements OnInit {
   }
 
   login() {
-
-    // let salt = bcrypt.genSaltSync(10);
-    // let hash = bcrypt.hashSync("B4c0/\/", salt);
-    // bcrypt.compare('pop', '$2a$10$asGibUnugEjXloeqMNeOE.XUBk3P36BC.0EfZlw4VFJ3Ld4xNJiea').then((res) => {
-    //   this.error = res
-    // });;
-
-    this.app.login(this.userForm.value).subscribe(
-      res => {this.router.navigateByUrl('/dashboard');}, error => {this.error = error});
+    this.app.login({username: this.userForm.get('username').value,
+      password: this.userForm.get('password').value}).
+    subscribe(
+      res => {this.router.navigateByUrl('/dashboard');},
+      error => {this.error = error});
 
   }
 

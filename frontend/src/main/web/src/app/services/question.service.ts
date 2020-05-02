@@ -12,10 +12,7 @@ export class QuestionService {
   private questionsUrl = 'http://localhost:8080/api/question';  // URL to web api
   constructor(private http: HttpClient, private userService: UserService) {
   }
-  // const httpOptions = {
-  //   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  //     .set('Authorization',  `Bearer_${this.userService.getToken()}`)
-  // };
+
   getQuestions(quiz_id): Observable<Question[]> {
     return this.http.get<Question[]>(`http://localhost:8080/api/questions/${quiz_id}`, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
