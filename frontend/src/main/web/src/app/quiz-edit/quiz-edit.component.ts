@@ -25,11 +25,11 @@ export class QuizEditComponent implements OnInit, OnDestroy {
 
   questionForm = this.fb.group({
     'questionText': ['', Validators.required],
-    'questionType': ['', Validators.required],
-    'questionTime': ['', Validators.required]
+    'questionType': ['not selected', Validators.required],
+    'questionTime': ['not selected', Validators.required]
   })
   questions: Question[] = [];
-  titleEditor: any;
+  titleEditor = 'Add a question';
 
   numberOfOptions = 4;
   options: Option[] = Array.from({length: this.numberOfOptions},()=>
@@ -65,13 +65,9 @@ export class QuizEditComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.routeSub.unsubscribe();
   }
-  showAdd() {
-    this.titleEditor = 'Add a question';
-    this.isAddQuestion = !this.isAddQuestion;
-  }
+
   showEdit() {
     this.titleEditor = 'Edit a question';
-    this.isAddQuestion = !this.isAddQuestion;
   }
 
 

@@ -52,10 +52,35 @@ public class QuizDaoImpl implements QuizDao {
     }
 
     @Override
+    public List<Quiz> getApproved() {
+        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id where status_id = 2 "
+                ,quizRowMapper);
+    }
+
+    // to do
+    @Override
+    public List<Quiz> getCategoryQuizes(String category) {
+        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id INNER JOIN quiz_to_categ QTC ON Q.id = QTC.quiz_id INNER JOIN quiz_category QC ON QTC.cat_id = QC.id where QC.name= ? "
+                ,new Object[] { category },
+                quizRowMapper);
+    }
+
+    @Override
+    public List<Quiz> searchQuizes(String category, String searchstring) {
+        String cat=category;
+        String search="%"+searchstring+"%";
+        System.out.println(cat+" "+search);
+        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id where Q."+cat+"::text LIKE ? "
+                ,new Object[] {search},
+                quizRowMapper);
+    }
+
+    @Override
     public List<Quiz> getAll() {
         return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id"
                 ,quizRowMapper);
     }
+
 
 
     @Override

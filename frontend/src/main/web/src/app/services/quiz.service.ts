@@ -18,6 +18,14 @@ export class QuizService {
   constructor(private http: HttpClient, private userService: UserService) {
   }
 
+  getQuiz(quizId): Observable<Quiz> {
+    return  this.http.get<Quiz>(this.quizzesUrl + '/' + quizId, { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+      .pipe(
+        catchError(this.handleError<Quiz>('getQuiz')
+        ));
+  }
+
   getQuizzes(): Observable<Quiz[]> {
     return this.http.get<Quiz[]>(this.quizzesUrl,{ headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
@@ -48,9 +56,17 @@ export class QuizService {
     );
   }
 
+  searchQuizzes(term: string): Observable<Quiz[]> {
+    if (!term.trim()) {
+      return of([]);
+    }
+    return this.http.get<Quiz[]>(`${this.quizzesUrl}/?title=${term}`).pipe(
+      catchError(this.handleError<Quiz[]>('searchQuizzes', []))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
       // Let the app keep running by returning an empty result.

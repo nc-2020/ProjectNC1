@@ -1,6 +1,6 @@
 <section class="min-vh-100" id="cover">
 	<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-	<div class="container">
+	<div class="container d-flex justify-content-center">
 		<div class="kr-modal-body">
 			<div class="banner">
 				<div class="title">
@@ -10,8 +10,7 @@
 
       <form [formGroup]="quizForm" novalidate (ngSubmit)="submit()">
         <div class="form">
-
-          <div class="form-group">
+          <div class="form-group text-left">
             <div class="quiz-name-wrapper">
               <div class="quiz-name-input kr2-textfield">
                 <label>1. Name this quiz</label>
@@ -25,7 +24,7 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group text-left">
             <div class="quiz-name-wrapper">
               <div class="quiz-name-input kr2-textfield">
                 <label>2. Description</label>
@@ -35,10 +34,23 @@
                      *ngIf="quizForm.controls['description'].invalid && quizForm.controls['description'].touched">
                   Please enter a quiz description
                 </div>
+                <label class="mt-2">3. Choose relevant categories</label>
+                <mat-form-field color="primary">
+                  <mat-label class="text-center">Categories</mat-label>
+                  <mat-select class="form-control" name="categories" formControlName="categories" multiple>
+                    <mat-option *ngFor="let category of categoriesList" [value]="category">{{category.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="quiz-description-validation"
+                     *ngIf="quizForm.controls['categories'].invalid && quizForm.controls['categories'].touched">
+                  Please select one or more categories
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+
 
         <div class="form-group">
           <div class="action-btns-wrapper">
@@ -46,6 +58,8 @@
             <button [disabled]="quizForm.invalid" class="save-btn" data-qtest="create-quiz-btn" (click)="createQuiz()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Next</span></button>
           </div>
         </div>
+
+
       </form>
 
 		</div>

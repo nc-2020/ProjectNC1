@@ -4,5 +4,6 @@ export interface Quiz {
   description: string;
   status?: string;
   user_id: string;
+  categories: any;
   image?: string;
 }

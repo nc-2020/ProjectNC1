@@ -1,16 +1,18 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Quiz} from "../entities/quiz";
 import {catchError} from "rxjs/operators";
 import {Observable, throwError} from "rxjs";
 import {Category} from "../entities/category";
+import {UserService} from "../user.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
+  private categoriesUrl = 'http://localhost:8080/api/categories';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private userService: UserService) {
   }
 
   getCategory(category: Category) {
@@ -20,10 +22,12 @@ export class CategoryService {
   }
 
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`api/category/getCategories`).pipe(
+    return this.http.get<Category[]>(this.categoriesUrl, { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
       catchError(this.handleError<any>('getCategory'))
     );
   }
+
   updateCategory(category: Category) {
     return this.http.put<Quiz>('api/category/update', category).pipe(
       catchError(this.handleError<any>('editCategory'))
