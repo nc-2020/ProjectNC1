@@ -24,6 +24,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoaderService } from './services/loader.service';
 import { LoaderInterceptor } from './interceptors/loader-interceptor.service';
 import { MyLoaderComponent } from './components/my-loader/my-loader.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
 // @Injectable()
 // export class AuthInterceptor implements HttpInterceptor {
@@ -69,6 +71,8 @@ import { MyLoaderComponent } from './components/my-loader/my-loader.component';
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   providers: [
     LoaderService,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import { Quiz } from '../entities/quiz';
 import { QuizService } from '../services/quiz.service';
 
@@ -11,6 +11,9 @@ export class QuizDashboardComponent implements OnInit {
   quizzes: Quiz[] = [];
   userQuizzes: Quiz[] = [];
   currentTab = 'Quizzes';
+  selected: boolean;
+  selectedChange = new EventEmitter<boolean>();
+
   constructor(private quizService: QuizService) { }
 
   ngOnInit(): void {
@@ -35,5 +38,9 @@ export class QuizDashboardComponent implements OnInit {
 
   quizTab(tab: string) {
       this.currentTab = tab;
+  }
+
+  public toggleSelected(quiz: Quiz) {
+    quiz.favourite = !quiz.favourite;
   }
 }

@@ -5,7 +5,7 @@ import {CategoryService} from "../services/category.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from '@angular/common';
 import {UserService} from "../user.service";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {Category} from "../entities/category";
 
 
@@ -35,7 +35,6 @@ export class QuizCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.getData();
     this.getCategories();
   }
 
@@ -46,7 +45,6 @@ export class QuizCreateComponent implements OnInit {
   createQuiz() {
     let selectedCategoriesId = [];
     for (let category of this.quizForm.get('categories').value) {
-      console.log(category.id);
       selectedCategoriesId.push(category.id);
     }
 
@@ -66,12 +64,7 @@ export class QuizCreateComponent implements OnInit {
     this.categoryService.getCategories().subscribe(
       (data: Category[]) => {
         this.categoriesList = data;
-        console.log(this.categoriesList);
       }
     )
-  }
-
-  submit() {
-    console.log(this.quizForm);
   }
 }
