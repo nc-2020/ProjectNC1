@@ -1,10 +1,24 @@
 package com.team.app.backend.dto;
 
+
+import com.team.app.backend.persistance.model.QuizCategory;
+
+import java.util.List;
+
 public class QuizAddDto {
     private String title;
     private String description;
     private byte[] image;
     private int user_id;
+    private List<Long> categories;
+
+    public List<Long> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Long> categories) {
+        this.categories = categories;
+    }
 
     public String getTitle() {
         return title;
