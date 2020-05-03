@@ -6,6 +6,9 @@ import {ActivatedRoute} from "@angular/router";
 import {QuestionService} from "../services/question.service";
 import {SequenceOption} from "../entities/sequence-option";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
+import {Answer} from "../entities/answer";
+import {OptionService} from "../services/option.service";
+import {DefaultOption} from "../entities/default-option";
 
 @Component({
   selector: 'app-quiz',
@@ -23,6 +26,9 @@ export class QuizComponent implements OnInit, OnDestroy {
   timeout: any = null;
   optionType = 0;
   numberOfOptions = 4;
+  userAnswers: Answer[];
+  quizAnswers: DefaultOption[];
+  error = '';
   optionsSequence: SequenceOption[] = Array.from({length: this.numberOfOptions},() =>
     ({
       serial_num: null,
@@ -30,6 +36,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     }));
 
   constructor(quizService: QuizService,
+              private optionService: OptionService,
               private route: ActivatedRoute,
               private questionService: QuestionService) { }
 
@@ -40,8 +47,8 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.getQuestions();
   }
 
-  nextQuestion(clear: boolean): void {
-    if(clear){
+  nextQuestion(clearTimer: boolean): void {
+    if(clearTimer) {
       clearInterval(this.interval);
       clearTimeout(this.timeout);
     }
@@ -51,6 +58,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
     else {
       this.timer = 0;
+      console.log(this.getScore());
     }
     this.optionSwitcher();
   }
@@ -76,7 +84,17 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
     console.log(this.optionType);
   }
+  optionAnswer() {
 
+  }
+  sequenceAnswer() {
+
+  }
+  defAnswer(answer: string) {
+    this.userAnswers.push({questionId: this.questions[this.indexQuestion].id,
+      points: this.quizAnswers[this.indexQuestion].answer === answer ? 1 : 0} as Answer);
+    this.nextQuestion(true);
+  }
 startQuestionTimer()  {
   this.timer = this.questions[this.indexQuestion].time;
   this.interval = setInterval(() => this.timer--, 1000);
@@ -94,10 +112,19 @@ startQuestionTimer()  {
         console.log(questions);
         this.questions = questions;
         this.optionType = +this.questions[0].type.id;
+        this.questions.forEach(x => this.optionService.getDefaultOptions(x.id).
+        subscribe(res => {this.quizAnswers.push(res[0]);  console.log(res) }));
       });
+
+
   }
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.optionsSequence, event.previousIndex, event.currentIndex);
+  }
+  getScore(): number {
+    let sum = 0;
+    this.userAnswers.forEach(x => sum + x.points);
+    return sum;
   }
 }

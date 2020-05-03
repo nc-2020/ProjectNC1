@@ -47,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
-                .antMatchers("/index.html", "/").permitAll()
+                .antMatchers("/index.html").permitAll()
                 .antMatchers(SIGN_UP_ENDPOINT).permitAll()
                 .antMatchers(ROOT_ENDPOINT).permitAll()
                 .anyRequest().authenticated()
@@ -69,6 +69,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/favicon.ico","/index.html",
+                "/assets/logo_brainduel.png",
                 "/polyfills*.js",
                 "/runtime*.js",
                 "/styles*.js",
