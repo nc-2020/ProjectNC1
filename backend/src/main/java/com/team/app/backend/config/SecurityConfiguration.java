@@ -1,7 +1,5 @@
 package com.team.app.backend.config;
 
-
-//import com.sun.tools.javac.util.List;
 import com.team.app.backend.security.jwt.JwtConfigurer;
 import com.team.app.backend.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +14,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-//import java.util.List;
 
 @Configuration
 @Component
@@ -54,22 +53,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider)).and().cors();
     }
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        final CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(List.of("*"));
-//        configuration.setAllowedMethods(List.of("HEAD",
-//                "GET", "POST", "PUT", "DELETE", "PATCH"));
-//        configuration.setAllowCredentials(true);
-//        configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
-//        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        final CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Stream.of("*").collect(Collectors.toList()));
+        configuration.setAllowedMethods(Stream.of("HEAD",
+                "GET", "POST", "PUT", "DELETE", "PATCH").collect(Collectors.toList()));
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Stream.of("Authorization", "Cache-Control", "Content-Type").collect(Collectors.toList()));
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/favicon.ico","/index.html",
-                "/assets/logo_brainduel.png",
+                "/assets/logo_brainduel.svg",
                 "/polyfills*.js",
                 "/runtime*.js",
                 "/styles*.js",
