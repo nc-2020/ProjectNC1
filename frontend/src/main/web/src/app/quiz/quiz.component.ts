@@ -81,7 +81,7 @@ startQuestionTimer()  {
   this.timer = this.questions[this.indexQuestion].time;
   this.interval = setInterval(() => this.timer--, 1000);
   this.timeout = setTimeout(() => { clearInterval(this.interval);
-  this.nextQuestion(false); this.indexQuestion++},
+  this.nextQuestion(false)},
         (this.questions[this.indexQuestion].time + 1) * 1000);
 }
   ngOnDestroy() {
