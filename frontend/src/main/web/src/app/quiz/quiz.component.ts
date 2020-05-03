@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {Question} from "../entities/question";
 import {QuizService} from "../services/quiz.service";
@@ -7,8 +7,6 @@ import {QuestionService} from "../services/question.service";
 import {SequenceOption} from "../entities/sequence-option";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {OptionService} from "../services/option.service";
-import {DefaultOption} from "../entities/default-option";
-import {Option} from "../entities/option";
 import {Answer} from "../entities/answer";
 
 @Component({
@@ -17,15 +15,10 @@ import {Answer} from "../entities/answer";
   styleUrls: ['./quiz.component.css']
 })
 export class QuizComponent implements OnInit, OnDestroy {
-
   private routeSub: Subscription;
   quizId;
   questions: Question[] = [];
-  quizAnswers: DefaultOption[] = [];
   userAnswers: Answer[] = [];
-  // quizDefaultOptionAnswers: DefaultOption[] = [];
-  // quizOptionAnswers: Option[] = [];
-  // quizSequenceOptionAnswers: SequenceOption[] = [];
   questionOptions = new Map();
   indexQuestion = 0;
   timer = 0;
@@ -49,10 +42,6 @@ export class QuizComponent implements OnInit, OnDestroy {
       this.quizId = params['id'];
     });
     this.getQuestions();
-
-    for (let quizA of this.quizAnswers) {
-      console.log('quizA: ' + quizA);
-    }
     console.log(this.questionOptions);
   }
 
@@ -85,6 +74,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         break;
       case 4:
         this.optionType = 4;
+        this.optionsSequence = this.questionOptions.get(this.questions[this.indexQuestion].id);
         break;
       default:
         this.optionType = 0;
@@ -102,12 +92,17 @@ export class QuizComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.routeSub.unsubscribe();
   }
+
   defAnswer(answer: string) {
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id ,
       points: this.questionOptions.get(this.questions[this.indexQuestion].id)[0].answer === answer ? 1 : 0});
     this.nextQuestion(true);
+  }
+
+  seqQuestion() {
 
   }
+
   getQuestions() {
     this.questionService.getQuestions(this.quizId)
       .subscribe(questions => {
@@ -140,20 +135,11 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
-  getDefaultOptions(questionId: number) {
-    this.optionService.getDefaultOptions(questionId)
-      .subscribe((options: DefaultOption[]) => {
-        // console.log(options);
-        console.log(options[0]);
-        this.quizAnswers.push(options[0]);
-      })
-  }
-
-getScore(): number {
+  getScore(): number {
     let score = 0;
     this.userAnswers.forEach(x => score += x.points);
     return score;
-}
+  }
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.optionsSequence, event.previousIndex, event.currentIndex);
   }
