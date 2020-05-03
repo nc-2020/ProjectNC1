@@ -53,6 +53,7 @@ message = ''
     this.user.lastName = this.registrationForm.get('lastname').value;
     this.user.email = this.registrationForm.get('email').value;
     this.user.password = HashBcrypt.hash(this.registrationForm.get('password').value);
+    this.registrationForm.reset();
     this.app.signUp(this.user).subscribe(
       _ => this.router.navigateByUrl('/login'), error => this.message = error.message);
   }

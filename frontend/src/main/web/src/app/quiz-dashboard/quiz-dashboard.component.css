@@ -66,3 +66,22 @@ h4 {
   color: white;
   border: 1px solid transparent;
 }
+
+.favourite_btn {
+  border-top: black;
+}
+
+.mat-button,.mat-stroked-button {
+  background: white;
+}
+
+.mat-icon-button {
+  background: #F0F0F0;
+  padding: 0;
+  min-width: 0;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  line-height: 40px;
+  border-radius: 0%;
+}

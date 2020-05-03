@@ -1,7 +1,6 @@
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-import {Component, OnInit, Input, OnDestroy} from '@angular/core';
-import {Quiz} from "../entities/quiz";
+import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Question} from "../entities/question";
 import {QuestionService} from "../services/question.service";
 import {Option} from "../entities/option";
@@ -9,7 +8,7 @@ import {DefaultOption} from "../entities/default-option"
 import {Subscription} from "rxjs";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {SequenceOption} from "../entities/sequence-option";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-quiz-edit',
@@ -87,7 +86,6 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     this.questionService.getQuestion(question_id)
       .subscribe(question => {
         console.log(question);
-        // this.questions.push(question);
       })
   }
 
@@ -130,9 +128,10 @@ export class QuizEditComponent implements OnInit, OnDestroy {
       quiz_id: this.quiz_id,
       image: ''
     };
-
-
-
+    this.questionForm.reset({
+      'questionType': 'not selected',
+      'questionTime': 'not selected'}
+    );
     this.questionService.createQuestion(question as Question)
       .subscribe(data  => {
         question.id = data.id;
