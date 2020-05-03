@@ -75,6 +75,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/styles*.js",
                 "/scripts.js",
                 "/main*.js",
+                "/assets/logo_brainduel.png",
                 "/vendor*.js"
         );
     }

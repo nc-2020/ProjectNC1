@@ -11,8 +11,6 @@ export class QuizDashboardComponent implements OnInit {
   quizzes: Quiz[] = [];
   userQuizzes: Quiz[] = [];
   currentTab = 'Quizzes';
-  selected: boolean;
-  selectedChange = new EventEmitter<boolean>();
 
   constructor(private quizService: QuizService) { }
 

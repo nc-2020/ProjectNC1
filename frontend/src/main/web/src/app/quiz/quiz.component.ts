@@ -6,7 +6,6 @@ import {ActivatedRoute} from "@angular/router";
 import {QuestionService} from "../services/question.service";
 import {SequenceOption} from "../entities/sequence-option";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {Answer} from "../entities/answer";
 import {OptionService} from "../services/option.service";
 import {DefaultOption} from "../entities/default-option";
 
@@ -20,22 +19,22 @@ export class QuizComponent implements OnInit, OnDestroy {
   private routeSub: Subscription;
   quizId;
   questions: Question[] = [];
+  quizAnswers: DefaultOption[] = [];
+
+
   indexQuestion = 0;
   timer = 0;
   interval: any = null;
   timeout: any = null;
   optionType = 0;
   numberOfOptions = 4;
-  userAnswers: Answer[];
-  quizAnswers: DefaultOption[];
-  error = '';
   optionsSequence: SequenceOption[] = Array.from({length: this.numberOfOptions},() =>
     ({
       serial_num: null,
       text: ''
     }));
 
-  constructor(quizService: QuizService,
+  constructor(private quizService: QuizService,
               private optionService: OptionService,
               private route: ActivatedRoute,
               private questionService: QuestionService) { }
@@ -45,10 +44,14 @@ export class QuizComponent implements OnInit, OnDestroy {
       this.quizId = params['id'];
     });
     this.getQuestions();
+
+    for (let quizA of this.quizAnswers) {
+      console.log('quizA: ' + quizA);
+    }
   }
 
-  nextQuestion(clearTimer: boolean): void {
-    if(clearTimer) {
+  nextQuestion(clear: boolean): void {
+    if(clear){
       clearInterval(this.interval);
       clearTimeout(this.timeout);
     }
@@ -58,7 +61,6 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
     else {
       this.timer = 0;
-      console.log(this.getScore());
     }
     this.optionSwitcher();
   }
@@ -82,26 +84,16 @@ export class QuizComponent implements OnInit, OnDestroy {
       default:
         this.optionType = 0;
     }
-    console.log(this.optionType);
   }
-  optionAnswer() {
 
+  startQuestionTimer()  {
+    this.timer = this.questions[this.indexQuestion].time;
+    this.interval = setInterval(() => this.timer--, 1000);
+    this.timeout = setTimeout(() => { clearInterval(this.interval);
+        this.nextQuestion(false);},
+      (this.questions[this.indexQuestion].time + 1) * 1000);
   }
-  sequenceAnswer() {
 
-  }
-  defAnswer(answer: string) {
-    this.userAnswers.push({questionId: this.questions[this.indexQuestion].id,
-      points: this.quizAnswers[this.indexQuestion].answer === answer ? 1 : 0} as Answer);
-    this.nextQuestion(true);
-  }
-startQuestionTimer()  {
-  this.timer = this.questions[this.indexQuestion].time;
-  this.interval = setInterval(() => this.timer--, 1000);
-  this.timeout = setTimeout(() => { clearInterval(this.interval);
-  this.nextQuestion(false)},
-        (this.questions[this.indexQuestion].time + 1) * 1000);
-}
   ngOnDestroy() {
     this.routeSub.unsubscribe();
   }
@@ -112,19 +104,31 @@ startQuestionTimer()  {
         console.log(questions);
         this.questions = questions;
         this.optionType = +this.questions[0].type.id;
-        this.questions.forEach(x => this.optionService.getDefaultOptions(x.id).
-        subscribe(res => {this.quizAnswers.push(res[0]);  console.log(res) }));
+
+        for (let question of this.questions) {
+          this.getDefaultOptions(question);
+        }
       });
-
-
   }
+
+  getOptions(question: Question) {
+    this.optionService.getOptions(question.id)
+      .subscribe(options => {
+      })
+  }
+
+  getDefaultOptions(question: Question) {
+    console.log("from def option");
+    this.optionService.getDefaultOptions(question.id)
+      .subscribe((options: DefaultOption[]) => {
+        // console.log(options);
+        console.log(options[0]);
+        this.quizAnswers.push(options[0]);
+      })
+  }
+
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.optionsSequence, event.previousIndex, event.currentIndex);
-  }
-  getScore(): number {
-    let sum = 0;
-    this.userAnswers.forEach(x => sum + x.points);
-    return sum;
   }
 }
