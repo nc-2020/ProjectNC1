@@ -25,7 +25,7 @@
                 </div>
                 <div class="btn-group justify-content-between" role="group" aria-label="First group">
                   <a routerLink="/quiz/{{quiz.id}}" class="btn btn-secondary ">Play</a>
-                  <button mat-icon-button (click)="toggleSelected(quiz)">
+                  <button class="favourite_btn" mat-icon-button color="warn" (click)="toggleSelected(quiz)">
                     <mat-icon
                       *ngIf="quiz.favourite"
                       aria-label="Example icon-button with a heart icon">

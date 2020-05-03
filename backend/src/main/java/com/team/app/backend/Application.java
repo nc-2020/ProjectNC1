@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.team.app.backend;
 
 import org.springframework.boot.SpringApplication;
