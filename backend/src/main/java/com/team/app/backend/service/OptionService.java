@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface OptionService {
 
-    List<DefaultQuest> getDefaultOpion(Long quest_id);
+    List<DefaultQuest> getDefaultOption(Long quest_id);
 
-    List<Option> getOpions(Long quest_id);
+    List<Option> getOptions(Long quest_id);
 
-    List<SeqOption> getSeqOpion(Long quest_id);
+    List<SeqOption> getSeqOption(Long quest_id);
 }
