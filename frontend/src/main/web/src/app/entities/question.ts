@@ -1,5 +1,3 @@
-import {Option} from "./option";
-
 export interface Question {
   id: number;
   time: number;
