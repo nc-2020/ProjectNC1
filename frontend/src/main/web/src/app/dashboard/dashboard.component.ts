@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.tab = this.route.snapshot.paramMap.get('tab');
-    this.user = this.userService.user;
+    this.user = this.tab === 'Profile' ? this.userService.user : {role:{}} as User;
     this.users$ = this.searchTerms.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
   }
   profileSet( editOnly?: boolean, user?: User)
   {
-    this.user = (user ? user : {role: {name: 'moderator'}} as User)
+    this.user = (user ? user : {role:{}} as User)
     this.changeTab(editOnly ? 'AddProfile' : 'Profile');
   }
 

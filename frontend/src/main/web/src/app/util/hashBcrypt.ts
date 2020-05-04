@@ -8,10 +8,6 @@ export class HashBcrypt {
     return bcrypt.hashSync(value, salt);
   }
   static compare(pass: string, hash: string): boolean {
-    let result: boolean;
-    bcrypt.compare(pass, hash).then((res) => {
-      result = res;
-    });
-    return result;
+    return bcrypt.compareSync(pass, hash);
   }
 }
