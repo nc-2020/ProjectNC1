@@ -21,11 +21,8 @@ export class QuizComponent implements OnInit, OnDestroy {
   private routeSub: Subscription;
   quizId;
   questions: Question[] = [];
-  quizAnswers: DefaultOption[] = [];
   userAnswers: Answer[] = [];
-  // quizDefaultOptionAnswers: DefaultOption[] = [];
-  // quizOptionAnswers: Option[] = [];
-  // quizSequenceOptionAnswers: SequenceOption[] = [];
+  optionalAnswers: Option[] = [];
   questionOptions = new Map();
   indexQuestion = 0;
   timer = 0;
@@ -50,10 +47,6 @@ export class QuizComponent implements OnInit, OnDestroy {
     });
     this.getQuestions();
 
-    for (let quizA of this.quizAnswers) {
-      console.log('quizA: ' + quizA);
-    }
-    console.log(this.questionOptions);
   }
 
   nextQuestion(clear: boolean): void {
@@ -80,11 +73,14 @@ export class QuizComponent implements OnInit, OnDestroy {
       case 2:
         this.optionType = 2;
         break;
-      case 3:
+      case 3: {
         this.optionType = 3;
+        this.optionalAnswers = this.questionOptions.get(this.questions[this.indexQuestion].id) as Option[];
         break;
+      }
       case 4:
         this.optionType = 4;
+        this.optionsSequence = this.questionOptions.get(this.questions[this.indexQuestion].id);
         break;
       default:
         this.optionType = 0;
@@ -92,6 +88,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   startQuestionTimer()  {
+    this.optionSwitcher();
     this.timer = this.questions[this.indexQuestion].time;
     this.interval = setInterval(() => this.timer--, 1000);
     this.timeout = setTimeout(() => { clearInterval(this.interval);
@@ -111,7 +108,6 @@ export class QuizComponent implements OnInit, OnDestroy {
   getQuestions() {
     this.questionService.getQuestions(this.quizId)
       .subscribe(questions => {
-        console.log(questions);
         this.questions = questions;
         this.optionType = +this.questions[0].type.id;
 
@@ -140,14 +136,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
-  getDefaultOptions(questionId: number) {
-    this.optionService.getDefaultOptions(questionId)
-      .subscribe((options: DefaultOption[]) => {
-        // console.log(options);
-        console.log(options[0]);
-        this.quizAnswers.push(options[0]);
-      })
-  }
+
 
 getScore(): number {
     let score = 0;
