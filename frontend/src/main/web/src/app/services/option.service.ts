@@ -17,7 +17,7 @@ export class OptionService {
   }
 
   getOptions(question_id): Observable<Option[]> {
-    return this.http.get<Option[]>(`http://localhost:8080/api/options/${question_id}`, { headers: new HttpHeaders()
+    return this.http.get<Option[]>(`/api/options/${question_id}`, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(
         catchError(this.handleError<Option[]>('getOptions', []))
@@ -25,7 +25,7 @@ export class OptionService {
   }
 
   getDefaultOptions(question_id): Observable<DefaultOption[]> {
-    return this.http.get<DefaultOption[]>(`http://localhost:8080/api/default_options/${question_id}`, { headers: new HttpHeaders()
+    return this.http.get<DefaultOption[]>(`/api/default_options/${question_id}`, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(
         catchError(this.handleError<DefaultOption[]>('getDefaultOptions', []))
@@ -33,7 +33,7 @@ export class OptionService {
   }
 
   getSequenceOptions(question_id): Observable<SequenceOption[]> {
-    return this.http.get<SequenceOption[]>(`http://localhost:8080/api/sequence_options/${question_id}`, { headers: new HttpHeaders()
+    return this.http.get<SequenceOption[]>(`/api/sequence_options/${question_id}`, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(
         catchError(this.handleError<SequenceOption[]>('getSequenceOptions', []))

@@ -9,7 +9,8 @@ import {UserService} from "../user.service";
   providedIn: 'root'
 })
 export class QuizService {
-  private quizzesUrl = 'http://localhost:8080/api/quiz';  // URL to web api
+  // private quizzesUrl = 'http://localhost:8080/api/quiz';  // URL to web api
+  private quizzesUrl = '/api/quiz';  // URL for deploy
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
