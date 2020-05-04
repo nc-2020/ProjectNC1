@@ -75,6 +75,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         break;
       case 3: {
         this.optionType = 3;
+        this.userAnswers.push({questionId: this.questions[this.indexQuestion].id , points: 0});
         this.optionalAnswers = this.questionOptions.get(this.questions[this.indexQuestion].id) as Option[];
         break;
       }
@@ -103,7 +104,28 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id ,
       points: this.questionOptions.get(this.questions[this.indexQuestion].id)[0].answer === answer ? 1 : 0});
     this.nextQuestion(true);
+
   }
+
+  addPoint(point: number, event?) {
+    this.userAnswers[this.userAnswers.length - 1].points += event.target.checked ? point : -point;
+  }
+
+  seqAnswer() {
+    let questionPoints = 0;
+
+    for (let i = 0; i < this.optionsSequence.length; i++) {
+      if (i + 1 === this.optionsSequence[i].serial_num) {
+        questionPoints += 0.25;
+      }
+    }
+    console.log(questionPoints);
+    this.userAnswers.push({questionId: this.questions[this.indexQuestion].id,
+       points: questionPoints
+    })
+    this.nextQuestion(true);
+  }
+
   getQuestions() {
     this.questionService.getQuestions(this.quizId)
       .subscribe(questions => {
