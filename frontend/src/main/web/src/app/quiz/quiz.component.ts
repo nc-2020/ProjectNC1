@@ -103,7 +103,6 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id ,
       points: this.questionOptions.get(this.questions[this.indexQuestion].id)[0].answer === answer ? 1 : 0});
     this.nextQuestion(true);
-
   }
   getQuestions() {
     this.questionService.getQuestions(this.quizId)
