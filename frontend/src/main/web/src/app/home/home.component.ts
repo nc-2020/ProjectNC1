@@ -12,7 +12,6 @@ export class HomeComponent implements OnInit {
   title = 'Demo';
   greeting = {};
   constructor( private http: HttpClient, private app: UserService) {
-    http.get('api/resource').subscribe(data => this.greeting = data);
   }
 
   authenticated() {

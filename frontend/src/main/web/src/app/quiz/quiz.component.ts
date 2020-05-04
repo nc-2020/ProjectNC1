@@ -25,7 +25,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   userAnswers: Answer[] = [];
   optionalAnswers: Option[] = [];
   questionOptions = new Map();
-  indexQuestion = 0;
+  indexQuestion: number = 0;
   timer = 0;
   interval: any = null;
   timeout: any = null;
@@ -53,15 +53,15 @@ export class QuizComponent implements OnInit, OnDestroy {
   nextQuestion(clear: boolean): void {
     if(clear){
       clearInterval(this.interval);
-      clearTimeout(this.timeout);
+      clearTimeout(+this.timeout);
     }
-    if (this.indexQuestion < this.questions.length) {
+    if (this.indexQuestion < this.questions.length - 1) {
       this.indexQuestion++;
       this.startQuestionTimer();
-    }
-    else {
-      this.timer = 0;
+    } else {
+      this.interval = null;
       console.log(this.getScore());
+      console.log(this.indexQuestion);
     }
     this.optionSwitcher();
   }
