@@ -1,23 +1,68 @@
-<section class="min-vh-100" id="cover">
-	<div class="container">
-		<h3 style="color: white;">Top Quizes</h3>
-	  <!-- <div class="grid grid-pad">
-	    <a *ngFor="let quiz of quizes" class="col-1-4"
-	       routerLink="/quiz-edit/{{quiz.id}}">
-	      <div class="module hero">
-	        <h4>{{quiz.title}}</h4>
-	      </div>
-	    </a>
-	  </div> -->
-	  <a *ngFor="let quiz of quizes" class="col-lg-4"
-	       routerLink="/quiz-edit/{{quiz.id}}">
-		<div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-		  <div class="card-header"><img src="../../assets/logo_brainduel.png" width="110" height="122"></div>
-		  <div class="card-body">
-		    <h5 class="card-title">{{quiz.title}}</h5>
-		    <p class="card-text">{{quiz.description}}</p>
-		  </div>
-		</div>
-	  </a>
-	</div>
-</section>
+  <div class="container-fluid">
+    <div class= "raw">
+      <div class="col-lg-12 order-lg-2 mt-2">
+        <ul class="nav nav-tabs">
+          <li class="nav-item" (click)="quizTab('Quizzes')">
+            <a  data-toggle="collapse" href="#collapseQuizzes" role="button" aria-expanded="false" aria-controls="collapseQuizzes" class="nav-link">Quizzes</a>
+          </li>
+          <li class="nav-item" (click)="quizTab('User quizzes')">
+            <a  data-toggle="collapse" href="#collapseUserQuizzes" role="button" aria-expanded="false" aria-controls="collapseUserQuizzes" class="nav-link">My Quizzes</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+      <div class="tab-content pt-4">
+        <div *ngIf="currentTab === 'Quizzes'" class="collapse active show" id="collapseQuizzes">
+          <div class="raw">
+            <a *ngFor="let quiz of quizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center">
+              <div  class="card  text-center text-white bg-primary mx-2 mx-sm-2 mx-md-2" style="width: 14rem; height: 17rem">
+                <a routerLink="/quiz-edit/{{quiz.id}}">
+                  <div class="card-header"><img src="../../assets/logo_brainduel.png" width="110" height="122"></div>
+                </a>
+                <div class="card-body">
+                  <h5 class="card-title">{{quiz.title}}</h5>
+                  <p class="card-text">{{quiz.description}}</p>
+                </div>
+                <div class="btn-group justify-content-between" role="group" aria-label="First group">
+                  <a routerLink="/quiz/{{quiz.id}}" class="btn btn-secondary ">Play</a>
+                  <button class="favourite_btn" mat-icon-button color="warn" (click)="toggleSelected(quiz)">
+                    <mat-icon
+                      *ngIf="quiz.favourite"
+                      aria-label="Example icon-button with a heart icon">
+                      favorite
+                    </mat-icon>
+
+                    <mat-icon
+                      *ngIf="!quiz.favourite"
+                      aria-label="Example icon-button with a heart icon">
+                      favorite_border
+                    </mat-icon>
+                  </button>
+
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div *ngIf="currentTab === 'User quizzes'" class="collapse" id="collapseUserQuizzes">
+          <div class="raw">
+            <a *ngFor="let userQuiz of userQuizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center">
+              <div  class="card  text-center text-white bg-primary mx-2 mx-sm-2 mx-md-2" style="width: 14rem; height: 17rem">
+                <a routerLink="/quiz-edit/{{userQuiz.id}}">
+                  <div class="card-header"><img src="../../assets/logo_brainduel.png" width="110" height="122"></div>
+                </a>
+                <div class="card-body">
+                  <h5 class="card-title">{{userQuiz.title}}</h5>
+                  <p class="card-text">{{userQuiz.description}}</p>
+                </div>
+                <div class="btn-group" role="group" aria-label="First group">
+                  <a routerLink="/quiz/{{userQuiz.id}}" class="btn btn-secondary ">Play</a>
+                  <a routerLink="/quiz-edit/{{userQuiz.id}}" class="btn btn-secondary">Edit</a>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+  </div>
+

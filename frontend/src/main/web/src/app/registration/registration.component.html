@@ -13,13 +13,13 @@
             <input type="text" formControlName="username"  class="form-control text-center"  placeholder="USERNAME" required maxlength="20">
           </div>
           <div class="form-group">
-            <input type="text" formControlName="firstname" class="form-control text-center"  placeholder="FIRST NAME" required maxlength="20">
+            <div class="input-group">
+              <input type="text" formControlName="firstname" class="form-control text-center"  placeholder="FIRST NAME" required maxlength="20">
+              <input type="text" formControlName="lastname" class="form-control text-center"  placeholder="LAST NAME" required maxlength="20">
+            </div>
           </div>
           <div class="form-group">
-            <input type="text" formControlName="lastname" class="form-control text-center"  placeholder="LAST NAME" required maxlength="20">
-          </div>
-          <div class="form-group">
-            <input type="email" formControlName="email" class="form-control text-center"  placeholder="EMAIL" required maxlength="20">
+            <input type="email" formControlName="email" class="form-control text-center"  placeholder="EMAIL" required maxlength="50">
             <div
               *ngIf="registrationForm.get('email').invalid && registrationForm.get('email').touched"
               class="validation">
@@ -32,7 +32,10 @@
             </div>
           </div>
           <div class="form-group">
-            <input type="password" formControlName="password" class="form-control text-center" id="exampleInputPassword1" placeholder="PASSWORD" required maxlength="20">
+            <div class="input-group">
+              <input type="password" formControlName="password" class="form-control text-center" placeholder="PASSWORD" required maxlength="20">
+              <input type="password" formControlName="confirmPassword" class="form-control text-center" placeholder="CONFIRM PASSWORD" required maxlength="20">
+            </div>
             <div
               *ngIf="registrationForm.get('password').invalid && registrationForm.get('password').touched"
               class="validation">
@@ -43,9 +46,7 @@
                 Password must be at least {{registrationForm.get('password').errors.minlength.requiredLength}} characters long
               </small>
             </div>
-          </div>
-          <div class="form-group">
-            <input type="password" formControlName="confirmPassword" class="form-control text-center" id="exampleInputPassword2" placeholder="CONFIRM PASSWORD" required maxlength="20">
+
             <div
               *ngIf="registrationForm.get('confirmPassword').invalid && registrationForm.get('confirmPassword').touched"
               class="validation">
@@ -67,7 +68,7 @@
             </div>
 
           </div>
-            <button  class="btn btn-secondary btn-lg" type="submit" [disabled]="registrationForm.invalid">SIGN UP</button>
+          <button  class="btn btn-secondary btn-lg" type="submit" [disabled]="registrationForm.invalid">SIGN UP</button>
         </form>
       </div>
 

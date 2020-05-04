@@ -1,33 +1,31 @@
-import { BrowserModule } from '@angular/platform-browser';
-import {Injectable, NgModule} from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { AuthorizationComponent } from './authorization/authorization.component';
-import {HttpClientModule, HttpErrorResponse, HttpResponse} from '@angular/common/http';
-import { HomeComponent } from './home/home.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {AuthorizationComponent} from './authorization/authorization.component';
+import {HomeComponent} from './home/home.component';
 import {RegistrationComponent} from './registration/registration.component';
-import {
-  HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS
-} from '@angular/common/http';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
-import { UserCardComponent } from './user-card/user-card.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {UserProfileComponent} from './user-profile/user-profile.component';
+import {UserCardComponent} from './user-card/user-card.component';
 import {UserProfileRoutingModule} from "./user-profile/user-profile-routing.module";
-import { QuizCreateComponent } from './quiz-create/quiz-create.component';
-import { QuizEditComponent } from './quiz-edit/quiz-edit.component';
-import { QuizDashboardComponent } from './quiz-dashboard/quiz-dashboard.component';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import {QuizCreateComponent} from './quiz-create/quiz-create.component';
+import {QuizEditComponent} from './quiz-edit/quiz-edit.component';
+import {QuizDashboardComponent} from './quiz-dashboard/quiz-dashboard.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import {InMemoryDataService} from "./services/in-memory-data.service";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AnnouncementComponent } from './announcement/announcement.component';
-import { AnnouncementEditComponent } from './announcement-edit/announcement-edit.component';
-import {Observable} from "rxjs";
-import {UserService} from "./user.service";
-
-
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AnnouncementComponent} from './announcement/announcement.component';
+import {AnnouncementEditComponent} from './announcement-edit/announcement-edit.component';
+import {QuizComponent} from './quiz/quiz.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoaderService } from './services/loader.service';
+import { LoaderInterceptor } from './interceptors/loader-interceptor.service';
+import { MyLoaderComponent } from './components/my-loader/my-loader.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
 // @Injectable()
 // export class AuthInterceptor implements HttpInterceptor {
@@ -58,7 +56,9 @@ import {UserService} from "./user.service";
     QuizEditComponent,
     QuizDashboardComponent,
     AnnouncementComponent,
-    AnnouncementEditComponent
+    AnnouncementEditComponent,
+    QuizComponent,
+    MyLoaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,15 +68,16 @@ import {UserService} from "./user.service";
     AppRoutingModule,
     UserProfileRoutingModule,
     DragDropModule,
-    // // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // // and returns simulated server responses.
-    // // Remove it when a real server is ready to receive requests.
-    // HttpClientInMemoryWebApiModule.forRoot(
-    //   InMemoryDataService, { dataEncapsulation: false }
-    // ),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatIconModule,
+    MatButtonModule,
   ],
-  providers: [],
+  providers: [
+    LoaderService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

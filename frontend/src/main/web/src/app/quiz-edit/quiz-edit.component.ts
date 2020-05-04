@@ -1,7 +1,6 @@
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-import {Component, OnInit, Input, OnDestroy} from '@angular/core';
-import {Quiz} from "../entities/quiz";
+import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Question} from "../entities/question";
 import {QuestionService} from "../services/question.service";
 import {Option} from "../entities/option";
@@ -9,6 +8,7 @@ import {DefaultOption} from "../entities/default-option"
 import {Subscription} from "rxjs";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {SequenceOption} from "../entities/sequence-option";
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-quiz-edit',
@@ -16,26 +16,20 @@ import {SequenceOption} from "../entities/sequence-option";
   styleUrls: ['./quiz-edit.component.css']
 })
 export class QuizEditComponent implements OnInit, OnDestroy {
+  quiz_id;
+  // quizEditForm: FormGroup = new FormGroup({
+  //   'questionText': new FormControl(null, Validators.required),
+  //   'questionType': new FormControl('1', Validators.required),
+  // })
+
+  questionForm = this.fb.group({
+    'questionText': ['', Validators.required],
+    'questionType': ['not selected', Validators.required],
+    'questionTime': ['not selected', Validators.required]
+  })
   questions: Question[] = [];
-  titleEditor: any;
-  question: Question = {
-    id: null,
-    time: 15,
-    options: 1,
-    type: {id: '1', name: ''},
-    text: '',
-    quiz_id: null,
-    image: ''
-  };
-  questionToAdd: Question = {
-    id: null,
-    time: 15,
-    options: 1,
-    type: {id: '1', name: ''},
-    text: '',
-    quiz_id: null,
-    image: ''
-  };
+  titleEditor = 'Add a question';
+
   numberOfOptions = 4;
   options: Option[] = Array.from({length: this.numberOfOptions},()=>
     ({
@@ -49,42 +43,30 @@ export class QuizEditComponent implements OnInit, OnDestroy {
       serial_num: null,
       text: ''
     }))
-
-
-
   isAddQuestion = false;
-  selectedLevel: any;
   private routeSub: Subscription;
   defaultOption: DefaultOption = {answer: ''};
 
 
   constructor(
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     private questionService: QuestionService,
     private location: Location
   ) { }
 
   ngOnInit(): void {
-
-      // console.log(params); //log the entire params object
-      //console.log(params['id']); //log the value of id
-
-      //console.log(this.question.quiz_id);
-       this.getQuestions();
-
+    this.routeSub = this.route.params.subscribe(params => {
+      this.quiz_id = params['id'];
+    });
+    this.getQuestions();
   }
   ngOnDestroy() {
     this.routeSub.unsubscribe();
   }
-  showAdd() {
-    this.titleEditor = 'Add a question';
-    this.question = this.questionToAdd;
-    this.isAddQuestion = !this.isAddQuestion;
-  }
-  showEdit(action: string, question: Question) {
+
+  showEdit() {
     this.titleEditor = 'Edit a question';
-    this.question = question;
-    this.isAddQuestion = !this.isAddQuestion;
   }
 
 
@@ -92,51 +74,71 @@ export class QuizEditComponent implements OnInit, OnDestroy {
 
   //CRUD
   getQuestions(): void {
-    this.questionService.getQuestions()
+    this.questionService.getQuestions(this.quiz_id)
       .subscribe(questions => {
-        for (let question of questions) {
-          if (question.quiz_id === this.question.quiz_id) {
-            this.questions.push(question);
-          }
-        }
-    }
+        console.log(questions);
+        this.questions = questions;
+      }
     );
   }
-  createQuestion() {
-    let someOption=[];
-    if (this.question.type.id === '1') {
-      this.defaultOption.answer = this.answerTrueFalse;
-      someOption.push(this.defaultOption);
-    } else if (this.question.type.id === '2') {
-      this.defaultOption.answer = this.answerTypeAnswer;
-      someOption.push(this.defaultOption);
-    } else if (this.question.type.id === '3') {
-      someOption = this.options;
-    } else if (this.question.type.id === '4') {
-      for (let i = 0; i < this.optionsSequence.length; i++) {
-        this.optionsSequence[i].serial_num = i + 1;
-      }
-      someOption = this.optionsSequence;
-    }
-    console.log("question created");
-    this.routeSub = this.route.params.subscribe(params => {
-      this.question.quiz_id = params['id'];
-    });
-    this.questionService.createQuestion({
-        options: someOption,
-        text: this.question.text,
-        type: {id: this.question.type.id},
-        time: this.question.time,
-        max_points:null,
-        quiz_id: this.question.quiz_id
-    } as Question)
-      .subscribe(data  => {
-        this.question.id = data.id;
-        console.log(data.id);
-        this.questions.push(this.question);
-      });
+
+  getQuestion(question_id): void {
+    this.questionService.getQuestion(question_id)
+      .subscribe(question => {
+        console.log(question);
+      })
   }
 
+  determineTypeQuestion(): any[] {
+    let someOption=[];
+    switch (this.questionForm.get('questionType').value) {
+      case '1':
+        this.defaultOption.answer = this.answerTrueFalse;
+        someOption.push(this.defaultOption);
+        break;
+      case '2':
+        this.defaultOption.answer = this.answerTypeAnswer;
+        someOption.push(this.defaultOption);
+        break;
+      case '3':
+        someOption = this.options;
+        break;
+      case '4':
+        for (let i = 0; i < this.optionsSequence.length; i++) {
+          this.optionsSequence[i].serial_num = i + 1;
+        }
+        someOption = this.optionsSequence;
+        break;
+    }
+
+    return someOption;
+  }
+
+
+  createQuestion() {
+    let someOption = this.determineTypeQuestion();
+    console.log("question created");
+    let question: Question  = {
+      id: null,
+      time: this.questionForm.get('questionTime').value,
+      options: someOption,
+      type: {id: this.questionForm.get('questionType').value, name: ''},
+      text: this.questionForm.get('questionText').value,
+      max_points: null,
+      quiz_id: this.quiz_id,
+      image: ''
+    };
+    this.questionForm.reset({
+      'questionType': 'not selected',
+      'questionTime': 'not selected'}
+    );
+    this.questionService.createQuestion(question as Question)
+      .subscribe(data  => {
+        question.id = data.id;
+        this.questions.push(question);
+        //this.getQuestion(data.id);
+      });
+  }
 
   deleteQuestion(question: Question): void {
     this.questions = this.questions.filter(q => q !== question);
@@ -150,6 +152,4 @@ export class QuizEditComponent implements OnInit, OnDestroy {
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.optionsSequence, event.previousIndex, event.currentIndex);
   }
-
-
 }

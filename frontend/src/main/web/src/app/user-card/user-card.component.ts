@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, ContentChild, EventEmitter, Output} from '@angular/core';
 import {UserService} from "../user.service";
 import { User } from '../entities/user';
 import { Router } from '@angular/router';
 import { SharedUserDataService } from '../shared-user-data.service';
+import {DashboardComponent} from "../dashboard/dashboard.component";
 
 @Component({
   selector: 'app-user-card',
@@ -10,28 +11,20 @@ import { SharedUserDataService } from '../shared-user-data.service';
   styleUrls: ['./user-card.component.css']
 })
 export class UserCardComponent implements OnInit {
-edit = false;
+
+
   @Input()
   user: User;
-  // user: User = {
-  //   id: '12',
-  //   username: 'lol',
-  //   firstName: 'lol',
-  //   lastName: 'kjk',
-  //   email: 'mompop@sdasd.com',
-  //   role: {name: 'user'},
-  //   password: 'lol'
-  // };
-  constructor(private userService: UserService, private router: Router,private sharedData: SharedUserDataService) { }
+  @Output()
+  onChanged = new EventEmitter<User>();
+
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
 
   }
   goToProfile() {
-    this.edit = true;
-    this.sharedData.setUserData(this.user);
-    this.router.navigateByUrl('dashboard/Profile');
-
+    this.onChanged.emit(this.user);
   }
   userRole() {
     return this.userService.user.role.name;

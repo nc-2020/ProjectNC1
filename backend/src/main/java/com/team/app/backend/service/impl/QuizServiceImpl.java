@@ -10,6 +10,7 @@ import com.team.app.backend.dto.QuestionSeqAddDto;
 import com.team.app.backend.dto.QuizAddDto;
 import com.team.app.backend.persistance.dao.OptionDao;
 import com.team.app.backend.persistance.dao.QuestionDao;
+import com.team.app.backend.persistance.dao.QuizCategoryDao;
 import com.team.app.backend.persistance.dao.QuizDao;
 import com.team.app.backend.persistance.model.*;
 import com.team.app.backend.service.QuizService;
@@ -32,6 +33,10 @@ public class QuizServiceImpl implements QuizService {
 
     @Autowired
     private OptionDao optionDao;
+
+    @Autowired
+    private QuizCategoryDao quizCategoryDao;
+
 
 
 
@@ -135,6 +140,21 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    public List<Quiz> getApprovedQuizes() {
+        return quizDao.getApproved();
+    }
+
+    @Override
+    public List<Quiz> getCategoryQuizes(String category) {
+        return quizDao.getCategoryQuizes(category);
+    }
+
+    @Override
+    public List<Quiz> searchQuizes(String category, String searchstring) {
+        return quizDao.searchQuizes(category,searchstring);
+    }
+
+    @Override
     public List<Question> getQuizQuestion(Long id) {
         return questionDao.getQuizQusetions(id);
     }
@@ -157,7 +177,11 @@ public class QuizServiceImpl implements QuizService {
         quiz.setImage(quizAddDto.getImage());
         quiz.setUser_id((long)quizAddDto.getUser_id());
         quiz.setStatus_Id(new QuizStatus( 1L,"created"));
-        return quizDao.save(quiz);
+        Long quiz_id= quizDao.save(quiz);
+        for (Long cat_id:quizAddDto.getCategories()) {
+            quizCategoryDao.addQuizToCategory(quiz_id,cat_id);
+        }
+        return quiz_id;
     }
 
 

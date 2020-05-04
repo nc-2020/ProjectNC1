@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import { Quiz } from '../entities/quiz';
 import { QuizService } from '../services/quiz.service';
 
@@ -8,18 +8,37 @@ import { QuizService } from '../services/quiz.service';
   styleUrls: ['./quiz-dashboard.component.css']
 })
 export class QuizDashboardComponent implements OnInit {
-  quizes: Quiz[] = [];
+  quizzes: Quiz[] = [];
+  userQuizzes: Quiz[] = [];
+  currentTab = 'Quizzes';
 
   constructor(private quizService: QuizService) { }
 
   ngOnInit(): void {
-    this.getQuizes();
+    this.getQuizzes();
+    this.getUserQuizzes();
   }
 
-  getQuizes(): void {
-    this.quizService.getQuizes()
-      .subscribe(quizes => this.quizes = quizes);
+  getQuizzes(): void {
+    this.quizService.getQuizzes()
+      .subscribe(quizzes => this.quizzes = quizzes);
   }
 
+  getUserQuizzes(): void {
+    this.quizService.getUserQuizzes()
+      .subscribe(quizzes => this.userQuizzes = quizzes);
+  }
 
+  deleteQuiz(quiz: Quiz) {
+    this.quizzes = this.quizzes.filter(q => q !== quiz);
+    this.quizService.deleteQuiz(quiz);
+  }
+
+  quizTab(tab: string) {
+      this.currentTab = tab;
+  }
+
+  public toggleSelected(quiz: Quiz) {
+    quiz.favourite = !quiz.favourite;
+  }
 }
