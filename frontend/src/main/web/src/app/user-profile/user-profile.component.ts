@@ -34,7 +34,7 @@ export class UserProfileComponent implements OnInit {
       email: [this.user.email, [Validators.required, Validators.minLength(3), Validators.email]],
       username: [this.user.username, [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(3)]],
-      confirmPassword: ['',[Validators.required, Validators.minLength(3)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(3)]],
       role: [this.user.role.name]
     }, {validators: MustMatchValidator.passwordConfirming});
   }
@@ -48,6 +48,7 @@ export class UserProfileComponent implements OnInit {
     this.user.username = this.userForm.get('username').value;
     this.user.password = HashBcrypt.hash(this.userForm.get('password').value);
     this.user.role.name = this.userForm.get('role').value;
+    this.userForm.reset();
     this.userService.createUser(this.user).subscribe(response => {this.message = 'User has been added!'},
         error => {this.error = error.message});
   }
@@ -58,8 +59,8 @@ export class UserProfileComponent implements OnInit {
     this.user.email = this.userForm.get('email').value;
     this.user.username = this.userForm.get('username').value;
     this.user.password = this.userForm.get('password').value;
-    // this.user.role.name = this.user.role.name === "user" ? "user":this.userForm.get('role').value;
-    this.userService.updateUser(this.user).subscribe(response =>{this.user = response; this.message = 'User has been updated!'},error=>{this.error=error.message});
+    this.userService.updateUser(this.user).subscribe(response => {this.user = response; this.message = 'User has been updated!'},
+        error=>{this.error=error.message});
   }
   delete() {
     this.userService.deleteUser(this.user).subscribe(response => {this.message = 'User has been deleted!';

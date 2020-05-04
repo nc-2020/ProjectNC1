@@ -21,7 +21,7 @@ export class UserService {
   //   role: {name: 'super admin'},
   //   password: 'lol'
   // };
-  
+
   constructor(private http: HttpClient, private router: Router) {
   }
   getToken() {

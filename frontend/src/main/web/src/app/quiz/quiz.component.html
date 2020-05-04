@@ -32,6 +32,7 @@
               <button (click)="nextQuestion(true)" class="btn text-right my-1 btn-primary">Skip</button>
             </div>
           </div>
+
           <div class="row mt-2">
             <div *ngIf="optionType === 3" class="col text-right">
               <button (click)="nextQuestion(true)" class="btn text-right my-1 btn-success">Send</button>
@@ -65,14 +66,13 @@
               <button (click)="defAnswer(ans.value)" class="col btn mx-1 btn-success" type="button">Send</button>
             </div>
           </div>
-
           <div *ngIf="optionType === 3" class="col-12">
             <div class="col-12">
               <div class="row justify-content-between">
-                <div *ngFor="let answer of optionalAnswers" class="input-group mb-3">
+                <div *ngFor="let answer of optionalAnswers;" class="input-group mb-3">
                   <div class="input-group-prepend">
                     <div class="input-group-text bg-success">
-                      <input type="checkbox" aria-label="Checkbox for following text input">
+                      <input (change)="answer.is_correct ? addPoint(0.25, $event) : addPoint(0, $event)"   type="checkbox" value="" aria-label="Checkbox for following text input">
                     </div>
                   </div>
                   <label type="text" class="form-control" aria-label="Text input with checkbox">{{answer.text}}</label>
