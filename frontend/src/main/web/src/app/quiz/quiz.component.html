@@ -17,7 +17,10 @@
     <nav class="w-100 navbar-expand-md">
       <ul class="navbar-nav  justify-content-between">
         <li class="nav-item">
-          <label class="ml-2">Question {{indexQuestion + 1}}/{{questions.length}}</label>
+          <label class="ml-2 mr-2">Question {{indexQuestion + 1}}/{{questions.length}}</label>
+        </li>
+        <li class="nav-item">
+          <label class="ml-2">Score {{getScore()}}/{{questions.length}}</label>
         </li>
         <li class="nav-item">
           <label class="mr-2" [style.color.red]="timer < 5"> Time left {{timer}}</label>

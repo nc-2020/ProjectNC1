@@ -20,6 +20,7 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   private routeSub: Subscription;
   quizId;
+  quizScore = 0;
   questions: Question[] = [];
   userAnswers: Answer[] = [];
   optionalAnswers: Option[] = [];
@@ -104,7 +105,6 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id ,
       points: this.questionOptions.get(this.questions[this.indexQuestion].id)[0].answer === answer ? 1 : 0});
     this.nextQuestion(true);
-
   }
 
   addPoint(point: number, event?) {
@@ -119,6 +119,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         questionPoints += 0.25;
       }
     }
+
     console.log(questionPoints);
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id,
        points: questionPoints

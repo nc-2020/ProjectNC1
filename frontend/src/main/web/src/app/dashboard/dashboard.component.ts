@@ -9,6 +9,8 @@ import { SharedUserDataService } from '../shared-user-data.service';
 import {UserCardComponent} from "../user-card/user-card.component";
 import {UserProfileComponent} from "../user-profile/user-profile.component";
 import * as bcrypt from 'bcryptjs';
+import {CategoryService} from "../services/category.service";
+import {Category} from "../entities/category";
 
 @Component({
   selector: 'app-dashboard',
@@ -20,14 +22,17 @@ export class DashboardComponent implements OnInit {
   tab: string = '';
   user: User;
   users$: Observable<User[]>;
+  categoriesList: Category[] = [];
+
 
   private searchTerms = new Subject<string>();
   @ViewChild(UserCardComponent, {static: false}) userCardChild: UserCardComponent;
 
-  constructor(private userService: UserService, private location: Location, private route: ActivatedRoute,
+  constructor(private userService: UserService, private categoryService: CategoryService, private location: Location, private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
+    this.getCategories();
     this.tab = this.route.snapshot.paramMap.get('tab');
     this.user = this.tab === 'Profile' ? this.userService.user : {role:{}} as User;
     this.users$ = this.searchTerms.pipe(
@@ -55,7 +60,6 @@ export class DashboardComponent implements OnInit {
   getUser() {
     return this.userService.user;
   }
-
   getUserName() {
     return this.userService.user.firstName;
   }
@@ -64,5 +68,13 @@ export class DashboardComponent implements OnInit {
   }
   getUserRole() {
     return this.userService.user.role.name;
+  }
+
+  getCategories() {
+    this.categoryService.getCategories().subscribe(
+      (data: Category[]) => {
+        this.categoriesList = data;
+      }
+    )
   }
 }
