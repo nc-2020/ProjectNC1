@@ -59,7 +59,7 @@
         <div *ngIf="tab === 'Users' || tab === 'Friends' || tab === 'Admins-Moderators' || tab==='Moderators' || tab === 'Quizzes' " class=" main-frame container-fluid my-5 ">
           <form class="form-inline ml-3 my-2 my-lg-0 border-bottom" >
             <input #searchBox id="search-box"  class="form-control my-2 mr-3" type="text" placeholder="Search" style="width: 70%">
-            <mat-form-field color="primary" id="dropListCategory">
+            <mat-form-field color="Warn" id="dropListCategory">
               <mat-label class="text-center">Categories</mat-label>
               <mat-select multiple>
                 <mat-option *ngFor="let category of categoriesList" [value]="category">{{category.name}}</mat-option>

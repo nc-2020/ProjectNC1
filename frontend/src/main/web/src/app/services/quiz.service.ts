@@ -32,6 +32,14 @@ export class QuizService {
         catchError(this.handleError<Quiz[]>('getQuizzes', []))
       );
   }
+  getAllUserQuizzes(): Observable<Quiz[]> {
+    return this.http.get<Quiz[]>(this.quizzesUrl + "/user/" + this.userService.user.id + '/all',{ headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+      .pipe(
+        catchError(this.handleError<Quiz[]>('getUserAllQuizzes', []))
+      );
+  }
+
 
   getUserQuizzes(): Observable<Quiz[]> {
     return this.http.get<Quiz[]>(this.quizzesUrl + "/user/" + this.userService.user.id,{ headers: new HttpHeaders()
