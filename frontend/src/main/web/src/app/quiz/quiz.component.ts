@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {Subscription} from "rxjs";
 import {Question} from "../entities/question";
 import {QuizService} from "../services/quiz.service";
@@ -7,6 +7,8 @@ import {QuestionService} from "../services/question.service";
 import {SequenceOption} from "../entities/sequence-option";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {OptionService} from "../services/option.service";
+import {DefaultOption} from "../entities/default-option";
+import {Option} from "../entities/option";
 import {Answer} from "../entities/answer";
 
 @Component({
@@ -15,10 +17,12 @@ import {Answer} from "../entities/answer";
   styleUrls: ['./quiz.component.css']
 })
 export class QuizComponent implements OnInit, OnDestroy {
+
   private routeSub: Subscription;
   quizId;
   questions: Question[] = [];
   userAnswers: Answer[] = [];
+  optionalAnswers: Option[] = [];
   questionOptions = new Map();
   indexQuestion = 0;
   timer = 0;
@@ -42,7 +46,7 @@ export class QuizComponent implements OnInit, OnDestroy {
       this.quizId = params['id'];
     });
     this.getQuestions();
-    console.log(this.questionOptions);
+
   }
 
   nextQuestion(clear: boolean): void {
@@ -69,9 +73,11 @@ export class QuizComponent implements OnInit, OnDestroy {
       case 2:
         this.optionType = 2;
         break;
-      case 3:
+      case 3: {
         this.optionType = 3;
+        this.optionalAnswers = this.questionOptions.get(this.questions[this.indexQuestion].id) as Option[];
         break;
+      }
       case 4:
         this.optionType = 4;
         this.optionsSequence = this.questionOptions.get(this.questions[this.indexQuestion].id);
@@ -82,6 +88,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   startQuestionTimer()  {
+    this.optionSwitcher();
     this.timer = this.questions[this.indexQuestion].time;
     this.interval = setInterval(() => this.timer--, 1000);
     this.timeout = setTimeout(() => { clearInterval(this.interval);
@@ -92,21 +99,31 @@ export class QuizComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.routeSub.unsubscribe();
   }
-
   defAnswer(answer: string) {
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id ,
       points: this.questionOptions.get(this.questions[this.indexQuestion].id)[0].answer === answer ? 1 : 0});
     this.nextQuestion(true);
   }
 
-  seqQuestion() {
+  seqAnswer() {
+    let questionPoints = 0;
 
+    for (let i = 0; i < this.optionsSequence.length; i++) {
+      if (i + 1 === this.optionsSequence[i].serial_num) {
+        questionPoints += 0.25;
+      }
+    }
+    console.log(questionPoints);
+    this.userAnswers.push({questionId: this.questions[this.indexQuestion].id,
+       points: questionPoints
+    })
+
+    this.nextQuestion(true);
   }
 
   getQuestions() {
     this.questionService.getQuestions(this.quizId)
       .subscribe(questions => {
-        console.log(questions);
         this.questions = questions;
         this.optionType = +this.questions[0].type.id;
 
@@ -135,11 +152,13 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
-  getScore(): number {
+
+
+getScore(): number {
     let score = 0;
     this.userAnswers.forEach(x => score += x.points);
     return score;
-  }
+}
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.optionsSequence, event.previousIndex, event.currentIndex);
   }

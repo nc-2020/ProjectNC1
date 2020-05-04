@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {User} from "./entities/user";
 import {Observable, of, throwError} from "rxjs";
@@ -10,19 +10,18 @@ import {Router} from "@angular/router";
   providedIn: 'root'
 })
 export class UserService {
-  authenticated = false;
-  // user: User;
-   user: User = {
-    id: '123',
-    username: 'lol',
-    firstName: 'lol',
-    lastName: 'kek',
-    email: 'sdad@sdasd.com',
-    role: {name: 'super admin'},
-    password: 'lol'
-  };
-
-
+  authenticated = localStorage.getItem('user') ? true : false;
+  user: User = JSON.parse(localStorage.getItem('user'));
+  //  user: User = {
+  //   id: '123',
+  //   username: 'lol',
+  //   firstName: 'lol',
+  //   lastName: 'kek',
+  //   email: 'sdad@sdasd.com',
+  //   role: {name: 'super admin'},
+  //   password: 'lol'
+  // };
+  
   constructor(private http: HttpClient, private router: Router) {
   }
   getToken() {
@@ -67,6 +66,7 @@ export class UserService {
     return this.http.post<any>('http://localhost:8080/api/login', user).pipe(
       tap(response => {
         this.user = response;
+        localStorage.setItem('user', JSON.stringify(response));
         this.authenticated = true}),
       catchError(this.handleError<any>('login'))
     );
@@ -74,7 +74,7 @@ export class UserService {
   logout() {
     return this.http.post<User>('http://localhost:8080/api/logout', this.user, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(finalize(() => {
-      this.authenticated = false; window.location.replace('/login')
+      this.authenticated = false; localStorage.removeItem('user'); window.location.replace('/login')
     }), catchError(this.handleError<any>('logout')))
   }
 

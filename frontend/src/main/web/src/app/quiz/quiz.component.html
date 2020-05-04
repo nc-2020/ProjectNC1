@@ -32,9 +32,12 @@
               <button (click)="nextQuestion(true)" class="btn text-right my-1 btn-primary">Skip</button>
             </div>
           </div>
-          <div *ngIf="optionType === 4" class="row mt-2">
-            <div class="col text-right">
+          <div class="row mt-2">
+            <div *ngIf="optionType === 3" class="col text-right">
               <button (click)="nextQuestion(true)" class="btn text-right my-1 btn-success">Send</button>
+            </div>
+            <div *ngIf="optionType === 4" class="col text-right">
+              <button (click)="seqAnswer()" class="btn text-right my-1 btn-success">Send</button>
             </div>
           </div>
           <div class="row mt-1 justify-content-center">
@@ -66,12 +69,14 @@
           <div *ngIf="optionType === 3" class="col-12">
             <div class="col-12">
               <div class="row justify-content-between">
-                <button (click)="nextQuestion(true)" class="col btn mx-1 btn-success">Option 1</button>
-                <button (click)="nextQuestion(true)" class="col btn mx-1 btn-success">Option 2</button>
-              </div>
-              <div class="row  my-2 justify-content-between">
-                <button (click)="nextQuestion(true)" class="col btn mx-1 btn-success">Option 3</button>
-                <button (click)="nextQuestion(true)" class="col btn mx-1 btn-success">Option 4</button>
+                <div *ngFor="let answer of optionalAnswers" class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text bg-success">
+                      <input type="checkbox" aria-label="Checkbox for following text input">
+                    </div>
+                  </div>
+                  <label type="text" class="form-control" aria-label="Text input with checkbox">{{answer.text}}</label>
+                </div>
               </div>
             </div>
           </div>
@@ -81,7 +86,7 @@
                 <div cdkDropList (cdkDropListDropped)="drop($event)">
                   <button *ngFor="let option of optionsSequence; let i = index" class="col btn mx-1 btn-success mb-2">
                     <li cdkDrag>
-                      {{option.text}}
+                      {{option.text + i}}
                     </li>
                   </button>
                 </div>
