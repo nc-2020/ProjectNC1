@@ -26,6 +26,7 @@ import { LoaderInterceptor } from './interceptors/loader-interceptor.service';
 import { MyLoaderComponent } from './components/my-loader/my-loader.component';
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import { QuizCardComponent } from './quiz-card/quiz-card.component';
 
 // @Injectable()
 // export class AuthInterceptor implements HttpInterceptor {
@@ -59,6 +60,7 @@ import {MatButtonModule} from "@angular/material/button";
     AnnouncementEditComponent,
     QuizComponent,
     MyLoaderComponent,
+    QuizCardComponent,
   ],
   imports: [
     BrowserModule,

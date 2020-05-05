@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import { Quiz } from '../entities/quiz';
+import { QuizCardComponent } from '../quiz-card/quiz-card.component';
 import { QuizService } from '../services/quiz.service';
 
 @Component({

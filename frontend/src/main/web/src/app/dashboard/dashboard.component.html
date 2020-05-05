@@ -69,9 +69,16 @@
             <button *ngIf="getUserRole()==='admin' || getUserRole()==='super admin'" class="btn btn-success my-2 mx-auto my-sm-0"
                     (click)="profileSet(true)"  style="width: auto">Add</button>
           </form>
-          <app-user-card *ngFor="let user of users$ | async" (onChanged)="profileSet(false, $event)" [user]="user"></app-user-card>
+          <div *ngIf="tab !== 'Quizzes'">
+            <app-user-card *ngFor="let user of users$ | async" (onChanged)="profileSet(false, $event)" [user]="user"></app-user-card>
+          </div>
 
-          <app-quiz-dashboard *ngIf="tab === 'Quizzes'" class="mt-5"></app-quiz-dashboard>
+          <app-quiz-dashboard *ngIf="tab === 'Quizzes' && isVisible; else elseBlock" class="mt-5"></app-quiz-dashboard>
+          <div #elseBlock class="raw">
+            <div *ngIf="tab === 'Quizzes'">
+              <app-quiz-card *ngFor="let quiz of quizes$ | async" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="quiz"></app-quiz-card>
+            </div>
+          </div>
         </div>
 <!--        Profile-->
 
