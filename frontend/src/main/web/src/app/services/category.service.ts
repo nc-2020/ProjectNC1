@@ -10,7 +10,7 @@ import {UserService} from "../user.service";
   providedIn: 'root'
 })
 export class CategoryService {
-  private categoriesUrl = 'http://localhost:8080/api/categories';
+  private categoriesUrl = 'api/categories';
 
   constructor(private http: HttpClient, private userService: UserService) {
   }

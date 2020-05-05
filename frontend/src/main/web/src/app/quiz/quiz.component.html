@@ -1,5 +1,5 @@
 <section  class="min-vh-100" id="cover">
-  <div class="container text-white p-2 align-items-center w-50" id="bod0" style="height: 15rem" [hidden]="interval">
+  <div class="container text-white p-2 align-items-center w-50" id="bod0" style="height: 15rem" *ngIf="interval===null && indexQuestion === 0">
     <h2 class="mt-2">Before start playing</h2>
     <div class="row">
       <div class="col">
@@ -12,7 +12,9 @@
       </div>
     </div>
   </div>
-
+  <div *ngIf="interval===null && indexQuestion === questions.length - 1" class="container text-white p-2 align-items-center w-50" style="height: 15rem" [hidden]="interval">
+    <h2 class="mt-2">Your score is {{getScore()}}</h2>
+  </div>
   <div class="container text-white p-0" id="bod1" *ngIf="interval!==null" >
     <nav class="w-100 navbar-expand-md">
       <ul class="navbar-nav  justify-content-between">

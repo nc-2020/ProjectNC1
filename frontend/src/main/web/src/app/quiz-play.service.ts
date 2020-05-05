@@ -13,7 +13,7 @@ export class QuizPlayService {
               private quizService: QuizService,
               private userService: UserService) {}
 
-  private quizzesUrl = 'http://localhost:8080/api/quiz';
+  private quizzesUrl = 'api/quiz';
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
