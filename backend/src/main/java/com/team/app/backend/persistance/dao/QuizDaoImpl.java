@@ -134,4 +134,12 @@ public class QuizDaoImpl implements QuizDao {
                 id
         );
     }
+    @Override
+    public void approve(Long id) {
+        jdbcTemplate.update(
+                "UPDATE quiz set status = 2  where id = ?",
+                id
+        );
+    }
+
 }
