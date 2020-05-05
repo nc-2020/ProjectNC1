@@ -7,12 +7,18 @@ import com.team.app.backend.persistance.model.UserToSession;
 import com.team.app.backend.service.*;
 import jdk.jfr.Frequency;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.FileReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +38,9 @@ public class PlayQuizController {
 
     @Autowired
     private UserToSessionService userToSessionService;
+
+    @Autowired
+    private QuestionService questionService;
 
     @RequestMapping("play")
     public ResponseEntity playQuiz(
@@ -74,6 +83,33 @@ public class PlayQuizController {
             response.put(user.getUsername(), userToSession.getScore());
         }
         return ResponseEntity.ok().body(response);
+    }
+
+    @RequestMapping("quiz/finish")
+    public ResponseEntity finishQuiz(
+            HttpEntity<String> httpEntity
+    ) {
+        String json = httpEntity.getBody();
+
+        JSONParser jsonParser = new JSONParser();
+
+        try {
+            Object obj = jsonParser.parse(json);
+            JSONObject jsonObject = (JSONObject) obj;
+            Long userId = (Long) jsonObject.get("user_id");
+            Long sessionId = (Long) jsonObject.get("session_id");
+            JSONArray answers = (JSONArray) jsonObject.get("answers");
+            answers.forEach(answer -> parseAnswer((JSONObject) answer));
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private void parseAnswer(JSONObject answer) {
+        Long questionId = (Long) answer.get("key");
+
     }
 
 
