@@ -21,9 +21,9 @@
         <li class="nav-item">
           <label class="ml-2 mr-2">Question {{indexQuestion + 1}}/{{questions.length}}</label>
         </li>
-<!--        <li class="nav-item">-->
-<!--          <label class="ml-2">Score {{getScore()}}/{{questions.length}}</label>-->
-<!--        </li>-->
+        <li class="nav-item">
+          <label class="ml-2">Score {{getScore()}}/{{questions.length}}</label>
+        </li>
         <li class="nav-item">
           <label class="mr-2" [class.text-red]="timer < 5"> Time left {{timer}}</label>
         </li>
@@ -40,7 +40,7 @@
 
           <div class="row mt-2">
             <div *ngIf="optionType === 3" class="col text-right">
-              <button (click)="nextQuestion(true)" class="btn text-right my-1 btn-success">Send</button>
+              <button (click)="sendOptionAnswer()" class="btn text-right my-1 btn-success">Send</button>
             </div>
             <div *ngIf="optionType === 4" class="col text-right">
               <button (click)="seqAnswer()" class="btn text-right my-1 btn-success">Send</button>
