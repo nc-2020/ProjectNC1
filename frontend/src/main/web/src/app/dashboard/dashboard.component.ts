@@ -30,7 +30,8 @@ export class DashboardComponent implements OnInit {
   isVisible = true;
 
 
-  private searchTerms = new Subject<string>();
+  private searchQuizTerms = new Subject<string>();
+  private searchUserTerms = new Subject<string>();
   @ViewChild(UserCardComponent, {static: false}) userCardChild: UserCardComponent;
 
   constructor(private userService: UserService, private quizService: QuizService, private categoryService: CategoryService, private location: Location, private route: ActivatedRoute,
@@ -40,17 +41,29 @@ export class DashboardComponent implements OnInit {
     this.getCategories();
     this.tab = this.route.snapshot.paramMap.get('tab');
     this.user = this.tab === 'Profile' ? this.userService.user : {role:{}} as User;
-    this.quizes$ = this.searchTerms.pipe(
+    this.quizes$ = this.searchQuizTerms.pipe(
       debounceTime(300),
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
       switchMap((term: string) => this.quizService.searchQuizzes(term)),
     );
+    this.users$ = this.searchUserTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      // switch to new search observable each time the term changes
+      switchMap((term: string) => this.userService.searchUsers(term)),
+    );
+    
   }
 
   search(term: string): void {
     this.isVisible = false;
-    this.searchTerms.next(term);
+    if (this.tab === 'Quizzes') {
+      this.searchQuizTerms.next(term);
+    } else {
+      this.searchUserTerms.next(term);
+    }
+    
   }
   profileSet( editOnly?: boolean, user?: User)
   {

@@ -74,6 +74,15 @@ public class QuizDaoImpl implements QuizDao {
                 ,new Object[] {search},
                 quizRowMapper);
     }
+	
+	@Override
+    public List<Quiz> searchQuizes(String searchstring) {
+        String search="%"+searchstring+"%";
+        System.out.println(search);
+        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id where Q.title LIKE ? "
+                ,new Object[] {search},
+                quizRowMapper);
+    }
 
     @Override
     public List<Quiz> getAll() {

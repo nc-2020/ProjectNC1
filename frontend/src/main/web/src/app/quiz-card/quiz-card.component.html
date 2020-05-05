@@ -10,7 +10,7 @@
                 <div class="btn-group justify-content-between" role="group" aria-label="First group">
                   <a routerLink="/quiz/{{quiz.id}}" class="btn btn-secondary ">Play</a>
                   <a *ngIf="isEdit" routerLink="/quiz-edit/{{quiz.id}}" class="btn btn-secondary">Edit</a>
-                  <button class="favourite_btn" mat-icon-button color="warn" (click)="toggleSelected(quiz)">
+                  <button *ngIf="!isEdit" class="favourite_btn" mat-icon-button color="warn" (click)="toggleSelected(quiz)">
                     <mat-icon
                       *ngIf="quiz.favourite"
                       aria-label="Example icon-button with a heart icon">
