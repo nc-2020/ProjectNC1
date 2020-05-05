@@ -26,6 +26,7 @@ public interface QuizDao {
 
     void delete(Long id);
 
+    void approve(Long id);
 
 
 

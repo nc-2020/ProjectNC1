@@ -8,6 +8,8 @@ import com.team.app.backend.persistance.model.Question;
 import com.team.app.backend.persistance.model.Quiz;
 import com.team.app.backend.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -116,10 +118,21 @@ public class QuizController {
         System.out.println(category+" "+searchstring);
         return quizService.searchQuizes(category,searchstring);
     }
-	
+
 	@GetMapping("/quiz/search/{searchstring}")
     public List<Quiz> searchQuizes(@PathVariable("searchstring") String searchstring) {
         System.out.println(searchstring);
         return quizService.searchQuizes(searchstring);
+    }
+
+    @PostMapping("/quiz/approve")
+    public ResponseEntity approveQuiz(@RequestBody Quiz quiz) {
+        try {
+            quizService.aproveQuiz(quiz);
+        }
+        catch (DataAccessException sqlEx) {
+            return ResponseEntity.badRequest().build();
+        }
+            return ResponseEntity.ok().build();
     }
 }

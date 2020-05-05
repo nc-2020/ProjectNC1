@@ -42,4 +42,6 @@ public interface QuizService {
     List<Quiz> getAllQuizes();
 
     Quiz getQuiz(Long id);
+
+    void aproveQuiz(Quiz quiz);
 }

@@ -60,8 +60,6 @@ export class QuizComponent implements OnInit, OnDestroy {
       this.startQuestionTimer();
     } else {
       this.interval = null;
-      console.log(this.getScore());
-      console.log(this.indexQuestion);
     }
     this.optionSwitcher();
   }
@@ -108,6 +106,8 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   addPoint(point: number, event?) {
+    let coef = 1 / this.optionalAnswers.filter(x => x.is_correct).length;
+    point *= coef;
     this.userAnswers[this.userAnswers.length - 1].points += event.target.checked ? point : -point;
   }
 
@@ -119,8 +119,6 @@ export class QuizComponent implements OnInit, OnDestroy {
         questionPoints += 0.25;
       }
     }
-
-    console.log(questionPoints);
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id,
        points: questionPoints
     })
