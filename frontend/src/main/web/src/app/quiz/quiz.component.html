@@ -89,9 +89,9 @@
             <div *ngIf="optionType === 4" class="mb-3">
               <ul class="list-unstyled">
                 <div cdkDropList (cdkDropListDropped)="drop($event)">
-                  <button *ngFor="let option of optionsSequence; let i = index" class="col btn mx-1 btn-success mb-2">
+                  <button *ngFor="let option of optionsSequence;" class="col btn mx-1 btn-success mb-2">
                     <li cdkDrag>
-                      {{option.text + i}}
+                      {{option.text}}
                     </li>
                   </button>
                 </div>
