@@ -118,6 +118,13 @@ public class QuizController {
         System.out.println(category+" "+searchstring);
         return quizService.searchQuizes(category,searchstring);
     }
+
+	@GetMapping("/quiz/search/{searchstring}")
+    public List<Quiz> searchQuizes(@PathVariable("searchstring") String searchstring) {
+        System.out.println(searchstring);
+        return quizService.searchQuizes(searchstring);
+    }
+
     @PostMapping("/quiz/approve")
     public ResponseEntity approveQuiz(@RequestBody Quiz quiz) {
         try {

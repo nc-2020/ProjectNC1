@@ -154,6 +154,11 @@ public class QuizServiceImpl implements QuizService {
         return quizDao.searchQuizes(category,searchstring);
     }
 
+	@Override
+    public List<Quiz> searchQuizes(String searchstring) {
+        return quizDao.searchQuizes(searchstring);
+    }
+	
     @Override
     public List<Question> getQuizQuestion(Long id) {
         return questionDao.getQuizQusetions(id);

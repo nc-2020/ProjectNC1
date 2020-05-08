@@ -41,9 +41,9 @@ message = ''
         Validators.required,
         Validators.minLength(3),
       ]),
-      checkAgreement: new FormControl([true,
-        Validators.requiredTrue
-      ])
+      // checkAgreement: new FormControl([true,
+      //   Validators.requiredTrue
+      // ])
     }, {validators: MustMatchValidator.passwordConfirming});
   }
 

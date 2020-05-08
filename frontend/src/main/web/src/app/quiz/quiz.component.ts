@@ -19,6 +19,8 @@ import {Answer} from "../entities/answer";
 export class QuizComponent implements OnInit, OnDestroy {
 
   private routeSub: Subscription;
+  questionOptionPoints = 0;
+
   quizId;
   quizScore = 0;
   questions: Question[] = [];
@@ -106,10 +108,21 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   addPoint(point: number, event?) {
+
     const coef = 1 / this.optionalAnswers.filter(x => x.is_correct).length;
     point *= coef;
-    this.userAnswers[this.userAnswers.length - 1].points += event.target.checked ? point : -point;
+
+    // this.userAnswers[this.userAnswers.length - 1].points += event.target.checked ? point : -point;
+    this.questionOptionPoints += event.target.checked ? point : -point;
   }
+
+  sendOptionAnswer() {
+    this.userAnswers.push({questionId: this.questions[this.indexQuestion].id,
+      points: this.questionOptionPoints
+    })
+    this.nextQuestion(true);
+  }
+
 
   seqAnswer() {
     let questionPoints = 0;

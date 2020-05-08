@@ -67,7 +67,8 @@ export class QuizService {
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.get<Quiz[]>(`${this.quizzesUrl}/?title=${term}`).pipe(
+    return this.http.get<Quiz[]>(`${this.quizzesUrl}/search/${term}`, { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
       catchError(this.handleError<Quiz[]>('searchQuizzes', []))
     );
   }
