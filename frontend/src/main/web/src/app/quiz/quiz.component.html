@@ -77,7 +77,7 @@
                 <div *ngFor="let answer of optionalAnswers;" class="input-group mb-3">
                   <div class="input-group-prepend">
                     <div class="input-group-text bg-success">
-                      <input (change)="answer.is_correct ? addPoint(1, $event) : addPoint(0, $event)"   type="checkbox" value="" aria-label="Checkbox for following text input">
+                      <input (change)="answer.is_correct ? addPoint(1, $event) : addPoint(-1, $event)"   type="checkbox" value="" aria-label="Checkbox for following text input">
                     </div>
                   </div>
                   <label type="text" class="form-control" aria-label="Text input with checkbox">{{answer.text}}</label>
