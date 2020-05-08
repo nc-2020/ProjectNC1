@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -19,7 +20,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-@Component
+@Repository
 public class QuizDaoImpl implements QuizDao {
 
     @Autowired
@@ -151,4 +152,9 @@ public class QuizDaoImpl implements QuizDao {
         );
     }
 
+    @Override
+    public List<Quiz> getCreated() {
+        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id where status_id = 1"
+                ,quizRowMapper);
+    }
 }

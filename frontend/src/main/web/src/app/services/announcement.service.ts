@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {User} from "./entities/user";
+import {User} from "../entities/user";
 import {catchError} from "rxjs/operators";
 import {Observable, throwError} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Announcement} from "./entities/announcement";
+import {Announcement} from "../entities/announcement";
 import {UserService} from "./user.service";
 
 @Injectable({

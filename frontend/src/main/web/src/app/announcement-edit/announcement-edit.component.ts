@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Announcement} from "../entities/announcement";
-import {UserService} from "../user.service";
-import {AnnouncementService} from "../announcement.service";
+import {UserService} from "../services/user.service";
+import {AnnouncementService} from "../services/announcement.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({

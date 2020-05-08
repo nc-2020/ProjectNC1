@@ -4,7 +4,7 @@ import {Quiz} from "../entities/quiz";
 import {catchError} from "rxjs/operators";
 import {Observable, throwError} from "rxjs";
 import {Category} from "../entities/category";
-import {UserService} from "../user.service";
+import {UserService} from "./user.service";
 
 @Injectable({
   providedIn: 'root'

@@ -28,6 +28,8 @@ public interface QuizDao {
 
     void approve(Long id);
 
+    List<Quiz> getCreated();
+
 
 
 }

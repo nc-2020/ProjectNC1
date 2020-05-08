@@ -44,4 +44,6 @@ public interface QuizService {
     Quiz getQuiz(Long id);
 
     void aproveQuiz(Quiz quiz);
+
+    List<Quiz> getCreated();
 }

@@ -1,0 +1,29 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="approveForm" (ngSubmit)="submit()">
+        <div class="form-group">
+          <label for="exampleTextarea">Comment</label>
+          <textarea id="exampleTextarea" formControlName="comment" rows="3" class="form-control text-center"   required maxlength="500"></textarea>
+        </div>
+       <fieldset class="form-group">
+          <legend>Radio buttons</legend>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" formControlName="approveStatus" name="optionsRadios" id="optionsRadios1" value="approved" checked="">
+              Approved
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" formControlName="approveStatus" name="optionsRadios" id="optionsRadios2" value="disapproved">
+              Disapproved
+            </label>
+          </div>
+        </fieldset>
+        <button  class="btn btn-secondary btn btn-block" type="submit" [disabled]="!approveForm.valid">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

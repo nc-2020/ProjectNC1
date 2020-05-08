@@ -103,6 +103,7 @@ public class QuizController {
     public List<Quiz> approvedQuizes() {
         return quizService.getApprovedQuizes();
     }
+
     @GetMapping("quiz/category/{category}")
     public List<Quiz> categoryQuizes(@PathVariable("category") String category) {
         return quizService.getCategoryQuizes(category);
@@ -134,5 +135,17 @@ public class QuizController {
             return ResponseEntity.badRequest().build();
         }
             return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/quiz/created")
+    public ResponseEntity getCreatedQuizs() {
+        List<Quiz> quizzes;
+        try {
+            quizzes = quizService.getCreated();
+        }
+        catch (DataAccessException sqlEx) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().body(quizzes);
     }
 }

@@ -1,5 +1,5 @@
 import {Component, ContentChild, Input, OnInit} from '@angular/core';
-import {UserService} from "../user.service";
+import {UserService} from "../services/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { User } from '../entities/user';
 import { Router } from '@angular/router';

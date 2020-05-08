@@ -7,23 +7,23 @@ public class Notification {
     private String text;
     private boolean seen;
     private Date date;
-    private Long categoryID;
+    private Long categoryId;
     private Long userId;
 
-    public Notification(Long id, String text, boolean seen, Date date, Long categoryID, Long userId) {
+    public Notification(Long id, String text, boolean seen, Date date, Long categoryId, Long userId) {
         this.id = id;
         this.text = text;
         this.seen = seen;
         this.date = date;
-        this.categoryID = categoryID;
+        this.categoryId = categoryId;
         this.userId = userId;
     }
 
     public Notification() {
-        this.setSeen(false);
+        this.seen = false;
         long millis=System.currentTimeMillis();
         java.sql.Date date = new java.sql.Date(millis);
-        this.setDate(date);
+        this.date = date;
     }
 
     public Long getId() {
@@ -59,11 +59,11 @@ public class Notification {
     }
 
     public Long getCategoryID() {
-        return categoryID;
+        return categoryId;
     }
 
     public void setCategoryID(Long categoryID) {
-        this.categoryID = categoryID;
+        this.categoryId = categoryID;
     }
 
     public Long getUserId() {

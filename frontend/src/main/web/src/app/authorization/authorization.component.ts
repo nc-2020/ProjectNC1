@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { User } from '../entities/user';
-import {UserService} from '../user.service';
+import {UserService} from '../services/user.service';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {tap} from "rxjs/operators";

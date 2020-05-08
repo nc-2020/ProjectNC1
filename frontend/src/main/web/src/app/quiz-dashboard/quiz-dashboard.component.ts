@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit} from '@angular/core';
 import { Quiz } from '../entities/quiz';
 import { QuizCardComponent } from '../quiz-card/quiz-card.component';
 import { QuizService } from '../services/quiz.service';
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-quiz-dashboard',
@@ -13,13 +14,24 @@ export class QuizDashboardComponent implements OnInit {
   userQuizzes: Quiz[] = [];
   currentTab = 'Quizzes';
 
-  constructor(private quizService: QuizService) { }
+  constructor(private quizService: QuizService, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.getQuizzes();
-    this.getUserQuizzes();
-  }
+    if(this.getRole() === 'user') {
+      this.getQuizzes();
+      this.getUserQuizzes();
+    } else {
+      this.getCreatedQuizzes();
+    }
 
+  }
+  getRole() {
+    return this.userService.user.role.name;
+  }
+  getCreatedQuizzes() {
+    this.quizService.getCreatedQuizzes().
+    subscribe(quizzes => this.quizzes = quizzes);
+  }
   getQuizzes(): void {
     this.quizService.getQuizzes()
       .subscribe(quizzes => this.quizzes = quizzes);

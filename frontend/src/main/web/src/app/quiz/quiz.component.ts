@@ -10,6 +10,7 @@ import {OptionService} from "../services/option.service";
 import {DefaultOption} from "../entities/default-option";
 import {Option} from "../entities/option";
 import {Answer} from "../entities/answer";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-quiz',
@@ -42,7 +43,8 @@ export class QuizComponent implements OnInit, OnDestroy {
   constructor(private quizService: QuizService,
               private optionService: OptionService,
               private route: ActivatedRoute,
-              private questionService: QuestionService) { }
+              private questionService: QuestionService,
+              private userService: UserService) { }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
@@ -178,5 +180,9 @@ getScore(): number {
 }
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.optionsSequence, event.previousIndex, event.currentIndex);
+  }
+
+  getUserRole() {
+    return this.userService.user.role.name;
   }
 }

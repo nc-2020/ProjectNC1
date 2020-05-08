@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Quiz } from '../entities/quiz'; 
+import { Quiz } from '../entities/quiz';
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-quiz-card',
@@ -12,8 +13,11 @@ export class QuizCardComponent implements OnInit {
   @Input() isEdit = false;
   @Output() onChanged = new EventEmitter<Quiz>();
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
+  getUserRole() {
+    return this.userService.user.role.name;
+  }
   ngOnInit(): void {
   }
 

@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError} from "rxjs/operators";
 import {Observable, of} from "rxjs";
 import {Quiz} from "../entities/quiz";
-import {UserService} from "../user.service";
+import {UserService} from "./user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,13 @@ export class QuizService {
         catchError(this.handleError<Quiz>('getQuiz')
         ));
   }
-
+  getCreatedQuizzes(): Observable<Quiz[]> {
+    return  this.http.get<Quiz[]>(this.quizzesUrl + '/created', { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+      .pipe(
+        catchError(this.handleError<Quiz[]>('getCreatedQuizzes',[])
+        ));
+  }
   getQuizzes(): Observable<Quiz[]> {
     return this.http.get<Quiz[]>(this.quizzesUrl,{ headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})

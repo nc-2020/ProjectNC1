@@ -1,6 +1,6 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {User} from "./entities/user";
+import {User} from "../entities/user";
 import {Observable, of, throwError} from "rxjs";
 import {catchError, tap, finalize} from "rxjs/operators";
 import { error } from 'protractor';
@@ -74,7 +74,7 @@ export class UserService {
   logout() {
     return this.http.post<User>('api/logout', this.user, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(finalize(() => {
-      this.authenticated = false; localStorage.removeItem('user'); this.router.navigateByUrl('/login') /*window.location.replace('/login')*/
+      this.authenticated = false; localStorage.removeItem('user'); this.router.navigateByUrl('/login')
     }), catchError(this.handleError<any>('logout')))
   }
 

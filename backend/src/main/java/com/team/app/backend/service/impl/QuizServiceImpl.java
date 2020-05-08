@@ -218,4 +218,9 @@ public class QuizServiceImpl implements QuizService {
         notificationDao.create(notification);
 
     }
+
+    @Override
+    public List<Quiz> getCreated() {
+        return this.quizDao.getCreated();
+    }
 }
