@@ -5,7 +5,8 @@ import {CategoryService} from "../services/category.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from '@angular/common';
 import {UserService} from "../user.service";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
+import {Category} from "../entities/category";
 
 
 @Component({
@@ -17,8 +18,11 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 export class QuizCreateComponent implements OnInit {
   quizForm = this.fb.group({
     'title': ['', [Validators.required, Validators.maxLength(20)]],
-    'description': ['', [Validators.required, Validators.maxLength(30)]]
+    'description': ['', [Validators.required, Validators.maxLength(30)]],
+    'categories': [[], Validators.required]
   })
+
+  categoriesList: Category[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -31,7 +35,7 @@ export class QuizCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.getData();
+    this.getCategories();
   }
 
   goBack(): void {
@@ -39,18 +43,28 @@ export class QuizCreateComponent implements OnInit {
   }
 
   createQuiz() {
+    let selectedCategoriesId = [];
+    for (let category of this.quizForm.get('categories').value) {
+      selectedCategoriesId.push(category.id);
+    }
+
     console.log("quiz created");
     this.quizService.createQuiz({
       title: this.quizForm.get('title').value,
       description: this.quizForm.get('description').value,
-      user_id: this.userService.user.id
+      user_id: this.userService.user.id,
+      categories: selectedCategoriesId
     } as Quiz)
       .subscribe(data  => {
         this.router.navigate(['/quiz-edit/' + data.id ]);
       });
   }
 
-  submit() {
-    console.log(this.quizForm);
+  getCategories() {
+    this.categoryService.getCategories().subscribe(
+      (data: Category[]) => {
+        this.categoriesList = data;
+      }
+    )
   }
 }

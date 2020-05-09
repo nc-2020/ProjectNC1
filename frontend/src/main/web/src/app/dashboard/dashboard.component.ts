@@ -9,27 +9,32 @@ import { SharedUserDataService } from '../shared-user-data.service';
 import {UserCardComponent} from "../user-card/user-card.component";
 import {UserProfileComponent} from "../user-profile/user-profile.component";
 import * as bcrypt from 'bcryptjs';
+import {CategoryService} from "../services/category.service";
+import {Category} from "../entities/category";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewInit {
+export class DashboardComponent implements OnInit {
 
   tab: string = '';
   user: User;
   users$: Observable<User[]>;
+  categoriesList: Category[] = [];
+
 
   private searchTerms = new Subject<string>();
   @ViewChild(UserCardComponent, {static: false}) userCardChild: UserCardComponent;
 
-  constructor(private userService: UserService, private location: Location, private route: ActivatedRoute,
-              private router: Router,private sharedData: SharedUserDataService) { }
+  constructor(private userService: UserService, private categoryService: CategoryService, private location: Location, private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
+    this.getCategories();
     this.tab = this.route.snapshot.paramMap.get('tab');
-    this.user = this.userService.user;
+    this.user = this.tab === 'Profile' ? this.userService.user : {role:{}} as User;
     this.users$ = this.searchTerms.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -37,24 +42,13 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
       switchMap((term: string) => this.userService.searchUsers(term)),
     );
   }
-  ngAfterViewInit() {
-
-  }
-
-
-  ngAfterViewChecked() {
-    if (this.userCardChild && true === this.userCardChild.edit) {
-      this.profileSet(false, this.userCardChild.user);
-    }
-  }
-
 
   search(term: string): void {
     this.searchTerms.next(term);
   }
   profileSet( editOnly?: boolean, user?: User)
   {
-    this.user = (user ? user : {role: {name: 'moderator'}} as User)
+    this.user = (user ? user : {role:{}} as User)
     this.changeTab(editOnly ? 'AddProfile' : 'Profile');
   }
 
@@ -66,7 +60,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
   getUser() {
     return this.userService.user;
   }
-
   getUserName() {
     return this.userService.user.firstName;
   }
@@ -75,5 +68,13 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
   }
   getUserRole() {
     return this.userService.user.role.name;
+  }
+
+  getCategories() {
+    this.categoryService.getCategories().subscribe(
+      (data: Category[]) => {
+        this.categoriesList = data;
+      }
+    )
   }
 }

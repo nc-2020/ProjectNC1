@@ -22,17 +22,17 @@ public class OptionServiceImpl implements OptionService {
 
 
     @Override
-    public List<DefaultQuest> getDefaultOpion(Long quest_id) {
+    public List<DefaultQuest> getDefaultOption(Long quest_id) {
         return optionDao.getDefaultQuest(quest_id);
     }
 
     @Override
-    public List<Option> getOpions(Long quest_id) {
+    public List<Option> getOptions(Long quest_id) {
         return optionDao.getOptionQuest(quest_id);
     }
 
     @Override
-    public List<SeqOption> getSeqOpion(Long quest_id) {
+    public List<SeqOption> getSeqOption(Long quest_id) {
         return optionDao.getSeqOptionQuest(quest_id);
     }
 }

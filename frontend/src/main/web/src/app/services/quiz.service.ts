@@ -1,16 +1,15 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError} from "rxjs/operators";
-import {Observable, of, throwError} from "rxjs";
+import {Observable, of} from "rxjs";
 import {Quiz} from "../entities/quiz";
 import {UserService} from "../user.service";
-import {User} from "../entities/user";
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
-  private quizzesUrl = 'http://localhost:8080/api/quiz';  // URL to web api
+  private quizzesUrl = 'api/quiz';  // URL to web api
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -33,6 +32,14 @@ export class QuizService {
         catchError(this.handleError<Quiz[]>('getQuizzes', []))
       );
   }
+  getAllUserQuizzes(): Observable<Quiz[]> {
+    return this.http.get<Quiz[]>(this.quizzesUrl + "/user/" + this.userService.user.id + '/all',{ headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+      .pipe(
+        catchError(this.handleError<Quiz[]>('getUserAllQuizzes', []))
+      );
+  }
+
 
   getUserQuizzes(): Observable<Quiz[]> {
     return this.http.get<Quiz[]>(this.quizzesUrl + "/user/" + this.userService.user.id,{ headers: new HttpHeaders()

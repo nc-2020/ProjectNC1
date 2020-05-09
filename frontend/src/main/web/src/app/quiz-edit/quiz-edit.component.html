@@ -1,24 +1,26 @@
 <section class="min-vh-100" id="cover">
   <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
 
-  <h2>My Questions
-  <h5 style="margin-top: 50px;"><ol class="questions">
-    <li *ngFor="let question of questions" style="margin-top: 10px;">
+  <div>
+    <h2>My Questions</h2>
+    <h5 style="margin-top: 50px;"><ol class="questions">
+      <li *ngFor="let question of questions" style="margin-top: 10px;">
         <span (click)="showEdit()">
         <a>{{question.text}}</a>
         <button class="delete-btn" title="delete question"
                 (click)="deleteQuestion(question)">x</button>
         </span>
-    </li>
-  </ol></h5>
+      </li>
+    </ol></h5>
 
-    <div class="action-btns-wrapper">
-      <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" routerLink="/dashboard">Done</button>
-      <button class="add-btn" data-qtest="create-quiz-btn" (click)="showAdd()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Add question</span></button>
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-secondary mr-3" routerLink="/dashboard">Done</button>
+      <button type="button" class="btn btn-link"  data-toggle="collapse" data-target="#collapseOne"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Add question</span></button>
     </div>
+  </div>
 
-  </h2>
-  <div *ngIf="isAddQuestion" class="container">
+
+  <div class="container collapse" id="collapseOne">
     <div class="kr-modal-body">
       <div class="banner">
         <div class="title">
@@ -41,7 +43,7 @@
               <div class="quiz-name-input kr2-textfield">
                 <label>
                   Select type of question
-                  <select class="form-control" formControlName="questionType">
+                  <select class="form-control"  formControlName="questionType">
                     <option value="not selected" selected disabled hidden>Choose here</option>
                     <option value="1">True/False</option>
                     <option value="2">Type answer</option>
@@ -69,26 +71,25 @@
           </div>
 
         </form>
-        <div *ngIf="questionForm.get('questionType').value" class="quiz-name-wrapper">
+        <div class="quiz-name-wrapper">
           <div *ngIf="questionForm.get('questionType').value === '1'" class="quiz-name-input kr2-textfield">
             <p>True/False!</p>
-            <div class="action-btns-wrapper" style="margin-left: 20px;">
+            <div class="action-btns-wrapper">
               <!-- <button class="true-btn" data-qtest="cancel-create-quiz-btn">True</button>
               <button class="false-btn" data-qtest="cancel-create-quiz-btn">False</button> -->
-              <input [(ngModel)]="answerTrueFalse" class="true-false" name="true-false-opt" type="radio" value="True"  style="margin-left: 20px"><label style="margin-right: 100px; font-size: 20px">True</label>
-              <input [(ngModel)]="answerTrueFalse" class="true-false" name="true-false-opt" type="radio" value="False"  checked="checked"><label style="margin-right: 100px; font-size: 20px">False</label>
+              <input [(ngModel)]="answerTrueFalse" class="true-false" name="true-false-opt" type="radio" value="True"><label style="margin-right: 100px; font-size: 20px">True</label>
+              <input [(ngModel)]="answerTrueFalse" class="true-false" name="true-false-opt" type="radio" value="False"  checked="checked"><label style="font-size: 20px">False</label>
             </div>
           </div>
           <div *ngIf="questionForm.get('questionType').value === '2'" class="quiz-name-input kr2-textfield">
             <p>Type answer</p>
             <input [(ngModel)]="answerTypeAnswer" type="text" id="name-input" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
           </div>
-          <div *ngIf="questionForm.get('questionType').value === '3'" class="quiz-name-input kr2-textfield">
-            <p>Select option</p>
+          <div *ngIf="questionForm.get('questionType').value === '3'" class="quiz-name-input kr2-textfield text-left">
             <ol>
               <li *ngFor="let option of options">
-                <label for="select-option-input"><button class="delete-btn" title="delete question" (click)="isCorrectOption(option)">{{option.is_correct}}*</button></label>
-                <input [(ngModel)]="option.text" type="text" id="select-option-input" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
+                <button [style.background-color]="option.is_correct ? 'green' : 'red'" type="button" class="btn btn-dark"  (click)="isCorrectOption(option)">{{option.is_correct}}</button>
+                <input [(ngModel)]="option.text"  class="mt-1 mb-1" type="text" id="select-option-input" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
               </li>
             </ol>
           </div>
@@ -105,7 +106,7 @@
         </div>
       </div>
       <div class="action-btns-wrapper">
-        <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="showAdd()">Cancel</button>
+        <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" data-toggle="collapse" data-target="#collapseOne">Cancel</button>
         <button class="save-btn" data-qtest="create-quiz-btn" (click)="createQuestion()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Next</span></button>
       </div>
     </div>

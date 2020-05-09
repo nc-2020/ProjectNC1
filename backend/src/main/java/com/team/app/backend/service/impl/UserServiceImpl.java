@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
         //user.setImage(userDto.getImage());
         user.setActivate_link("ttest");
         user.setRegistr_date(new Date());
-        user.setRole(new Role(1L,userCreateDto.getRole().getName()));
+        user.setRole(new Role(userCreateDto.getRole().getName() =="admin" ? 3L : 2L ,userCreateDto.getRole().getName()));
         user.setStatus(new UserStatus(1L,"REGISTERED"));
         userDao.save(user);
         return userDao.findByUsername(userCreateDto.getUsername());
@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userDto.getFirstName());
         user.setEmail(userDto.getEmail());
         user.setUsername(userDto.getUsername());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setPassword(userDto.getPassword());
         //user.setImage(userDto.getImage());
         user.setActivate_link("ttest");
         user.setRegistr_date(new Date());
