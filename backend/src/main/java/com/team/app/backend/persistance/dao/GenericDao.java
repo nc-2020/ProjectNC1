@@ -1,10 +1,15 @@
 package com.team.app.backend.persistance.dao;
 
-public interface GenericDao<T> {
+/**
+ *
+ * @param <T> entity
+ * @param <D> DTO object
+ */
+public interface GenericDao<T, D> {
 
-    T save(T obj);
+    T save(D obj);
 
-    T update(T obj);
+    T update(D obj);
 
     T get(Long id);
 

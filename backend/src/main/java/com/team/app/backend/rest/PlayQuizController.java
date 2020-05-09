@@ -1,24 +1,20 @@
 package com.team.app.backend.rest;
 
-import com.team.app.backend.persistance.model.Quiz;
-import com.team.app.backend.persistance.model.Session;
-import com.team.app.backend.persistance.model.User;
-import com.team.app.backend.persistance.model.UserToSession;
+import com.team.app.backend.dto.FinishedQuizDto;
+import com.team.app.backend.dto.UserAnswerDto;
+import com.team.app.backend.persistance.model.*;
 import com.team.app.backend.service.*;
-import jdk.jfr.Frequency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +38,10 @@ public class PlayQuizController {
     @Autowired
     private QuestionService questionService;
 
-    @RequestMapping("play")
+    @Autowired
+    private UserAnswerService userAnswerService;
+
+    @GetMapping("play")
     public ResponseEntity playQuiz(
             @RequestParam("user_id") Long userId,
             @RequestParam("quiz_id") Long quizId) {
@@ -58,7 +57,7 @@ public class PlayQuizController {
         return ResponseEntity.ok("");
     }
 
-    @RequestMapping("join")
+    @GetMapping("join")
     public ResponseEntity joinQuiz(
             @RequestParam("user_id") Long userId,
             @RequestParam("access_code") String accessCode
@@ -72,45 +71,30 @@ public class PlayQuizController {
         return ResponseEntity.ok("");
     }
 
-    @RequestMapping("results")
+    @PostMapping("stats")
     public ResponseEntity calculateResults(
-            @RequestParam("session_id") Long sessionId
+            @RequestParam("quiz_id") Long quizId
     ) {
-        List<UserToSession> userToSessionList = sessionService.getAllUsersToSession(sessionId);
-        Map<String, Integer> response = new HashMap<>();
-        for (UserToSession userToSession: userToSessionList) {
-            User user = userService.getUserById(userToSession.getUser_id());
-            response.put(user.getUsername(), userToSession.getScore());
-        }
-        return ResponseEntity.ok().body(response);
+        Map<String, Integer> response = new HashMap();
+        List<UserToSession> userToSessionList = new ArrayList<>();
+        List<Session> sessionList = sessionService.getAllByQuizId(quizId);
+        sessionList.forEach(
+                s -> {
+                    userToSessionList.addAll(userToSessionService.getAllBySessionId(s.getId()));
+                }
+        );
+        userToSessionList.forEach(
+                uts -> {
+                    response.put(userService.getUserNameById(uts.getUser_id()), uts.getScore());
+                }
+        );
+        return ResponseEntity.ok(response);
     }
 
-    @RequestMapping("quiz/finish")
-    public ResponseEntity finishQuiz(
-            HttpEntity<String> httpEntity
-    ) {
-        String json = httpEntity.getBody();
-
-        JSONParser jsonParser = new JSONParser();
-
-        try {
-            Object obj = jsonParser.parse(json);
-            JSONObject jsonObject = (JSONObject) obj;
-            Long userId = (Long) jsonObject.get("user_id");
-            Long sessionId = (Long) jsonObject.get("session_id");
-            JSONArray answers = (JSONArray) jsonObject.get("answers");
-            answers.forEach(answer -> parseAnswer((JSONObject) answer));
-        } catch (ParseException pe) {
-            pe.printStackTrace();
-        }
-
+    @RequestMapping("finish")
+    public ResponseEntity finishQuiz(@RequestBody FinishedQuizDto finishedQuizDto) {
+        // TODO: complete
         return null;
     }
-
-    private void parseAnswer(JSONObject answer) {
-        Long questionId = (Long) answer.get("key");
-
-    }
-
 
 }

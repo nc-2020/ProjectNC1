@@ -2,9 +2,9 @@ package com.team.app.backend.persistance.model;
 
 public class AnswerToDef {
 
-    Long userAnsw_id;
-    Long def_id;
-    String text;
+    private Long userAnsw_id;
+    private Long def_id;
+    private String text;
 
     public AnswerToDef() {}
 

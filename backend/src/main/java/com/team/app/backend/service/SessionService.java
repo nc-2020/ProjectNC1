@@ -9,12 +9,12 @@ import java.util.List;
 
 public interface SessionService {
 
-    List<UserToSession> getAllUsersToSession(Long sessionId);
-
     Session newSessionForQuiz(Quiz quiz);
 
     Session updateSession(Session session);
 
     Session getSessionById(Long id);
+
+    List<Session> getAllByQuizId(Long quizId);
 
 }

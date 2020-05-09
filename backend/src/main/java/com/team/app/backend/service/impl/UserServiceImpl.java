@@ -38,6 +38,11 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    public String getUserNameById(Long id) {
+        return null;
+    }
+
+    @Override
     public User updateUser(UserUpdateDto userDto) {
         User user = new User(userDto.getId(),
                 userDto.getFirstName(),
