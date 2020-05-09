@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {Announcement} from "../entities/announcement";
-import {UserService} from "../services/user.service";
-import {AnnouncementService} from "../services/announcement.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Component, Input, OnInit} from '@angular/core';
+import {Announcement} from '../entities/announcement';
+import {UserService} from '../services/user.service';
+import {AnnouncementService} from '../services/announcement.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-announcement-edit',
@@ -11,7 +11,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class AnnouncementEditComponent implements OnInit {
 
-
+  @Input()
+  editOnly = false;
+  @Input()
   announcement: Announcement = {
     id: '8',
     title: 'New epic big super announcement',
@@ -23,7 +25,7 @@ export class AnnouncementEditComponent implements OnInit {
 
 
   };
-  error = ''
+  error = '';
   message = '';
 
   announcementForm: FormGroup;
@@ -40,18 +42,30 @@ export class AnnouncementEditComponent implements OnInit {
   }
 
   save() {
+    this.cleanMessage();
     this.announcement.title = this.announcementForm.get('title').value;
     this.announcement.text = this.announcementForm.get('text').value;
-    this.announcementService.updateAnnouncement(this.announcement).subscribe(resp => {this.message = resp.message},
-      error => {this.error = error.message});
+    this.announcementService.updateAnnouncement(this.announcement).subscribe(resp => {this.message = 'Announcement updated!';},
+      error => {this.error = error.message;});
   }
 
   add() {
+    this.cleanMessage();
     this.announcement.title = this.announcementForm.get('title').value;
     this.announcement.text = this.announcementForm.get('text').value;
     this.announcement.userId = this.userService.user.id;
-    this.announcementService.createAnnouncement(this.announcement).subscribe(resp => {this.message = resp.message},
-      error => {this.error = error.message});
+    this.announcementService.createAnnouncement(this.announcement).subscribe(resp => {this.message = 'Announcement added!';},
+      error => {this.error = error.message;});
+  }
+  delete() {
+    this.cleanMessage();
+  }
+  cleanMessage() {
+    this.error = '';
+    this.message = '';
+  }
+  submit() {
+
   }
 
 }
