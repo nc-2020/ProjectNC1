@@ -207,10 +207,9 @@ public class QuizServiceImpl implements QuizService {
         Notification notification = new Notification();
         notification.setCategoryID(1L);
         notification.setUserId(quiz.getUser_id());
-        if(quiz.getStatus().getName() == "approved") {
+        if(quiz.getStatus().getName().equals("approved")) {
             quizDao.approve(quiz.getId());
             notification.setText("Quiz approved!)");
-
         } else {
             notification.setText(quiz.getDescription());
             quizDao.delete(quiz.getId());

@@ -14,7 +14,7 @@
   </div>
   <div *ngIf="interval===null && indexQuestion === questions.length - 1" class="container text-white p-2 align-items-center w-50" style="height: 15rem" [hidden]="interval">
     <h2 class="mt-2">Your score is {{getScore()}}</h2>
-    <app-quiz-aprove-form *ngIf="getUserRole() !== 'user'" >
+    <app-quiz-aprove-form *ngIf="getUserRole() !== 'user'" [userId]="72" [quizId]="quizId">  <!--fix hard code!!!!!!!!1-->
     </app-quiz-aprove-form>
   </div>
   <div class="container text-white p-0" id="bod1" *ngIf="interval!==null" >

@@ -11,6 +11,7 @@ import {UserService} from "./user.service";
 })
 export class AnnouncementService {
 
+  apiURL = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient, private userService: UserService) { }
   header = {
@@ -23,8 +24,10 @@ export class AnnouncementService {
       return throwError(error);
     };
   }
+
+
   deleteAnnouncement(ann: Announcement) {
-    return this.http.delete<Announcement>(`http://localhost:8080/api/announcement/delete/${ann.id}`,{
+    return this.http.delete<Announcement>(this.apiURL + `/announcement/delete/${ann.id}`,{
       headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)
     }).pipe(
@@ -32,7 +35,7 @@ export class AnnouncementService {
     );
   }
   createAnnouncement(ann: Announcement) {
-    return this.http.post<Announcement>('http://localhost:8080/api/announcement/create', ann, {
+    return this.http.post<Announcement>(this.apiURL + '/announcement/create', ann, {
       headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)
     }).pipe(
@@ -41,7 +44,7 @@ export class AnnouncementService {
   }
 
   updateAnnouncement(ann: Announcement) {
-    return this.http.put<Announcement>(`http://localhost:8080/api/announcement/update`, ann, {
+    return this.http.put<Announcement>(this.apiURL + `/announcement/update`, ann, {
       headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)
     }).pipe(

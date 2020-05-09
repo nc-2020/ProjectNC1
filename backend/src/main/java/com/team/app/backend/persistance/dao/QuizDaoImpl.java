@@ -139,17 +139,13 @@ public class QuizDaoImpl implements QuizDao {
 
     @Override
     public void delete(Long id) {
-        jdbcTemplate.update(
-                "DELETE from quiz where id = ?",
-                id
-        );
+        jdbcTemplate.update("DELETE from quiz_to_categ where quiz_id = ?", id);
+        jdbcTemplate.update("DELETE from quiz where id = ?", id);
     }
     @Override
     public void approve(Long id) {
         jdbcTemplate.update(
-                "UPDATE quiz set status = 2  where id = ?",
-                id
-        );
+                "UPDATE quiz set status_id = 2  where id = ?", id);
     }
 
     @Override

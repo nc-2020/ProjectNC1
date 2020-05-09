@@ -9,7 +9,7 @@ import {UserService} from "./user.service";
   providedIn: 'root'
 })
 export class QuizService {
-  private quizzesUrl = 'api/quiz';  // URL to web api
+  private quizzesUrl = 'http://localhost:8080/api/quiz';  // URL to web api
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -39,13 +39,18 @@ export class QuizService {
       );
   }
   getAllUserQuizzes(): Observable<Quiz[]> {
-    return this.http.get<Quiz[]>(this.quizzesUrl + "/user/" + this.userService.user.id + '/all',{ headers: new HttpHeaders()
+    return this.http.get<Quiz[]>(this.quizzesUrl + '/user/' + this.userService.user.id + '/all',{ headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(
         catchError(this.handleError<Quiz[]>('getUserAllQuizzes', []))
       );
   }
 
+    approveQuiz(quiz: Quiz): Observable<any> {
+    return  this.http.post<Quiz>(this.quizzesUrl + '/approve', quiz, { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+
+  }
 
   getUserQuizzes(): Observable<Quiz[]> {
     return this.http.get<Quiz[]>(this.quizzesUrl + "/user/" + this.userService.user.id,{ headers: new HttpHeaders()

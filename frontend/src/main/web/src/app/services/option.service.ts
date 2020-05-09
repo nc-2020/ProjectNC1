@@ -12,12 +12,12 @@ import {SequenceOption} from "../entities/sequence-option";
   providedIn: 'root'
 })
 export class OptionService {
-  private optionsUrl = 'api/option';  // URL to web api
+  private optionsUrl = 'http://localhost:8080/api/';  // URL to web api
   constructor(private http: HttpClient, private userService: UserService) {
   }
 
   getOptions(question_id): Observable<Option[]> {
-    return this.http.get<Option[]>(`api/options/${question_id}`, { headers: new HttpHeaders()
+    return this.http.get<Option[]>(this.optionsUrl + `/options/${question_id}`, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(
         catchError(this.handleError<Option[]>('getOptions', []))
@@ -25,7 +25,7 @@ export class OptionService {
   }
 
   getDefaultOptions(question_id): Observable<DefaultOption[]> {
-    return this.http.get<DefaultOption[]>(`api/default_options/${question_id}`, { headers: new HttpHeaders()
+    return this.http.get<DefaultOption[]>(this.optionsUrl + `/default_options/${question_id}`, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(
         catchError(this.handleError<DefaultOption[]>('getDefaultOptions', []))
@@ -33,7 +33,7 @@ export class OptionService {
   }
 
   getSequenceOptions(question_id): Observable<SequenceOption[]> {
-    return this.http.get<SequenceOption[]>(`api/sequence_options/${question_id}`, { headers: new HttpHeaders()
+    return this.http.get<SequenceOption[]>(this.optionsUrl + `/sequence_options/${question_id}`, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(
         catchError(this.handleError<SequenceOption[]>('getSequenceOptions', []))

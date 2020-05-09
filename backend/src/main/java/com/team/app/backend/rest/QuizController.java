@@ -76,10 +76,7 @@ public class QuizController {
     }
 
 
-//    @GetMapping("/quiz/quest/{id}")
-//    public List<Question> questions(@PathVariable("id") long id) {
-//        return quizService.getQuizQuestion(id);
-//    }
+
 
     @GetMapping("/questions/{quiz_id}")
     public List<Question> questions(@PathVariable("quiz_id") long id) {
@@ -132,7 +129,7 @@ public class QuizController {
             quizService.aproveQuiz(quiz);
         }
         catch (DataAccessException sqlEx) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(sqlEx.toString());
         }
             return ResponseEntity.ok().build();
     }

@@ -9,12 +9,12 @@ import {UserService} from "./user.service";
   providedIn: 'root'
 })
 export class QuestionService {
-  private questionsUrl = 'api/question';  // URL to web api
+  private questionsUrl = 'http://localhost:8080/api';  // URL to web api
   constructor(private http: HttpClient, private userService: UserService) {
   }
 
   getQuestions(quiz_id): Observable<Question[]> {
-    return this.http.get<Question[]>(`api/questions/${quiz_id}`, { headers: new HttpHeaders()
+    return this.http.get<Question[]>(this.questionsUrl + `/questions/${quiz_id}`, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(
         catchError(this.handleError<Question[]>('getQuestions', []))
@@ -22,14 +22,14 @@ export class QuestionService {
   }
 
   getQuestion(question_id): Observable<Question> {
-    return  this.http.get<Question>(this.questionsUrl + '/' + question_id, { headers: new HttpHeaders()
+    return  this.http.get<Question>(this.questionsUrl + '/question/' + question_id, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
   }
 
   /** POST: add a new question to the server */
   createQuestion(question: Question): Observable<Question> {
     console.table(question);
-    return this.http.post<Question>(this.questionsUrl + '/' + question.type.id, question, { headers: new HttpHeaders()
+    return this.http.post<Question>(this.questionsUrl + '/question/' + question.type.id, question, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
       catchError(this.handleError<Question>('createQuestion'))
     );
@@ -37,7 +37,7 @@ export class QuestionService {
 
   deleteQuestion(question: Question | number): Observable<Question> {
     const id = typeof question === 'number' ? question : question.id;
-    const url = `${this.questionsUrl}/${id}`;
+    const url = `${this.questionsUrl}/question/${id}`;
     return this.http.delete<Question>(url, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
       catchError(this.handleError<Question>('deleteQuestion'))
