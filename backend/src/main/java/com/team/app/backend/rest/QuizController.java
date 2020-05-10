@@ -9,7 +9,9 @@ import com.team.app.backend.persistance.model.Quiz;
 import com.team.app.backend.service.QuizService;
 import com.team.app.backend.service.UserQuizFavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -80,10 +82,7 @@ public class QuizController {
     }
 
 
-//    @GetMapping("/quiz/quest/{id}")
-//    public List<Question> questions(@PathVariable("id") long id) {
-//        return quizService.getQuizQuestion(id);
-//    }
+
 
     @GetMapping("/questions/{quiz_id}")
     public List<Question> questions(@PathVariable("quiz_id") long id) {
@@ -119,6 +118,7 @@ public class QuizController {
     }
 
 
+
     @GetMapping("quiz/category/{category}")
     public List<Quiz> categoryQuizes(@PathVariable("category") String category) {
         return quizService.getCategoryQuizes(category);
@@ -145,5 +145,34 @@ public class QuizController {
     public List<Quiz> searchQuizes(@PathVariable("category") String category,@PathVariable("searchstring") String searchstring) {
         System.out.println(category+" "+searchstring);
         return quizService.searchQuizes(category,searchstring);
+    }
+
+	@GetMapping("/quiz/search/{searchstring}")
+    public List<Quiz> searchQuizes(@PathVariable("searchstring") String searchstring) {
+        System.out.println(searchstring);
+        return quizService.searchQuizes(searchstring);
+    }
+
+    @PostMapping("/quiz/approve")
+    public ResponseEntity approveQuiz(@RequestBody Quiz quiz) {
+        try {
+            quizService.aproveQuiz(quiz);
+        }
+        catch (DataAccessException sqlEx) {
+            return ResponseEntity.badRequest().body(sqlEx.toString());
+        }
+            return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/quiz/created")
+    public ResponseEntity getCreatedQuizs() {
+        List<Quiz> quizzes;
+        try {
+            quizzes = quizService.getCreated();
+        }
+        catch (DataAccessException sqlEx) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().body(quizzes);
     }
 }

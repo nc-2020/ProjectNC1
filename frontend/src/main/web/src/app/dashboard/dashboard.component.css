@@ -40,6 +40,7 @@ body {
   left: 0;
   height: calc(100vh - 48px);
   padding-top: .5rem;
+  overflow-y: auto;
 }
 h2{
   font-size: x-large;
@@ -49,4 +50,11 @@ h2{
   color: white;
 }
 
-
+[class*='col-'] {
+  float: left;
+  padding-right: 20px;
+  padding-bottom: 20px;
+}
+[class*='col-']:last-of-type {
+  padding-right: 0;
+}

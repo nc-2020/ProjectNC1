@@ -1,28 +1,26 @@
-import {Component, OnInit, Input, ContentChild, EventEmitter, Output} from '@angular/core';
-import {UserService} from "../user.service";
-import { User } from '../entities/user';
-import { Router } from '@angular/router';
-import { SharedUserDataService } from '../shared-user-data.service';
-import {DashboardComponent} from "../dashboard/dashboard.component";
+
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {UserService} from "../services/user.service";
+import {User} from '../entities/user';
+import {UserInvite} from "../entities/user-invite";
+
 
 @Component({
   selector: 'app-user-card',
   templateUrl: './user-card.component.html',
   styleUrls: ['./user-card.component.css']
 })
-export class UserCardComponent implements OnInit {
-
-
+export class UserCardComponent {
   @Input()
   user: User;
   @Output()
   onChanged = new EventEmitter<User>();
+  name: string = this.userService.user.firstName;
+  nameSendButton = 'Send invitation';
+  clicked: boolean = false;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService) { }
 
-  ngOnInit(): void {
-
-  }
   goToProfile() {
     this.onChanged.emit(this.user);
   }
@@ -30,4 +28,20 @@ export class UserCardComponent implements OnInit {
     return this.userService.user.role.name;
   }
 
+  sendInvite(inviteText) {
+    this.clicked = true;
+    this.nameSendButton = 'Invitation was sent';
+    this.userService.sendUserInvite({
+      inviteText: inviteText,
+      userIdFrom: +this.userService.user.id,
+      userIdTo: +this.user.id,
+    } as UserInvite).subscribe(data  => {
+
+    });
+  }
+
+
+
 }
+
+

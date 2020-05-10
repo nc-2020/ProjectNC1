@@ -1,26 +1,21 @@
 package com.team.app.backend.persistance.dao;
 
-import com.team.app.backend.persistance.dao.QuizDao;
 import com.team.app.backend.persistance.dao.mappers.QuizRowMapper;
-
-import com.team.app.backend.persistance.model.Question;
 import com.team.app.backend.persistance.model.Quiz;
-import com.team.app.backend.persistance.model.QuizStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 
-@Component
+@Repository
 public class QuizDaoImpl implements QuizDao {
 
     @Autowired
@@ -92,6 +87,15 @@ public class QuizDaoImpl implements QuizDao {
                 ,new Object[] {search},
                 quizRowMapper);
     }
+	
+	@Override
+    public List<Quiz> searchQuizes(String searchstring) {
+        String search="%"+searchstring+"%";
+        System.out.println(search);
+        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id where Q.title LIKE ? "
+                ,new Object[] {search},
+                quizRowMapper);
+    }
 
     @Override
     public List<Quiz> getAll() {
@@ -147,10 +151,19 @@ public class QuizDaoImpl implements QuizDao {
 
     @Override
     public void delete(Long id) {
+        jdbcTemplate.update("DELETE from quiz_to_categ where quiz_id = ?", id);
+        jdbcTemplate.update("DELETE from quiz where id = ?", id);
+    }
+    @Override
+    public void approve(Long id) {
         jdbcTemplate.update(
-                "DELETE from quiz where id = ?",
-                id
-        );
+                "UPDATE quiz set status_id = 2  where id = ?", id);
+    }
+
+    @Override
+    public List<Quiz> getCreated() {
+        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id where status_id = 1"
+                ,quizRowMapper);
     }
 
 

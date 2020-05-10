@@ -1,6 +1,8 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import { Quiz } from '../entities/quiz';
+import { QuizCardComponent } from '../quiz-card/quiz-card.component';
 import { QuizService } from '../services/quiz.service';
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-quiz-dashboard',
@@ -10,15 +12,29 @@ import { QuizService } from '../services/quiz.service';
 export class QuizDashboardComponent implements OnInit {
   quizzes: Quiz[] = [];
   userQuizzes: Quiz[] = [];
+  favoriteQuizzes: Quiz[] = [];
+  suggestionQuizzes: Quiz[] = [];
   currentTab = 'Quizzes';
 
-  constructor(private quizService: QuizService) { }
+  constructor(private quizService: QuizService, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.getQuizzes();
-    this.getUserQuizzes();
+    if (this.getRole() === 'user') {
+      this.getQuizzes();
+      this.getUserQuizzes();
+      this.getFavorite();
+      this.getSuggestions();
+    } else {
+      this.getCreatedQuizzes();
+    }
   }
-
+  getRole() {
+    return this.userService.user.role.name;
+  }
+  getCreatedQuizzes() {
+    this.quizService.getCreatedQuizzes().
+    subscribe(quizzes => this.quizzes = quizzes);
+  }
   getQuizzes(): void {
     this.quizService.getQuizzes()
       .subscribe(quizzes => this.quizzes = quizzes);
@@ -29,6 +45,16 @@ export class QuizDashboardComponent implements OnInit {
       .subscribe(quizzes => this.userQuizzes = quizzes);
   }
 
+  getFavorite(): void {
+    this.quizService.getFavoriteQuizzes()
+      .subscribe(quizzes => this.favoriteQuizzes = quizzes);
+  }
+
+  getSuggestions(): void {
+    this.quizService.getSuggestionsQuizzes()
+      .subscribe(quizzes => this.suggestionQuizzes = quizzes)
+  }
+
   deleteQuiz(quiz: Quiz) {
     this.quizzes = this.quizzes.filter(q => q !== quiz);
     this.quizService.deleteQuiz(quiz);
@@ -36,9 +62,5 @@ export class QuizDashboardComponent implements OnInit {
 
   quizTab(tab: string) {
       this.currentTab = tab;
-  }
-
-  public toggleSelected(quiz: Quiz) {
-    quiz.favourite = !quiz.favourite;
   }
 }

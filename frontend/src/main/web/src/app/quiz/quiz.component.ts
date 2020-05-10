@@ -10,6 +10,7 @@ import {OptionService} from "../services/option.service";
 import {DefaultOption} from "../entities/default-option";
 import {Option} from "../entities/option";
 import {Answer} from "../entities/answer";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-quiz',
@@ -19,6 +20,8 @@ import {Answer} from "../entities/answer";
 export class QuizComponent implements OnInit, OnDestroy {
 
   private routeSub: Subscription;
+  questionOptionPoints = 0;
+
   quizId;
   quizScore = 0;
   questions: Question[] = [];
@@ -40,7 +43,8 @@ export class QuizComponent implements OnInit, OnDestroy {
   constructor(private quizService: QuizService,
               private optionService: OptionService,
               private route: ActivatedRoute,
-              private questionService: QuestionService) { }
+              private questionService: QuestionService,
+              private userService: UserService) { }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
@@ -60,8 +64,6 @@ export class QuizComponent implements OnInit, OnDestroy {
       this.startQuestionTimer();
     } else {
       this.interval = null;
-      console.log(this.getScore());
-      console.log(this.indexQuestion);
     }
     this.optionSwitcher();
   }
@@ -108,8 +110,21 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   addPoint(point: number, event?) {
-    this.userAnswers[this.userAnswers.length - 1].points += event.target.checked ? point : -point;
+
+    const coef = 1 / this.optionalAnswers.filter(x => x.is_correct).length;
+    point *= coef;
+
+    // this.userAnswers[this.userAnswers.length - 1].points += event.target.checked ? point : -point;
+    this.questionOptionPoints += event.target.checked ? point : -point;
   }
+
+  sendOptionAnswer() {
+    this.userAnswers.push({questionId: this.questions[this.indexQuestion].id,
+      points: this.questionOptionPoints
+    })
+    this.nextQuestion(true);
+  }
+
 
   seqAnswer() {
     let questionPoints = 0;
@@ -119,8 +134,6 @@ export class QuizComponent implements OnInit, OnDestroy {
         questionPoints += 0.25;
       }
     }
-
-    console.log(questionPoints);
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id,
        points: questionPoints
     })
@@ -167,5 +180,9 @@ getScore(): number {
 }
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.optionsSequence, event.previousIndex, event.currentIndex);
+  }
+
+  getUserRole() {
+    return this.userService.user.role.name;
   }
 }
