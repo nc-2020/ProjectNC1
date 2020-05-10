@@ -22,7 +22,7 @@ export class CategoryService {
   }
 
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>('localhost:8080/api/categories', { headers: new HttpHeaders()
+    return this.http.get<Category[]>('http://localhost:8080/api/categories', { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
       catchError(this.handleError<any>('getCategory'))
     );

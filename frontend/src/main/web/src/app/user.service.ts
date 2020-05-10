@@ -146,4 +146,13 @@ export class UserService {
       catchError(this.handleError<any>('getFriendsList'))
     );
   }
+
+  deleteFriendFromList(id) {
+    return this.http.delete<UserInvite>(this.userUrl + '/invite/friends/'+ this.user.id + '/' + id, { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(
+      tap(response => {
+        console.log(response);
+      }),
+      catchError(this.handleError<any>('deleteFriendFromList')))
+  }
 }

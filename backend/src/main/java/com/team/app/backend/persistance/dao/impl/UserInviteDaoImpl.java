@@ -80,4 +80,13 @@ public class UserInviteDaoImpl implements UserInviteDao {
                 id
         );
     }
+
+    @Override
+    public void deleteFriendFromList(Long userId, Long userIdDelete) {
+        jdbcTemplate.update(
+                "DELETE FROM friend_to WHERE user_id_from = ? AND user_id_to = ? " +
+                        "OR user_id_to = ? AND user_id_from = ?",
+                userId, userIdDelete, userId, userIdDelete
+        );
+    }
 }

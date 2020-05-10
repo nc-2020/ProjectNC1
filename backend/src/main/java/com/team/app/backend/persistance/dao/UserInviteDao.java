@@ -10,4 +10,5 @@ public interface UserInviteDao {
     List<UserInvite> getFriendsList(Long userId);
     void accept(Long id);
     void decline(Long id);
+    void deleteFriendFromList(Long userIdDelete, Long userId);
 }

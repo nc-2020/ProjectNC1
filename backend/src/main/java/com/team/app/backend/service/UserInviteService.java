@@ -10,4 +10,5 @@ public interface UserInviteService {
     List<UserInvite> getUserInvite(Long userId);
     void declineUserInvite(Long id);
     List<UserInvite> getFriendsList(Long userId);
+    void deleteUserFromList(Long userId, Long deleteId);
 }

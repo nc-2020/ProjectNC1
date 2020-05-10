@@ -45,4 +45,9 @@ public class UserInviteServiceImpl implements UserInviteService {
     public List<UserInvite> getFriendsList(Long userId) {
         return userInviteDao.getFriendsList(userId);
     }
+
+    @Override
+    public void deleteUserFromList(Long userId, Long deleteId) {
+        userInviteDao.deleteFriendFromList(userId, deleteId);
+    }
 }

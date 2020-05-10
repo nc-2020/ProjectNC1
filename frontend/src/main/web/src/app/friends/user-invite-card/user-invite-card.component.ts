@@ -14,6 +14,8 @@ export class UserInviteCardComponent implements OnInit {
   onChanged = new EventEmitter<UserInvite>();
   nameButtonAccept = 'Accept';
   nameButtonDecline = 'Decline';
+  nameButtonDelete = 'Delete';
+  deleted = false;
   clicked = false;
   constructor(private userService: UserService) { }
 
@@ -39,5 +41,13 @@ export class UserInviteCardComponent implements OnInit {
     } else {
       this.nameButtonDecline = action;
     }
+  }
+
+  deleteFriend(): void {
+    this.userService.deleteFriendFromList(this.userInvite.userIdFrom).subscribe(response => {
+      console.log(response);
+    })
+    this.nameButtonDelete = 'Deleted';
+    this.deleted = true;
   }
 }

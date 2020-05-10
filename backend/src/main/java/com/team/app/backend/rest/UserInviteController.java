@@ -74,4 +74,20 @@ public class UserInviteController {
     public ResponseEntity<List<UserInvite>> getFriends(@PathVariable("user_id") long id) {
         return ResponseEntity.ok().body(userInviteService.getFriendsList(id));
     }
+
+    @DeleteMapping("/friends/{user_id}/{delete_id}")
+    public ResponseEntity deleteUserFromList(@PathVariable("user_id") long id,
+                                             @PathVariable("delete_id") long deleteId) {
+        Map<String, String> model = new HashMap<>();
+        try {
+            userInviteService.deleteUserFromList(id, deleteId);
+        }
+        catch (DataAccessException sqlEx) {
+            System.out.println(sqlEx);
+            model.put("message", "There is a problem while delete friend");
+            return ResponseEntity.badRequest().body(model);
+        }
+        model.put("message", "Deleted");
+        return ResponseEntity.ok(model);
+    }
 }
