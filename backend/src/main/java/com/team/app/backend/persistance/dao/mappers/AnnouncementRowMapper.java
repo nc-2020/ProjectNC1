@@ -1,9 +1,6 @@
 package com.team.app.backend.persistance.dao.mappers;
 
 import com.team.app.backend.persistance.model.Announcement;
-import com.team.app.backend.persistance.model.Role;
-import com.team.app.backend.persistance.model.User;
-import com.team.app.backend.persistance.model.UserStatus;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

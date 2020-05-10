@@ -4,13 +4,10 @@ import com.team.app.backend.persistance.dao.AnnouncementDao;
 import com.team.app.backend.persistance.model.Announcement;
 import com.team.app.backend.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLDataException;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Service
 @Transactional

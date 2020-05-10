@@ -1,11 +1,7 @@
 package com.team.app.backend.persistance.dao;
 
-import com.team.app.backend.persistance.dao.QuizDao;
 import com.team.app.backend.persistance.dao.mappers.QuizRowMapper;
-
-import com.team.app.backend.persistance.model.Question;
 import com.team.app.backend.persistance.model.Quiz;
-import com.team.app.backend.persistance.model.QuizStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -14,8 +10,6 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 

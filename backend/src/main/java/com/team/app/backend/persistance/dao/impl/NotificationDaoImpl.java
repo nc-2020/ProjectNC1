@@ -1,7 +1,6 @@
 package com.team.app.backend.persistance.dao.impl;
 
 import com.team.app.backend.persistance.dao.NotificationDao;
-import com.team.app.backend.persistance.dao.mappers.AnnouncementRowMapper;
 import com.team.app.backend.persistance.dao.mappers.NotificationRowMapper;
 import com.team.app.backend.persistance.model.Notification;
 import org.springframework.beans.factory.annotation.Autowired;

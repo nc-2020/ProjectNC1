@@ -1,4 +1,3 @@
-
 <div class="container-fluid my-1">
   <div class="card flex-fill"  style="color: #2d2d2d;height: 55%">
     <div class="row flex-fill h-auto no-gutters align-items-center">
@@ -9,11 +8,15 @@
           <h2>
             <label class="card-title">{{user.username+' '+user.firstName+' '+user.lastName}}</label>
           </h2>
+          <div class="collapse" id="collapseMessage">
+            <label for="inviteText">Send to {{user.username}} </label>
+            <input id="inviteText" #inviteText>
+          </div>
         </div>
         <div class="col-12 col-sm-6 col-md-7 col-lg-5 align-self-center">
           <div class="btn-group text-right">
-            <a *ngIf="userRole() ==='user'" href="#" class="btn btn-outline-primary">Message</a>
-            <a *ngIf="userRole() ==='user'" href="#" class="btn   btn-outline-success">Send invitation</a>
+            <button *ngIf="userRole() ==='user'" class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseMessage" aria-expanded="false" aria-controls="collapseExample">Message</button>
+            <button *ngIf="userRole() ==='user'"  [disabled]="clicked" class="btn btn-outline-success" (click)="sendInvite(inviteText.value)">{{nameSendButton}}</button>
             <a *ngIf="userRole() ==='user'" href="#" class="btn  btn-outline-danger">Unfollow</a>
             <a *ngIf="userRole() ==='super admin' || userRole() ==='admin'" (click)="goToProfile()" class="btn  btn-outline-primary">Edit profile</a>
           </div>
