@@ -10,37 +10,41 @@ import {UserService} from "./user.service";
   providedIn: 'root'
 })
 export class CategoryService {
-  private categoriesUrl = 'http://localhost:8080/api';
+
+  private categoriesUrl = 'http://localhost:8080/api/category';
+
 
   constructor(private http: HttpClient, private userService: UserService) {
   }
 
   getCategory(category: Category) {
-    return this.http.get<Category>(this.categoriesUrl + `/category/get/${category.id}`).pipe(
+
+    return this.http.get<Category>(this.categoriesUrl + `/get/${category.id}`).pipe(
+
       catchError(this.handleError<any>('getCategory'))
     );
   }
 
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.categoriesUrl + '/categories', { headers: new HttpHeaders()
+    return this.http.get<Category[]>('http://localhost:8080/api/categories', { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
       catchError(this.handleError<any>('getCategory'))
     );
   }
 
   updateCategory(category: Category) {
-    return this.http.put<Quiz>(this.categoriesUrl + '/category/update', category).pipe(
+    return this.http.put<Quiz>(this.categoriesUrl + '/update', category).pipe(
       catchError(this.handleError<any>('editCategory'))
     );
   }
   createCategory(category: Category) {
-    return this.http.post<Category>(this.categoriesUrl + '/category/create', category).pipe(
+    return this.http.post<Category>(this.categoriesUrl + '/create', category).pipe(
       catchError(this.handleError<any>('createCategory'))
     );
   }
 
   deleteCategory(category: Category) {
-    return this.http.delete<Category>(this.categoriesUrl + `/category/delete/${category.id}`).pipe(
+    return this.http.delete<Category>(this.categoriesUrl + `/delete/${category.id}`).pipe(
       catchError(this.handleError<any>('deleteCategory'))
     );
   }

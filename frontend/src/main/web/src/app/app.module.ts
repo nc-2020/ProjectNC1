@@ -19,15 +19,18 @@ import {AnnouncementEditComponent} from './announcement-edit/announcement-edit.c
 import {QuizComponent} from './quiz/quiz.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LoaderService } from './services/loader.service';
-import { LoaderInterceptor } from './interceptors/loader-interceptor.service';
-import { MyLoaderComponent } from './components/my-loader/my-loader.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {LoaderService} from './services/loader.service';
+import {LoaderInterceptor} from './interceptors/loader-interceptor.service';
+import {MyLoaderComponent} from './components/my-loader/my-loader.component';
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
-import { QuizCardComponent } from './quiz-card/quiz-card.component';
 import { QuizAproveFormComponent } from './quiz-aprove-form/quiz-aprove-form.component';
 import { AnnouncementDashboardComponent } from './announcement-dashboard/announcement-dashboard.component';
+import {QuizCardComponent} from './quiz-card/quiz-card.component';
+import {FriendsComponent} from './friends/friends.component';
+import {UserInviteCardComponent} from './friends/user-invite-card/user-invite-card.component';
+
 
 
 @NgModule({
@@ -49,6 +52,8 @@ import { AnnouncementDashboardComponent } from './announcement-dashboard/announc
     QuizCardComponent,
     QuizAproveFormComponent,
     AnnouncementDashboardComponent,
+    FriendsComponent,
+    UserInviteCardComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +66,7 @@ import { AnnouncementDashboardComponent } from './announcement-dashboard/announc
     MatFormFieldModule,
     MatSelectModule,
     MatIconModule,
-    MatButtonModule,
+    MatButtonModule
   ],
   providers: [
     LoaderService,
