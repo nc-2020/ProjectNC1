@@ -27,6 +27,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import { QuizCardComponent } from './quiz-card/quiz-card.component';
 import { QuizAproveFormComponent } from './quiz-aprove-form/quiz-aprove-form.component';
+import { AnnouncementDashboardComponent } from './announcement-dashboard/announcement-dashboard.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { QuizAproveFormComponent } from './quiz-aprove-form/quiz-aprove-form.com
     MyLoaderComponent,
     QuizCardComponent,
     QuizAproveFormComponent,
+    AnnouncementDashboardComponent,
   ],
   imports: [
     BrowserModule,

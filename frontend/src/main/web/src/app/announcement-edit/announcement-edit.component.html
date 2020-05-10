@@ -1,8 +1,8 @@
 <div class="container">
-  <div class="row p-2">
+  <div class="row p-2 ">
     <div class="col" id="bod">
       <form [formGroup]="announcementForm" role="form" (ngSubmit)="submit()">
-        <div class="form-group row">
+        <div class="form-group row justify-content-center">
           <div class="col-lg-11 ml-lg-3 mt-5 alert alert-danger" [hidden]="!error">
             There was a problem. {{error}}.
           </div>
@@ -10,33 +10,42 @@
             {{message}}
           </div>
         </div>
-        <div class="row">
-          <div class="col-2 col-sm-2 col-md-4">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-4 col-sm-4 col-md-4">
             <div class="form-group align-items-center">
               <div class="text-center">
-                <img src="https://cdn.pixabay.com/photo/2020/04/09/12/28/dog-5021242_1280.jpg" width="250" height="250" class="mx-auto d-flex" alt="img">
-                <h5 class="mt-2">Change an announcement image</h5>
+                <img src="https://cdn.pixabay.com/photo/2020/04/09/12/28/dog-5021242_1280.jpg" style="max-width: 250px; max-height: 250px"  class="mx-auto d-flex" alt="img">
+                <h5 class="mt-2">Select an announcement image</h5>
                 <label class="custom-file">
-                  <input type="file" id="file" class="custom-file-input" text="Choose file">
+                  <input type="file" id="file" class="custom-file-input" style="height: 1px; width: 1px"  text="Choose file">
                   <span class="btn text-white custom-file-control border">Choose file</span>
                 </label>
               </div>
             </div>
           </div>
-          <div class="col-10 col-sm-10 col-md-8">
+          <div class="col-10 col-sm-10 col-md-8 align-self-center">
             <div class="form-group">
               <h3><label class=" form-control-label">Title</label></h3>
               <input class="form-control" formControlName="title" type="text" required>
             </div>
             <div class="form-group">
               <h3> <label class="form-control-label">Text</label></h3>
-              <textarea class="form-control"formControlName="text" id="exampleTextarea" rows="3"  required></textarea>
+              <textarea class="form-control" formControlName="text" id="exampleTextarea" rows="3"  required></textarea>
             </div>
             <div class="form-group">
               <div class="text-center">
-                <input  type="submit" class="btn btn-primary" (click)="save()"   value="Save Changes">
-                <input  type="button" class="btn btn-danger mx-2 my-2"  (click)="delete()" value="Delete">
-                <input  type="submit" class="btn btn-success"   (click)="add()" value="Add">
+                <div *ngIf="editOnly && getUserRole() !== 'user'">
+                <input  type="submit" class="btn btn-primary" (click)="save()"   value="Save Changes" [disabled]="!announcementForm.valid">
+                </div>
+                <div *ngIf="!editOnly">
+                  <div *ngIf="getUserRole() !== 'user'" class="form-check my-2">
+                    <label class="form-check-label" for="autoSizingCheck">
+                      <input class="form-check-input" formControlName="important" name="important" value="important" type="checkbox" id="autoSizingCheck">
+                      Mark as important
+                    </label>
+                  </div>
+                <input  type="submit" class="btn btn-success"   (click)="add()" value="Add" [disabled]="!announcementForm.valid">
+              </div>
               </div>
             </div>
           </div>

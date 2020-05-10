@@ -40,7 +40,6 @@ export class DashboardComponent implements OnInit {
     this.quizes$ = this.searchQuizTerms.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      // switch to new search observable each time the term changes
       switchMap((term: string) => this.quizService.searchQuizzes(term)),
     );
     this.users$ = this.searchUserTerms.pipe(

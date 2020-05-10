@@ -17,8 +17,8 @@ public class AnnouncementRowMapper implements RowMapper<Announcement> {
                 resultSet.getLong("id"),
                 resultSet.getString("title"),
                 resultSet.getString("text"),
-                resultSet.getDate("date").toString(),
-                resultSet.getBytes("iamge"),
+                resultSet.getDate("date"),
+                resultSet.getBytes("image"),
                 resultSet.getLong("status_id"),
                 resultSet.getLong("cat_id"),
                 resultSet.getLong("user_id"));

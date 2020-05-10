@@ -25,13 +25,38 @@ export class AnnouncementService {
     };
   }
 
+  getAll() {
+    return this.http.get<Announcement[]>(this.apiURL + `/announcement/all`,  {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)
+    }).pipe(
+      catchError(this.handleError<any>('getAll'))
+    );
+  }
 
-  deleteAnnouncement(ann: Announcement) {
-    return this.http.delete<Announcement>(this.apiURL + `/announcement/delete/${ann.id}`,{
+  getCreated() {
+    return this.http.get<Announcement[]>(this.apiURL + `/announcement/created`,  {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)
+    }).pipe(
+      catchError(this.handleError<any>('getCreated'))
+    );
+  }
+
+  deleteAnnouncement(id: number) {
+    return this.http.delete<Announcement>(this.apiURL + `/announcement/delete/${id}`,{
       headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)
     }).pipe(
       catchError(this.handleError<any>('deleteAnnouncement'))
+    );
+  }
+  approve(ann: Announcement) {
+    return this.http.post<Announcement>(this.apiURL + '/announcement/approve', ann, {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)
+    }).pipe(
+      catchError(this.handleError<any>('approve'))
     );
   }
   createAnnouncement(ann: Announcement) {

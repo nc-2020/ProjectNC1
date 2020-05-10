@@ -4,7 +4,7 @@ public class Announcement {
     private Long id;
     private String title;
     private String text;
-    private String date;
+    private Date date;
     private byte[] image;
     private Long statusId;
     private Long userId;
@@ -12,9 +12,12 @@ public class Announcement {
 
     public Announcement(){
 
+        long millis=System.currentTimeMillis();
+        java.sql.Date date = new java.sql.Date(millis);
+        this.date = date;
     }
 
-    public Announcement(Long id, String title, String text, String date, byte[] image, Long statusId, Long userId, Long categoryId) {
+    public Announcement(Long id, String title, String text, Date date, byte[] image, Long statusId,Long categoryId, Long userId) {
         this.id = id;
         this.title = title;
         this.text = text;
@@ -57,11 +60,11 @@ public class Announcement {
         this.title = title;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
