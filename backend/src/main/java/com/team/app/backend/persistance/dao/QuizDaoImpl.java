@@ -12,6 +12,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,6 +55,23 @@ public class QuizDaoImpl implements QuizDao {
     @Override
     public List<Quiz> getApproved() {
         return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id where status_id = 2 "
+                ,quizRowMapper);
+    }
+
+
+    @Override
+    public List<Quiz> getApprovedForUser(Long user_id) {
+        return jdbcTemplate.query(
+                "SELECT Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id ,Q.id IN (SELECT UQF.quiz_id FROM user_quiz_fav UQF WHERE UQF.user_id = ?) AS favorite FROM quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id WHERE status_id = 2"
+                ,new Object[] { user_id }
+                ,quizRowMapper);
+    }
+
+    @Override
+    public List<Quiz> getFavoriteQuizes(Long user_id) {
+        return jdbcTemplate.query(
+                "SELECT Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id , TRUE as favorite FROM quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id WHERE status_id = 2 AND Q.id IN (SELECT UQF.quiz_id FROM user_quiz_fav UQF WHERE UQF.user_id = ?)"
+                ,new Object[] { user_id }
                 ,quizRowMapper);
     }
 
@@ -134,4 +152,6 @@ public class QuizDaoImpl implements QuizDao {
                 id
         );
     }
+
+
 }

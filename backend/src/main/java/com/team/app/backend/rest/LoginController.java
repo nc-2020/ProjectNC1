@@ -35,10 +35,14 @@ public class LoginController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody UserLoginDto requestDto) {
         try {
             String username = requestDto.getUsername();
+            String password = passwordEncoder.encode(requestDto.getPassword());
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
             User user = userService.findByUsername(username);
 

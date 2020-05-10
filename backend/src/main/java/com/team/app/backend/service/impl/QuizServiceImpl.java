@@ -145,6 +145,16 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    public List<Quiz> getApprovedUserQuizes(Long user_id) {
+        return quizDao.getApprovedForUser(user_id);
+    }
+
+    @Override
+    public List<Quiz> getUserFavoritesQuizes(Long user_id) {
+        return quizDao.getFavoriteQuizes(user_id);
+    }
+
+    @Override
     public List<Quiz> getCategoryQuizes(String category) {
         return quizDao.getCategoryQuizes(category);
     }
