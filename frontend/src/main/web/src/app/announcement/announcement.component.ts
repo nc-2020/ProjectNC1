@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Announcement} from "../entities/announcement";
-import {AnnouncementService} from "../announcement.service";
-import {UserService} from "../user.service";
+import {AnnouncementService} from "../services/announcement.service";
+import {UserService} from "../services/user.service";
+import {User} from "../entities/user";
 
 @Component({
   selector: 'app-announcement',
@@ -10,14 +11,12 @@ import {UserService} from "../user.service";
 })
 export class AnnouncementComponent implements OnInit {
 
-  announcement: Announcement = {
-    id: '1',
-    title: 'New epic big super announcement',
-    text: 'Some quick example text to build on the card title and make up the bulk of the card`s content.',
-    date: '',
-    userId: '1'
-  };
+  @Input()
+  announcement: Announcement ;
+  @Output()
+  onChanged = new EventEmitter<Announcement>();
   error = '';
+  message = '';
 
 
   constructor(private announcementService: AnnouncementService, private userService: UserService) { }
@@ -25,11 +24,23 @@ export class AnnouncementComponent implements OnInit {
   getRole() {
     return this.userService.user.role.name;
   }
+  edit() {
+    this.onChanged.emit(this.announcement);
+  }
   delete() {
-    this.announcementService.deleteAnnouncement(this.announcement).subscribe(resp => {window.location.reload()},
+    this.announcementService.deleteAnnouncement(+this.announcement.id).
+    subscribe(resp => {window.location.reload()},
         error => {this.error = error.message});
   }
   ngOnInit(): void {
+  }
+  approve(approved: boolean) {
+    this.announcement.statusId = approved ? 2 : 0;
+    console.log(this.announcement);
+    this.announcementService.approve(this.announcement).
+    subscribe(resp => {window.location.reload()},
+      error => {this.announcement.statusId = 1 ; this.error = error.message; console.log(error)})
+
   }
 
 }

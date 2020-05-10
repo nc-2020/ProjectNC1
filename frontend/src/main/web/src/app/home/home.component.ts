@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from "../user.service";
+import {UserService} from "../services/user.service";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
@@ -12,7 +12,6 @@ export class HomeComponent implements OnInit {
   title = 'Demo';
   greeting = {};
   constructor( private http: HttpClient, private app: UserService) {
-    http.get('api/resource').subscribe(data => this.greeting = data);
   }
 
   authenticated() {

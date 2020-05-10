@@ -1,8 +1,8 @@
 input.ng-invalid.ng-touched {
-  border: 2px solid red;
+  border: 1px solid red;
 }
 input.ng-valid.ng-touched {
-  border: 2px solid green;
+  border: 1px solid green;
 }
 form:before {
   content: '';

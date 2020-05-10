@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError} from "rxjs/operators";
-import {Observable, of, throwError} from "rxjs";
+import {Observable, of} from "rxjs";
 import {Quiz} from "../entities/quiz";
-import {UserService} from "../user.service";
-import {User} from "../entities/user";
+import {UserService} from "./user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -25,13 +24,32 @@ export class QuizService {
         catchError(this.handleError<Quiz>('getQuiz')
         ));
   }
-
+  getCreatedQuizzes(): Observable<Quiz[]> {
+    return  this.http.get<Quiz[]>(this.quizzesUrl + '/created', { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+      .pipe(
+        catchError(this.handleError<Quiz[]>('getCreatedQuizzes',[])
+        ));
+  }
   getQuizzes(): Observable<Quiz[]> {
     return this.http.get<Quiz[]>(this.quizzesUrl,{ headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(
         catchError(this.handleError<Quiz[]>('getQuizzes', []))
       );
+  }
+  getAllUserQuizzes(): Observable<Quiz[]> {
+    return this.http.get<Quiz[]>(this.quizzesUrl + '/user/' + this.userService.user.id + '/all',{ headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+      .pipe(
+        catchError(this.handleError<Quiz[]>('getUserAllQuizzes', []))
+      );
+  }
+
+    approveQuiz(quiz: Quiz): Observable<any> {
+    return  this.http.post<Quiz>(this.quizzesUrl + '/approve', quiz, { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+
   }
 
   getUserQuizzes(): Observable<Quiz[]> {
@@ -60,7 +78,8 @@ export class QuizService {
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.get<Quiz[]>(`${this.quizzesUrl}/?title=${term}`).pipe(
+    return this.http.get<Quiz[]>(`${this.quizzesUrl}/search/${term}`, { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
       catchError(this.handleError<Quiz[]>('searchQuizzes', []))
     );
   }

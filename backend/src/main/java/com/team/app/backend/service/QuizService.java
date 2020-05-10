@@ -30,6 +30,8 @@ public interface QuizService {
     List<Quiz> getCategoryQuizes(String category);
 
     List<Quiz> searchQuizes(String category,String searchstring);
+	
+	List<Quiz> searchQuizes(String searchstring);
 
     List<Question> getQuizQuestion(Long id);
 
@@ -40,4 +42,8 @@ public interface QuizService {
     List<Quiz> getAllQuizes();
 
     Quiz getQuiz(Long id);
+
+    void aproveQuiz(Quiz quiz);
+
+    List<Quiz> getCreated();
 }

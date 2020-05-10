@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {QuizService} from "./services/quiz.service";
-import {UserService} from "./user.service";
+import {UserService} from "./services/user.service";
 import {Observable, of} from "rxjs";
 
 @Injectable({
@@ -13,7 +13,7 @@ export class QuizPlayService {
               private quizService: QuizService,
               private userService: UserService) {}
 
-  private quizzesUrl = 'http://localhost:8080/api/quiz';
+  private quizzesUrl = 'api/quiz';
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

@@ -3,8 +3,8 @@ import { User } from '../entities/user';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MustMatchValidator} from './_helpers/must-match.validator';
 import {Router} from "@angular/router";
-import {UserService} from "../user.service";
-
+import {UserService} from "../services/user.service";
+import {HashBcrypt} from '../util/hashBcrypt';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -41,9 +41,9 @@ message = ''
         Validators.required,
         Validators.minLength(3),
       ]),
-      checkAgreement: new FormControl([true,
-        Validators.requiredTrue
-      ])
+      // checkAgreement: new FormControl([true,
+      //   Validators.requiredTrue
+      // ])
     }, {validators: MustMatchValidator.passwordConfirming});
   }
 
@@ -52,7 +52,8 @@ message = ''
     this.user.firstName = this.registrationForm.get('firstname').value;
     this.user.lastName = this.registrationForm.get('lastname').value;
     this.user.email = this.registrationForm.get('email').value;
-    this.user.password = this.registrationForm.get('password').value;
+    this.user.password = HashBcrypt.hash(this.registrationForm.get('password').value);
+    this.registrationForm.reset();
     this.app.signUp(this.user).subscribe(
       _ => this.router.navigateByUrl('/login'), error => this.message = error.message);
   }
