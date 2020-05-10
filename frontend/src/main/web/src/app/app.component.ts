@@ -27,7 +27,4 @@ export class AppComponent {
     return this.app.authenticated;
   }
 
-  ifUser(): boolean {
-    return this.app.user.role.name === 'user';
-  }
 }

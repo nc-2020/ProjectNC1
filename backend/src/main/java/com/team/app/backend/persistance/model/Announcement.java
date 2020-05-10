@@ -1,5 +1,7 @@
 package com.team.app.backend.persistance.model;
+
 import java.util.Date;
+
 public class Announcement {
     private Long id;
     private String title;

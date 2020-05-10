@@ -4,7 +4,6 @@ import com.team.app.backend.persistance.model.Announcement;
 import com.team.app.backend.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +19,6 @@ public class AnnouncementController {
     @Autowired
     AnnouncementService announcementService;
 
-    @CrossOrigin
     @PostMapping("/create")
     public ResponseEntity createAnnouncement(@RequestBody Announcement announcement) {
         Map<String, String> response = new HashMap<>();

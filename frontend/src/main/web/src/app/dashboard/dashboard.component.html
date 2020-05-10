@@ -72,6 +72,9 @@
           <div *ngIf="tab !== 'Quizzes'">
             <app-user-card *ngFor="let user of users$ | async" (onChanged)="profileSet(false, $event)" [user]="user"></app-user-card>
           </div>
+          <div *ngIf="tab === 'Friends'">
+            <app-friends></app-friends>
+          </div>
           <app-quiz-dashboard *ngIf="tab === 'Quizzes' && isVisible; else elseBlock" class="mt-5"></app-quiz-dashboard>
           <div #elseBlock class="raw">
             <div *ngIf="tab === 'Quizzes'">

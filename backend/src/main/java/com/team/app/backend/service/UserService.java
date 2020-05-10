@@ -11,7 +11,6 @@ import java.util.List;
 
 public interface UserService {
 
-
     User updateUser(UserUpdateDto userDto);
 
     User getUserById(Long id);
