@@ -1,6 +1,6 @@
 
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {UserService} from "../user.service";
+import {UserService} from "../services/user.service";
 import {User} from '../entities/user';
 import {UserInvite} from "../entities/user-invite";
 

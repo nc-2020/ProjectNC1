@@ -3,9 +3,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {User} from "../entities/user";
 import {Observable, of, throwError} from "rxjs";
 import {catchError, tap, finalize} from "rxjs/operators";
-import { error } from 'protractor';
 import {Router} from "@angular/router";
-import {UserInvite} from "./entities/user-invite";
+import {UserInvite} from '../entities/user-invite';
 
 @Injectable({
   providedIn: 'root'
