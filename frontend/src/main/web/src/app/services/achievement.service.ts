@@ -24,7 +24,7 @@ export class AchievementService {
   }
 
   getAchievements(): Observable<Achievement[]> {
-    return this.http.get<Achievement[]>('http://localhost:8080/api/achievements', { headers: new HttpHeaders()
+    return this.http.get<Achievement[]>(this.achievementUrl + '/achievements', { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
       catchError(this.handleError<any>('getAchievements'))
     );

@@ -98,7 +98,7 @@
 
 
         <div *ngIf="tab === 'Achievements'">
-          <app-achievements *ngFor="let categoryAchievement of categoriesList" [categoryAchievement]="categoryAchievement"></app-achievements>
+          <app-achievements *ngFor="let achievement of achievementList" [achievement]="achievement"></app-achievements>
         </div>
         <app-user-profile *ngIf="tab === 'Profile' || tab === 'AddProfile'" [user]="user" [editOnly]="tab === 'Profile'? false : true" ></app-user-profile>
 
