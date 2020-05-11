@@ -9,7 +9,7 @@ public class UserToSession {
 
     public UserToSession() {}
 
-    public UserToSession(Long session_id, Long user_id) {
+    public UserToSession(Long user_id, Long session_id) {
         this.session_id = session_id;
         this.user_id = user_id;
     }

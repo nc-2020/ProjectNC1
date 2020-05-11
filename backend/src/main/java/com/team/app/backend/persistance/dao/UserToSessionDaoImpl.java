@@ -19,7 +19,7 @@ public class UserToSessionDaoImpl implements UserToSessionDao {
 
     @Override
     public UserToSession save(UserToSession userToSession) {
-        String sql = "INSERT INTO UserToSession(ses_id, user_id, score) VALUES ( ?, ?, ? )";
+        String sql = "INSERT INTO user_to_ses (ses_id, user_id, score) VALUES ( ?, ?, ? )";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(
                 connection -> {
@@ -34,12 +34,12 @@ public class UserToSessionDaoImpl implements UserToSessionDao {
                 },
                 keyHolder
         );
-        return getById((Long) keyHolder.getKey());
+        return getById(keyHolder.getKey().longValue());
     }
 
     @Override
     public UserToSession getById(Long id) {
-        String sql = "SELECT * FROM UserToSession WHERE id = ?";
+        String sql = "SELECT * FROM user_to_ses WHERE id = ?";
         return jdbcTemplate.queryForObject(
                 sql,
                 new Object[]{id},
@@ -61,7 +61,7 @@ public class UserToSessionDaoImpl implements UserToSessionDao {
 
     @Override
     public UserToSession update(UserToSession userToSession) {
-        String sql = "UPDATE UserToSession SET ses_id = ?, user_id = ?, score = ? WHERE id = ?";
+        String sql = "UPDATE user_to_ses SET ses_id = ?, user_id = ?, score = ? WHERE id = ?";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(
                 connection -> {
@@ -77,6 +77,6 @@ public class UserToSessionDaoImpl implements UserToSessionDao {
                 },
                 keyHolder
         );
-        return getById((Long) keyHolder.getKey());
+        return getById(keyHolder.getKey().longValue());
     }
 }

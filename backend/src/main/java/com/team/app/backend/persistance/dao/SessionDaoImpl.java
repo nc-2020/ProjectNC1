@@ -22,7 +22,7 @@ public class SessionDaoImpl implements SessionDao {
 
     @Override
     public Session save(Session session) {
-        String sql = "INSERT INTO session(access_code, date, quiz_id) VALUES ( ?, ?, ? )";
+        String sql = "INSERT INTO session(access_code, date, quiz_id, status_id) VALUES ( ?, ?, ? ,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(
                 connection -> {
@@ -31,13 +31,14 @@ public class SessionDaoImpl implements SessionDao {
                             new String[] {"id"}
                     );
                     ps.setString(1, session.getAccess_code());
-                    ps.setDate(2, (Date) session.getDate());
+                    ps.setDate(2, session.getDate());
                     ps.setLong(3, session.getQuiz_id());
+                    ps.setLong(4, session.getStatus().getId());
                     return ps;
                 },
                 keyHolder
         );
-        return getById((Long) keyHolder.getKey());
+        return getById(keyHolder.getKey().longValue());
     }
 
     @Override
@@ -73,13 +74,13 @@ public class SessionDaoImpl implements SessionDao {
                             new String[] {"id"}
                     );
                     ps.setString(1, session.getAccess_code());
-                    ps.setDate(2, (Date) session.getDate());
+                    ps.setDate(2, session.getDate());
                     ps.setLong(3, session.getQuiz_id());
                     ps.setLong(4, session.getId());
                     return ps;
                 },
                 keyHolder
         );
-        return getById((Long) keyHolder.getKey());
+        return getById(keyHolder.getKey().longValue());
     }
 }

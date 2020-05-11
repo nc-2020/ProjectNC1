@@ -99,8 +99,16 @@ public class UserDaoImpl implements UserDao {
     @Override
     public String getUserPasswordByUsername(String username) {
         return jdbcTemplate.queryForObject(
-                "select PASSWORD from users where USERNAME = ? ",
+                "SELECT PASSWORD FROM users WHERE USERNAME = ? ",
                 new Object[]{username},String.class
+        );
+    }
+
+    @Override
+    public void activateByToken(String token) {
+        jdbcTemplate.update(
+                "UPDATE users set status_id = 2 WHERE activate_link = ?",
+                token
         );
     }
 

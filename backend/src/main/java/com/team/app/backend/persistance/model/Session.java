@@ -2,7 +2,7 @@ package com.team.app.backend.persistance.model;
 
 import org.jasypt.util.text.BasicTextEncryptor;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Session {
 
@@ -10,13 +10,25 @@ public class Session {
     private Long quiz_id;
     private String access_code;
     private Date date;
+    private SessionStatus status;
+
+    public SessionStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(SessionStatus status) {
+        this.status = status;
+    }
 
     public Session() {}
 
     public Session(Long quiz_id) {
+        long millis=System.currentTimeMillis();
+        java.sql.Date date=new java.sql.Date(millis);
         this.quiz_id = quiz_id;
-        this.date = new Date();
-        this.access_code = ""; // because of NOT_NULL constraint in the DB
+        this.date = date;
+        this.access_code = "";
+        this.status=new SessionStatus(1L,"waiting");
     }
 
     public Long getId() {

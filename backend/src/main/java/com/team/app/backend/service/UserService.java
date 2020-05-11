@@ -30,6 +30,7 @@ public interface UserService {
     void registerNewUserAccount(UserRegistrationDto userDto)
             throws UserAlreadyExistsException;
 
+    void activateUserAccount(String token);
     boolean isUserRegistered(String username);
 
     String getUserPassword(String username);

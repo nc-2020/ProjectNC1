@@ -10,12 +10,15 @@ import com.team.app.backend.persistance.model.User;
 import com.team.app.backend.persistance.model.UserStatus;
 import com.team.app.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -25,6 +28,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Override
     public User findByUsername(String username) {
@@ -114,11 +120,30 @@ public class UserServiceImpl implements UserService {
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());
         //user.setImage(userDto.getImage());
-        user.setActivate_link("ttest");
+        user.setActivate_link(UUID.randomUUID().toString());
         user.setRegistr_date(new Date());
         user.setRole(new Role(1L,"USER"));
         user.setStatus(new UserStatus(1L,"REGISTERED"));
+
+        String recipientAddress = user.getEmail();
+        String subject = "Registration Confirmation";
+        String confirmationUrl = "api/user/activate?token=" + user.getActivate_link();
+        String message = "Welcome on our site!" +
+                "To continue press net link ";
+
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setFrom("Brain-duel");
+        email.setTo(recipientAddress);
+        email.setSubject(subject);
+        email.setText(message + " http://localhost:8080" + confirmationUrl);
+        mailSender.send(email);
         userDao.save(user);
+
+    }
+
+    @Override
+    public void activateUserAccount(String token) {
+        userDao.activateByToken(token);
     }
 
     /**

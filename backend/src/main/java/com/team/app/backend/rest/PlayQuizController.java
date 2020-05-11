@@ -41,32 +41,33 @@ public class PlayQuizController {
     @Autowired
     private UserAnswerService userAnswerService;
 
-    @GetMapping("play")
+    @GetMapping("play/{user_id}/{quiz_id}")
     public ResponseEntity playQuiz(
-            @RequestParam("user_id") Long userId,
-            @RequestParam("quiz_id") Long quizId) {
-        Quiz quiz = quizService.getQuiz(quizId);
+            @PathVariable("user_id") long user_id,
+            @PathVariable("quiz_id") long quiz_id) {
+        Quiz quiz = quizService.getQuiz(quiz_id);
         Session session = sessionService.newSessionForQuiz(quiz);
-        String accessCode = AccessCodeProvider.createAccessCode(session, quiz);
-        session.setAccess_code(accessCode);
+        //String accessCode = AccessCodeProvider.createAccessCode(session, quiz);
+        session.setAccess_code(session.getId().toString());
         sessionService.updateSession(session);
-        User user = userService.getUserById(userId);
+        User user = userService.getUserById(user_id);
 
         UserToSession userToSession = userToSessionService.createNewUserToSession(user, session);
 
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(session);
     }
 
     @GetMapping("join")
     public ResponseEntity joinQuiz(
-            @RequestParam("user_id") Long userId,
-            @RequestParam("access_code") String accessCode
+            @RequestParam("user_id") Long user_id,
+            @RequestParam("access_code") Long accessCode
     ) {
-        Quiz quiz = quizService.getQuiz(
-                AccessCodeProvider.parseAccessCode(accessCode).get("quiz_id"));
-        Session session = sessionService.getSessionById(
-                AccessCodeProvider.parseAccessCode(accessCode).get("session_id"));
-        User user = userService.getUserById(userId);
+        //Quiz quiz = quizService.getQuiz(
+                //AccessCodeProvider.parseAccessCode(accessCode).get("quiz_id"));
+        //sessionService.getSessionById(
+         //       AccessCodeProvider.parseAccessCode(accessCode).get("session_id") Session session = );
+        Session session = sessionService.getSessionById(accessCode);
+        User user = userService.getUserById(user_id);
         UserToSession userToSession = userToSessionService.createNewUserToSession(user, session);
         return ResponseEntity.ok("");
     }

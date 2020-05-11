@@ -21,8 +21,10 @@ public class UserToSessionServiceImpl implements UserToSessionService {
     @Override
     public UserToSession createNewUserToSession(User user, Session session) {
         UserToSession userToSession = new UserToSession(user.getId(), session.getId());
+        System.out.println("user"+user.getId()+"ses"+session.getId());
         return userToSessionDao.save(userToSession);
     }
+
     // TODO: implement
     @Override
     public List<UserToSession> getAllBySessionId(Long sessionId) {

@@ -20,4 +20,6 @@ public interface UserDao {
 
     String getUserPasswordByUsername(String username);
 
+    void activateByToken(String token);
+
 }
