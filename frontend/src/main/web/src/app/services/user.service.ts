@@ -31,8 +31,7 @@ export class UserService {
   getToken() {
     return this.user.token;
   }
-  getUser(user: User) {
-
+  getUser(user: User): Observable<User> {
     return this.http.get<User>(this.userUrl + `/get/${user.id}`, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(
       catchError(this.handleError<any>('getUser'))

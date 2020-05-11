@@ -30,6 +30,7 @@ import { AnnouncementDashboardComponent } from './announcement-dashboard/announc
 import {QuizCardComponent} from './quiz-card/quiz-card.component';
 import {FriendsComponent} from './friends/friends.component';
 import {UserInviteCardComponent} from './friends/user-invite-card/user-invite-card.component';
+import { AchievementsComponent } from './achievements/achievements.component';
 
 
 
@@ -53,7 +54,8 @@ import {UserInviteCardComponent} from './friends/user-invite-card/user-invite-ca
     QuizAproveFormComponent,
     AnnouncementDashboardComponent,
     FriendsComponent,
-    UserInviteCardComponent
+    UserInviteCardComponent,
+    AchievementsComponent
   ],
   imports: [
     BrowserModule,

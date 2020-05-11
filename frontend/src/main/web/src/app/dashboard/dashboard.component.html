@@ -14,6 +14,11 @@
               </a>
             </li>
             <li *ngIf="getUserRole()==='user'" class="nav-item border-bottom">
+              <a class="nav-link" (click)="changeTab('Achievements')">
+                Achievements
+              </a>
+            </li>
+            <li *ngIf="getUserRole()==='user'" class="nav-item border-bottom">
               <a class="nav-link" (click)="changeTab('Friends')">
                 Friends
               </a>
@@ -57,15 +62,21 @@
       <main role="main" class="col-md-9 ml-sm-auto col-lg-9 px-1 align-self-start" >
         <!--        Users search menu-->
         <div *ngIf="tab === 'Users' || tab === 'Friends' || tab === 'Admins-Moderators' || tab==='Moderators' || tab === 'Quizzes' " class=" main-frame container-fluid my-5 ">
-          <form class="form-inline ml-3 my-2 my-lg-0 border-bottom" >
-            <input #searchBox id="search-box"  class="form-control my-2 mr-3" type="text" placeholder="Search" style="width: 70%">
+          <form *ngIf="tab !== 'Quizzes'" class="form-inline ml-3 my-2 my-lg-0" >
+            <input #searchBox id="search-box"  class="form-control my-2" type="text" placeholder="Search" style="width: 70%">
+            <button for="search-box" class="btn btn-secondary my-2 my-sm-0" (click)="search(searchBox.value)" type="submit" style="width: auto">Search</button>
+            <button *ngIf="getUserRole()==='admin' || getUserRole()==='super admin'" class="btn btn-success my-2 mx-auto my-sm-0"
+                    (click)="profileSet(true)"  style="width: auto">Add</button>
+          </form>
+          <form *ngIf="tab === 'Quizzes'" class="form-inline ml-3 my-2 my-lg-0" >
+            <input #searchBox id="search-quiz"  class="form-control my-2 mr-3" type="text" placeholder="Search" style="width: 70%">
             <mat-form-field color="Warn" id="dropListCategory">
               <mat-label class="text-center">Categories</mat-label>
               <mat-select multiple>
                 <mat-option *ngFor="let category of categoriesList" [value]="category">{{category.name}}</mat-option>
               </mat-select>
             </mat-form-field>
-            <button for="search-box" class="btn btn-secondary my-2 mx-auto my-sm-0" (click)="search(searchBox.value)" type="submit" style="width: auto">Search</button>
+            <button for="search-quiz" class="btn btn-secondary my-2 mx-auto my-sm-0" (click)="search(searchBox.value)" type="submit" style="width: auto">Search</button>
             <button *ngIf="getUserRole()==='admin' || getUserRole()==='super admin'" class="btn btn-success my-2 mx-auto my-sm-0"
                     (click)="profileSet(true)"  style="width: auto">Add</button>
           </form>
@@ -75,6 +86,7 @@
           <div *ngIf="tab === 'Friends'">
             <app-friends></app-friends>
           </div>
+
           <app-quiz-dashboard *ngIf="tab === 'Quizzes' && isVisible; else elseBlock" class="mt-5"></app-quiz-dashboard>
           <div #elseBlock class="raw">
             <div *ngIf="tab === 'Quizzes'">
@@ -84,6 +96,10 @@
         </div>
         <!--Profile-->
 
+
+        <div *ngIf="tab === 'Achievements'">
+          <app-achievements *ngFor="let categoryAchievement of categoriesList" [categoryAchievement]="categoryAchievement"></app-achievements>
+        </div>
         <app-user-profile *ngIf="tab === 'Profile' || tab === 'AddProfile'" [user]="user" [editOnly]="tab === 'Profile'? false : true" ></app-user-profile>
 
         <app-announcement-dashboard *ngIf="tab === 'Announcement'" ></app-announcement-dashboard>
