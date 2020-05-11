@@ -15,6 +15,8 @@ public interface QuizDao {
 
     List<Quiz> getFavoriteQuizes(Long user_id);
 
+    List<Quiz> getSuggestion(Long user_id);
+
     List<Quiz> getCategoryQuizes(String category);
 
     List<Quiz> searchQuizes(String category, String searchstring);

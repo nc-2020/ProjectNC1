@@ -70,6 +70,64 @@ public class QuizDaoImpl implements QuizDao {
                 ,quizRowMapper);
     }
 
+    @Override
+    public List<Quiz> getSuggestion(Long user_id) {
+        System.out.println(user_id);
+        String sql="SELECT QQ.id,QQ.title,QQ.date,QQ.description,QQ.image,QQ.status_id, 'approved' as status_name , QQ.user_id,FALSE AS favorite, COALESCE(QQ1.fav_coef,0)+COALESCE(QQ1.played_coef,0)+FQK.num_friends_played+FQK.num_friends_favorite AS coef\n" +
+                "FROM (quiz Q LEFT OUTER JOIN quiz_to_categ QTC ON Q.id = QTC.quiz_id) QQ\n" +
+                "  LEFT OUTER JOIN\n" +
+                "  (SELECT QTC1.cat_id AS sel_cat_id, COUNT(FQ.fav_quiz_id)*0.4 as fav_coef ,COUNT(SQ.sel_quiz_id)*0.1 as played_coef\n" +
+                "    FROM quiz_to_categ QTC1\n" +
+                "      LEFT OUTER JOIN \n" +
+                "        (SELECT DISTINCT(S.quiz_id) AS sel_quiz_id\n" +
+                "        FROM user_to_ses US INNER JOIN session S ON US.ses_id = S.id\n" +
+                "        WHERE user_id = ? AND S.status_id = 2) SQ ON SQ.sel_quiz_id = QTC1.quiz_id\n" +
+                "      LEFT OUTER JOIN \n" +
+                "        (SELECT F.quiz_id AS fav_quiz_id\n" +
+                "        FROM user_quiz_fav F\n" +
+                "        WHERE F.user_id = ?) FQ ON FQ.fav_quiz_id = QTC1.quiz_id\n" +
+                "    GROUP BY QTC1.cat_id) QQ1 ON QQ.cat_id=QQ1.sel_cat_id\n" +
+                "  LEFT OUTER JOIN \n" +
+                "  (SELECT Q.id AS friend_quiz_id, COALESCE(FPQ.num_friends_played*0.2, 0 ) as num_friends_played,COALESCE(FFQ.num_fav_friend*0.3, 0 ) as num_friends_favorite\n" +
+                "  FROM quiz Q LEFT JOIN \n" +
+                "          (SELECT DISTINCT(S.quiz_id) AS friend_played_quiz_id ,COUNT(user_id) AS num_friends_played\n" +
+                "          FROM user_to_ses US LEFT JOIN session S ON US.ses_id = S.id\n" +
+                "          WHERE user_id IN (\n" +
+                "                  SELECT id\n" +
+                "                    FROM users\n" +
+                "                    WHERE id IN (SELECT user_id_from\n" +
+                "                          FROM friend_to\n" +
+                "                        WHERE user_id_to = ?)\n" +
+                "                    OR id IN (SELECT user_id_to\n" +
+                "                        FROM friend_to\n" +
+                "                        WHERE user_id_from = ?)\n" +
+                "            AND S.status_id = 2)  \n" +
+                "          GROUP BY S.quiz_id) FPQ ON Q.id=FPQ.friend_played_quiz_id\n" +
+                "        LEFT JOIN (SELECT quiz_id AS friends_fav_quiz, COUNT(user_id) AS num_fav_friend\n" +
+                "              FROM user_quiz_fav\n" +
+                "              WHERE user_id IN (\n" +
+                "                      SELECT id\n" +
+                "                        FROM users\n" +
+                "                        WHERE id IN (SELECT user_id_from\n" +
+                "                              FROM friend_to\n" +
+                "                            WHERE user_id_to = ?)\n" +
+                "                        OR id IN (SELECT user_id_to\n" +
+                "                            FROM friend_to\n" +
+                "                            WHERE user_id_from = ?)\n" +
+                "          )\n" +
+                "         GROUP BY quiz_id) FFQ ON Q.id=friends_fav_quiz\n" +
+                "   ) FQK ON FQK.friend_quiz_id= QQ.id\n" +
+                "WHERE QQ.id NOT IN(\n" +
+                "  \t\t\t\tSELECT DISTINCT(S.quiz_id) AS sel_quiz_id\n" +
+                "  \t\t\t\tFROM user_to_ses US INNER JOIN session S ON US.ses_id = S.id\n" +
+                "\t  \t\t\tWHERE user_id = ? AND S.status_id = 2)\n" +
+                "\t\t\t\tAND status_id =2\n" +
+                "ORDER BY coef DESC";
+        return jdbcTemplate.query(sql
+                ,new Object[] { user_id,user_id,user_id,user_id,user_id,user_id,user_id },
+                quizRowMapper);
+    }
+
     // to do
     @Override
     public List<Quiz> getCategoryQuizes(String category) {

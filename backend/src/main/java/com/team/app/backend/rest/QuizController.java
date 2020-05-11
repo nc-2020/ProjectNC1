@@ -117,6 +117,12 @@ public class QuizController {
         return quizService.getUserFavoritesQuizes(user_id);
     }
 
+    @GetMapping("quiz/suggestion/{user_id}")
+    public List<Quiz> getSuggestionQuizes(@PathVariable("user_id") long user_id) {
+        return quizService.getSuggestion(user_id);
+    }
+
+
 
 
     @GetMapping("quiz/category/{category}")
