@@ -13,6 +13,7 @@ import com.team.app.backend.persistance.model.*;
 import com.team.app.backend.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -217,7 +218,7 @@ public class QuizServiceImpl implements QuizService {
         notificationDao.create(notification);
 
     }
-
+    @Transactional(propagation= Propagation.SUPPORTS)
     @Override
     public List<Quiz> getCreated() {
         return this.quizDao.getCreated();

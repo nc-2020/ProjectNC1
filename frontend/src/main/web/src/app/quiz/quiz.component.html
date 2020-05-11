@@ -29,7 +29,7 @@
           <label class="ml-2">Score {{getScore()}}/{{questions.length}}</label>
         </li>
         <li class="nav-item">
-          <label class="mr-2" [class.text-red]="timer < 5"> Time left {{timer}}</label>
+          <label class="mr-2" [class.text-warning]="timer < 5"> Time left {{timer}}</label>
         </li>
       </ul>
     </nav>

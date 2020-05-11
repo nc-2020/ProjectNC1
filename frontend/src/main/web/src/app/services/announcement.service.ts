@@ -14,10 +14,7 @@ export class AnnouncementService {
   apiURL = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient, private userService: UserService) { }
-  header = {
-    headers: new HttpHeaders()
-      .set('Authorization',  `Bearer_${this.userService.getToken()}`)
-  }
+
   private handleError<T>(operation= 'opeartion') {
     return (error: any): Observable<T> => {
       console.log(operation + ' ' + error);

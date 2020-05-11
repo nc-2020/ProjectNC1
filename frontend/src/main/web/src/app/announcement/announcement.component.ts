@@ -36,10 +36,9 @@ export class AnnouncementComponent implements OnInit {
   }
   approve(approved: boolean) {
     this.announcement.statusId = approved ? 2 : 0;
-    console.log(this.announcement);
     this.announcementService.approve(this.announcement).
-    subscribe(resp => {window.location.reload()},
-      error => {this.announcement.statusId = 1 ; this.error = error.message; console.log(error)})
+    subscribe(resp => {},
+      error => {this.announcement.statusId = 1 ; this.error = error.message;})
 
   }
 

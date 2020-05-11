@@ -27,7 +27,8 @@
 
       <div  class="tab-pane" id="approve">
         <div *ngIf="!editOnly" class="raw">
-          <app-announcement  (onChanged)="editAnn($event)" *ngFor="let announcement of newAnnouncements" [announcement] = "announcement"> </app-announcement>
+          <h1 *ngIf="newAnnouncements.length == 0 ">No announcements for approving</h1>
+          <app-announcement  (onChanged)="editAnn($event)" *ngFor="let announcement of getNewAnnouncements()" [announcement] = "announcement"> </app-announcement>
         </div>
         <app-announcement-edit *ngIf="editOnly" [announcement]="announcement"  [editOnly]="editOnly"></app-announcement-edit>
       </div>

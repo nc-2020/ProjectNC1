@@ -18,7 +18,7 @@ public class NotificationDaoImpl implements NotificationDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private NotificationRowMapper userRowMapper = new NotificationRowMapper();
+    private NotificationRowMapper notificationRowMapper = new NotificationRowMapper();
 
     public NotificationDaoImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
@@ -37,16 +37,29 @@ public class NotificationDaoImpl implements NotificationDao {
     }
     @Override
     public void update(Notification not) {
-
+        jdbcTemplate.update(
+                "UPDATE notification set  text = ?, seen = ?, date = ?,  cat_id = ?, user_id = ? where id = ?",
+                not.getText(),
+                not.isSeen(),
+                not.getDate(),
+                not.getCategoryID(),
+                not.getUserId(),
+                not.getId());
     }
 
     @Override
     public void delete(Long id) {
-
+        jdbcTemplate.update(
+                "DELETE from notification where id = ?",
+                id
+        );
     }
 
     @Override
     public List<Notification> getAll (Long user_id) {
-        return new LinkedList<>();
+
+        return jdbcTemplate.query("select nt.id, nt.text, nt.seen,  nt.date,  nt.cat_id, nt.user_id from notification nt where user_id = ? and seen = false order by cat_id desc, date desc",
+                new Object[]{user_id}
+                ,notificationRowMapper);
     }
 }
