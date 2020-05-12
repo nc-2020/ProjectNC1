@@ -32,6 +32,9 @@ public class FileUploadController {
         this.storageService = storageService;
     }
 
+    @Value("${upload.path}")
+    private String uploadPath;
+
     @GetMapping("/")
     public String listUploadedFiles(Model model) throws IOException {
 
@@ -55,7 +58,14 @@ public class FileUploadController {
     @PostMapping("/")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {
-
+        if (file != null) {
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+                }
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFilename = uuidFile + . "" + file.getOriginalFilename();
+        }
         storageService.store(file);
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
