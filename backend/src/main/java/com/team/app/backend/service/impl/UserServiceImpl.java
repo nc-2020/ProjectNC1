@@ -142,7 +142,7 @@ public class UserServiceImpl implements UserService {
         email.setFrom("Brain-duel");
         email.setTo(recipientAddress);
         email.setSubject(subject);
-        email.setText(message + " http://localhost:8080" + confirmationUrl);
+        email.setText(message + " http://localhost:8080" + confirmationUrl); //change to heroku brainduek
         mailSender.send(email);
         userDao.save(user);
 
