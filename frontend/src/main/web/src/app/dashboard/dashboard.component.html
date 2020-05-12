@@ -61,8 +61,8 @@
             <input #searchBox id="search-box"  class="form-control my-2 mr-3" type="text" placeholder="Search" style="width: 70%">
             <mat-form-field color="Warn" id="dropListCategory">
               <mat-label class="text-center">Categories</mat-label>
-              <mat-select multiple>
-                <mat-option *ngFor="let category of categoriesList" [value]="category">{{category.name}}</mat-option>
+              <mat-select [(value)]="selectedCategories" multiple>
+                <mat-option *ngFor="let category of categoriesList" [value]="category.name">{{category.name}}</mat-option>
               </mat-select>
             </mat-form-field>
             <button for="search-box" class="btn btn-secondary my-2 mx-auto my-sm-0" (click)="search(searchBox.value)" type="submit" style="width: auto">Search</button>

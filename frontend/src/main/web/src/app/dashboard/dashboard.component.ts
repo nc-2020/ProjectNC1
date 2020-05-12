@@ -28,9 +28,10 @@ export class DashboardComponent implements OnInit {
   quizes$: Observable<Quiz[]>;
   categoriesList: Category[] = [];
   isVisible = true;
+  selectedCategories: string[] = [];
 
 
-  private searchQuizTerms = new Subject<string>();
+  private searchQuizTerms = new Subject<any>();
   private searchUserTerms = new Subject<string>();
   @ViewChild(UserCardComponent, {static: false}) userCardChild: UserCardComponent;
 
@@ -45,7 +46,7 @@ export class DashboardComponent implements OnInit {
       debounceTime(300),
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.quizService.searchQuizzes(term)),
+      switchMap((obj: any) => this.quizService.searchQuizzes(obj.title, obj.categories)),
     );
     this.users$ = this.searchUserTerms.pipe(
       debounceTime(300),
@@ -59,7 +60,7 @@ export class DashboardComponent implements OnInit {
   search(term: string): void {
     this.isVisible = false;
     if (this.tab === 'Quizzes') {
-      this.searchQuizTerms.next(term);
+      this.searchQuizTerms.next({ title: term, categories: this.selectedCategories });
     } else {
       this.searchUserTerms.next(term);
     }

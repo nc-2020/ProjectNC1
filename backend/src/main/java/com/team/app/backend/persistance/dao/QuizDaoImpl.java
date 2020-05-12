@@ -66,12 +66,20 @@ public class QuizDaoImpl implements QuizDao {
     }
 
     @Override
-    public List<Quiz> searchQuizes(String category, String searchstring) {
-        String cat=category;
-        String search="%"+searchstring+"%";
-        System.out.println(cat+" "+search);
-        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id where Q."+cat+"::text LIKE ? "
-                ,new Object[] {search},
+    public List<Quiz> searchQuizes(String[] categories, String searchstring) {
+		String search="%"+searchstring+"%";
+		String query = "select distinct Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id, Q.user_id, QS.name as status_name from quiz Q INNER JOIN quiz_to_categ QTC ON Q.id = QTC.quiz_id INNER JOIN quiz_category QC ON QC.id = QTC.cat_id INNER JOIN quiz_status QS ON QS.id = Q.status_id where (Q.title LIKE ? or Q.description LIKE ?)";
+        if (categories.length != 0) {
+			String cat = "";
+			for (int i = 0; i < categories.length - 1; i++) {
+				cat += "'" + categories[i] + "', ";
+			}
+			cat += "'" + categories[categories.length - 1] + "'";
+			query += " and QC.name IN (" + cat + ")"; 
+		}
+        //System.out.println(cat+" "+search);
+        return jdbcTemplate.query(query
+                ,new Object[] {search, search},
                 quizRowMapper);
     }
 	
@@ -79,7 +87,7 @@ public class QuizDaoImpl implements QuizDao {
     public List<Quiz> searchQuizes(String searchstring) {
         String search="%"+searchstring+"%";
         System.out.println(search);
-        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id where Q.title LIKE ? "
+        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id, Q.user_id from quiz Q where Q.title LIKE ? "
                 ,new Object[] {search},
                 quizRowMapper);
     }

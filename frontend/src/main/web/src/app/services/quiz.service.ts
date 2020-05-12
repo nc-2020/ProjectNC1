@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {catchError} from "rxjs/operators";
 import {Observable, of} from "rxjs";
 import {Quiz} from "../entities/quiz";
@@ -63,11 +63,11 @@ export class QuizService {
     );
   }
 
-  searchQuizzes(term: string): Observable<Quiz[]> {
+  searchQuizzes(term: string, cat: string[]): Observable<Quiz[]> {
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.get<Quiz[]>(`${this.quizzesUrl}/search/${term}`, { headers: new HttpHeaders()
+    return this.http.post<Quiz[]>(`${this.quizzesUrl}/search`, { title: term, categories: cat }, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
       catchError(this.handleError<Quiz[]>('searchQuizzes', []))
     );
