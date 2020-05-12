@@ -9,6 +9,9 @@
     position: relative;
 }
 
+ .mat-form-field-underline {
+   background-color:white !important;
+ }
 
 
 /*html, body { height: 100%; }*/

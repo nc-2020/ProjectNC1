@@ -9,19 +9,22 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/home">Home</a>
       </li>
-      <li class="nav-item">
+      <li *ngIf="!authenticated()" class="nav-item">
         <a class="nav-link" routerLink="/login">Login</a>
+      </li>
+      <li *ngIf="authenticated()" class="nav-item">
+        <a class="nav-link" routerLink="/dashboard">Dashboard</a>
       </li>
     </ul>
     <form class="form-inline  mt-2 mt-md-0">
-<!--      <a class="btn bg-secondary btn-sm" routerLink="/quiz-create">Create quiz</a>-->
-      <a *ngIf="authenticated() && ifUser()" class="btn bg-secondary btn-sm" routerLink="/quiz-create">Create quiz</a>
+      <a *ngIf="authenticated()" class="btn bg-secondary btn-sm mr-3" routerLink="/quiz-create">Create quiz</a>
       <a *ngIf="authenticated()" class="btn bg-secondary btn-sm"  (click)="logout()">Logout</a>
     </form>
   </div>
 </nav>
 
 <router-outlet></router-outlet>
+<app-my-loader></app-my-loader>
 
 
 

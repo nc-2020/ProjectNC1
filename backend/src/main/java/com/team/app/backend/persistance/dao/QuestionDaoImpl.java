@@ -1,19 +1,15 @@
 package com.team.app.backend.persistance.dao;
 
-import com.team.app.backend.persistance.dao.QuestionDao;
 import com.team.app.backend.persistance.dao.mappers.QuestionRowMapper;
 import com.team.app.backend.persistance.model.Question;
-import com.team.app.backend.persistance.model.QuestionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 @Component

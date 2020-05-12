@@ -7,7 +7,7 @@
           <h5>
             <span class="badge bg-primary">{{getUserName()}} {{getUserLastName()}}</span>
           </h5>
-           <ul class="nav flex-column">
+          <ul class="nav flex-column">
             <li  class="nav-item active text-center border-bottom border-top">
               <a class="nav-link active" (click)="changeTab('Quizzes')" >
                 Quizzes
@@ -18,26 +18,26 @@
                 Friends
               </a>
             </li>
-             <li *ngIf="getUserRole()=='admin'"  class="nav-item border-bottom">
-               <a class="nav-link"  (click)="changeTab('Moderators')">
-                 Moderators
-               </a>
-             </li>
-             <li *ngIf="getUserRole()=='super admin'" class="nav-item border-bottom">
-               <a class="nav-link"  (click)="changeTab('Admins-Moderators')">
-                 Admins/Moderators
-               </a>
-             </li>
+            <li *ngIf="getUserRole()=='admin'"  class="nav-item border-bottom">
+              <a class="nav-link"  (click)="changeTab('Moderators')">
+                Moderators
+              </a>
+            </li>
+            <li *ngIf="getUserRole()=='super admin'" class="nav-item border-bottom">
+              <a class="nav-link"  (click)="changeTab('Admins-Moderators')">
+                Admins/Moderators
+              </a>
+            </li>
             <li class="nav-item border-bottom">
               <a class="nav-link" (click)="changeTab('News')">
                 News
               </a>
             </li>
-             <li  class="nav-item border-bottom">
-               <a class="nav-link" (click)="changeTab('Announcement')">
-                 Announcement
-               </a>
-             </li>
+            <li  class="nav-item border-bottom">
+              <a class="nav-link" (click)="changeTab('Announcement')">
+                Announcement
+              </a>
+            </li>
             <li *ngIf="getUserRole()==='user' || getUserRole()==='super admin'" class="nav-item border-bottom">
               <a class="nav-link" (click)="profileSet(false, getUser())">
                 <span data-feather="users"></span>
@@ -55,28 +55,38 @@
       </nav>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-9 px-1 align-self-start" >
-<!--        Users search menu-->
+        <!--        Users search menu-->
         <div *ngIf="tab === 'Users' || tab === 'Friends' || tab === 'Admins-Moderators' || tab==='Moderators' || tab === 'Quizzes' " class=" main-frame container-fluid my-5 ">
           <form class="form-inline ml-3 my-2 my-lg-0 border-bottom" >
-            <input #searchBox id="search-box"  class="form-control my-2" type="text" placeholder="Search" style="width: 75%">
+            <input #searchBox id="search-box"  class="form-control my-2 mr-3" type="text" placeholder="Search" style="width: 70%">
+            <mat-form-field color="Warn" id="dropListCategory">
+              <mat-label class="text-center">Categories</mat-label>
+              <mat-select multiple>
+                <mat-option *ngFor="let category of categoriesList" [value]="category">{{category.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
             <button for="search-box" class="btn btn-secondary my-2 mx-auto my-sm-0" (click)="search(searchBox.value)" type="submit" style="width: auto">Search</button>
             <button *ngIf="getUserRole()==='admin' || getUserRole()==='super admin'" class="btn btn-success my-2 mx-auto my-sm-0"
                     (click)="profileSet(true)"  style="width: auto">Add</button>
           </form>
-          <app-user-card *ngFor="let user of users$ | async" [user]="user"></app-user-card>
-
-          <app-quiz-dashboard *ngIf="tab === 'Quizzes'" class="mt-5"></app-quiz-dashboard>
+          <div *ngIf="tab !== 'Quizzes'">
+            <app-user-card *ngFor="let user of users$ | async" (onChanged)="profileSet(false, $event)" [user]="user"></app-user-card>
+          </div>
+          <div *ngIf="tab === 'Friends'">
+            <app-friends></app-friends>
+          </div>
+          <app-quiz-dashboard *ngIf="tab === 'Quizzes' && isVisible; else elseBlock" class="mt-5"></app-quiz-dashboard>
+          <div #elseBlock class="raw">
+            <div *ngIf="tab === 'Quizzes'">
+              <app-quiz-card *ngFor="let quiz of quizes$ | async" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="quiz"></app-quiz-card>
+            </div>
+          </div>
         </div>
-<!--        Profile-->
+        <!--Profile-->
 
         <app-user-profile *ngIf="tab === 'Profile' || tab === 'AddProfile'" [user]="user" [editOnly]="tab === 'Profile'? false : true" ></app-user-profile>
 
-
-
-<!--    Announcement-->
-<app-announcement *ngIf="tab === 'Announcement'"> </app-announcement>
-<!--<app-announcement-edit></app-announcement-edit>-->
-
+        <app-announcement-dashboard *ngIf="tab === 'Announcement'" ></app-announcement-dashboard>
       </main>
     </div>
   </div>

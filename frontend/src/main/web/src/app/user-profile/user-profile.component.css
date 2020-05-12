@@ -6,7 +6,15 @@ section {
     color: white;
     text-align: left;
 }
-
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+input.ng-valid.ng-touched {
+  border: 1px solid green;
+}
+small{
+  color: red;
+}
 .container {
 	font-family: Quicksand, Helvetica, Arial;
 	max-width: 720px;
