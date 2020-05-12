@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   users$: Observable<User[]>;
   quizes$: Observable<Quiz[]>;
   achievementList: Achievement[] = [];
+  categoriesList: Category[] = [];
   isVisible = true;
 
 
@@ -32,10 +33,13 @@ export class DashboardComponent implements OnInit {
   private searchUserTerms = new Subject<string>();
   @ViewChild(UserCardComponent, {static: false}) userCardChild: UserCardComponent;
 
-  constructor(private userService: UserService, private quizService: QuizService, private achievementService: AchievementService, private location: Location, private route: ActivatedRoute,
+  constructor(private userService: UserService, private quizService: QuizService, private achievementService: AchievementService,
+              private categoryService: CategoryService,
+              private location: Location, private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
+    this.getCategories();
     this.tab = this.route.snapshot.paramMap.get('tab');
     this.user = this.tab === 'Profile' ? this.userService.user : {role: {}} as User;
     this.quizes$ = this.searchQuizTerms.pipe(
@@ -88,6 +92,13 @@ export class DashboardComponent implements OnInit {
     return this.userService.user.role.name;
   }
 
+  getCategories() {
+    this.categoryService.getCategories().subscribe(
+      (data: Category[]) => {
+        this.categoriesList = data;
+      }
+    )
+  }
   getAchievements() {
     this.achievementService.getAchievements().subscribe(
       (data: Achievement[]) => {
