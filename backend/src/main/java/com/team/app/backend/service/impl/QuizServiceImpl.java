@@ -206,7 +206,7 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public void aproveQuiz(Quiz quiz) {
         Notification notification = new Notification();
-        notification.setCategoryID(1L);
+        notification.setCategoryId(1L);
         notification.setUserId(quiz.getUser_id());
         if(quiz.getStatus().getName().equals("approved")) {
             quizDao.approve(quiz.getId());

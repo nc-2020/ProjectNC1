@@ -42,4 +42,10 @@ public class NotificationServiceImpl implements NotificationService {
     public List<Notification> getAll (Long user_id) {
         return notificationDao.getAll(user_id);
     }
+
+    @Transactional
+    @Override
+    public void setSetting(Notification not) {
+        this.notificationDao.setSetting(not);
+    }
 }

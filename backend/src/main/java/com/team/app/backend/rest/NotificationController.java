@@ -70,6 +70,18 @@ public class NotificationController {
         return ResponseEntity.ok(notifications);
 
     }
+    @PostMapping("/settings")
+    public ResponseEntity setSetting(@RequestBody Notification not) {
+        try {
+            this.notificationService.setSetting(not);
+        }
+        catch (DataAccessException sqlEx)
+        {
+            ResponseEntity.badRequest();
+        }
+        return ResponseEntity.ok().build();
+
+    }
 
 
 }

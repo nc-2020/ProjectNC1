@@ -32,7 +32,7 @@ public class NotificationDaoImpl implements NotificationDao {
                 not.getText(),
                 not.isSeen(),
                 not.getDate(),
-                not.getCategoryID(),
+                not.getCategoryId(),
                 not.getUserId());
     }
     @Override
@@ -42,7 +42,7 @@ public class NotificationDaoImpl implements NotificationDao {
                 not.getText(),
                 not.isSeen(),
                 not.getDate(),
-                not.getCategoryID(),
+                not.getCategoryId(),
                 not.getUserId(),
                 not.getId());
     }
@@ -54,12 +54,21 @@ public class NotificationDaoImpl implements NotificationDao {
                 id
         );
     }
+    @Override
+    public void setSetting(Notification not) {
+        jdbcTemplate.update("INSERT INTO not_setting(cat_id, user_id, enabled) values( ?, ?, ?) ON CONFLICT ON CONSTRAINT not_setting_pkey DO UPDATE set enabled = ?",
+                not.getCategoryId(),
+                not.getUserId(),
+                not.isSeen(),
+                not.isSeen());
+    }
 
     @Override
     public List<Notification> getAll (Long user_id) {
 
-        return jdbcTemplate.query("select nt.id, nt.text, nt.seen,  nt.date,  nt.cat_id, nt.user_id from notification nt where user_id = ? and seen = false order by cat_id desc, date desc",
-                new Object[]{user_id}
+        return jdbcTemplate.query(
+                "select nt.id, nt.text, nt.seen, nt.date, nt.cat_id, nt.user_id from notification nt where nt.cat_id not in (select setting.cat_id from public.not_setting setting where setting.enabled = false and setting.user_id = ?) and nt.user_id = ? order by nt.date desc",
+                new Object[]{user_id,user_id}
                 ,notificationRowMapper);
     }
 }

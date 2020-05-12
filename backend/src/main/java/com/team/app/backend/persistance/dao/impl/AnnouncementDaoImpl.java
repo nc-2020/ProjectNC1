@@ -24,8 +24,6 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
     }
 
 
-
-
     @Override
     public void create(Announcement announcement) {
         jdbcTemplate.update(

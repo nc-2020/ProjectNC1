@@ -51,7 +51,7 @@ public class AnnouncemrntServiceImpl implements AnnouncementService {
     @Override
     public void approve(Announcement announcement) {
         Notification notification = new Notification();
-        notification.setCategoryID(1L);
+        notification.setCategoryId(1L);
         notification.setUserId(announcement.getUserId());
         if(announcement.getStatusId() == 2) {
             announcementDao.approve(announcement.getId());
