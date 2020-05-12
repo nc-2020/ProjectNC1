@@ -10,4 +10,5 @@ public interface NotificationService {
     void delete(List<Notification> not);
     List<Notification> getAll (Long user_id);
     void setSetting(Notification not);
+    List<Notification> getSetting(Long userId);
 }

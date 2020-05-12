@@ -116,6 +116,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.questionOptionPoints += event.target.checked ? point : -point;
   }
 
+
   sendOptionAnswer() {
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id,
       points: this.questionOptionPoints

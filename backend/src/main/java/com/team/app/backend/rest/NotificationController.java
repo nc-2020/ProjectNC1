@@ -70,6 +70,18 @@ public class NotificationController {
         return ResponseEntity.ok(notifications);
 
     }
+    @GetMapping("/settings/get/{id}")
+    public  ResponseEntity getSetting(@PathVariable("id") Long userId) {
+        List<Notification> notifications = null;
+        try {
+            notifications = this.notificationService.getSetting(userId);
+        }
+        catch (DataAccessException sqlEx)
+        {
+            ResponseEntity.badRequest();
+        }
+        return ResponseEntity.ok(notifications);
+    }
     @PostMapping("/settings")
     public ResponseEntity setSetting(@RequestBody Notification not) {
         try {

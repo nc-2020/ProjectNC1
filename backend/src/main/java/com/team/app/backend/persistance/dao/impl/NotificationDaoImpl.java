@@ -62,6 +62,12 @@ public class NotificationDaoImpl implements NotificationDao {
                 not.isSeen(),
                 not.isSeen());
     }
+    public List<Notification> getSetting(Long userId) {
+        return jdbcTemplate.query(
+                "select nt.cat_id, nt.user_id, nt.enabled from not_setting nt where nt.user_id = ? order by nt.cat_id",
+                new Object[]{userId}
+                ,notificationRowMapper);
+    }
 
     @Override
     public List<Notification> getAll (Long user_id) {

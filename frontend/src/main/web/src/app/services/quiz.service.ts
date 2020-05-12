@@ -4,6 +4,7 @@ import {catchError} from "rxjs/operators";
 import {Observable, of} from "rxjs";
 import {Quiz} from "../entities/quiz";
 import {UserService} from "./user.service";
+import {Session} from "../entities/session";
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,13 @@ export class QuizService {
         catchError(this.handleError<Quiz[]>('getCreatedQuizzes',[])
         ));
   }
-
+  getSession(quizId: number) {
+    return this.http.get(this.quizzesUrl + `/play/${this.userId}/${quizId}`,{ headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+      .pipe(
+        catchError(this.handleError<Session>('getSession')
+        ));
+  }
   getQuizzes(): Observable<Quiz[]> {
     return this.http.get<Quiz[]>(this.quizzesUrl + "/approved/" + this.userId,{ headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})

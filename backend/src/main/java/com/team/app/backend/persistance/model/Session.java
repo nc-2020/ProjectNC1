@@ -7,8 +7,8 @@ import java.sql.Date;
 public class Session {
 
     private Long id;
-    private Long quiz_id;
-    private String access_code;
+    private Long quizId;
+    private String accessCode;
     private Date date;
     private SessionStatus status;
 
@@ -25,9 +25,9 @@ public class Session {
     public Session(Long quiz_id) {
         long millis=System.currentTimeMillis();
         java.sql.Date date=new java.sql.Date(millis);
-        this.quiz_id = quiz_id;
+        this.quizId = quiz_id;
         this.date = date;
-        this.access_code = "";
+        this.accessCode = "";
         this.status=new SessionStatus(1L,"waiting");
     }
 
@@ -41,20 +41,20 @@ public class Session {
     }
 
     public Long getQuiz_id() {
-        return quiz_id;
+        return quizId;
     }
 
     public Session setQuiz_id(Long quiz_id) {
-        this.quiz_id = quiz_id;
+        this.quizId = quiz_id;
         return this;
     }
 
     public String getAccess_code() {
-        return access_code;
+        return accessCode;
     }
 
     public Session setAccess_code(String access_code) {
-        this.access_code = access_code;
+        this.accessCode = access_code;
         return this;
     }
 
