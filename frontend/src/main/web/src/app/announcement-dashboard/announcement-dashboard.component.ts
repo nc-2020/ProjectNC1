@@ -33,6 +33,9 @@ export class AnnouncementDashboardComponent implements OnInit {
     subscribe(res => {this.announcements = res},
               error => this.announcements = [] );
   }
+  getNewAnnouncements() {
+    return this.newAnnouncements.filter(ann => ann.statusId === 1);
+  }
   getCreated() {
     this.announcementService.getCreated().
     subscribe(res => {this.newAnnouncements = res},

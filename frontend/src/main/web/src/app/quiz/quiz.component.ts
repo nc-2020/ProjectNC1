@@ -113,8 +113,6 @@ export class QuizComponent implements OnInit, OnDestroy {
 
     const coef = 1 / this.optionalAnswers.filter(x => x.is_correct).length;
     point *= coef;
-
-    // this.userAnswers[this.userAnswers.length - 1].points += event.target.checked ? point : -point;
     this.questionOptionPoints += event.target.checked ? point : -point;
   }
 
