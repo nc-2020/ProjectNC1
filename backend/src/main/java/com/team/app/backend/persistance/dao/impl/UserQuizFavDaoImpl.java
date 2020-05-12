@@ -1,5 +1,6 @@
-package com.team.app.backend.persistance.dao;
+package com.team.app.backend.persistance.dao.impl;
 
+import com.team.app.backend.persistance.dao.UserQuizFavDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;

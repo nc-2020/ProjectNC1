@@ -1,33 +1,33 @@
 package com.team.app.backend.dto;
 
 public class FinishedQuizDto {
-    long userId;
-    long sessionId;
+    long user_id;
+    long ses_id;
     int score;
 
     public FinishedQuizDto() {}
 
-    public FinishedQuizDto(long userId, long sessionId, int score) {
-        this.userId = userId;
-        this.sessionId = sessionId;
+    public FinishedQuizDto(long user_id, long ses_id, int score) {
+        this.user_id = user_id;
+        this.ses_id = ses_id;
         this.score = score;
     }
 
-    public long getUserId() {
-        return userId;
+    public long getUser_id() {
+        return user_id;
     }
 
-    public FinishedQuizDto setUserId(long userId) {
-        this.userId = userId;
+    public FinishedQuizDto setUser_id(long user_id) {
+        this.user_id = user_id;
         return this;
     }
 
-    public long getSessionId() {
-        return sessionId;
+    public long getSes_id() {
+        return ses_id;
     }
 
-    public FinishedQuizDto setSessionId(long sessionId) {
-        this.sessionId = sessionId;
+    public FinishedQuizDto setSes_id(long ses_id) {
+        this.ses_id = ses_id;
         return this;
     }
 

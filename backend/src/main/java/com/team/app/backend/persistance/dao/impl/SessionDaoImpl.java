@@ -1,5 +1,6 @@
-package com.team.app.backend.persistance.dao;
+package com.team.app.backend.persistance.dao.impl;
 
+import com.team.app.backend.persistance.dao.SessionDao;
 import com.team.app.backend.persistance.model.Session;
 import com.team.app.backend.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;

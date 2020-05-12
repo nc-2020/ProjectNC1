@@ -1,4 +1,4 @@
-package com.team.app.backend.persistance.dao;
+package com.team.app.backend.persistance.dao.impl;
 
 import com.team.app.backend.persistance.dao.UserDao;
 import com.team.app.backend.persistance.dao.mappers.UserRowMapper;
@@ -105,10 +105,27 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public User getUserByToken(String token) {
+        return jdbcTemplate.queryForObject(
+                "select U.id,U.firstname,U.lastname,U.username,U.image,U.password,U.email,U.registr_date,U.activate_link,U.status_id,US.name as status_name,U.role_id,R.name as role_name from users U INNER JOIN user_status US ON U.status_id = US.id INNER JOIN role R ON R.id = U.role_id where U.activate_link = ? ",
+                new Object[]{token},
+                userRowMapper);    }
+
+
+
+    @Override
     public void activateByToken(String token) {
         jdbcTemplate.update(
                 "UPDATE users set status_id = 2 WHERE activate_link = ?",
                 token
+        );
+    }
+
+    @Override
+    public boolean checkTokenAvailability(String token) {
+        return jdbcTemplate.queryForObject(
+                "SELECT ? IN (SELECT activate_link FROM users)",
+                new Object[]{token},Boolean.class
         );
     }
 

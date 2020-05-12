@@ -104,6 +104,9 @@ public class UserServiceImpl implements UserService {
         return userDao.findByUsername(userCreateDto.getUsername());
     }
 
+    public boolean  checkTokenAvailability(String token){
+        return userDao.checkTokenAvailability(token);
+    }
     @Override
     public void registerNewUserAccount(UserRegistrationDto userDto)
             throws UserAlreadyExistsException {
@@ -120,14 +123,18 @@ public class UserServiceImpl implements UserService {
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());
         //user.setImage(userDto.getImage());
-        user.setActivate_link(UUID.randomUUID().toString());
+        String token =UUID.randomUUID().toString();
+        while(checkTokenAvailability(token)){
+            token =UUID.randomUUID().toString();
+        }
+        user.setActivate_link(token);
         user.setRegistr_date(new Date());
         user.setRole(new Role(1L,"USER"));
         user.setStatus(new UserStatus(1L,"REGISTERED"));
 
         String recipientAddress = user.getEmail();
         String subject = "Registration Confirmation";
-        String confirmationUrl = "api/user/activate?token=" + user.getActivate_link();
+        String confirmationUrl = "/api/user/activate?token=" + user.getActivate_link();
         String message = "Welcome on our site!" +
                 "To continue press net link ";
 
@@ -142,8 +149,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void activateUserAccount(String token) {
-        userDao.activateByToken(token);
+    public boolean activateUserAccount(String token) {
+        boolean check = checkRegistDate(userDao.getUserByToken(token));
+        if(check)userDao.activateByToken(token);
+        return check;
+    }
+
+    @Override
+    public boolean checkRegistDate(User user) {
+        System.out.println("time"+user.getRegistr_date().getTime()+"    "+new Date().getTime());
+        return new Date().getTime()-user.getRegistr_date().getTime()<86400000;
     }
 
     /**

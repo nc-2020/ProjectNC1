@@ -47,8 +47,8 @@ public class UserController {
     @GetMapping("user/activate")
     public ResponseEntity activateUser(
             @RequestParam("token") String token){
-        userService.activateUserAccount(token);
-        return ResponseEntity.ok("You successfully registered");
+        if(userService.activateUserAccount(token))return ResponseEntity.ok("You successfully registered");
+        else return ResponseEntity.ok("You registration time is out of date");
     }
 
 

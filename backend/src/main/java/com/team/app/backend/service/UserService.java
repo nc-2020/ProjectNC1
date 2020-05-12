@@ -23,6 +23,8 @@ public interface UserService {
 
     boolean deleteUser(Long id);
 
+    boolean  checkTokenAvailability(String token);
+
     User createNewUser(UserCreateDto userCreateDto);
 
     List<User> searchUsers(String string);
@@ -30,7 +32,10 @@ public interface UserService {
     void registerNewUserAccount(UserRegistrationDto userDto)
             throws UserAlreadyExistsException;
 
-    void activateUserAccount(String token);
+    boolean activateUserAccount(String token);
+
+    boolean checkRegistDate(User user);
+
     boolean isUserRegistered(String username);
 
     String getUserPassword(String username);

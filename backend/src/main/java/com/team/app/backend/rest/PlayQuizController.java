@@ -72,30 +72,26 @@ public class PlayQuizController {
         return ResponseEntity.ok("");
     }
 
-    @PostMapping("stats")
+    @GetMapping("stats/{ses_id}")
     public ResponseEntity calculateResults(
-            @RequestParam("quiz_id") Long quizId
+            @PathVariable("ses_id") long ses_id
     ) {
         Map<String, Integer> response = new HashMap();
-        List<UserToSession> userToSessionList = new ArrayList<>();
-        List<Session> sessionList = sessionService.getAllByQuizId(quizId);
-        sessionList.forEach(
-                s -> {
-                    userToSessionList.addAll(userToSessionService.getAllBySessionId(s.getId()));
-                }
-        );
+
+        List<UserToSession> userToSessionList = new ArrayList<>(userToSessionService.getAllBySessionId(ses_id));
+
         userToSessionList.forEach(
                 uts -> {
-                    response.put(userService.getUserNameById(uts.getUser_id()), uts.getScore());
+                    response.put(userService.getUserById(uts.getUser_id()).getUsername(), uts.getScore());
                 }
         );
         return ResponseEntity.ok(response);
     }
 
-    @RequestMapping("finish")
+    @PostMapping("finish")
     public ResponseEntity finishQuiz(@RequestBody FinishedQuizDto finishedQuizDto) {
-        // TODO: complete
-        return null;
+        userToSessionService.insertScore(finishedQuizDto);
+        return ResponseEntity.ok("result added");
     }
 
 }

@@ -1,6 +1,8 @@
 package com.team.app.backend.rest;
 
 import com.team.app.backend.dto.UserLoginDto;
+import com.team.app.backend.exception.DisabledUserException;
+import com.team.app.backend.exception.NotActivatedUserException;
 import com.team.app.backend.persistance.model.User;
 import com.team.app.backend.security.jwt.JwtTokenProvider;
 import com.team.app.backend.service.UserService;
@@ -50,6 +52,13 @@ public class LoginController {
                 throw new UsernameNotFoundException("User with username: " + username + " not found");
             }
 
+
+            if(user.getStatus().getId()==1){
+                throw new NotActivatedUserException("This user wasnt activated. Check your email");
+            }
+            if(user.getStatus().getId()==3){
+                throw new DisabledUserException("This user was deactivated!)");
+            }
             String token = jwtTokenProvider.createToken(user);
 
             Map<Object, Object> response = new HashMap<>();
@@ -70,6 +79,9 @@ public class LoginController {
         } catch (AuthenticationException e) {
             e.printStackTrace();
             throw new BadCredentialsException("Username or password are not valid");
+        } catch (DisabledUserException | NotActivatedUserException e) {
+            e.printStackTrace();
+            throw new BadCredentialsException("This user is not activated");
         }
     }
 
