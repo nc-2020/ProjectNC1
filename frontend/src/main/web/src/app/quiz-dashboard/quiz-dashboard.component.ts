@@ -12,18 +12,21 @@ import {UserService} from "../services/user.service";
 export class QuizDashboardComponent implements OnInit {
   quizzes: Quiz[] = [];
   userQuizzes: Quiz[] = [];
+  favoriteQuizzes: Quiz[] = [];
+  suggestionQuizzes: Quiz[] = [];
   currentTab = 'Quizzes';
 
   constructor(private quizService: QuizService, private userService: UserService) { }
 
   ngOnInit(): void {
-    if(this.getRole() === 'user') {
+    if (this.getRole() === 'user') {
       this.getQuizzes();
       this.getUserQuizzes();
+      this.getFavorite();
+      this.getSuggestions();
     } else {
       this.getCreatedQuizzes();
     }
-
   }
   getRole() {
     return this.userService.user.role.name;
@@ -42,6 +45,16 @@ export class QuizDashboardComponent implements OnInit {
       .subscribe(quizzes => this.userQuizzes = quizzes);
   }
 
+  getFavorite(): void {
+    this.quizService.getFavoriteQuizzes()
+      .subscribe(quizzes => this.favoriteQuizzes = quizzes);
+  }
+
+  getSuggestions(): void {
+    this.quizService.getSuggestionsQuizzes()
+      .subscribe(quizzes => this.suggestionQuizzes = quizzes)
+  }
+
   deleteQuiz(quiz: Quiz) {
     this.quizzes = this.quizzes.filter(q => q !== quiz);
     this.quizService.deleteQuiz(quiz);
@@ -49,9 +62,5 @@ export class QuizDashboardComponent implements OnInit {
 
   quizTab(tab: string) {
       this.currentTab = tab;
-  }
-
-  public toggleSelected(quiz: Quiz) {
-    quiz.favourite = !quiz.favourite;
   }
 }
