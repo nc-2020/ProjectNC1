@@ -10,11 +10,13 @@ import {UserService} from "./user.service";
 })
 export class QuizService {
   private quizzesUrl = 'http://localhost:8080/api/quiz';  // URL to web api
+  private userId;
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
   constructor(private http: HttpClient, private userService: UserService) {
+    this.userId = this.userService.user.id;
   }
 
   getQuiz(quizId): Observable<Quiz> {
@@ -24,6 +26,7 @@ export class QuizService {
         catchError(this.handleError<Quiz>('getQuiz')
         ));
   }
+
   getCreatedQuizzes(): Observable<Quiz[]> {
     return  this.http.get<Quiz[]>(this.quizzesUrl + '/created', { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
@@ -31,34 +34,47 @@ export class QuizService {
         catchError(this.handleError<Quiz[]>('getCreatedQuizzes',[])
         ));
   }
+
   getQuizzes(): Observable<Quiz[]> {
-    return this.http.get<Quiz[]>(this.quizzesUrl,{ headers: new HttpHeaders()
+    return this.http.get<Quiz[]>(this.quizzesUrl + "/approved/" + this.userId,{ headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(
         catchError(this.handleError<Quiz[]>('getQuizzes', []))
       );
   }
-  getAllUserQuizzes(): Observable<Quiz[]> {
-    return this.http.get<Quiz[]>(this.quizzesUrl + '/user/' + this.userService.user.id + '/all',{ headers: new HttpHeaders()
-        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
-      .pipe(
-        catchError(this.handleError<Quiz[]>('getUserAllQuizzes', []))
-      );
-  }
-
-    approveQuiz(quiz: Quiz): Observable<any> {
-    return  this.http.post<Quiz>(this.quizzesUrl + '/approve', quiz, { headers: new HttpHeaders()
-        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
-  }
 
   getUserQuizzes(): Observable<Quiz[]> {
-    return this.http.get<Quiz[]>(this.quizzesUrl + "/user/" + this.userService.user.id,{ headers: new HttpHeaders()
+    return this.http.get<Quiz[]>(this.quizzesUrl + "/user/" + this.userId,{ headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(
         catchError(this.handleError<Quiz[]>('getUserQuizzes', []))
       );
   }
+
+  getFavoriteQuizzes(): Observable<Quiz[]> {
+    return this.http.get<Quiz[]>(this.quizzesUrl + '/favorite/' + this.userId,{ headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+      .pipe(
+        catchError(this.handleError<Quiz[]>('getFavoriteQuizzes', []))
+      );
+  }
+
+  getSuggestionsQuizzes(): Observable<Quiz[]> {
+    return this.http.get<Quiz[]>(this.quizzesUrl + '/suggestion/' + this.userId,{ headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+      .pipe(
+        catchError(this.handleError<Quiz[]>('getSuggestionsQuizzes', []))
+      );
+  }
+
   /** POST: add a new quiz to the server */
+
+  approveQuiz(quiz: Quiz): Observable<any> {
+    return  this.http.post<Quiz>(this.quizzesUrl + '/approve', quiz, { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+
+  }
+
   createQuiz(quiz: Quiz): Observable<Quiz> {
     return this.http.post<Quiz>(this.quizzesUrl, quiz, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(

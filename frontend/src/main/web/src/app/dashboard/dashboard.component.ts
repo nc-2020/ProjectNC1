@@ -10,6 +10,8 @@ import {Location} from '@angular/common';
 import {UserCardComponent} from '../user-card/user-card.component';
 import {CategoryService} from '../services/category.service';
 import {Category} from '../entities/category';
+import {Achievement} from "../entities/achievement";
+import {AchievementService} from "../services/achievement.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -22,6 +24,7 @@ export class DashboardComponent implements OnInit {
   user: User;
   users$: Observable<User[]>;
   quizes$: Observable<Quiz[]>;
+  achievementList: Achievement[] = [];
   categoriesList: Category[] = [];
   isVisible = true;
 
@@ -30,7 +33,9 @@ export class DashboardComponent implements OnInit {
   private searchUserTerms = new Subject<string>();
   @ViewChild(UserCardComponent, {static: false}) userCardChild: UserCardComponent;
 
-  constructor(private userService: UserService, private quizService: QuizService, private categoryService: CategoryService, private location: Location, private route: ActivatedRoute,
+  constructor(private userService: UserService, private quizService: QuizService, private achievementService: AchievementService,
+              private categoryService: CategoryService,
+              private location: Location, private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -67,6 +72,9 @@ export class DashboardComponent implements OnInit {
 
   changeTab(tab: string) {
     this.tab = tab;
+    if (this.tab === 'Achievements') {
+      this.getAchievements();
+    }
     this.router.navigateByUrl(`dashboard/${tab}`);
     this.isVisible = true;
   }
@@ -88,6 +96,13 @@ export class DashboardComponent implements OnInit {
     this.categoryService.getCategories().subscribe(
       (data: Category[]) => {
         this.categoriesList = data;
+      }
+    )
+  }
+  getAchievements() {
+    this.achievementService.getAchievements().subscribe(
+      (data: Achievement[]) => {
+        this.achievementList = data;
       }
     );
   }

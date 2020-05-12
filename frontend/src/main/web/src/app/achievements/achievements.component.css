@@ -1,0 +1,101 @@
+body {
+  background-color: rgb(25, 34, 50);
+}
+
+.achievement-box {
+  background-color: rgb(35, 48, 64);
+  border: 2px solid rgb(64, 81, 102);
+  display: flex;
+  height: 120px;
+  width: 540px;
+}
+
+.achievement-box-icon {
+  background-image: url("https://img.glom.fi/gdokjb44dw.png");
+  border: 5px solid rgb(75, 92, 105);
+  outline: 2px solid rgb(64, 81, 102);
+  height: 110px;
+  width: 110px;
+}
+
+.achievement-box-namebar-area {
+  color: white;
+  display: inline-flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-around;
+  margin: 20px;
+  height: 80px;
+}
+
+.achievement-box-bar {
+  background-color: rgb(49, 83, 107);
+  border: 1px solid rgb(64, 81, 102);
+  height: 14px;
+  width: 380px;
+}
+
+@keyframes skill-25 {
+  from { width: 0px; }
+  to { width: 95px; }
+}
+
+@keyframes skill-50 {
+  from {
+    background-color: rgb(255,0,0);
+    width: 0px;
+  }
+  to {
+    width: 190px;
+  }
+}
+
+@keyframes skill-75 {
+  from {
+    background-color: rgb(255,0,0);
+    width: 0px;
+  }
+  to { width: 280px; }
+}
+
+@keyframes skill-100 {
+  from {
+    background-color: rgb(255,0,0);
+    width: 0px;
+  }
+  to { width: 376px; }
+}
+
+
+.achievement-box-status-25 {
+  background-color: rgb(255,0,0);
+  margin: 2px;
+  margin-left: 3px;
+  height: 9px;
+  width: 95px;
+  animation: skill-25 3s;
+}
+
+.achievement-box-status-50 {
+  background-color: rgb(255,255,0);
+  margin: 2px;
+  height: 10px;
+  width: 190px;
+  animation: skill-50 3s;
+}
+
+.achievement-box-status-75 {
+  background-color: rgb(100,255,120);
+  margin: 2px;
+  height: 9px;
+  width: 285px;
+  animation: skill-75 3s;
+}
+
+.achievement-box-status-100 {
+  background-color: rgb(0,255,0);
+  margin: 2px;
+  height: 9px;
+  width: 376px;
+  animation: skill-100 3s;
+}

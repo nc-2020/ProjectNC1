@@ -1,24 +1,23 @@
 <section class="min-vh-100" id="cover">
   <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-
   <div>
     <h2>My Questions</h2>
-    <h5 style="margin-top: 50px;"><ol class="questions">
-      <li *ngFor="let question of questions" style="margin-top: 10px;">
-        <span (click)="showEdit()">
-        <a>{{question.text}}</a>
-        <button class="delete-btn" title="delete question"
-                (click)="deleteQuestion(question)">x</button>
-        </span>
-      </li>
-    </ol></h5>
-
+    <h5 style="margin-top: 50px;">
+      <ol class="questions">
+        <li *ngFor="let question of questions" style="margin-top: 10px;">
+          <span (click)="showEdit()">
+          <a>{{question.text}}</a>
+          <button class="delete-btn" title="delete question"
+                  (click)="deleteQuestion(question)">x</button>
+          </span>
+        </li>
+      </ol>
+    </h5>
     <div class="btn-group" role="group" aria-label="Basic example">
       <button type="button" class="btn btn-secondary mr-3" routerLink="/dashboard">Done</button>
       <button type="button" class="btn btn-link"  data-toggle="collapse" data-target="#collapseOne"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Add question</span></button>
     </div>
   </div>
-
 
   <div class="container collapse" id="collapseOne">
     <div class="kr-modal-body">
@@ -35,10 +34,12 @@
               <div class="quiz-name-input kr2-textfield">
                 <label>Question: </label>
                 <input class="form-control" formControlName="questionText" type="text" id="name-input" placeholder="Question name" data-qtest="quiz-name-input-field" maxlength="60">
-                <div class="quiz-name-error"><span class="hidden">Please enter a question</span></div>
+                <div class="quiz-name-validation"
+                     *ngIf="questionForm.controls['questionText'].invalid && questionForm.controls['questionText'].touched">
+                  Please enter a question
+                </div>
               </div>
             </div>
-
             <div class="quiz-name-wrapper">
               <div class="quiz-name-input kr2-textfield">
                 <label>
@@ -51,6 +52,10 @@
                     <option value="4">Select sequence</option>
                   </select>
                 </label>
+                <div class="quiz-name-validation"
+                     *ngIf="questionForm.controls['questionType'].value === 'not selected' && questionForm.controls['questionType'].touched">
+                  Please select type of question
+                </div>
               </div>
 
               <div class="quiz-name-input kr2-textfield">
@@ -64,6 +69,10 @@
                     <option value=120>2 minute</option>
                   </select>
                 </label>
+                <div class="quiz-name-validation"
+                     *ngIf="questionForm.controls['questionTime'].value === 'not selected' && questionForm.controls['questionTime'].touched">
+                  Please select time for question
+                </div>
               </div>
 
             </div>
@@ -107,7 +116,8 @@
       </div>
       <div class="action-btns-wrapper">
         <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" data-toggle="collapse" data-target="#collapseOne">Cancel</button>
-        <button class="save-btn" data-qtest="create-quiz-btn" (click)="createQuestion()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Next</span></button>
+        <button [disabled]="questionForm.invalid || questionForm.controls['questionType'].value === 'not selected' ||
+        questionForm.controls['questionTime'].value === 'not selected'" class="save-btn" data-qtest="create-quiz-btn" (click)="createQuestion()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Next</span></button>
       </div>
     </div>
   </div>

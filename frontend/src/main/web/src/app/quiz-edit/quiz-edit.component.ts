@@ -17,11 +17,6 @@ import {FormBuilder, Validators} from "@angular/forms";
 })
 export class QuizEditComponent implements OnInit, OnDestroy {
   quiz_id;
-  // quizEditForm: FormGroup = new FormGroup({
-  //   'questionText': new FormControl(null, Validators.required),
-  //   'questionType': new FormControl('1', Validators.required),
-  // })
-
   questionForm = this.fb.group({
     'questionText': ['', Validators.required],
     'questionType': ['not selected', Validators.required],
@@ -43,7 +38,6 @@ export class QuizEditComponent implements OnInit, OnDestroy {
       serial_num: null,
       text: ''
     }))
-  isAddQuestion = false;
   private routeSub: Subscription;
   defaultOption: DefaultOption = {answer: ''};
 
@@ -52,7 +46,6 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private questionService: QuestionService,
-    private location: Location
   ) { }
 
   ngOnInit(): void {
