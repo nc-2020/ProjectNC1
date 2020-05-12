@@ -11,6 +11,15 @@ public class Quiz {
     private QuizStatus status;
     private Long user_id;
     private String quiz_author;
+    private Boolean favorite;
+
+    public Boolean getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
+    }
 
     public void setStatus(QuizStatus status) {
         this.status = status;
@@ -36,6 +45,8 @@ public class Quiz {
         this.status = status;
         this.user_id = user_id;
     }
+
+
 
     public Long getId() {
         return id;

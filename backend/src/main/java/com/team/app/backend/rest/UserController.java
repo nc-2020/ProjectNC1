@@ -6,6 +6,7 @@ import com.team.app.backend.dto.UserUpdateDto;
 import com.team.app.backend.persistance.model.User;
 import com.team.app.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -42,6 +43,14 @@ public class UserController {
             @RequestBody UserCreateDto userDto){
         return userService.createNewUser(userDto);
     }
+
+    @GetMapping("user/activate")
+    public ResponseEntity activateUser(
+            @RequestParam("token") String token){
+        if(userService.activateUserAccount(token))return ResponseEntity.ok("You successfully registered");
+        else return ResponseEntity.ok("You registration time is out of date");
+    }
+
 
     @DeleteMapping("user/delete/{id}")
     public Map<String,Object> deleteUser( @PathVariable("id") long id){
