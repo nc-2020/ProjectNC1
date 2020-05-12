@@ -12,4 +12,5 @@ public interface SessionDao {
 
     Session update(Session session);
 
+    void setSesionStatus(Long ses_id,Long status_id);
 }
