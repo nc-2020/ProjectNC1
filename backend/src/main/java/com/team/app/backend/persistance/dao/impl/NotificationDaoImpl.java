@@ -3,6 +3,7 @@ package com.team.app.backend.persistance.dao.impl;
 import com.team.app.backend.persistance.dao.NotificationDao;
 import com.team.app.backend.persistance.dao.mappers.NotificationRowMapper;
 import com.team.app.backend.persistance.model.Notification;
+import com.team.app.backend.persistance.model.UserInvite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -66,7 +67,14 @@ public class NotificationDaoImpl implements NotificationDao {
         return jdbcTemplate.query(
                 "select nt.cat_id, nt.user_id, nt.enabled from not_setting nt where nt.user_id = ? order by nt.cat_id",
                 new Object[]{userId}
-                ,notificationRowMapper);
+                ,(resultSet, i) -> {
+                    Notification not = new Notification();
+                    not.setCategoryId(resultSet.getLong("cat_id"));
+                    not.setUserId(resultSet.getLong("user_id"));
+                    not.setSeen(resultSet.getBoolean("enabled"));
+                    return not;
+                });
+
     }
 
     @Override

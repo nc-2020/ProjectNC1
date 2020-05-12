@@ -5,6 +5,7 @@ import { catchError, tap, finalize } from 'rxjs/operators';
 import {UserService} from './services/user.service';
 import {NotificationService} from './services/notification.service';
 import {Notification} from './entities/notification';
+import {SettingsService} from "./services/settings.service";
 
 @Component({
   selector: 'app-root',
@@ -19,22 +20,28 @@ export class AppComponent {
   constructor(private http: HttpClient,
               private userService: UserService,
               private router: Router,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private settingsService: SettingsService ) {
 
   }
 
   ngOnInit(): void {
     if(this.userService.user.role.name === 'user') {
       this.getNotifications();
+      this.getNotificationSettings();
     }
-
   }
+
   @HostListener('window:beforeunload')
   deleteNotifications() {
     this.notificationService.delete(this.notifications.filter(x => x.seen)).subscribe();
   }
+  getNotificationSettings() {
+    this.settingsService.getNotificationSettings(+this.userService.user.id).
+    subscribe(res => this.settingsService.notificationSettings = res);
+  }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     localStorage.removeItem('user');
 
   }
@@ -50,7 +57,9 @@ export class AppComponent {
     this.userService.logout().subscribe(
       _ => this.router.navigateByUrl('/login'));
   }
-
+getRole() {
+    return this.userService.user.role.name;
+}
   authenticated() {
     return this.userService.authenticated;
   }

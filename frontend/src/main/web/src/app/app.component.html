@@ -17,7 +17,7 @@
       </li>
     </ul>
     <form class="form-inline  mt-2 mt-md-0">
-      <div *ngIf="authenticated() && notifications.length > 0" class="btn-group dropbuttom mr-2">
+      <div *ngIf="authenticated() && getRole() ==='user' && notifications.length > 0" class="btn-group dropbuttom mr-2">
         <a class="btn dropdown-toggle border"
            id="dropdownMenuButton" data-toggle="dropdown">
           <span class="badge badge-danger badge-pill mx-1">{{getNewNotifications().length}}</span>
