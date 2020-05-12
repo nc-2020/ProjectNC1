@@ -1,70 +1,55 @@
-  <div class="container-fluid">
-    <div class= "raw">
-      <div class="col-lg-12 order-lg-2 mt-2">
-        <ul class="nav nav-tabs">
-          <li class="nav-item" (click)="quizTab('Quizzes')">
-            <a  data-toggle="collapse" href="#collapseQuizzes" role="button" aria-expanded="false" aria-controls="collapseQuizzes" class="nav-link">Quizzes</a>
-          </li>
-          <li class="nav-item" (click)="quizTab('User quizzes')">
-            <a  data-toggle="collapse" href="#collapseUserQuizzes" role="button" aria-expanded="false" aria-controls="collapseUserQuizzes" class="nav-link">My Quizzes</a>
-          </li>
-        </ul>
-      </div>
+<div class="container-fluid">
+  <div class= "raw">
+    <div class="col-lg-12 order-lg-2 mt-2">
+      <ul class="nav nav-tabs">
+        <li class="nav-item" (click)="quizTab('Quizzes')">
+          <a  data-toggle="collapse" href="#collapseQuizzes" role="button" aria-expanded="false" aria-controls="collapseQuizzes" class="nav-link">Quizzes</a>
+        </li>
+        <li *ngIf="getRole()==='user'" class="nav-item" (click)="quizTab('My quizzes')">
+          <a  data-toggle="collapse" href="#collapseUserQuizzes" role="button" aria-expanded="false" aria-controls="collapseUserQuizzes" class="nav-link">My Quizzes</a>
+        </li>
+        <li *ngIf="getRole()==='user'" class="nav-item" (click)="quizTab('Favorite')">
+          <a  data-toggle="collapse" href="#collapseFavorite" role="button" aria-expanded="false" aria-controls="collapseFavorite" class="nav-link">Favorite</a>
+        </li>
+        <li *ngIf="getRole()==='user'" class="nav-item" (click)="quizTab('Suggestions')">
+          <a  data-toggle="collapse" href="#collapseSuggestions" role="button" aria-expanded="false" aria-controls="collapseSuggestions" class="nav-link">Suggestions</a>
+        </li>
+      </ul>
     </div>
-      <div class="tab-content pt-4">
-        <div *ngIf="currentTab === 'Quizzes'" class="collapse active show" id="collapseQuizzes">
-          <div class="raw">
-            <!-- <a *ngFor="let quiz of quizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center"> -->
-              <!-- <div  class="card  text-center text-white bg-primary mx-2 mx-sm-2 mx-md-2" style="width: 14rem; height: 17rem">
-                <a routerLink="/quiz-edit/{{quiz.id}}">
-                  <div class="card-header"><img src="../../assets/logo_brainduel.png" width="110" height="122"></div>
-                </a>
-                <div class="card-body">
-                  <h5 class="card-title">{{quiz.title}}</h5>
-                  <p class="card-text">{{quiz.description}}</p>
-                </div>
-                <div class="btn-group justify-content-between" role="group" aria-label="First group">
-                  <a routerLink="/quiz/{{quiz.id}}" class="btn btn-secondary ">Play</a>
-                  <button class="favourite_btn" mat-icon-button color="warn" (click)="toggleSelected(quiz)">
-                    <mat-icon
-                      *ngIf="quiz.favourite"
-                      aria-label="Example icon-button with a heart icon">
-                      favorite
-                    </mat-icon>
-
-                    <mat-icon
-                      *ngIf="!quiz.favourite"
-                      aria-label="Example icon-button with a heart icon">
-                      favorite_border
-                    </mat-icon>
-                  </button>
-
-                </div>
-              </div> -->
-              <app-quiz-card *ngFor="let quiz of quizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="quiz"></app-quiz-card>
-            <!-- </a> -->
-          </div>
-        </div>
-        <div *ngIf="currentTab === 'User quizzes'" class="collapse" id="collapseUserQuizzes">
-          <div class="raw">
-            <!-- <a *ngFor="let userQuiz of userQuizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center">
-              <div  class="card  text-center text-white bg-primary mx-2 mx-sm-2 mx-md-2" style="width: 14rem; height: 17rem">
-                <a routerLink="/quiz-edit/{{userQuiz.id}}">
-                  <div class="card-header"><img src="../../assets/logo_brainduel.png" width="110" height="122"></div>
-                </a>
-                <div class="card-body">
-                  <h5 class="card-title">{{userQuiz.title}}</h5>
-                  <p class="card-text">{{userQuiz.description}}</p>
-                </div>
-                <div class="btn-group" role="group" aria-label="First group">
-                  <a routerLink="/quiz/{{userQuiz.id}}" class="btn btn-secondary ">Play</a>
-                  <a routerLink="/quiz-edit/{{userQuiz.id}}" class="btn btn-secondary">Edit</a>
-                </div>
-              </div>
-            </a> -->
-            <app-quiz-card *ngFor="let userQuiz of userQuizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="userQuiz" [isEdit]="true"></app-quiz-card>
-          </div>
-        </div>
-      </div>
   </div>
+  <div class="tab-content pt-4">
+    <div *ngIf="currentTab === 'Quizzes'" class="collapse active show" id="collapseQuizzes">
+      <div *ngIf="quizzes.length > 0; else elseBlock" class="raw">
+        <app-quiz-card *ngFor="let quiz of quizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="quiz"></app-quiz-card>
+      </div>
+      <ng-template #elseBlock>
+        <h2>No quizzes to show</h2>
+      </ng-template>
+    </div>
+    <div *ngIf="currentTab === 'My quizzes'" class="collapse" id="collapseUserQuizzes">
+      <div *ngIf="userQuizzes.length > 0; else elseBlock"class="raw">
+        <app-quiz-card *ngFor="let userQuiz of userQuizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="userQuiz" [isEdit]="true"></app-quiz-card>
+      </div>
+      <ng-template #elseBlock>
+        <h2>No your quizzes to show</h2>
+      </ng-template>
+    </div>
+    <div *ngIf="currentTab === 'Favorite'" class="collapse" id="collapseFavorite">
+      <div *ngIf="favoriteQuizzes.length > 0; else elseBlock"class="raw">
+        <app-quiz-card *ngFor="let favoriteQuiz of favoriteQuizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="favoriteQuiz" [isEdit]="true"></app-quiz-card>
+      </div>
+      <ng-template #elseBlock>
+        <h2>No favorites to show</h2>
+      </ng-template>
+    </div>
+    <div *ngIf="currentTab === 'Suggestions'" class="collapse" id="collapseSuggestions">
+      <div *ngIf="suggestionQuizzes.length > 0; else elseBlock"class="raw">
+        <app-quiz-card *ngFor="let suggestionQuiz of suggestionQuizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="suggestionQuiz" [isEdit]="true"></app-quiz-card>
+      </div>
+      <ng-template #elseBlock>
+        <h2>No suggestions to show</h2>
+      </ng-template>
+    </div>
+  </div>
+</div>
 

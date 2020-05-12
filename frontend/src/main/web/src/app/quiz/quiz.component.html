@@ -3,7 +3,7 @@
     <h2 class="mt-2">Before start playing</h2>
     <div class="row">
       <div class="col">
-        <button class="btn btn-primary my-2 w-50" (click)="startQuestionTimer()" >Start new game!</button>
+        <button class="btn btn-primary my-2 w-50" (click)="startNewGame(); startQuestionTimer()" >Start new game!</button>
       </div>
     </div>
     <div class="row">
@@ -14,6 +14,10 @@
   </div>
   <div *ngIf="interval===null && indexQuestion === questions.length - 1" class="container text-white p-2 align-items-center w-50" style="height: 15rem" [hidden]="interval">
     <h2 class="mt-2">Your score is {{getScore()}}</h2>
+
+    <app-quiz-aprove-form *ngIf="getUserRole() !== 'user'" [userId]="72" [quizId]="quizId">  <!--fix hard code!!!!!!!!1-->
+    </app-quiz-aprove-form>
+    <a routerLink="/dashboard"><h3>Go back to quizzes</h3></a>
   </div>
   <div class="container text-white p-0" id="bod1" *ngIf="interval!==null" >
     <nav class="w-100 navbar-expand-md">
@@ -25,7 +29,7 @@
           <label class="ml-2">Score {{getScore()}}/{{questions.length}}</label>
         </li>
         <li class="nav-item">
-          <label class="mr-2" [style.color.red]="timer < 5"> Time left {{timer}}</label>
+          <label class="mr-2" [class.text-warning]="timer < 5"> Time left {{timer}}</label>
         </li>
       </ul>
     </nav>
@@ -40,7 +44,7 @@
 
           <div class="row mt-2">
             <div *ngIf="optionType === 3" class="col text-right">
-              <button (click)="nextQuestion(true)" class="btn text-right my-1 btn-success">Send</button>
+              <button (click)="sendOptionAnswer()" class="btn text-right my-1 btn-success">Send</button>
             </div>
             <div *ngIf="optionType === 4" class="col text-right">
               <button (click)="seqAnswer()" class="btn text-right my-1 btn-success">Send</button>
@@ -77,7 +81,7 @@
                 <div *ngFor="let answer of optionalAnswers;" class="input-group mb-3">
                   <div class="input-group-prepend">
                     <div class="input-group-text bg-success">
-                      <input (change)="answer.is_correct ? addPoint(0.25, $event) : addPoint(0, $event)"   type="checkbox" value="" aria-label="Checkbox for following text input">
+                      <input (change)="answer.is_correct ? addPoint(1, $event) : addPoint(-1, $event)"   type="checkbox" value="" aria-label="Checkbox for following text input">
                     </div>
                   </div>
                   <label type="text" class="form-control" aria-label="Text input with checkbox">{{answer.text}}</label>
@@ -89,9 +93,9 @@
             <div *ngIf="optionType === 4" class="mb-3">
               <ul class="list-unstyled">
                 <div cdkDropList (cdkDropListDropped)="drop($event)">
-                  <button *ngFor="let option of optionsSequence; let i = index" class="col btn mx-1 btn-success mb-2">
+                  <button *ngFor="let option of optionsSequence;" class="col btn mx-1 btn-success mb-2">
                     <li cdkDrag>
-                      {{option.text + i}}
+                      {{option.text}}
                     </li>
                   </button>
                 </div>

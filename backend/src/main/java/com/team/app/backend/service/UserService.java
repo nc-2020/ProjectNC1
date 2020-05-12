@@ -12,6 +12,9 @@ import java.util.List;
 public interface UserService {
 
 
+    //TODO: IMPLEMENT
+    String getUserNameById(Long id);
+
     User updateUser(UserUpdateDto userDto);
 
     User getUserById(Long id);
@@ -20,12 +23,18 @@ public interface UserService {
 
     boolean deleteUser(Long id);
 
+    boolean  checkTokenAvailability(String token);
+
     User createNewUser(UserCreateDto userCreateDto);
 
     List<User> searchUsers(String string);
 
     void registerNewUserAccount(UserRegistrationDto userDto)
             throws UserAlreadyExistsException;
+
+    boolean activateUserAccount(String token);
+
+    boolean checkRegistDate(User user);
 
     boolean isUserRegistered(String username);
 

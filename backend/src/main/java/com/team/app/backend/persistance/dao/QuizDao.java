@@ -1,6 +1,5 @@
 package com.team.app.backend.persistance.dao;
 
-import com.team.app.backend.persistance.model.Question;
 import com.team.app.backend.persistance.model.Quiz;
 
 import java.util.List;
@@ -11,6 +10,12 @@ public interface QuizDao {
     List<Quiz> getByUserId(Long id);
 
     List<Quiz> getApproved();
+
+    List<Quiz> getApprovedForUser(Long user_id);
+
+    List<Quiz> getFavoriteQuizes(Long user_id);
+
+    List<Quiz> getSuggestion(Long user_id);
 
     List<Quiz> getCategoryQuizes(String category);
 
@@ -25,6 +30,10 @@ public interface QuizDao {
     void update(Quiz quiz);
 
     void delete(Long id);
+
+    void approve(Long id);
+
+    List<Quiz> getCreated();
 
 
 

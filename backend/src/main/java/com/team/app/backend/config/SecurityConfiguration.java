@@ -6,6 +6,7 @@ import com.team.app.backend.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -27,6 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_ENDPOINT = "/api/login";
     private static final String SIGN_UP_ENDPOINT = "/api/sign-up";
     private static final String ROOT_ENDPOINT = "/";
+    private static final String ACTIVATE_ENDPOINT = "/api/user/activate*";
 
 
     @Autowired
@@ -50,6 +52,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/index.html").permitAll()
                 .antMatchers(SIGN_UP_ENDPOINT).permitAll()
                 .antMatchers(ROOT_ENDPOINT).permitAll()
+                .antMatchers(HttpMethod.GET,ACTIVATE_ENDPOINT + "*")
+                .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider)).and().cors();

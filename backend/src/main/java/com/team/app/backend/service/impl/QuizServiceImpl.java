@@ -8,14 +8,12 @@ import com.team.app.backend.dto.QuestionDto;
 import com.team.app.backend.dto.QuestionOptAddDto;
 import com.team.app.backend.dto.QuestionSeqAddDto;
 import com.team.app.backend.dto.QuizAddDto;
-import com.team.app.backend.persistance.dao.OptionDao;
-import com.team.app.backend.persistance.dao.QuestionDao;
-import com.team.app.backend.persistance.dao.QuizCategoryDao;
-import com.team.app.backend.persistance.dao.QuizDao;
+import com.team.app.backend.persistance.dao.*;
 import com.team.app.backend.persistance.model.*;
 import com.team.app.backend.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -27,6 +25,9 @@ public class QuizServiceImpl implements QuizService {
 
     @Autowired
     private QuizDao quizDao;
+
+    @Autowired
+    private NotificationDao notificationDao;
 
     @Autowired
     private QuestionDao questionDao;
@@ -145,6 +146,21 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    public List<Quiz> getApprovedUserQuizes(Long user_id) {
+        return quizDao.getApprovedForUser(user_id);
+    }
+
+    @Override
+    public List<Quiz> getUserFavoritesQuizes(Long user_id) {
+        return quizDao.getFavoriteQuizes(user_id);
+    }
+
+    @Override
+    public List<Quiz> getSuggestion(Long user_id) {
+        return quizDao.getSuggestion(user_id);
+    }
+
+    @Override
     public List<Quiz> getCategoryQuizes(String category) {
         return quizDao.getCategoryQuizes(category);
     }
@@ -200,5 +216,26 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public Quiz getQuiz(Long id) {
         return quizDao.get(id);
+    }
+
+    @Override
+    public void aproveQuiz(Quiz quiz) {
+        Notification notification = new Notification();
+        notification.setCategoryId(1L);
+        notification.setUserId(quiz.getUser_id());
+        if(quiz.getStatus().getName().equals("approved")) {
+            quizDao.approve(quiz.getId());
+            notification.setText("Quiz approved!)");
+        } else {
+            notification.setText(quiz.getDescription());
+            quizDao.delete(quiz.getId());
+        }
+        notificationDao.create(notification);
+
+    }
+    @Transactional(propagation= Propagation.SUPPORTS)
+    @Override
+    public List<Quiz> getCreated() {
+        return this.quizDao.getCreated();
     }
 }

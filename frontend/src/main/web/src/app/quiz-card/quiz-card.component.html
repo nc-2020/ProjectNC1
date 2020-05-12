@@ -8,9 +8,9 @@
                   <p class="card-text">{{quiz.description}}</p>
                 </div>
                 <div class="btn-group justify-content-between" role="group" aria-label="First group">
-                  <a routerLink="/quiz/{{quiz.id}}" class="btn btn-secondary ">Play</a>
+                  <a routerLink="/quiz/{{quiz.id}}" class="btn btn-secondary" (click)="createSession()">{{getUserRole() === 'user' ? 'Play' : 'Test'}}</a>
                   <a *ngIf="isEdit" routerLink="/quiz-edit/{{quiz.id}}" class="btn btn-secondary">Edit</a>
-                  <button *ngIf="!isEdit" class="favourite_btn" mat-icon-button color="warn" (click)="toggleSelected(quiz)">
+                  <button *ngIf="!isEdit && getUserRole() === 'user'" class="favourite_btn" mat-icon-button color="warn" (click)="toggleSelected(quiz)">
                     <mat-icon
                       *ngIf="quiz.favourite"
                       aria-label="Example icon-button with a heart icon">

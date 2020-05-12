@@ -1,5 +1,5 @@
 import {Component, ContentChild, Input, OnInit} from '@angular/core';
-import {UserService} from "../user.service";
+import {UserService} from "../services/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { User } from '../entities/user';
 import { Router } from '@angular/router';
@@ -61,8 +61,9 @@ export class UserProfileComponent implements OnInit {
     this.setMaininfo();
     this.user.password = HashBcrypt.hash(this.userForm.get('password').value);
     this.user.role.name = this.userRole() === 'admin' ? 'moderator' : this.userForm.get('role').value;
-    this.userService.createUser(this.user).subscribe(response => {this.message = 'User has been added!';},
-        error => {this.error = error.message});
+    this.userService.createUser(this.user).subscribe(
+      response => {this.message = 'User has been added!';},
+      error => {this.error = error.message});
   }
 
   update() {
@@ -70,7 +71,8 @@ export class UserProfileComponent implements OnInit {
     this.setMaininfo();
     this.user.password = this.checkPassword();
     if(!this.error) {
-      this.userService.updateUser(this.user).subscribe(response => {this.user = response; this.message = 'User has been updated!'},
+      this.userService.updateUser(this.user).subscribe(
+        response => {this.user = response; this.message = 'User has been updated!'},
         error => {this.error = error.message});
     }
   }
@@ -89,7 +91,6 @@ export class UserProfileComponent implements OnInit {
       if(HashBcrypt.compare(this.userForm.get('confirmPassword').value, this.userService.user.password)){
         return HashBcrypt.hash(this.userForm.get('password').value);
       }
-      console.log(this.userService.user.password);
       this.error = 'Password incorrect';
     } else {
       return this.user.password;
@@ -102,8 +103,9 @@ export class UserProfileComponent implements OnInit {
   delete() {
     this.clearMessages();
     this.userService.deleteUser(this.user).subscribe(response => {this.message = 'User has been deleted!';
-    this.userService.logout().subscribe(resp => {},error => this.error = error.message); },
-        error => { this.error = error.message});
+    this.userRole() === 'user' ? this.userService.logout().subscribe(
+      resp => {},error => this.error = error.message) : this.router.navigateByUrl('dashboard/AddProfile')},
+      error => { this.error = error.message});
   }
   submit() {
 

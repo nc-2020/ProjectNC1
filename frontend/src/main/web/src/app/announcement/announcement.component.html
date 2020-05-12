@@ -1,33 +1,40 @@
 <div class="container-fluid">
-<div class="card mb-3" style="color: #2d2d2d;">
-  <div class="row no-gutters">
-    <div class="col-sm-2 col-md-2">
-      <img src="https://cdn.pixabay.com/photo/2020/04/09/12/28/dog-5021242_1280.jpg" class="card-img" alt="news">
-    </div>
-    <div class="col-sm-10 col-md-10">
-
-          <h2 style="color: red" class="card-title">{{error}}</h2>
-
-        <div class="row">
-          <div class="col">
-            <h2 class="card-title">{{announcement.title}}</h2>
+  <div class="card  mb-3" style="color: #2d2d2d;">
+    <div class="row no-gutters">
+      <div class="col">
+        <div class="row justify-content-center">
+          <div class=" col-4 col-sm-3 col-md-3 col-lg-2 align-self-center pr-1 ">
+            <img src="https://cdn.pixabay.com/photo/2020/04/09/12/28/dog-5021242_1280.jpg" style="max-height: 350px;max-height: 350px" class="card-img" alt="news">
           </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <p class="card-text">{{announcement.text}}</p>
-            <p class="card-text text-center"><small class="text-muted">Created {{announcement.date}}</small></p>
+          <div class="col-10 col-sm-9 col-md-9 col-lg-10 align-self-center">
+            <div class="row">
+              <div class="col">
+                <div class="alert alert-danger" [hidden]="!error" >
+                  There is a problem.
+                </div>
+                <div class="alert alert-danger" [hidden]="!message" >
+                  {{message}}
+                </div>
+                <h2 class="card-title" style=""><strong>{{announcement.title}}</strong></h2>
+                <p class="card-text">{{announcement.text}}</p>
+              </div>
+            </div>
+            <div class="row justify-content-end">
+              <div class="col align-self-end">
+                <p class="card-text mr-4 text-center"><small class="text-muted"><strong>Created {{announcement.date}}</strong></small></p>
+              </div>
+            </div>
+            <div *ngIf="getRole() !== 'user'" class="mt-5 align-items-end" >
+              <a  (click)="edit()" class="card-link btn border">Edit</a>
+              <a *ngIf="announcement.statusId !== 1" (click)="delete()" class="btn border mx-2">Delete</a>
+              <a *ngIf="announcement.statusId === 1" (click)="approve(true)" class="btn border mx-2">Approve</a>
+              <a *ngIf="announcement.statusId === 1" (click)="approve(false)" class="btn border">Disapprove</a>
+            </div>
           </div>
-        </div>
-
-      <div *ngIf="getRole() !== 'user'" class="row d-flex mt-5 align-items-end" >
-        <div class="col align-self-end">
-          <a herf="" class="card-link btn">Edit</a>
-          <a (click)="delete()" class="btn">Delete</a>
         </div>
       </div>
     </div>
   </div>
 </div>
-</div>
+
 

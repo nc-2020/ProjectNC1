@@ -2,7 +2,6 @@ package com.team.app.backend.persistance.dao.mappers;
 
 import com.team.app.backend.persistance.model.Question;
 import com.team.app.backend.persistance.model.QuestionType;
-import com.team.app.backend.persistance.model.Quiz;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
