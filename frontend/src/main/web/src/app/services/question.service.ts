@@ -11,13 +11,17 @@ import {UserService} from "./user.service";
 export class QuestionService {
 
   private questionsUrl = 'http://localhost:8080/api/question/';  // URL to web api
+  // private questionsUrl = '/api/question/';  // URL to web api
+  private apiUrl = 'http://localhost:8080/api';
+
+  // private apiUrl = '/api';
+
 
   constructor(private http: HttpClient, private userService: UserService) {
   }
 
   getQuestions(quiz_id): Observable<Question[]> {
-
-    return this.http.get<Question[]>(`http://localhost:8080/api/questions/${quiz_id}`, { headers: new HttpHeaders()
+    return this.http.get<Question[]>(this.apiUrl + `/questions/${quiz_id}`, { headers: new HttpHeaders()
 
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(

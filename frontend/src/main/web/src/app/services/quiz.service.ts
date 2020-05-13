@@ -13,6 +13,7 @@ import {UserSessionResult} from "../entities/UserSessionResult";
 })
 export class QuizService {
   private quizzesUrl = 'http://localhost:8080/api/quiz';  // URL to web api
+  // private quizzesUrl = '/api/quiz';  // URL to web api
   private userId;
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -80,9 +81,6 @@ export class QuizService {
     );
   }
 
-
-
-
   getQuizzes(): Observable<Quiz[]> {
     return this.http.get<Quiz[]>(this.quizzesUrl + "/approved/" + this.userId,{ headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
@@ -105,6 +103,20 @@ export class QuizService {
       .pipe(
         catchError(this.handleError<Quiz[]>('getFavoriteQuizzes', []))
       );
+  }
+
+  addFavoriteQuiz(quizId) {
+    return this.http.post(this.quizzesUrl + '/favorite/' + quizId + '/' + this.userId,'Add favorite quiz', { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
+      catchError(this.handleError<Quiz>('addFavoriteQuiz'))
+    );
+  }
+
+  deleteFavoriteQuiz(quizId) {
+    return this.http.delete(this.quizzesUrl + '/favorite/' + quizId + '/' + this.userId, { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
+      catchError(this.handleError<Quiz>('deleteFavoriteQuiz'))
+    );
   }
 
   getSuggestionsQuizzes(): Observable<Quiz[]> {

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Achievement} from "../entities/achievement";
+import {UserAchievement} from "../entities/user-achievement";
 
 @Component({
   selector: 'app-achievements',
@@ -8,7 +8,7 @@ import {Achievement} from "../entities/achievement";
 })
 export class AchievementsComponent implements OnInit {
   @Input()
-  achievement: Achievement;
+  userAchievement: UserAchievement;
   constructor() { }
 
   ngOnInit(): void {

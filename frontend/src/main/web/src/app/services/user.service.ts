@@ -15,7 +15,9 @@ export class UserService {
 
 
   private userUrl = 'http://localhost:8080/api/user';
-
+  private apiUrl = 'http://localhost:8080/api';
+  // private userUrl = '/api/user';
+  // private apiUrl = '/api';
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -49,7 +51,7 @@ export class UserService {
     );
   }
   signUp(user: User): Observable<any> {
-    return this.http.post<User>('http://localhost:8080/api/sign-up', user,{
+    return this.http.post<User>(this.apiUrl + '/sign-up', user,{
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
       responseType: 'json'
     }).pipe(
@@ -59,7 +61,7 @@ export class UserService {
   }
 
   login(user): Observable<User> {
-    return this.http.post<any>('http://localhost:8080/api/login', user).pipe(
+    return this.http.post<any>( this.apiUrl+ '/login', user).pipe(
       tap(response => {
         this.user = response;
         localStorage.setItem('user', JSON.stringify(response));
@@ -68,7 +70,7 @@ export class UserService {
     );
   }
   logout() {
-    return this.http.post<User>('http://localhost:8080/api/logout', this.user, { headers: new HttpHeaders()
+    return this.http.post<User>( this.apiUrl + '/logout', this.user, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(finalize(() => {
       this.authenticated = false; localStorage.removeItem('user'); this.router.navigateByUrl('/login')
     }), catchError(this.handleError<any>('logout')))

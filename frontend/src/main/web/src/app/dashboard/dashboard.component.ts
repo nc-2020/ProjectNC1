@@ -12,6 +12,7 @@ import {CategoryService} from '../services/category.service';
 import {Category} from '../entities/category';
 import {Achievement} from "../entities/achievement";
 import {AchievementService} from "../services/achievement.service";
+import {UserAchievement} from "../entities/user-achievement";
 
 @Component({
   selector: 'app-dashboard',
@@ -24,7 +25,7 @@ export class DashboardComponent implements OnInit {
   user: User;
   users$: Observable<User[]>;
   quizes$: Observable<Quiz[]>;
-  achievementList: Achievement[] = [];
+  achievementList: UserAchievement[] = [];
   categoriesList: Category[] = [];
   isVisible = true;
 
@@ -73,7 +74,7 @@ export class DashboardComponent implements OnInit {
   changeTab(tab: string) {
     this.tab = tab;
     if (this.tab === 'Achievements') {
-      this.getAchievements();
+      this.getAchievement();
     }
     this.router.navigateByUrl(`dashboard/${tab}`);
     this.isVisible = true;
@@ -99,9 +100,9 @@ export class DashboardComponent implements OnInit {
       }
     )
   }
-  getAchievements() {
+  getAchievement() {
     this.achievementService.getAchievements().subscribe(
-      (data: Achievement[]) => {
+      (data: UserAchievement[]) => {
         this.achievementList = data;
       }
     );

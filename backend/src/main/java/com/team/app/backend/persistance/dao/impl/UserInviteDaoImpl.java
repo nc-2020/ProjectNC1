@@ -69,8 +69,7 @@ public class UserInviteDaoImpl implements UserInviteDao {
     @Override
     public void accept(Long id) {
         jdbcTemplate.update(
-                "UPDATE friend_to SET activated = ? WHERE id = ?",
-                true,
+                "UPDATE friend_to SET activated = true WHERE id = ?",
                 id);
     }
 

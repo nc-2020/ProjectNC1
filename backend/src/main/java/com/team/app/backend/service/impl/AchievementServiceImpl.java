@@ -2,6 +2,7 @@ package com.team.app.backend.service.impl;
 
 import com.team.app.backend.persistance.dao.AchievementDao;
 import com.team.app.backend.persistance.model.Achievement;
+import com.team.app.backend.persistance.model.UserAchievement;
 import com.team.app.backend.service.AchievementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class AchievementServiceImpl implements AchievementService {
     private AchievementDao achievementDao;
 
     @Override
-    public List<Achievement> getAchievements() {
-        return achievementDao.getAchievements();
+    public List<UserAchievement> getAchievements(long id) {
+        return achievementDao.getAchievements(id);
     }
 }

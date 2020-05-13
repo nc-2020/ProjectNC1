@@ -36,7 +36,7 @@
     </div>
     <div *ngIf="currentTab === 'Favorite'" class="collapse" id="collapseFavorite">
       <div *ngIf="favoriteQuizzes.length > 0; else elseBlock"class="raw">
-        <app-quiz-card *ngFor="let favoriteQuiz of favoriteQuizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="favoriteQuiz" [isEdit]="true"></app-quiz-card>
+        <app-quiz-card *ngFor="let favoriteQuiz of favoriteQuizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="favoriteQuiz" [isEdit]="false"></app-quiz-card>
       </div>
       <ng-template #elseBlock>
         <h2>No favorites to show</h2>
@@ -44,7 +44,7 @@
     </div>
     <div *ngIf="currentTab === 'Suggestions'" class="collapse" id="collapseSuggestions">
       <div *ngIf="suggestionQuizzes.length > 0; else elseBlock"class="raw">
-        <app-quiz-card *ngFor="let suggestionQuiz of suggestionQuizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="suggestionQuiz" [isEdit]="true"></app-quiz-card>
+        <app-quiz-card *ngFor="let suggestionQuiz of suggestionQuizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="suggestionQuiz" [isEdit]="false"></app-quiz-card>
       </div>
       <ng-template #elseBlock>
         <h2>No suggestions to show</h2>
