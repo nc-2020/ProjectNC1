@@ -4,8 +4,6 @@ import com.team.app.backend.persistance.dao.AchievementDao;
 import com.team.app.backend.persistance.dao.mappers.AchievementRowMapper;
 import com.team.app.backend.persistance.model.Achievement;
 import com.team.app.backend.persistance.model.UserAchievement;
-import com.team.app.backend.persistance.model.UserInvite;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
