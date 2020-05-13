@@ -6,5 +6,6 @@ import com.team.app.backend.persistance.model.UserAchievement;
 import java.util.List;
 
 public interface AchievementService {
-    List<UserAchievement> getAchievements(long id);
+    List<UserAchievement> getUserAchievements(long id);
+    List<Achievement> getAchievements();
 }

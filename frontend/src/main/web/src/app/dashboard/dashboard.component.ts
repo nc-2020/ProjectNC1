@@ -100,6 +100,7 @@ export class DashboardComponent implements OnInit {
       }
     )
   }
+
   getAchievement() {
     this.achievementService.getAchievements().subscribe(
       (data: UserAchievement[]) => {

@@ -23,13 +23,16 @@ public class AchievementDaoImpl implements AchievementDao {
     }
 
     @Override
-    public List<UserAchievement> getAchievements(long userId) {
-        return jdbcTemplate.query("SELECT A.title, A.quiz_amount, COUNT(QTC.cat_id) AS played FROM user_to_ses US \n" +
-                "INNER JOIN session S ON US.ses_id = S.id\n" +
-                "INNER JOIN quiz_to_categ QTC ON QTC.quiz_id = S.quiz_id\n" +
-                "INNER JOIN achievement A ON A.id = QTC.cat_id\n" +
-                "WHERE US.user_id = ?\n" +
-                "GROUP BY QTC.cat_id, A.title, A.quiz_amount", new Object[] { userId },
+    public List<UserAchievement> getUserAchievements(long userId) {
+        return jdbcTemplate.query("SELECT A.title, A.quiz_amount, UA.played " +
+                        "FROM achievement A " +
+                        "LEFT OUTER JOIN (SELECT A.title, COUNT(QTC.cat_id) AS played " +
+                        "FROM user_to_ses US " +
+                        "INNER JOIN session S ON US.ses_id = S.id " +
+                        "INNER JOIN quiz_to_categ QTC ON QTC.quiz_id = S.quiz_id " +
+                        "INNER JOIN achievement A ON A.cat_id = QTC.cat_id " +
+                        "WHERE US.user_id = ? " +
+                        "GROUP BY QTC.cat_id, A.title) AS UA ON A.title = UA.title", new Object[] { userId },
                 (resultSet, i) -> {
                     UserAchievement userAchievement = new UserAchievement();
                     userAchievement.setTitle(resultSet.getString("title"));
@@ -37,5 +40,10 @@ public class AchievementDaoImpl implements AchievementDao {
                     userAchievement.setPlayed(resultSet.getLong("played"));
                     return userAchievement;
                 });
+    }
+
+    @Override
+    public List<Achievement> getAchievements() {
+        return jdbcTemplate.query("SELECT * FROM achievement", achievementRowMapper);
     }
 }

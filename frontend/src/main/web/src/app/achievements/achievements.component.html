@@ -4,7 +4,7 @@
   <div class="achievement-box-namebar-area">
     <span>{{userAchievement.title}}</span>
     <div class="achievement-box-bar">
-      <div class="">
+      <div class="{{boxStatus()}}" [ngStyle]= "{'width':  percentStatus + '%', 'to': percentStatus +'%'}">
       </div>
     </div>
     <span>{{userAchievement.played}}/{{userAchievement.quizAmount}}</span>

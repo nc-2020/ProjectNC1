@@ -37,16 +37,12 @@ body {
 
 @keyframes skill-25 {
   from { width: 0px; }
-  to { width: 95px; }
 }
 
 @keyframes skill-50 {
   from {
     background-color: rgb(255,0,0);
     width: 0px;
-  }
-  to {
-    width: 190px;
   }
 }
 
@@ -55,7 +51,7 @@ body {
     background-color: rgb(255,0,0);
     width: 0px;
   }
-  to { width: 280px; }
+
 }
 
 @keyframes skill-100 {
@@ -63,7 +59,6 @@ body {
     background-color: rgb(255,0,0);
     width: 0px;
   }
-  to { width: 376px; }
 }
 
 
