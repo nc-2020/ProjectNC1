@@ -2,16 +2,12 @@ package com.team.app.backend.persistance.dao.impl;
 
 import com.team.app.backend.persistance.dao.SessionDao;
 import com.team.app.backend.persistance.model.Session;
-import com.team.app.backend.service.QuizService;
+import com.team.app.backend.persistance.model.SessionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.*;
 
@@ -31,9 +27,9 @@ public class SessionDaoImpl implements SessionDao {
                             sql,
                             new String[] {"id"}
                     );
-                    ps.setString(1, session.getAccess_code());
+                    ps.setString(1, session.getAccessCode());
                     ps.setDate(2, session.getDate());
-                    ps.setLong(3, session.getQuiz_id());
+                    ps.setLong(3, session.getQuizId());
                     ps.setLong(4, session.getStatus().getId());
                     return ps;
                 },
@@ -44,7 +40,7 @@ public class SessionDaoImpl implements SessionDao {
 
     @Override
     public Session getById(Long id) {
-        String sql = "SELECT * FROM session WHERE id = ?";
+        String sql = "SELECT S.id,S.access_code,S.date,S.quiz_id,S.status_id ,SS.name AS status_name FROM session S INNER JOIN ses_status SS ON S.status_id = SS.id WHERE S.id = ?";
         return jdbcTemplate.queryForObject(
                 sql,
                 new Object[]{id},
@@ -52,9 +48,10 @@ public class SessionDaoImpl implements SessionDao {
                     Session session = new Session();
                     session
                             .setId(resultSet.getLong("id"))
-                            .setAccess_code(resultSet.getString("access_code"))
+                            .setAccessCode(resultSet.getString("access_code"))
                             .setDate(resultSet.getDate("date"))
-                            .setQuiz_id(resultSet.getLong("quiz_id"));
+                            .setQuizId(resultSet.getLong("quiz_id"))
+                            .setStatus(new SessionStatus(resultSet.getLong("status_id"),resultSet.getString("status_name")));
                     return session;
                 });
     }
@@ -74,9 +71,9 @@ public class SessionDaoImpl implements SessionDao {
                             sql,
                             new String[] {"id"}
                     );
-                    ps.setString(1, session.getAccess_code());
+                    ps.setString(1, session.getAccessCode());
                     ps.setDate(2, session.getDate());
-                    ps.setLong(3, session.getQuiz_id());
+                    ps.setLong(3, session.getQuizId());
                     ps.setLong(4, session.getId());
                     return ps;
                 },
@@ -84,4 +81,13 @@ public class SessionDaoImpl implements SessionDao {
         );
         return getById(keyHolder.getKey().longValue());
     }
+
+    @Override
+    public void setSesionStatus(Long ses_id, Long status_id) {
+        jdbcTemplate.update("UPDATE session SET status_id =? WHERE id = ?",
+                new Object[]{status_id,ses_id}
+        );
+    }
+
+
 }

@@ -1,13 +1,15 @@
-<div class="achievement-box">
-  <div class="achievement-box-icon">
+
+
+<div class="achievement-box mt-5">
+  <div class="achievement-box-icon" [ngStyle]="{'background-image': urlIcon}">
   </div>
   <div class="achievement-box-namebar-area">
-    <span>{{achievement.title}}</span>
+    <span>{{userAchievement.title}}</span>
     <div class="achievement-box-bar">
-      <div class="">
+      <div class="{{boxStatus()}}" [ngStyle]= "{'width':  percentStatus + '%', 'to': percentStatus +'%'}">
       </div>
     </div>
-    <span>0/{{achievement.amountOfQuizzes}}</span>
+    <span>{{userAchievement.played}}/{{userAchievement.quizAmount}}</span>
   </div>
 </div>
 <!--<div class="achievement-box">-->

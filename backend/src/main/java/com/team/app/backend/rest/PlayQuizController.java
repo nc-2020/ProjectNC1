@@ -1,19 +1,13 @@
 package com.team.app.backend.rest;
 
 import com.team.app.backend.dto.FinishedQuizDto;
-import com.team.app.backend.dto.UserAnswerDto;
 import com.team.app.backend.persistance.model.*;
 import com.team.app.backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +42,7 @@ public class PlayQuizController {
         Quiz quiz = quizService.getQuiz(quiz_id);
         Session session = sessionService.newSessionForQuiz(quiz);
         //String accessCode = AccessCodeProvider.createAccessCode(session, quiz);
-        session.setAccess_code(session.getId().toString());
+        session.setAccessCode(session.getId().toString());
         sessionService.updateSession(session);
         User user = userService.getUserById(user_id);
 
@@ -56,6 +50,14 @@ public class PlayQuizController {
 
         return ResponseEntity.ok(session);
     }
+
+
+    @PostMapping("start/{ses_id}")
+    public ResponseEntity startSession(@PathVariable("ses_id") long ses_id){
+        sessionService.setSesionStatus(ses_id,new SessionStatus(3L,"started"));
+        return ResponseEntity.ok("");
+    }
+
 
     @GetMapping("join")
     public ResponseEntity joinQuiz(
@@ -67,15 +69,22 @@ public class PlayQuizController {
         //sessionService.getSessionById(
          //       AccessCodeProvider.parseAccessCode(accessCode).get("session_id") Session session = );
         Session session = sessionService.getSessionById(accessCode);
-        User user = userService.getUserById(user_id);
-        UserToSession userToSession = userToSessionService.createNewUserToSession(user, session);
-        return ResponseEntity.ok("");
+        if(session.getStatus().getId()==1){
+            User user = userService.getUserById(user_id);
+            UserToSession userToSession = userToSessionService.createNewUserToSession(user, session);
+            return ResponseEntity.ok("");
+        }else{
+            throw new BadCredentialsException("Session already in progress or finished");
+        }
+
     }
 
     @GetMapping("stats/{ses_id}")
     public ResponseEntity calculateResults(
             @PathVariable("ses_id") long ses_id
     ) {
+
+        sessionService.setSesionStatus(ses_id,new SessionStatus(2L,"ended"));
         Map<String, Integer> response = new HashMap();
 
         List<UserToSession> userToSessionList = new ArrayList<>(userToSessionService.getAllBySessionId(ses_id));

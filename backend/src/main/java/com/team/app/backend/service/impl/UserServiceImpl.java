@@ -142,7 +142,7 @@ public class UserServiceImpl implements UserService {
         email.setFrom("Brain-duel");
         email.setTo(recipientAddress);
         email.setSubject(subject);
-        email.setText(message + " http://localhost:8080" + confirmationUrl);
+        email.setText(message + " https://brainduel.herokuapp.com/" + confirmationUrl); //change to heroku brainduek
         mailSender.send(email);
         userDao.save(user);
 
@@ -157,7 +157,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkRegistDate(User user) {
-        System.out.println("time"+user.getRegistr_date().getTime()+"    "+new Date().getTime());
+        System.out.println("time"+user.getRegistr_date().getTime() + "    " + new Date().getTime());
         return new Date().getTime()-user.getRegistr_date().getTime()<86400000;
     }
 

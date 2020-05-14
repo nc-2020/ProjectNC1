@@ -1,9 +1,6 @@
 package com.team.app.backend.service;
 
-import com.team.app.backend.persistance.model.Quiz;
-import com.team.app.backend.persistance.model.Session;
-import com.team.app.backend.persistance.model.User;
-import com.team.app.backend.persistance.model.UserToSession;
+import com.team.app.backend.persistance.model.*;
 
 import java.util.List;
 
@@ -16,5 +13,8 @@ public interface SessionService {
     Session getSessionById(Long id);
 
     List<Session> getAllByQuizId(Long quizId);
+
+    void setSesionStatus(Long ses_id,SessionStatus sessionStatus);
+
 
 }

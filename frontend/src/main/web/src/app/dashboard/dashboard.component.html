@@ -14,8 +14,8 @@
               </a>
             </li>
             <li *ngIf="getUserRole()==='user'" class="nav-item border-bottom">
-              <a class="nav-link" (click)="changeTab('Achievements')">
-                Achievements
+              <a class="nav-link active btn" (click)="changeTab('Achievements')" >
+                <strong>Achievements</strong>
               </a>
             </li>
             <li *ngIf="getUserRole()==='user'" class="nav-item border-bottom">
@@ -95,8 +95,10 @@
         </div>
         <!--Profile-->
         <div *ngIf="tab === 'Achievements'">
-          <app-achievements *ngFor="let achievement of achievementList" [achievement]="achievement"></app-achievements>
-        </div>
+          <div class="container-fluid mt-5">
+            <app-achievements *ngFor="let achievement of achievementList" [userAchievement]="achievement"></app-achievements>
+          </div>
+          </div>
         <app-user-profile *ngIf="tab === 'Profile' || tab === 'AddProfile'" [user]="user" [editOnly]="tab === 'Profile'? false : true" ></app-user-profile>
         <app-settings *ngIf="tab === 'Settings'"></app-settings>
         <app-announcement-dashboard *ngIf="tab === 'Announcement'" ></app-announcement-dashboard>

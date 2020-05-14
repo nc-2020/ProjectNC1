@@ -12,10 +12,10 @@ import {UserService} from "./user.service";
 export class AnnouncementService {
 
   apiURL = 'http://localhost:8080/api';
-
+  // apiURL = '/api';
   constructor(private http: HttpClient, private userService: UserService) { }
 
-  private handleError<T>(operation= 'opeartion') {
+  private handleError<T>(operation= 'operation') {
     return (error: any): Observable<T> => {
       console.log(operation + ' ' + error);
       return throwError(error);
