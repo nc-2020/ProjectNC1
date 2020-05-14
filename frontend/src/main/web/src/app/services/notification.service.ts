@@ -20,11 +20,7 @@ export class NotificationService {
       return throwError(error);
     };
   }
-   body = {
-    target: 'targetId',
-    subset: "fruits",
-    reason: "rotten"
-  };
+
   getAll(userId: number) {
     return this.http.get<Notification[]>(this.apiURL + `/get/${userId}`,  {
       headers: new HttpHeaders()

@@ -32,7 +32,8 @@ export class SettingsComponent implements OnInit {
   }
 
   changeSetting(catId: number, event) {
-    this.settingsService.setNotificationSetting({categoryId: catId, userId: +this.userService.user.id, seen: event.target.checked}).
+    this.settingsService.setNotificationSetting(
+      {categoryId: catId, userId: +this.userService.user.id, seen: event.target.checked}).
     subscribe();
 
   }
