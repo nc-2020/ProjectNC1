@@ -197,7 +197,7 @@ public class QuizServiceImpl implements QuizService {
         quiz.setDate(date);
         quiz.setImage(quizAddDto.getImage());
         quiz.setUser_id((long)quizAddDto.getUser_id());
-        quiz.setStatus_Id(new QuizStatus( 1L,"created"));
+        quiz.setStatus(new QuizStatus( 1L,"created"));
         Long quiz_id= quizDao.save(quiz);
         for (Long cat_id:quizAddDto.getCategories()) {
             quizCategoryDao.addQuizToCategory(quiz_id,cat_id);

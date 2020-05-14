@@ -3,16 +3,11 @@ package com.team.app.backend.persistance.dao.impl;
 import com.team.app.backend.persistance.dao.SessionDao;
 import com.team.app.backend.persistance.model.Session;
 import com.team.app.backend.persistance.model.SessionStatus;
-import com.team.app.backend.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.*;
 
@@ -32,9 +27,9 @@ public class SessionDaoImpl implements SessionDao {
                             sql,
                             new String[] {"id"}
                     );
-                    ps.setString(1, session.getAccess_code());
+                    ps.setString(1, session.getAccessCode());
                     ps.setDate(2, session.getDate());
-                    ps.setLong(3, session.getQuiz_id());
+                    ps.setLong(3, session.getQuizId());
                     ps.setLong(4, session.getStatus().getId());
                     return ps;
                 },
@@ -53,9 +48,9 @@ public class SessionDaoImpl implements SessionDao {
                     Session session = new Session();
                     session
                             .setId(resultSet.getLong("id"))
-                            .setAccess_code(resultSet.getString("access_code"))
+                            .setAccessCode(resultSet.getString("access_code"))
                             .setDate(resultSet.getDate("date"))
-                            .setQuiz_id(resultSet.getLong("quiz_id"))
+                            .setQuizId(resultSet.getLong("quiz_id"))
                             .setStatus(new SessionStatus(resultSet.getLong("status_id"),resultSet.getString("status_name")));
                     return session;
                 });
@@ -76,9 +71,9 @@ public class SessionDaoImpl implements SessionDao {
                             sql,
                             new String[] {"id"}
                     );
-                    ps.setString(1, session.getAccess_code());
+                    ps.setString(1, session.getAccessCode());
                     ps.setDate(2, session.getDate());
-                    ps.setLong(3, session.getQuiz_id());
+                    ps.setLong(3, session.getQuizId());
                     ps.setLong(4, session.getId());
                     return ps;
                 },
