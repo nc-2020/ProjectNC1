@@ -17,7 +17,7 @@ public class Question {
     private byte[] image;
     private QuestionType type;
     private Long quiz_id;
-    private List<OptionObj> options ;
+    private List<OptionObj> options;
 
     public Question(Long id, Integer time, String text, Integer max_points, byte[] image, QuestionType type, Long quiz_id) {
         this.id = id;
