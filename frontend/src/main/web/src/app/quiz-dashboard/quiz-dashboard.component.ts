@@ -53,7 +53,10 @@ export class QuizDashboardComponent implements OnInit {
 
   getSuggestions(): void {
     this.quizService.getSuggestionsQuizzes()
-      .subscribe(quizzes => this.suggestionQuizzes = quizzes)
+      .subscribe(quizzes => {
+        console.log(quizzes)
+        this.suggestionQuizzes = quizzes
+      })
   }
 
   deleteQuiz(quiz: Quiz) {

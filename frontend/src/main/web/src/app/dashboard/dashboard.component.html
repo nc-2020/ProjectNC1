@@ -3,7 +3,7 @@
     <div class="row mt-2">
       <nav class="col-md-3 col-lg-3 col-sm-2  d-none d-md-block sidebar navbar-expand-md">
         <div class="sidebar-sticky">
-          <img  src="https://img.icons8.com/plasticine/100/000000/user-male-circle.png"/>
+          <img src="https://img.icons8.com/plasticine/100/000000/user-male-circle.png"/>
           <h5>
             <span class="badge bg-primary">{{getUserName()}} {{getUserLastName()}}</span>
           </h5>
@@ -13,7 +13,7 @@
                 <strong>Quizzes</strong>
               </a>
             </li>
-            <li *ngIf="getUserRole()==='user'" class="nav-item border-bottom">
+            <li class="nav-item border-bottom">
               <a class="nav-link active btn" (click)="changeTab('Achievements')" >
                 <strong>Achievements</strong>
               </a>
@@ -69,7 +69,7 @@
           </form>
           <form *ngIf="tab === 'Quizzes'" class="form-inline ml-3 my-2 my-lg-0" >
             <input #searchBox id="search-quiz"  class="form-control my-2 mr-3" type="text" placeholder="Search" style="width: 70%">
-            <mat-form-field color="Warn" id="dropListCategory">
+            <mat-form-field color="primary" id="dropListCategory">
               <mat-label class="text-center">Categories</mat-label>
               <mat-select multiple>
                 <mat-option *ngFor="let category of categoriesList" [value]="category">{{category.name}}</mat-option>
@@ -87,19 +87,26 @@
           </div>
 
           <app-quiz-dashboard *ngIf="tab === 'Quizzes' && isVisible; else elseBlock" class="mt-5"></app-quiz-dashboard>
-          <div #elseBlock class="raw">
-            <div *ngIf="tab === 'Quizzes'">
-              <app-quiz-card *ngFor="let quiz of quizes$ | async" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="quiz"></app-quiz-card>
+          <ng-template #elseBlock>
+            <div class="raw">
+              <div *ngIf="tab === 'Quizzes'">
+                <app-quiz-card *ngFor="let quiz of quizes$ | async" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="quiz"></app-quiz-card>
+              </div>
             </div>
-          </div>
+          </ng-template>
         </div>
         <!--Profile-->
         <div *ngIf="tab === 'Achievements'">
-          <div class="container-fluid mt-5">
-            <app-achievements *ngFor="let achievement of achievementList" [userAchievement]="achievement"></app-achievements>
+          <div *ngIf="getUserRole() === 'user'; else elseBlock" class="container-fluid mt-5">
+            <app-achievements *ngFor="let userAchievement of userAchievementList" [userAchievement]="userAchievement"></app-achievements>
           </div>
-          </div>
-        <app-user-profile *ngIf="tab === 'Profile' || tab === 'AddProfile'" [user]="user" [editOnly]="tab === 'Profile'? false : true" ></app-user-profile>
+          <ng-template #elseBlock >
+            <div class="container-fluid mt-5">
+              <app-achievements *ngFor="let achievement of achievementList" [achievement]="achievement"></app-achievements>
+            </div>
+          </ng-template>
+        </div>
+        <app-user-profile *ngIf="tab === 'Profile' || tab === 'AddProfile'" [user]="user" [editOnly]="tab!=='Profile'"></app-user-profile>
         <app-settings *ngIf="tab === 'Settings'"></app-settings>
         <app-announcement-dashboard *ngIf="tab === 'Announcement'" ></app-announcement-dashboard>
       </main>

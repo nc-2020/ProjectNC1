@@ -1,6 +1,4 @@
-
-
-<div class="achievement-box mt-5">
+<div *ngIf="role === 'user'; else elseBlock" class="achievement-box mt-5">
   <div class="achievement-box-icon" [ngStyle]="{'background-image': urlIcon}">
   </div>
   <div class="achievement-box-namebar-area">
@@ -12,17 +10,23 @@
     <span>{{userAchievement.played}}/{{userAchievement.quizAmount}}</span>
   </div>
 </div>
-<!--<div class="achievement-box">-->
-<!--  <div class="achievement-box-icon">-->
-<!--  </div>-->
-<!--  <div class="achievement-box-namebar-area">-->
-<!--    <span>Your math progress</span>-->
-<!--    <div class="achievement-box-bar">-->
-<!--      <div class="achievement-box-status-50">-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+<ng-template #elseBlock>
+  <div class="achievement-box mt-5">
+    <div class="achievement-box-icon" [ngStyle]="{'background-image': urlIcon}">
+    </div>
+    <div class="achievement-box-namebar-area">
+      <span>{{achievement.title}}</span>
+      <div class="achievement-box-bar">
+        <div class="">
+        </div>
+      </div>
+      <span>0/{{achievement.amountOfQuizzes}}</span>
+    </div>
+  </div>
+</ng-template>
+
+
+
 <!--<div class="achievement-box">-->
 <!--  <div class="achievement-box-icon">-->
 <!--  </div>-->
