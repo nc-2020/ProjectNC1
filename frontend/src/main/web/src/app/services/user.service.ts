@@ -20,6 +20,7 @@ export class UserService {
   // private apiUrl = '/api';
 
   constructor(private http: HttpClient, private router: Router) {
+
   }
   getToken() {
     return this.user.token;

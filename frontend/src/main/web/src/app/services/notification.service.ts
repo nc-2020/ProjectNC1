@@ -10,7 +10,6 @@ import {Notification} from '../entities/notification';
   providedIn: 'root'
 })
 export class NotificationService {
-
   private apiUrl = 'http://localhost:8080/api/notification';
   // private apiUrl = '/api/notification';
   constructor(private http: HttpClient, private userService: UserService) { }

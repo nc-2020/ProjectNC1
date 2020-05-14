@@ -23,13 +23,15 @@ export class AchievementService {
   }
 
   getAchievements(): Observable<Achievement[]> {
-    return this.http.get<Achievement[]>(this.achievementUrl + '/all', { headers: this.httpHeader}).pipe(
+    return this.http.get<Achievement[]>(this.achievementUrl + '/all',
+      { headers: this.httpHeader}).pipe(
       catchError(this.handleError<any>('getAchievements'))
     );
   }
 
   getUserAchievements(): Observable<UserAchievement[]> {
-    return this.http.get<UserAchievement[]>(this.achievementUrl + `/${this.userService.user.id}`,{ headers: this.httpHeader}).pipe(
+    return this.http.get<UserAchievement[]>(this.achievementUrl + `/${this.userService.user.id}`,
+      { headers: this.httpHeader}).pipe(
       catchError(this.handleError<any>('getUserAchievements'))
     );
   }
