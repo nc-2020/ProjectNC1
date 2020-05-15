@@ -4,12 +4,12 @@ import com.team.app.backend.persistance.dao.AchievementDao;
 import com.team.app.backend.persistance.dao.mappers.AchievementRowMapper;
 import com.team.app.backend.persistance.model.Achievement;
 import com.team.app.backend.persistance.model.UserAchievement;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -22,11 +22,8 @@ import java.util.List;
 @Repository
 public class AchievementDaoImpl implements AchievementDao {
     private final JdbcTemplate jdbcTemplate;
-    @Value("${achievement.all}")
-    private String sqlGetAchievements;
-    @Value("${achievement.user}")
-    private String sqlGetUserAchievements;
-
+    @Autowired
+    private Environment env;
 
     private AchievementRowMapper achievementRowMapper = new AchievementRowMapper();
 
@@ -36,7 +33,7 @@ public class AchievementDaoImpl implements AchievementDao {
 
     @Override
     public List<UserAchievement> getUserAchievements(long userId) {
-        System.out.println(sqlGetUserAchievements);
+        @NonNull String sqlGetUserAchievements = env.getProperty("achievement.user");
         return jdbcTemplate.query(sqlGetUserAchievements, new Object[] { userId },
                 (resultSet, i) -> {
                     UserAchievement userAchievement = new UserAchievement();
@@ -49,6 +46,7 @@ public class AchievementDaoImpl implements AchievementDao {
 
     @Override
     public List<Achievement> getAchievements() {
+        @NonNull String sqlGetAchievements= env.getProperty("achievement.all");;
         return jdbcTemplate.query(sqlGetAchievements, achievementRowMapper);
     }
 }
