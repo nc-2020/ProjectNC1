@@ -5,6 +5,9 @@ import com.team.app.backend.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,7 +59,20 @@ public class NotificationController {
         return ResponseEntity.ok().build();
 
     }
-    
+//    @MessageMapping("/notifications/{id}")
+//    @SendTo("/topic/get-all/{id}")
+//        public ResponseEntity getAll (@DestinationVariable Long user_id) {
+//        List<Notification>  notifications = null;
+//        try {
+//            notifications = notificationService.getAll(user_id);
+//        }
+//        catch (DataAccessException sqlEx)
+//        {
+//            ResponseEntity.badRequest();
+//        }
+//        return ResponseEntity.ok(notifications);
+//
+//    }
     @GetMapping("/get/{id}")
     public ResponseEntity getAll (@PathVariable("id") Long user_id) {
         List<Notification>  notifications = null;

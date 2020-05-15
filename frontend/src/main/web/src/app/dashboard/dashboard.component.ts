@@ -13,6 +13,7 @@ import {Category} from '../entities/category';
 import {Achievement} from "../entities/achievement";
 import {AchievementService} from "../services/achievement.service";
 import {UserAchievement} from "../entities/user-achievement";
+import {DEBOUNCE_TIME} from "../parameters";
 
 @Component({
   selector: 'app-dashboard',
@@ -44,12 +45,12 @@ export class DashboardComponent implements OnInit {
     this.tab = this.route.snapshot.paramMap.get('tab');
     this.user = this.tab === 'Profile' ? this.userService.user : {role: {}} as User;
     this.quizes$ = this.searchQuizTerms.pipe(
-      debounceTime(300),
+      debounceTime(DEBOUNCE_TIME),
       distinctUntilChanged(),
       switchMap((term: string) => this.quizService.searchQuizzes(term)),
     );
     this.users$ = this.searchUserTerms.pipe(
-      debounceTime(300),
+      debounceTime(DEBOUNCE_TIME),
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
       switchMap((term: string) => this.userService.searchUsers(term)),

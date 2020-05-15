@@ -10,14 +10,12 @@ import {UserInvite} from '../entities/user-invite';
   providedIn: 'root'
 })
 export class UserService {
+
   authenticated = localStorage.getItem('user') ? true : false;
   user: User = JSON.parse(localStorage.getItem('user'));
 
-
   private userUrl = 'http://localhost:8080/api/user';
   private apiUrl = 'http://localhost:8080/api';
-  // private userUrl = '/api/user';
-  // private apiUrl = '/api';
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -72,7 +70,7 @@ export class UserService {
   logout() {
     return this.http.post<User>( this.apiUrl + '/logout', this.user, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(finalize(() => {
-      this.authenticated = false; localStorage.removeItem('user'); this.router.navigateByUrl('/login')
+      this.authenticated = false; localStorage.clear(); this.router.navigateByUrl('/login')
     }), catchError(this.handleError<any>('logout')))
   }
 

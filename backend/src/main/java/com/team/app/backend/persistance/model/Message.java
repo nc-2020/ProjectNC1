@@ -27,4 +27,5 @@ public abstract class Message {
         java.sql.Date date = new java.sql.Date(millis);
         this.date = date;
     }
+
 }
