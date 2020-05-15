@@ -14,7 +14,6 @@ import javax.sql.DataSource;
 import java.util.List;
 
 
-@PropertySource("classpath:sql_query.properties")
 @Repository
 public class UserInviteDaoImpl implements UserInviteDao {
     private final JdbcTemplate jdbcTemplate;

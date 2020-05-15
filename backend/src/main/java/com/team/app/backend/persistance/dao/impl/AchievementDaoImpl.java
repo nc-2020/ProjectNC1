@@ -15,10 +15,6 @@ import javax.sql.DataSource;
 import java.util.List;
 
 
-
-
-
-@PropertySource("classpath:sql_query.properties")
 @Repository
 public class AchievementDaoImpl implements AchievementDao {
     private final JdbcTemplate jdbcTemplate;
