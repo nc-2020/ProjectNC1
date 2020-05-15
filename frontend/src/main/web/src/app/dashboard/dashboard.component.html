@@ -10,49 +10,49 @@
           <ul class="nav flex-column">
             <li  class="nav-item active text-center border-bottom border-top">
               <a class="nav-link active btn" (click)="changeTab('Quizzes')" >
-                <strong>Quizzes</strong>
-              </a>
-            </li>
-            <li class="nav-item border-bottom">
-              <a class="nav-link active btn" (click)="changeTab('Achievements')" >
-                <strong>Achievements</strong>
-              </a>
-            </li>
-            <li *ngIf="getUserRole()==='user'" class="nav-item border-bottom">
-              <a class="nav-link btn" (click)="changeTab('Friends')">
-                <strong>Friends</strong>
-              </a>
-            </li>
-            <li *ngIf="getUserRole()=='admin'"  class="nav-item border-bottom">
-              <a class="nav-link btn"  (click)="changeTab('Moderators')">
-                <strong>Moderators</strong>
-              </a>
-            </li>
-            <li *ngIf="getUserRole()=='super admin'" class="nav-item border-bottom">
-              <a class="nav-link btn"  (click)="changeTab('Admins-Moderators')">
-                <strong > Admins/Moderators</strong>
-              </a>
-            </li>
-            <li class="nav-item border-bottom">
-              <a class="nav-link btn" (click)="changeTab('News')">
-                <strong>News</strong>
-              </a>
-            </li>
-            <li  class="nav-item border-bottom">
-              <a class="nav-link btn" (click)="changeTab('Announcement')">
-                <strong>Announcement</strong>
+                <strong><mat-icon>extension</mat-icon>Quizzes</strong>
               </a>
             </li>
             <li *ngIf="getUserRole()==='user' || getUserRole()==='super admin'" class="nav-item border-bottom">
               <a class="nav-link btn" (click)="profileSet(false, getUser())">
                 <span data-feather="users"></span>
-                <strong>Profile</strong>
+                <mat-icon>person</mat-icon><strong>Profile</strong>
+              </a>
+            </li>
+            <li *ngIf="getUserRole()==='user'" class="nav-item border-bottom">
+              <a class="nav-link btn" (click)="changeTab('Friends')">
+                <mat-icon>group</mat-icon><strong>Friends</strong>
+              </a>
+            </li>
+            <li *ngIf="getUserRole()=='admin'"  class="nav-item border-bottom">
+              <a class="nav-link btn"  (click)="changeTab('Moderators')">
+                <mat-icon>group</mat-icon><strong>Moderators</strong>
+              </a>
+            </li>
+            <li *ngIf="getUserRole()=='super admin'" class="nav-item border-bottom">
+              <a class="nav-link btn"  (click)="changeTab('Admins-Moderators')">
+                <mat-icon>group</mat-icon><strong>Admins/Moderators</strong>
               </a>
             </li>
             <li class="nav-item border-bottom">
-              <a class="nav-link btn" (click)="changeTab('Settings')">
+              <a class="nav-link btn" (click)="changeTab('News')">
+                <mat-icon>list_alt</mat-icon><strong>News</strong>
+              </a>
+            </li>
+            <li  class="nav-item border-bottom">
+              <a class="nav-link btn" (click)="changeTab('Announcement')">
+                <mat-icon>event_note</mat-icon> <strong>Announcement</strong>
+              </a>
+            </li>
+            <li class="nav-item border-bottom">
+              <a class="nav-link active btn" (click)="changeTab('Achievements')" >
+                <mat-icon>gamepad</mat-icon><strong>Achievements</strong>
+              </a>
+            </li>
+            <li class="nav-item border-bottom">
+              <a class="nav-link btn text-align-center" (click)="changeTab('Settings')">
                 <span data-feather="bar-chart-2"></span>
-                <strong> Settings</strong>
+                <mat-icon>settings</mat-icon><strong>Settings</strong>
               </a>
             </li>
           </ul>
