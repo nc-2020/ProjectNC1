@@ -12,7 +12,10 @@
  .mat-form-field-underline {
    background-color:white !important;
  }
-
+ /* GLOBAL **/
+ .mat-icon {
+   vertical-align: middle;
+ }
 
 /*html, body { height: 100%; }*/
 /*body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }*/

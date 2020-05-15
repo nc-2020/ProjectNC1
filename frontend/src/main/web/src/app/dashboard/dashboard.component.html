@@ -10,49 +10,44 @@
           <ul class="nav flex-column">
             <li  class="nav-item active text-center border-bottom border-top">
               <a class="nav-link active btn" (click)="changeTab('Quizzes')" >
-                <strong><mat-icon>extension</mat-icon>Quizzes</strong>
+                  <mat-icon inline=true>extension</mat-icon><strong> Quizzes</strong>
               </a>
             </li>
             <li *ngIf="getUserRole()==='user' || getUserRole()==='super admin'" class="nav-item border-bottom">
               <a class="nav-link btn" (click)="profileSet(false, getUser())">
                 <span data-feather="users"></span>
-                <mat-icon>person</mat-icon><strong>Profile</strong>
+                <mat-icon inline=true>person</mat-icon><strong> Profile</strong>
               </a>
             </li>
             <li *ngIf="getUserRole()==='user'" class="nav-item border-bottom">
               <a class="nav-link btn" (click)="changeTab('Friends')">
-                <mat-icon>group</mat-icon><strong>Friends</strong>
+                <mat-icon inline=true>group</mat-icon><strong> Friends</strong>
               </a>
             </li>
             <li *ngIf="getUserRole()=='admin'"  class="nav-item border-bottom">
               <a class="nav-link btn"  (click)="changeTab('Moderators')">
-                <mat-icon>group</mat-icon><strong>Moderators</strong>
+                <mat-icon inline=true>group</mat-icon><strong> Moderators</strong>
               </a>
             </li>
             <li *ngIf="getUserRole()=='super admin'" class="nav-item border-bottom">
               <a class="nav-link btn"  (click)="changeTab('Admins-Moderators')">
-                <mat-icon>group</mat-icon><strong>Admins/Moderators</strong>
-              </a>
-            </li>
-            <li class="nav-item border-bottom">
-              <a class="nav-link btn" (click)="changeTab('News')">
-                <mat-icon>list_alt</mat-icon><strong>News</strong>
+                <mat-icon inline=true>group</mat-icon><strong>Admins/Moderators</strong>
               </a>
             </li>
             <li  class="nav-item border-bottom">
               <a class="nav-link btn" (click)="changeTab('Announcement')">
-                <mat-icon>event_note</mat-icon> <strong>Announcement</strong>
+                <mat-icon inline=true>event_note</mat-icon> <strong> Announcement</strong>
               </a>
             </li>
             <li class="nav-item border-bottom">
               <a class="nav-link active btn" (click)="changeTab('Achievements')" >
-                <mat-icon>gamepad</mat-icon><strong>Achievements</strong>
+                <mat-icon inline=true>gamepad</mat-icon><strong> Achievements</strong>
               </a>
             </li>
             <li class="nav-item border-bottom">
               <a class="nav-link btn text-align-center" (click)="changeTab('Settings')">
                 <span data-feather="bar-chart-2"></span>
-                <mat-icon>settings</mat-icon><strong>Settings</strong>
+                <mat-icon inline=true>settings</mat-icon><strong> Settings</strong>
               </a>
             </li>
           </ul>
