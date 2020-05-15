@@ -6,6 +6,7 @@ import {catchError} from "rxjs/operators";
 import {Observable, throwError} from "rxjs";
 import {Achievement} from "../entities/achievement";
 import {UserAchievement} from "../entities/user-achievement";
+import {Quiz} from "../entities/quiz";
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,13 @@ export class AchievementService {
       catchError(this.handleError<any>('getUserAchievements'))
     );
   }
+
+  createAchievement(achievement: Achievement) {
+    return this.http.post<Achievement>(this.achievementUrl + '/create', achievement,
+      { headers: this.httpHeader})
+      .pipe(catchError(this.handleError<Quiz>('createAchievement')));
+  }
+
 
   private handleError<T>(operation= 'operation') {
     return (error: any): Observable<T> => {

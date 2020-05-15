@@ -25,4 +25,9 @@ public class AchievementServiceImpl implements AchievementService {
     public List<Achievement> getAchievements() {
         return achievementDao.getAchievements();
     }
+
+    @Override
+    public void createAchievement(Achievement achievement) {
+        achievementDao.createAchievement(achievement);
+    }
 }

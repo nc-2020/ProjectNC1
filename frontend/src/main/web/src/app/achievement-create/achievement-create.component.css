@@ -96,7 +96,10 @@ body {
   animation: skill-100 3s;
 }
 .form-control {
-  width: 50%;
+  width: 52%;
+}
+.custom-select {
+  width: 52%;
 }
 
 

@@ -25,8 +25,6 @@ export class DashboardComponent implements OnInit {
   user: User;
   users$: Observable<User[]>;
   quizes$: Observable<Quiz[]>;
-  achievementList: Achievement[] = [];
-  userAchievementList: UserAchievement[] = [];
   categoriesList: Category[] = [];
   isVisible = true;
 
@@ -65,7 +63,6 @@ export class DashboardComponent implements OnInit {
     } else {
       this.searchUserTerms.next(term);
     }
-
   }
   profileSet( editOnly?: boolean, user?: User) {
     this.user = (user ? user : {role: {}} as User);
@@ -74,13 +71,6 @@ export class DashboardComponent implements OnInit {
 
   changeTab(tab: string) {
     this.tab = tab;
-    if (this.tab === 'Achievements') {
-      if (this.getUserRole() === 'user') {
-        this.getUserAchievements();
-      } else {
-        this.getAchievements();
-      }
-    }
     this.router.navigateByUrl(`dashboard/${tab}`);
     this.isVisible = true;
   }
@@ -104,21 +94,5 @@ export class DashboardComponent implements OnInit {
         this.categoriesList = data;
       }
     )
-  }
-
-  getUserAchievements() {
-    this.achievementService.getUserAchievements().subscribe(
-      (data: UserAchievement[]) => {
-        this.userAchievementList = data;
-      }
-    );
-  }
-
-  getAchievements() {
-    this.achievementService.getAchievements().subscribe(
-      (data: Achievement[]) => {
-        this.achievementList = data;
-      }
-    );
   }
 }

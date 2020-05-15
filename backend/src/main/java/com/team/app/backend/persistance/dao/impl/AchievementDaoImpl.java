@@ -45,4 +45,16 @@ public class AchievementDaoImpl implements AchievementDao {
         @NonNull String sqlGetAchievements= env.getProperty("achievement.all");;
         return jdbcTemplate.query(sqlGetAchievements, achievementRowMapper);
     }
+
+    @Override
+    public void createAchievement(Achievement achievement) {
+        @NonNull String sqlCreateAchievement = env.getProperty("achievement.create");
+        jdbcTemplate.update(sqlCreateAchievement,
+                achievement.getTitle(),
+                achievement.getIcon(),
+                achievement.getAmountOfQuizzes(),
+                achievement.getAmountOfCreated(),
+                achievement.getCreatorUserId(),
+                achievement.getCategoryId());
+    }
 }

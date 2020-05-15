@@ -97,14 +97,8 @@
         </div>
         <!--Profile-->
         <div *ngIf="tab === 'Achievements'">
-          <div *ngIf="getUserRole() === 'user'; else elseBlock" class="container-fluid mt-5">
-            <app-achievements *ngFor="let userAchievement of userAchievementList" [userAchievement]="userAchievement"></app-achievements>
-          </div>
-          <ng-template #elseBlock >
-            <div class="container-fluid mt-5">
-              <app-achievements *ngFor="let achievement of achievementList" [achievement]="achievement"></app-achievements>
-            </div>
-          </ng-template>
+
+          <app-achievement-dashboard></app-achievement-dashboard>
         </div>
         <app-user-profile *ngIf="tab === 'Profile' || tab === 'AddProfile'" [user]="user" [editOnly]="tab!=='Profile'"></app-user-profile>
         <app-settings *ngIf="tab === 'Settings'"></app-settings>

@@ -9,4 +9,5 @@ import java.util.List;
 public interface AchievementDao {
     List<UserAchievement> getUserAchievements(long userId);
     List<Achievement> getAchievements();
+    void createAchievement(Achievement achievement);
 }

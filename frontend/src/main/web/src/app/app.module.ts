@@ -32,6 +32,8 @@ import {FriendsComponent} from './friends/friends.component';
 import {UserInviteCardComponent} from './friends/user-invite-card/user-invite-card.component';
 import { AchievementsComponent } from './achievements/achievements.component';
 import { SettingsComponent } from './settings/settings.component';
+import { AchievementDashboardComponent } from './achievement-dashboard/achievement-dashboard.component';
+import { AchievementCreateComponent } from './achievement-create/achievement-create.component';
 
 
 
@@ -58,7 +60,9 @@ import { SettingsComponent } from './settings/settings.component';
     FriendsComponent,
     UserInviteCardComponent,
     AchievementsComponent,
-    SettingsComponent
+    SettingsComponent,
+    AchievementDashboardComponent,
+    AchievementCreateComponent
   ],
   imports: [
     BrowserModule,

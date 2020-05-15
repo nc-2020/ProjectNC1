@@ -8,4 +8,5 @@ import java.util.List;
 public interface AchievementService {
     List<UserAchievement> getUserAchievements(long id);
     List<Achievement> getAchievements();
+    void createAchievement(Achievement achievement);
 }

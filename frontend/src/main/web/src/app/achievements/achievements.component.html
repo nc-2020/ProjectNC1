@@ -1,4 +1,4 @@
-<div *ngIf="role === 'user'; else elseBlock" class="achievement-box mt-5">
+<div *ngIf="role === 'user'; else elseBlock" class="achievement-box mt-5 ml-3 text-center">
   <div class="achievement-box-icon" [ngStyle]="{'background-image': urlIcon}">
   </div>
   <div class="achievement-box-namebar-area">
@@ -11,7 +11,7 @@
   </div>
 </div>
 <ng-template #elseBlock>
-  <div class="achievement-box mt-5">
+  <div class="achievement-box mt-5 ml-3 text-center">
     <div class="achievement-box-icon" [ngStyle]="{'background-image': urlIcon}">
     </div>
     <div class="achievement-box-namebar-area">
@@ -24,6 +24,32 @@
     </div>
   </div>
 </ng-template>
+
+<!--<div class="justify-content-center" *ngIf="create">-->
+<!--  <div class="achievement-box mt-5 text-center">-->
+<!--    <div class="achievement-box-icon" [ngStyle]="{'background-image': urlIcon}">-->
+<!--    </div>-->
+<!--    <div class="achievement-box-namebar-area">-->
+<!--      <span>Lol</span>-->
+<!--      <div class="achievement-box-bar">-->
+<!--        <div class="">-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <span>0/{{achievement.amountOfQuizzes}}</span>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <form [formGroup]="achievementForm">-->
+<!--    <div class="form text-left mt-2 ml-4">-->
+<!--        <label for="name-input">Title</label>-->
+<!--        <input class="form-control" name="title" formControlName="title" type="text" id="name-input" placeholder="Achievement title" maxlength="20">-->
+
+<!--        <label for="quantity">Quantity</label>-->
+<!--        <input class="form-control" formControlName="quantity" type="number" id="quantity" name="quantity" min="1">-->
+<!--    </div>-->
+<!--  </form>-->
+<!--</div>-->
+
 
 
 
