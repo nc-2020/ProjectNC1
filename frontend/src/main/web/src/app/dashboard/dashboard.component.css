@@ -59,11 +59,3 @@ h2{
   padding-right: 0;
 }
 
-button.mat-button .mat-icon,
-a.mat-button .mat-icon,
-a.mat-raised-button .mat-icon,
-a.mat-flat-button .mat-icon,
-a.mat-stroked-button .mat-icon {
-  vertical-align: middle;
-  font-size: 20px;
-}
