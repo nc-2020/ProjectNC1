@@ -1,7 +1,14 @@
 package com.team.app.backend.persistance.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.sql.Date;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class Quiz {
     private Long id;
     private String title;
@@ -11,21 +18,7 @@ public class Quiz {
     private QuizStatus status;
     private Long user_id;
     private String quiz_author;
-
-    public void setStatus(QuizStatus status) {
-        this.status = status;
-    }
-
-    public String getQuiz_author() {
-        return quiz_author;
-    }
-
-    public void setQuiz_author(String quiz_author) {
-        this.quiz_author = quiz_author;
-    }
-
-    public Quiz() {
-    }
+    private Boolean favorite;
 
     public Quiz(Long id, String title, Date date, String description, byte[] image, QuizStatus status, Long user_id) {
         this.id = id;
@@ -34,62 +27,6 @@ public class Quiz {
         this.description = description;
         this.image = image;
         this.status = status;
-        this.user_id = user_id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
-    public QuizStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus_Id(QuizStatus status) {
-        this.status = status;
-    }
-
-    public Long getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Long user_id) {
         this.user_id = user_id;
     }
 }

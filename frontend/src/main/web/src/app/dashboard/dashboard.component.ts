@@ -10,6 +10,10 @@ import {Location} from '@angular/common';
 import {UserCardComponent} from '../user-card/user-card.component';
 import {CategoryService} from '../services/category.service';
 import {Category} from '../entities/category';
+import {Achievement} from "../entities/achievement";
+import {AchievementService} from "../services/achievement.service";
+import {UserAchievement} from "../entities/user-achievement";
+import {DEBOUNCE_TIME} from "../parameters";
 
 @Component({
   selector: 'app-dashboard',
@@ -22,6 +26,7 @@ export class DashboardComponent implements OnInit {
   user: User;
   users$: Observable<User[]>;
   quizes$: Observable<Quiz[]>;
+  achievementList: UserAchievement[] = [];
   categoriesList: Category[] = [];
   isVisible = true;
 
@@ -30,7 +35,9 @@ export class DashboardComponent implements OnInit {
   private searchUserTerms = new Subject<string>();
   @ViewChild(UserCardComponent, {static: false}) userCardChild: UserCardComponent;
 
-  constructor(private userService: UserService, private quizService: QuizService, private categoryService: CategoryService, private location: Location, private route: ActivatedRoute,
+  constructor(private userService: UserService, private quizService: QuizService, private achievementService: AchievementService,
+              private categoryService: CategoryService,
+              private location: Location, private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -38,12 +45,12 @@ export class DashboardComponent implements OnInit {
     this.tab = this.route.snapshot.paramMap.get('tab');
     this.user = this.tab === 'Profile' ? this.userService.user : {role: {}} as User;
     this.quizes$ = this.searchQuizTerms.pipe(
-      debounceTime(300),
+      debounceTime(DEBOUNCE_TIME),
       distinctUntilChanged(),
       switchMap((term: string) => this.quizService.searchQuizzes(term)),
     );
     this.users$ = this.searchUserTerms.pipe(
-      debounceTime(300),
+      debounceTime(DEBOUNCE_TIME),
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
       switchMap((term: string) => this.userService.searchUsers(term)),
@@ -67,6 +74,9 @@ export class DashboardComponent implements OnInit {
 
   changeTab(tab: string) {
     this.tab = tab;
+    if (this.tab === 'Achievements') {
+      this.getAchievement();
+    }
     this.router.navigateByUrl(`dashboard/${tab}`);
     this.isVisible = true;
   }
@@ -88,6 +98,14 @@ export class DashboardComponent implements OnInit {
     this.categoryService.getCategories().subscribe(
       (data: Category[]) => {
         this.categoriesList = data;
+      }
+    )
+  }
+
+  getAchievement() {
+    this.achievementService.getAchievements().subscribe(
+      (data: UserAchievement[]) => {
+        this.achievementList = data;
       }
     );
   }

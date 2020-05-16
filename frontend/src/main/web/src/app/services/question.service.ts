@@ -10,14 +10,18 @@ import {UserService} from "./user.service";
 })
 export class QuestionService {
 
-  private questionsUrl = 'http://localhost:8080/api/question';  // URL to web api
+  private questionsUrl = 'http://localhost:8080/api/question/';  // URL to web api
+  // private questionsUrl = '/api/question/';  // URL to web api
+  private apiUrl = 'http://localhost:8080/api';
+
+  // private apiUrl = '/api';
+
 
   constructor(private http: HttpClient, private userService: UserService) {
   }
 
   getQuestions(quiz_id): Observable<Question[]> {
-
-    return this.http.get<Question[]>(`http://localhost:8080/api/questions/${quiz_id}`, { headers: new HttpHeaders()
+    return this.http.get<Question[]>(this.apiUrl + `/questions/${quiz_id}`, { headers: new HttpHeaders()
 
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(
@@ -26,14 +30,14 @@ export class QuestionService {
   }
 
   getQuestion(question_id): Observable<Question> {
-    return  this.http.get<Question>(this.questionsUrl + '/question/' + question_id, { headers: new HttpHeaders()
+    return  this.http.get<Question>(this.questionsUrl + question_id, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
   }
 
   /** POST: add a new question to the server */
   createQuestion(question: Question): Observable<Question> {
     console.table(question);
-    return this.http.post<Question>(this.questionsUrl + '/question/' + question.type.id, question, { headers: new HttpHeaders()
+    return this.http.post<Question>(this.questionsUrl  + question.type.id, question, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
       catchError(this.handleError<Question>('createQuestion'))
     );

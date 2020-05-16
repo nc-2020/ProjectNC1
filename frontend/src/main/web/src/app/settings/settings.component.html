@@ -1,0 +1,21 @@
+<div class="container" id="bod">
+  <div class="row">
+    <div class="col">
+      <div *ngIf="getUserRole() === 'user'" class="row">
+        <div class="col">
+          <h2 class="text-left">Notifications</h2>
+      <div class="form-group text-left">
+        <div class="custom-control custom-switch">
+          <input type="checkbox"  (change)="changeSetting(approveCategoryId, $event)" class="custom-control-input" id="customSwitch1" [checked]="approveNotificationsOn">
+          <label class="custom-control-label" for="customSwitch1">Approve notifications</label>
+        </div>
+        <div class="custom-control custom-switch">
+          <input type="checkbox" (change)="changeSetting(systemCategoryId, $event)" class="custom-control-input" id="customSwitch2"  [checked]="systemNotificationsOn">
+          <label class="custom-control-label" for="customSwitch2">System notifications</label>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

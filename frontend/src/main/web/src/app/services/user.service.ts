@@ -10,29 +10,19 @@ import {UserInvite} from '../entities/user-invite';
   providedIn: 'root'
 })
 export class UserService {
+
   authenticated = localStorage.getItem('user') ? true : false;
   user: User = JSON.parse(localStorage.getItem('user'));
 
-
   private userUrl = 'http://localhost:8080/api/user';
-  //  user: User = {
-  //   id: '123',
-  //   username: 'lol',
-  //   firstName: 'lol',
-  //   lastName: 'kek',
-  //   email: 'sdad@sdasd.com',
-  //   role: {name: 'super admin'},
-  //   password: 'lol'
-  // };
-
+  private apiUrl = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient, private router: Router) {
   }
   getToken() {
     return this.user.token;
   }
-  getUser(user: User) {
-
+  getUser(user: User): Observable<User> {
     return this.http.get<User>(this.userUrl + `/get/${user.id}`, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(
       catchError(this.handleError<any>('getUser'))
@@ -59,7 +49,7 @@ export class UserService {
     );
   }
   signUp(user: User): Observable<any> {
-    return this.http.post<User>('http://localhost:8080/api/sign-up', user,{
+    return this.http.post<User>(this.apiUrl + '/sign-up', user,{
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
       responseType: 'json'
     }).pipe(
@@ -69,7 +59,7 @@ export class UserService {
   }
 
   login(user): Observable<User> {
-    return this.http.post<any>('http://localhost:8080/api/login', user).pipe(
+    return this.http.post<any>( this.apiUrl+ '/login', user).pipe(
       tap(response => {
         this.user = response;
         localStorage.setItem('user', JSON.stringify(response));
@@ -78,9 +68,9 @@ export class UserService {
     );
   }
   logout() {
-    return this.http.post<User>('http://localhost:8080/api/logout', this.user, { headers: new HttpHeaders()
+    return this.http.post<User>( this.apiUrl + '/logout', this.user, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(finalize(() => {
-      this.authenticated = false; localStorage.removeItem('user'); this.router.navigateByUrl('/login')
+      this.authenticated = false; localStorage.clear(); this.router.navigateByUrl('/login')
     }), catchError(this.handleError<any>('logout')))
   }
 

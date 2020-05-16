@@ -1,5 +1,6 @@
-package com.team.app.backend.persistance.dao;
+package com.team.app.backend.persistance.dao.impl;
 
+import com.team.app.backend.persistance.dao.QuestionDao;
 import com.team.app.backend.persistance.dao.mappers.QuestionRowMapper;
 import com.team.app.backend.persistance.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;

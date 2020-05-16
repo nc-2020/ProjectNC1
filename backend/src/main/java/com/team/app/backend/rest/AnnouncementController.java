@@ -53,7 +53,7 @@ public class AnnouncementController {
         }
         catch(DataAccessException sqlEx){
 
-            return ResponseEntity.badRequest().body(sqlEx.toString());
+            return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(announcementList);
 

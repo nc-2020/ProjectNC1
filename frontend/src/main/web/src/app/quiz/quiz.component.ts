@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {Question} from "../entities/question";
 import {QuizService} from "../services/quiz.service";
@@ -7,10 +7,10 @@ import {QuestionService} from "../services/question.service";
 import {SequenceOption} from "../entities/sequence-option";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {OptionService} from "../services/option.service";
-import {DefaultOption} from "../entities/default-option";
 import {Option} from "../entities/option";
 import {Answer} from "../entities/answer";
 import {UserService} from "../services/user.service";
+import {UserSessionResult} from "../entities/UserSessionResult";
 
 @Component({
   selector: 'app-quiz',
@@ -18,11 +18,10 @@ import {UserService} from "../services/user.service";
   styleUrls: ['./quiz.component.css']
 })
 export class QuizComponent implements OnInit, OnDestroy {
-
   private routeSub: Subscription;
   questionOptionPoints = 0;
-
   quizId;
+  sessionId;
   quizScore = 0;
   questions: Question[] = [];
   userAnswers: Answer[] = [];
@@ -49,6 +48,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
       this.quizId = params['id'];
+      this.sessionId = params['sessionId'];
     });
     this.getQuestions();
 
@@ -66,6 +66,10 @@ export class QuizComponent implements OnInit, OnDestroy {
       this.interval = null;
     }
     this.optionSwitcher();
+    if (this.indexQuestion === this.questions.length - 1) {
+      console.log('finished!')
+        this.finishSession();
+    }
   }
 
   optionSwitcher() {
@@ -113,10 +117,9 @@ export class QuizComponent implements OnInit, OnDestroy {
 
     const coef = 1 / this.optionalAnswers.filter(x => x.is_correct).length;
     point *= coef;
-
-    // this.userAnswers[this.userAnswers.length - 1].points += event.target.checked ? point : -point;
     this.questionOptionPoints += event.target.checked ? point : -point;
   }
+
 
   sendOptionAnswer() {
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id,
@@ -173,16 +176,32 @@ export class QuizComponent implements OnInit, OnDestroy {
 
 
 
-getScore(): number {
+  getScore(): number {
     let score = 0;
     this.userAnswers.forEach(x => score += x.points);
     return score;
-}
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.optionsSequence, event.previousIndex, event.currentIndex);
   }
+
+
+  drop(event: CdkDragDrop<string[]>) {moveItemInArray(this.optionsSequence, event.previousIndex, event.currentIndex);}
 
   getUserRole() {
     return this.userService.user.role.name;
   }
+
+  startNewGame() {
+    this.quizService.startSession(this.sessionId).subscribe(data =>
+      console.log(data))
+  }
+
+  finishSession() {
+    this.quizService.sendSessionStats({
+      ses_id : this.sessionId,
+      user_id : +this.userService.user.id,
+      score : this.getScore()
+    } as UserSessionResult).subscribe(data => {
+      console.log(data);
+    })
+  }
+
 }

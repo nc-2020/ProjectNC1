@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AnnouncementService} from "../services/announcement.service";
 import {UserService} from "../services/user.service";
 import {Announcement} from "../entities/announcement";
+import {CREATED_ANNOUNCEMENT_ID} from "../parameters";
 
 @Component({
   selector: 'app-announcement-dashboard',
@@ -32,6 +33,9 @@ export class AnnouncementDashboardComponent implements OnInit {
     this.announcementService.getAll().
     subscribe(res => {this.announcements = res},
               error => this.announcements = [] );
+  }
+  getNewAnnouncements() {
+    return this.newAnnouncements.filter(ann => ann.statusId === CREATED_ANNOUNCEMENT_ID);
   }
   getCreated() {
     this.announcementService.getCreated().

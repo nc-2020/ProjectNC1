@@ -8,5 +8,7 @@ public interface NotificationDao {
     void create(Notification not);
     void update(Notification not);
     void delete(Long id);
+    void setSetting(Notification not);
+    List<Notification> getSetting(Long userId);
     List<Notification> getAll (Long user_id);
 }

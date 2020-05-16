@@ -1,0 +1,50 @@
+
+
+<div class="achievement-box mt-5">
+  <div class="achievement-box-icon" [ngStyle]="{'background-image': urlIcon}">
+  </div>
+  <div class="achievement-box-namebar-area">
+    <span>{{userAchievement.title}}</span>
+    <div class="achievement-box-bar">
+      <div class="{{boxStatus()}}" [ngStyle]= "{'width':  percentStatus + '%', 'to': percentStatus +'%'}">
+      </div>
+    </div>
+    <span>{{userAchievement.played}}/{{userAchievement.quizAmount}}</span>
+  </div>
+</div>
+<!--<div class="achievement-box">-->
+<!--  <div class="achievement-box-icon">-->
+<!--  </div>-->
+<!--  <div class="achievement-box-namebar-area">-->
+<!--    <span>Your math progress</span>-->
+<!--    <div class="achievement-box-bar">-->
+<!--      <div class="achievement-box-status-50">-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="achievement-box">-->
+<!--  <div class="achievement-box-icon">-->
+<!--  </div>-->
+<!--  <div class="achievement-box-namebar-area">-->
+<!--    <span>Your history progress</span>-->
+<!--    <div class="achievement-box-bar">-->
+<!--      <div class="achievement-box-status-75">-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="achievement-box">-->
+<!--  <div class="achievement-box-icon">-->
+<!--  </div>-->
+<!--  <div class="achievement-box-namebar-area">-->
+<!--    <span>Your geography progress</span>-->
+<!--    <div class="achievement-box-bar">-->
+<!--      <div class="achievement-box-status-100">-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+

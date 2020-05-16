@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Quiz } from '../entities/quiz';
 import {UserService} from "../services/user.service";
+import {QuizService} from "../services/quiz.service";
+import {Router} from "@angular/router";
+import {Session} from "../entities/session";
 
 @Component({
   selector: 'app-quiz-card',
@@ -13,7 +16,9 @@ export class QuizCardComponent implements OnInit {
   @Input() isEdit = false;
   @Output() onChanged = new EventEmitter<Quiz>();
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+              private router: Router,
+              private quizService: QuizService) { }
 
   getUserRole() {
     return this.userService.user.role.name;
@@ -22,6 +27,26 @@ export class QuizCardComponent implements OnInit {
   }
 
   public toggleSelected(quiz: Quiz) {
-    quiz.favourite = !quiz.favourite;
+    quiz.favorite = !quiz.favorite;
+  }
+
+  createSession() {
+    if (this.getUserRole() === 'user') {
+      this.quizService.getSession(this.quiz.id).subscribe((session: Session) => {
+          this.router.navigate(['/quiz/' + this.quiz.id + '/' + session.id]);
+      })
+    }
+  }
+
+  addFavorite() {
+    this.quizService.addFavoriteQuiz(this.quiz.id).subscribe(data => {
+      this.quiz.favorite = true
+    });
+  }
+
+  deleteFavorite() {
+    this.quizService.deleteFavoriteQuiz(this.quiz.id).subscribe(data => {
+      this.quiz.favorite = false
+    });
   }
 }
