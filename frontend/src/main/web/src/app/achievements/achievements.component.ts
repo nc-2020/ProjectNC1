@@ -16,18 +16,24 @@ export class AchievementsComponent implements OnInit {
   userAchievement: UserAchievement;
   @Input()
   achievement : Achievement;
-
   role: string;
   linkToIconAchievement;
   urlIcon;
   percentStatus;
+  played;
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.role = this.getRole();
     if (this.role === 'user') {
-      this.percentStatus = (this.userAchievement.played / this.userAchievement.quizAmount * 100);
+      if (this.userAchievement.played >= this.userAchievement.quizAmount) {
+        this.percentStatus = 100;
+        this.played = this.userAchievement.quizAmount;
+      } else {
+        this.percentStatus = (this.userAchievement.played / this.userAchievement.quizAmount * 100);
+        this.played = this.userAchievement.played;
+      }
       this.getIcon(this.userAchievement.title);
     } else {
       this.getIcon(this.achievement.title);

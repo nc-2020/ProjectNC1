@@ -21,14 +21,22 @@
 
         <label for="name-input">Title</label>
         <input [(ngModel)]=title class="form-control" name="title" formControlName="title" type="text" id="name-input" placeholder="Achievement title" maxlength="20">
-
+        <div class="achievement-description-validation" *ngIf="achievementForm.controls['title'].invalid && achievementForm.controls['title'].touched">
+          Please enter a title
+        </div>
         <label for="quantity">Quantity</label>
         <input [(ngModel)]="amountOfQuizzes" class="form-control" formControlName="quantity" type="number" id="quantity" placeholder="Quantity to get achievement"name="quantity" min="1">
-
+        <div class="achievement-description-validation" *ngIf="achievementForm.controls['quantity'].invalid && achievementForm.controls['quantity'].touched">
+          Please enter a quantity more than 0
+        </div>
         <p>Category</p>
         <select id="category" multiple class="custom-select" formControlName="category">
             <option value="{{category.id}}" *ngFor="let category of categoriesList" [ngValue]="category">{{category.name}}</option>
         </select>
+        <div class="achievement-description-validation" *ngIf="achievementForm.controls['category'].invalid && achievementForm.controls['title'].touched
+          && achievementForm.controls['quantity'].touched">
+          Please choose a category
+        </div>
     </div>
     <button [disabled]="achievementForm.invalid" class="btn btn-primary mt-2 mr-1" (click)="createAchievement()">Create</button>
   </form>
