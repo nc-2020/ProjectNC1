@@ -42,7 +42,6 @@ export class AppComponent {
 
 
   ngOnInit(): void {
-
     if(this.userService.user.role.name === 'user') {
       this.getNotifications();
     }
