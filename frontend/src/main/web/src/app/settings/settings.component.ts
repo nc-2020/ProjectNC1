@@ -9,13 +9,13 @@ import {Notification} from '../entities/notification';
 })
 export class SettingsComponent implements OnInit {
 
-
-
-  constructor(private settingsService: SettingsService, private userService: UserService) { }
+  constructor(private settingsService: SettingsService, private userService: UserService) {
+  }
 
   ngOnInit(): void {
-  this.getNotificationSettings();
+    this.getNotificationSettings();
   }
+
   checkNotification(name: string): boolean {
     if (name === 'approve' && this.settingsService.notificationSettings.length >= 0) {
       return this.settingsService.notificationSettings[0].seen;
@@ -26,14 +26,16 @@ export class SettingsComponent implements OnInit {
     return true;
 
   }
+
   getNotificationSettings() {
-    this.settingsService.getNotificationSettings(+this.userService.user.id).
-    subscribe(res => this.settingsService.notificationSettings = res);
+    this.settingsService.getNotificationSettings(+this.userService.user.id).subscribe(res => this.settingsService.notificationSettings = res);
   }
 
   changeSetting(catId: number, event) {
-    this.settingsService.setNotificationSetting({categoryId: catId, userId: +this.userService.user.id, seen: event.target.checked}).
-    subscribe();
-
+    this.settingsService.setNotificationSetting({
+      categoryId: catId,
+      userId: +this.userService.user.id,
+      seen: event.target.checked
+    }).subscribe();
   }
 }

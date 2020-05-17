@@ -4,24 +4,24 @@
     <div class="row my-2">
       <div class="col-lg-4 order-lg-1 text-center">
         <img src="https://img.icons8.com/plasticine/100/000000/user-male-circle.png" width="150" height="150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
-        <h6 class="mt-2">Upload a different photo</h6>
+        <h6 class="mt-2">{{'DASHBOARD.PROFILE.PROFILE.UPLOAD' | translate}}</h6>
         <label class="custom-file">
           <input type="file" id="file" class="custom-file-input">
-          <span class="custom-file-control">Choose file</span>
+          <span class="custom-file-control">{{'DASHBOARD.PROFILE.PROFILE.CHOOSE_FILE' | translate}}</span>
         </label>
       </div>
       <div class="col-lg-8 order-lg-2">
         <ul class="nav nav-tabs">
           <li *ngIf="!editOnly" class="nav-item">
-            <a  data-target="#profile" data-toggle="tab" class="nav-link active show">Profile</a>
+            <a  data-target="#profile" data-toggle="tab" class="nav-link active show">{{'DASHBOARD.PROFILE.PROFILE.LABEL' | translate}}</a>
           </li>
           <li class="nav-item">
-            <a  data-target="#edit" data-toggle="tab" class="nav-link" [class.active]="editOnly">Edit</a>
+            <a  data-target="#edit" data-toggle="tab" class="nav-link" [class.active]="editOnly">{{'DASHBOARD.PROFILE.EDIT.LABEL' | translate}}</a>
           </li>
         </ul>
         <div  class="tab-content py-4">
           <div *ngIf="!editOnly" class="tab-pane active show" id="profile">
-            <h5 class="mb-3">{{user.role.name | uppercase}} PROFILE</h5>
+            <h5 class="mb-3">{{user.role.name | uppercase}} {{'DASHBOARD.PROFILE.PROFILE.LABEL' | translate | uppercase}}</h5>
             <div class="col">
               <div class="col-md-6">
                 <h6>{{user.username}}</h6>
@@ -36,95 +36,95 @@
             <form [formGroup]="userForm" role="form" (ngSubmit)="submit()">
               <div class="form-group row">
                 <div class="col-lg-11 ml-lg-3 alert alert-danger" [hidden]="!error">
-                  There was a problem. {{error}}.
+                  {{'DASHBOARD.PROFILE.EDIT.ALERT'}} {{error}}.
                 </div>
                 <div class="col-lg-11 ml-lg-3 alert alert-success" [hidden]="!message">
                   {{message}}
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-lg-3 col-form-label form-control-label">First name</label>
+                <label class="col-lg-3 col-form-label form-control-label">{{'DASHBOARD.PROFILE.EDIT.FIRST_NAME' | translate}}</label>
                 <div class="col-lg-9">
                   <input class="form-control" formControlName="firstname" type="text" >
                 </div>
                 <div *ngIf="userForm.get('firstname').invalid && userForm.get('firstname').touched" class="validation">
                   <small *ngIf="userForm.get('firstname').errors.required">
-                    First name cannot be empty
+                    {{'SIGN_UP.FORM.FIRST_NAME.VALIDATION_EMPTY' | translate}}
                   </small>
                 </div>
               </div>
 
               <div class="form-group row">
-                <label class="col-lg-3 col-form-label form-control-label">Last name</label>
+                <label class="col-lg-3 col-form-label form-control-label">{{'DASHBOARD.PROFILE.EDIT.LAST_NAME' | translate}}</label>
                 <div class="col-lg-9">
                   <input class="form-control" formControlName="lastname" type="text" required>
                 </div>
                 <div *ngIf="userForm.get('lastname').invalid && userForm.get('lastname').touched" class="validation">
                   <small *ngIf="userForm.get('lastname').errors.required">
-                    Last name cannot be empty
+                    {{'SIGN_UP.FORM.LAST_NAME.VALIDATION_EMPTY' | translate}}
                   </small>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                <label class="col-lg-3 col-form-label form-control-label">{{'DASHBOARD.PROFILE.EDIT.EMAIL' | translate}}</label>
                 <div class="col-lg-9">
                   <input class="form-control" formControlName="email" type="email" email>
                 </div>
                 <div *ngIf="userForm.get('email').invalid && userForm.get('email').touched" class="validation">
                   <small *ngIf="userForm.get('email').errors.email">
-                    Please fill in a valid email address
+                    {{'SIGN_UP.FORM.EMAIL.VALIDATION_VALID' | translate}}
                   </small>
                   <small *ngIf="userForm.get('email').errors.required">
-                    Email name cannot be empty
+                    {{'SIGN_UP.FORM.EMAIL.VALIDATION_EMPTY' | translate}}
                   </small>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-lg-3 col-form-label form-control-label">Username</label>
+                <label class="col-lg-3 col-form-label form-control-label">{{'DASHBOARD.PROFILE.EDIT.USERNAME' | translate}}</label>
                 <div class="col-lg-9">
                   <input class="form-control" formControlName="username" type="text" >
                 </div>
                 <div *ngIf="userForm.get('username').invalid && userForm.get('username').touched" class="validation">
                   <small *ngIf="userForm.get('username').errors.required">
-                    Username name cannot be empty
+                    {{'SIGN_UP.FORM.USER_NAME.VALIDATION_EMPTY' | translate}}
                   </small>
                 </div>
               </div>
               <div *ngIf="editOnly" class="form-group row">
-                <label class="col-lg-3 col-form-label form-control-label">Password</label>
+                <label class="col-lg-3 col-form-label form-control-label">{{'DASHBOARD.SIDEBAR.TABS.ADMINS_MODERATORS.EDIT.FORM.PASSWORD' | translate}}</label>
                 <div class="col-lg-9">
                   <input class="form-control" formControlName="password" type="password" >
                 </div>
                 <div *ngIf="userForm.get('password').invalid && userForm.get('password').touched" class="validation">
                   <small *ngIf="userForm.get('password').errors.required">
-                    Password cannot be empty
+                    {{'SIGN_UP.FORM.PASSWORD.VALIDATION_EMPTY' | translate}}
                   </small>
                 </div>
               </div>
               <div *ngIf="editOnly" class="form-group row">
-                <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
+                <label class="col-lg-3 col-form-label form-control-label">{{'DASHBOARD.SIDEBAR.TABS.ADMINS_MODERATORS.EDIT.FORM.CONFIRM_PASSWORD' | translate}}</label>
                 <div class="col-lg-9">
                   <input class="form-control" formControlName="confirmPassword" type="password" >
                 </div>
                 <div *ngIf="userForm.get('confirmPassword').invalid && userForm.get('confirmPassword').touched" class="validation">
                   <small *ngIf="userForm.get('confirmPassword').errors.required">
-                    This field cannot be empty
+                    {{'SIGN_UP.FORM.CONFIRM_PASSWORD.VALIDATION_EMPTY' | translate}}
                   </small>
                   <small *ngIf="userForm.get('confirmPassword').errors.mustMatch">
-                    Passwords must match
+                    {{'SIGN_UP.FORM.CONFIRM_PASSWORD.VALIDATION_VALID' | translate}}
                   </small>
                 </div>
               </div>
               <div *ngIf="editOnly && userRole()==='super admin'" class="form-group row">
                 <div class="form-check">
                   <label class="col-lg-7  form-check-label" for="gridRadios1">
-                    Admin
+                    {{'DASHBOARD.SIDEBAR.TABS.ADMINS_MODERATORS.EDIT.FORM.RADIO_BUTTON.ADMIN' | translate}}
                     <input class="form-check-input " type="radio" name="role" id="gridRadios1" value="admin" formControlName="role" >
                   </label>
                 </div>
                 <div class="form-check">
                   <label class="form-check-label col-lg-7" for="gridRadios2">
-                    Moderatot
+                    {{'DASHBOARD.SIDEBAR.TABS.ADMINS_MODERATORS.EDIT.FORM.RADIO_BUTTON.MODERATOR' | translate}}
                     <input class="form-check-input " type="radio" name="role" id="gridRadios2" value="moderator" formControlName="role" >
                   </label>
                 </div>
@@ -133,16 +133,16 @@
                 <div class="col">
                   <div class="row">
                     <button class="btn btn-warning col-5" (click)="clearPass()" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                      Set new password
+                      {{'DASHBOARD.PROFILE.EDIT.BUTTON.SET_NEW_PASSWORD' | translate}}
                     </button>
                   </div>
                   <div class="row">
                     <div class="collapse w-100" id="collapseExample">
-                      <label class="col-md-5 col-lg-5 col-form-label form-control-label">Current password of your {{this.userRole()}} account</label>
+                      <label class="col-md-5 col-lg-5 col-form-label form-control-label">{{'DASHBOARD.PROFILE.EDIT.CURRENT_PASSWORD' | translate}}</label>
                       <div class="col-lg-7">
                         <input class="form-control w-100" formControlName="confirmPassword"  type="password" >
                       </div>
-                      <label class=" col-md-5 col-lg-5 col-form-label form-control-label">New password for this {{user.role.name}} account</label>
+                      <label class=" col-md-5 col-lg-5 col-form-label form-control-label">{{'DASHBOARD.PROFILE.EDIT.NEW_PASSWORD' | translate}}</label>
                       <div class="col-md-7 col-lg-7">
                         <input class="form-control w-100" formControlName="password" type="password" >
                       </div>
@@ -153,9 +153,9 @@
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label form-control-label"></label>
                 <div class="col-lg-12">
-                  <input  *ngIf="!editOnly" [disabled]="userForm.invalid" name="button_1" type="submit" class="btn btn-primary" (click)="update()" value="Save Changes">
-                  <input *ngIf="(!editOnly && user.role.name ==='admin' || user.role.name ==='moderator')  || userRole() ==='user'" name="button_2" type="submit" class="btn btn-danger ml-sm-2" (click)="delete()" value="Delete Account">
-                  <input *ngIf="editOnly" [disabled]="userForm.invalid" type="submit" name="button_3" class="btn btn-success mt-lg-3" (click)="add()"  value="Add">
+                  <input  *ngIf="!editOnly" [disabled]="userForm.invalid" name="button_1" type="submit" class="btn btn-primary" (click)="update()" value="{{'DASHBOARD.PROFILE.EDIT.BUTTON.SAVE_CHANGES' | translate}}">
+<!--                  <input *ngIf="(!editOnly && user.role.name ==='admin' || user.role.name ==='moderator')  || userRole() ==='user'" name="button_2" type="submit" class="btn btn-danger ml-sm-2" (click)="delete()" value="Delete Account">-->
+                  <input *ngIf="editOnly" [disabled]="userForm.invalid" type="submit" name="button_3" class="btn btn-success mt-lg-3" (click)="add()"  value="{{'DASHBOARD.PROFILE.EDIT.BUTTON.ADD' | translate}}">
                 </div>
               </div>
             </form>

@@ -3,16 +3,16 @@
     <div class="col-lg-12 order-lg-2 mt-2">
       <ul class="nav nav-tabs">
         <li class="nav-item" (click)="quizTab('Quizzes')">
-          <a  data-toggle="collapse" href="#collapseQuizzes" role="button" aria-expanded="false" aria-controls="collapseQuizzes" class="nav-link">Quizzes</a>
+          <a  data-toggle="collapse" href="#collapseQuizzes" role="button" aria-expanded="false" aria-controls="collapseQuizzes" class="nav-link">{{'QUIZ_DASHBOARD.QUIZZES.LABEL' | translate}}</a>
         </li>
         <li *ngIf="getRole()==='user'" class="nav-item" (click)="quizTab('My quizzes')">
-          <a  data-toggle="collapse" href="#collapseUserQuizzes" role="button" aria-expanded="false" aria-controls="collapseUserQuizzes" class="nav-link">My Quizzes</a>
+          <a  data-toggle="collapse" href="#collapseUserQuizzes" role="button" aria-expanded="false" aria-controls="collapseUserQuizzes" class="nav-link">{{'QUIZ_DASHBOARD.MY_QUIZZES.LABEL' | translate}}</a>
         </li>
         <li *ngIf="getRole()==='user'" class="nav-item" (click)="quizTab('Favorite')">
-          <a  data-toggle="collapse" href="#collapseFavorite" role="button" aria-expanded="false" aria-controls="collapseFavorite" class="nav-link">Favorite</a>
+          <a  data-toggle="collapse" href="#collapseFavorite" role="button" aria-expanded="false" aria-controls="collapseFavorite" class="nav-link">{{'QUIZ_DASHBOARD.FAVORITE.LABEL' | translate}}</a>
         </li>
         <li *ngIf="getRole()==='user'" class="nav-item" (click)="quizTab('Suggestions')">
-          <a  data-toggle="collapse" href="#collapseSuggestions" role="button" aria-expanded="false" aria-controls="collapseSuggestions" class="nav-link">Suggestions</a>
+          <a  data-toggle="collapse" href="#collapseSuggestions" role="button" aria-expanded="false" aria-controls="collapseSuggestions" class="nav-link">{{'QUIZ_DASHBOARD.SUGGESTIONS.LABEL' | translate}}</a>
         </li>
       </ul>
     </div>
@@ -23,7 +23,7 @@
         <app-quiz-card *ngFor="let quiz of quizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="quiz"></app-quiz-card>
       </div>
       <ng-template #elseBlock>
-        <h2>No quizzes to show</h2>
+        <h2>{{'QUIZ_DASHBOARD.QUIZZES.NO_SHOW' | translate}}</h2>
       </ng-template>
     </div>
     <div *ngIf="currentTab === 'My quizzes'" class="collapse" id="collapseUserQuizzes">
@@ -31,7 +31,7 @@
         <app-quiz-card *ngFor="let userQuiz of userQuizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="userQuiz" [isEdit]="true"></app-quiz-card>
       </div>
       <ng-template #elseBlock>
-        <h2>No your quizzes to show</h2>
+        <h2>{{'QUIZ_DASHBOARD.MY_QUIZZES.NO_SHOW' | translate}}</h2>
       </ng-template>
     </div>
     <div *ngIf="currentTab === 'Favorite'" class="collapse" id="collapseFavorite">
@@ -39,7 +39,7 @@
         <app-quiz-card *ngFor="let favoriteQuiz of favoriteQuizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="favoriteQuiz" [isEdit]="false"></app-quiz-card>
       </div>
       <ng-template #elseBlock>
-        <h2>No favorites to show</h2>
+        <h2>{{'QUIZ_DASHBOARD.FAVORITE.NO_SHOW' | translate}}</h2>
       </ng-template>
     </div>
     <div *ngIf="currentTab === 'Suggestions'" class="collapse" id="collapseSuggestions">
@@ -47,7 +47,7 @@
         <app-quiz-card *ngFor="let suggestionQuiz of suggestionQuizzes" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="suggestionQuiz" [isEdit]="false"></app-quiz-card>
       </div>
       <ng-template #elseBlock>
-        <h2>No suggestions to show</h2>
+        <h2>{{'QUIZ_DASHBOARD.SUGGESTIONS.NO_SHOW' | translate}}</h2>
       </ng-template>
     </div>
   </div>

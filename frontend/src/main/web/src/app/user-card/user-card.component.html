@@ -11,7 +11,7 @@
         <div class="col-2 col-sm-5 col-md-auto col-lg-6 text-center align-self-center">
           <div *ngIf="userRole() ==='user'" class="input-group justify-content-center">
             <form [formGroup]="inviteForm" novalidate>
-              <input id="message" class="form-control" formControlName="inviteText" required placeholder="Invite message*" aria-label="Invite message" aria-describedby="basic-addon2">
+              <input id="message" class="form-control" formControlName="inviteText" required placeholder="{{'DASHBOARD.SEARCH.USER_CARD.INVITE_MESSAGE' | translate}}" aria-label="Invite message" aria-describedby="basic-addon2">
             </form>
             <div class="input-group-append mr-5">
               <button [disabled]="inviteForm.invalid" type="submit" class="btn btn-primary" (click)="sendInvite()">{{nameSendButton}}</button>
@@ -19,14 +19,14 @@
           </div>
           <div class="btn-group text-right">
             <!--            <a *ngIf="userRole() ==='user'" href="#" class="btn  btn-outline-danger">Unfollow</a>-->
-            <a *ngIf="userRole() ==='super admin' || userRole() ==='admin'" (click)="goToProfile()" class="btn  btn-outline-primary">Edit profile</a>
+            <a *ngIf="userRole() ==='super admin' || userRole() ==='admin'" (click)="goToProfile()" class="btn  btn-outline-primary">{{'DASHBOARD.SEARCH.USER_CARD.ADMIN_BUTTON.EDIT' | translate}}</a>
           </div>
         </div>
         <div class="col-12 col-sm-6 col-md-7 col-lg-5">
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">First name: {{user.firstName}}</li>
-              <li class="list-group-item">Last name: {{user.lastName}}</li>
-              <li class="list-group-item">Email: {{user.email}}</li>
+              <li class="list-group-item">{{'DASHBOARD.SEARCH.USER_CARD.FIRST_NAME' | translate}} {{user.firstName}}</li>
+              <li class="list-group-item">{{'DASHBOARD.SEARCH.USER_CARD.LAST_NAME' | translate}} {{user.lastName}}</li>
+              <li class="list-group-item">{{'DASHBOARD.SEARCH.USER_CARD.EMAIL' | translate}} {{user.email}}</li>
             </ul>
         </div>
     </div>
