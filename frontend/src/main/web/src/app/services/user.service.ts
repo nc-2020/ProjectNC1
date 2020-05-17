@@ -14,10 +14,10 @@ export class UserService {
   user: User = JSON.parse(localStorage.getItem('user'));
 
 
-  // private userUrl = 'http://localhost:8080/api/user';
-  // private apiUrl = 'http://localhost:8080/api';
-  private userUrl = '/api/user';
-  private apiUrl = '/api';
+  private userUrl = 'http://localhost:8080/api/user';
+  private apiUrl = 'http://localhost:8080/api';
+  // private userUrl = '/api/user';
+  // private apiUrl = '/api';
 
   constructor(private http: HttpClient, private router: Router) {
 

@@ -10,18 +10,18 @@
           <ul class="nav flex-column">
             <li  class="nav-item active text-center border-bottom border-top">
               <a class="nav-link active btn" (click)="changeTab('Quizzes')" >
-                  <mat-icon inline=true>extension</mat-icon><strong> Quizzes</strong>
+                  <mat-icon inline=true>extension</mat-icon><strong> {{'DASHBOARD.SIDEBAR.QUIZZES' | translate}}</strong>
               </a>
             </li>
             <li *ngIf="getUserRole()==='user' || getUserRole()==='super admin'" class="nav-item border-bottom">
               <a class="nav-link btn" (click)="profileSet(false, getUser())">
                 <span data-feather="users"></span>
-                <mat-icon inline=true>person</mat-icon><strong> Profile</strong>
+                <mat-icon inline=true>person</mat-icon><strong> {{'DASHBOARD.SIDEBAR.PROFILE' | translate}}</strong>
               </a>
             </li>
             <li *ngIf="getUserRole()==='user'" class="nav-item border-bottom">
               <a class="nav-link btn" (click)="changeTab('Friends')">
-                <mat-icon inline=true>group</mat-icon><strong> Friends</strong>
+                <mat-icon inline=true>group</mat-icon><strong> {{'DASHBOARD.SIDEBAR.FRIENDS' | translate}}</strong>
               </a>
             </li>
             <li *ngIf="getUserRole()=='admin'"  class="nav-item border-bottom">

@@ -6,8 +6,11 @@
   },
 
   "HEADER": {
+    "BRAND": "BrainDuel",
     "HOME": "Home",
-    "LOGIN": "Login"
+    "LOGIN": "Login",
+    "LOGOUT": "Logout",
+    "DASHBOARD": "Dashboard"
   },
 
   "LOGIN": {
@@ -22,22 +25,46 @@
       },
       "FORGOT_PASSWORD": "Forgot password?",
       "SIGN_UP": "Sign up"
-    }
+    },
+    "ALERT": "There was a problem logging in. Please try again."
   },
 
   "SIGN_UP": {
     "TITLE": "USER SIGN UP",
     "TEXT": "for BrainDuel",
     "FORM": {
-      "FIRST_NAME": "FIRST NAME",
-      "LAST_NAME": "LAST NAME",
-      "EMAIL": "EMAIL",
-      "PASSWORD": "PASSWORD",
-      "CONFIRM_PASSWORD": "CONFIRM PASSWORD",
+      "USER_NAME": {
+        "LABEL": "USERNAME"
+      },
+      "FIRST_NAME": {
+        "LABEL": "FIRST NAME",
+        "VALIDATION": ""
+      },
+      "LAST_NAME": {
+        "LABEL": "LAST NAME",
+        "VALIDATION": ""
+      },
+      "EMAIL": {
+        "LABEL": "EMAIL",
+        "VALIDATION_EMPTY": "Email cannot be empty",
+        "VALIDATION_VALID": "Please fill in a valid email address"
+      },
+      "PASSWORD": {
+        "LABEL": "PASSWORD",
+        "VALIDATION_EMPTY": "Password cannot be empty",
+        "VALIDATION_VALID": "Password must be at least",
+        "VALIDATION_VALID_ADD_TEXT": " characters long"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "CONFIRM PASSWORD",
+        "VALIDATION_EMPTY": "Confirm Password is required",
+        "VALIDATION_VALID": "Passwords must match"
+      },
       "BUTTON": {
         "SIGN_UP": "SIGN UP"
       }
-    }
+    },
+    "ALERT": "There was a problem."
   },
 
   "DASHBOARD": {
@@ -60,32 +87,36 @@
     "CATEGORIES": "Categories",
 
     "SIDEBAR": {
-      "QUIZZES": "QUIZZES",
-      "PROFILE": "PROFILE",
-      "FRIENDS": "FRIENDS",
-      "ANNOUNCEMENT": "ANNOUNCEMENT",
-      "ACHIEVEMENTS": "ACHIEVEMENTS",
-      "SETTINGS": "SETTINGS",
+      "QUIZZES": "Quizzes",
+      "PROFILE": " PROFILE",
+      "FRIENDS": " FRIENDS",
+      "ANNOUNCEMENT": " ANNOUNCEMENT",
+      "ACHIEVEMENTS": " ACHIEVEMENTS",
+      "SETTINGS": " SETTINGS",
 
       "TABS": {
         "QUIZZES": {
           "TABS": {
             "QUIZZES": {
               "TITLE": "Quizzes",
-              "BUTTON": {
-                "PLAY": "Play",
-                "Test": "Test",
-                "Edit": "Edit"
-              }
+              "NO_SHOW": "No quizzes to show"
             },
             "MY_QUIZZES": {
-              "TITLE": "My quizzes"
+              "TITLE": "My quizzes",
+              "NO_SHOW": "No your quizzes to show"
             },
             "FAVORITE": {
-              "TITLE": "Favorite"
+              "TITLE": "Favorite",
+              "NO_SHOW": "No favorite quizzes to show"
             },
             "SUGGESTIONS": {
-              "TITLE": "Suggestions"
+              "TITLE": "Suggestions",
+              "NO_SHOW": "No suggestions to show"
+            },
+            "BUTTON": {
+              "PLAY": "Play",
+              "Test": "Test",
+              "Edit": "Edit"
             }
           }
         },
@@ -268,6 +299,29 @@
     "BUTTON": {
       "ADD_QUESTION": "Add question",
       "DONE": "Done"
+    }
+  },
+
+  "PLAY_QUIZ": {
+    "START_MENU": {
+      "TITLE": "Before start playing",
+      "BUTTON": {
+        "START": "Start new game!",
+        "INVITE": "Invite friends"
+      }
+    },
+    "GAME": {
+      "QUESTION": "Question",
+      "SCORE": "Score",
+      "TIME_LEFT": "Time left",
+      "BUTTON": {
+        "SKIP": "Skip",
+        "SEND": "Send"
+      }
+    },
+    "RESULT": {
+      "TEXT": "Your score is",
+      "BUTTON": "Go back to quizzes"
     }
   }
 }

@@ -8,10 +8,10 @@ import {Notification} from '../entities/notification';
 })
 export class SettingsService {
 
-    notificationSettings: Notification[];
+  notificationSettings: Notification[];
 
-  // private apiURL = 'http://localhost:8080/api';
-  private apiURL = '/api';
+  private apiURL = 'http://localhost:8080/api';
+  // private apiURL = '/api';
   constructor(private http: HttpClient, private userService: UserService) {
 
   }
