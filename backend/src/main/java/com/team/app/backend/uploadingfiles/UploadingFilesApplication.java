@@ -11,3 +11,26 @@ public class UploadingFilesApplication {
     }
 
 }
+private void uploadFileTos3bucket(String fileName, File file) {
+    s3client.putObject(new PutObjectRequest(bucketName, fileName, file)
+            .withCannedAcl(CannedAccessControlList.PublicRead));
+}
+    public String uploadFile(MultipartFile multipartFile) {
+
+        String fileUrl = "";
+        try {
+            File file = convertMultiPartToFile(multipartFile);
+            String fileName = generateFileName(multipartFile);
+            fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
+            uploadFileTos3bucket(fileName, file);
+            file.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return fileUrl;
+    }
+    public String deleteFileFromS3Bucket(String fileUrl) {
+        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
+        s3client.deleteObject(new DeleteObjectRequest(bucketName + "/", fileName));
+        return "Successfully deleted";
+    }
