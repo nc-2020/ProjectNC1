@@ -1,49 +1,51 @@
-<section   class="min-vh-100" id="cover">
+<section class="min-vh-100" id="cover">
   <div class="container">
-    <h1>USER SIGN UP</h1>
-    <h3>for BrainDuel</h3>
+    <h1>{{'SIGN_UP.TITLE' | translate}}</h1>
+    <h3>{{'SIGN_UP.TEXT' | translate}}</h3>
 
     <div class="row text-white">
       <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
         <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
           <div class="col-lg-11 ml-lg-3 mt-5 alert alert-danger" [hidden]="!message">
-            There was a problem. {{message | json}}.
+            {{'SIGN_UP.ALERT' | translate}}{{message | json}}.
           </div>
           <div class="form-group ">
-            <input type="text" formControlName="username"  class="form-control text-center"  placeholder="USERNAME" required maxlength="20">
+            <input type="text" formControlName="username"  class="form-control text-center"  placeholder="{{'SIGN_UP.FORM.USER_NAME.LABEL' | translate}}" required maxlength="20">
+<!--            check unique username-->
+<!--            {{'SIGN_UP.FORM.USER_NAME.VALIDATION_EMPTY' | translate}}-->
           </div>
           <div class="form-group">
             <div class="input-group">
-              <input type="text" formControlName="firstname" class="form-control text-center"  placeholder="FIRST NAME" required maxlength="20">
-              <input type="text" formControlName="lastname" class="form-control text-center"  placeholder="LAST NAME" required maxlength="20">
+              <input type="text" formControlName="firstname" class="form-control text-center"  placeholder="{{'SIGN_UP.FORM.FIRST_NAME.LABEL' | translate}}" required maxlength="20">
+              <input type="text" formControlName="lastname" class="form-control text-center"  placeholder="{{'SIGN_UP.FORM.LAST_NAME.LABEL' | translate}}" required maxlength="20">
             </div>
           </div>
           <div class="form-group">
-            <input type="email" formControlName="email" class="form-control text-center"  placeholder="EMAIL" required maxlength="50">
+            <input type="email" formControlName="email" class="form-control text-center"  placeholder="{{'SIGN_UP.FORM.EMAIL.LABEL' | translate}}" required maxlength="50">
             <div
               *ngIf="registrationForm.get('email').invalid && registrationForm.get('email').touched"
               class="validation">
               <small *ngIf="registrationForm.get('email').errors.required">
-                Email cannot be empty
+                {{'SIGN_UP.FORM.EMAIL.VALIDATION_EMPTY' | translate}}
               </small>
               <small *ngIf="registrationForm.get('email').errors.email">
-                Please fill in a valid email address
+                {{'SIGN_UP.FORM.EMAIL.VALIDATION_VALID' | translate}}
               </small>
             </div>
           </div>
           <div class="form-group">
             <div class="input-group">
-              <input type="password" formControlName="password" class="form-control text-center" placeholder="PASSWORD" required maxlength="20">
-              <input type="password" formControlName="confirmPassword" class="form-control text-center" placeholder="CONFIRM PASSWORD" required maxlength="20">
+              <input type="password" formControlName="password" class="form-control text-center" placeholder="{{'SIGN_UP.FORM.PASSWORD.LABEL' | translate}}" required maxlength="20">
+              <input type="password" formControlName="confirmPassword" class="form-control text-center" placeholder="{{'SIGN_UP.FORM.CONFIRM_PASSWORD.LABEL' | translate}}" required maxlength="20">
             </div>
             <div
               *ngIf="registrationForm.get('password').invalid && registrationForm.get('password').touched"
               class="validation">
               <small *ngIf="registrationForm.get('password').errors.required">
-                Password cannot be empty
+                {{'SIGN_UP.FORM.PASSWORD.VALIDATION_EMPTY' | translate}}
               </small>
               <small *ngIf="registrationForm.get('password').errors.minlength">
-                Password must be at least {{registrationForm.get('password').errors.minlength.requiredLength}} characters long
+                {{'SIGN_UP.FORM.PASSWORD.VALIDATION_VALID' | translate}}{{registrationForm.get('password').errors.minlength.requiredLength}} {{'SIGN_UP.FORM.PASSWORD.VALIDATION_VALID_ADD_TEXT' | translate}}
               </small>
             </div>
 
@@ -51,10 +53,10 @@
               *ngIf="registrationForm.get('confirmPassword').invalid && registrationForm.get('confirmPassword').touched"
               class="validation">
               <small *ngIf="registrationForm.get('confirmPassword').errors.required">
-                Confirm Password is required
+                {{'SIGN_UP.FORM.CONFIRM_PASSWORD.VALIDATION_EMPTY' | translate}}
               </small>
               <small *ngIf="registrationForm.get('confirmPassword').errors.mustMatch">
-                Passwords must match
+                {{'SIGN_UP.FORM.CONFIRM_PASSWORD.VALIDATION_VALID' | translate}}
               </small>
             </div>
           </div>
@@ -74,7 +76,7 @@
 <!--                </label>-->
 <!--              </div>-->
 <!--          </div>-->
-          <button  class="btn btn-secondary btn-lg" type="submit" [disabled]="registrationForm.invalid">SIGN UP</button>
+          <button  class="btn btn-secondary btn-lg" type="submit" [disabled]="registrationForm.invalid">{{'SIGN_UP.FORM.BUTTON.SIGN_UP' | translate}}</button>
         </form>
       </div>
 

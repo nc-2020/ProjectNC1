@@ -19,6 +19,7 @@ export class UserService {
   private apiUrl = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient, private router: Router) {
+
   }
   getToken() {
     return this.user.token;
@@ -32,21 +33,20 @@ export class UserService {
   updateUser(user: User) {
     return this.http.put<User>(this.userUrl + '/update', user,{ headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(
-      catchError(this.handleError<any>('signUp'))
+      catchError(this.handleError<any>('updateUser'))
     );
   }
   createUser(user: User) {
-
     return this.http.post<User>(this.userUrl + '/create', user, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(
-      catchError(this.handleError<any>('signUp'))
+      catchError(this.handleError<any>('createUser'))
     );
   }
 
   deleteUser(user: User) {
     return this.http.delete<User>(this.userUrl + `/delete/${user.id}`,{ headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(
-      catchError(this.handleError<any>('signUp'))
+      catchError(this.handleError<any>('deleteUser'))
     );
   }
   signUp(user: User): Observable<any> {

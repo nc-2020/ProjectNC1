@@ -1,7 +1,7 @@
 <section class="min-vh-100" id="cover">
   <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
   <div>
-    <h2>My Questions</h2>
+    <h2>{{'QUIZ_EDIT.TITLE' | translate}}</h2>
     <h5 style="margin-top: 50px;">
       <ol class="questions">
         <li *ngFor="let question of questions" style="margin-top: 10px;">
@@ -14,8 +14,8 @@
       </ol>
     </h5>
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-secondary mr-3" routerLink="/dashboard">Done</button>
-      <button type="button" class="btn btn-link"  data-toggle="collapse" data-target="#collapseOne"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Add question</span></button>
+      <button type="button" class="btn btn-secondary mr-3" routerLink="/dashboard">{{'QUIZ_EDIT.BUTTON.DONE' | translate}}</button>
+      <button type="button" class="btn btn-link"  data-toggle="collapse" data-target="#collapseOne"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">{{'QUIZ_EDIT.BUTTON.ADD_QUESTION' | translate}}</span></button>
     </div>
   </div>
 
@@ -32,46 +32,46 @@
 
             <div class="quiz-name-wrapper">
               <div class="quiz-name-input kr2-textfield">
-                <label>Question: </label>
-                <input class="form-control" formControlName="questionText" type="text" id="name-input" placeholder="Question name" data-qtest="quiz-name-input-field" maxlength="60">
+                <label>{{'QUIZ_EDIT.QUESTION_FORM.NAME.LABEL' | translate}}</label>
+                <input class="form-control" formControlName="questionText" type="text" id="name-input" placeholder="{{'QUIZ_EDIT.QUESTION_FORM.NAME.PLACEHOLDER' | translate}}" data-qtest="quiz-name-input-field" maxlength="60">
                 <div class="quiz-name-validation"
                      *ngIf="questionForm.controls['questionText'].invalid && questionForm.controls['questionText'].touched">
-                  Please enter a question
+                  {{'QUIZ_EDIT.QUESTION_FORM.NAME.VALIDATION' | translate}}
                 </div>
               </div>
             </div>
             <div class="quiz-name-wrapper">
               <div class="quiz-name-input kr2-textfield">
                 <label>
-                  Select type of question
+                  {{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.LABEL' | translate}}
                   <select class="form-control"  formControlName="questionType">
-                    <option value="not selected" selected disabled hidden>Choose here</option>
-                    <option value="1">True/False</option>
-                    <option value="2">Type answer</option>
-                    <option value="3">Select option</option>
-                    <option value="4">Select sequence</option>
+                    <option value="not selected" selected disabled hidden>{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.PLACEHOLDER' | translate}}</option>
+                    <option value="1">{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.TRUE_FALSE.LABEL' | translate}}</option>
+                    <option value="2">{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.TYPE_ANSWER.LABEL' | translate}}</option>
+                    <option value="3">{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.SELECT_OPTION.LABEL' | translate}}</option>
+                    <option value="4">{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.SELECT_SEQUENCE.LABEL' | translate}}</option>
                   </select>
                 </label>
                 <div class="quiz-name-validation"
                      *ngIf="questionForm.controls['questionType'].value === 'not selected' && questionForm.controls['questionType'].touched">
-                  Please select type of question
+                  {{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.TYPE_VALIDATION' | translate}}
                 </div>
               </div>
 
               <div class="quiz-name-input kr2-textfield">
                 <label>
-                  Select time
+                  {{'QUIZ_EDIT.QUESTION_FORM.SELECT_TIME.LABEL' | translate}}
                   <select class="form-control" formControlName="questionTime">
-                    <option value="not selected" selected disabled hidden>Choose here</option>
-                    <option value=15>15 seconds</option>
-                    <option value=30>30 seconds</option>
-                    <option value=60>1 minute</option>
-                    <option value=120>2 minute</option>
+                    <option value="not selected" selected disabled hidden>{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TIME.PLACEHOLDER' | translate}}</option>
+                    <option value=15>15 {{'QUIZ_EDIT.QUESTION_FORM.SELECT_TIME.OPTIONS.SECONDS' | translate}}</option>
+                    <option value=30>30 {{'QUIZ_EDIT.QUESTION_FORM.SELECT_TIME.OPTIONS.SECONDS' | translate}}</option>
+                    <option value=60>1 {{'QUIZ_EDIT.QUESTION_FORM.SELECT_TIME.OPTIONS.MINUTE' | translate}}</option>
+                    <option value=120>2 {{'QUIZ_EDIT.QUESTION_FORM.SELECT_TIME.OPTIONS.MINUTE' | translate}}</option>
                   </select>
                 </label>
                 <div class="quiz-name-validation"
                      *ngIf="questionForm.controls['questionTime'].value === 'not selected' && questionForm.controls['questionTime'].touched">
-                  Please select time for question
+                  {{'QUIZ_EDIT.QUESTION_FORM.SELECT_TIME.TIME_VALIDATION' | translate}}
                 </div>
               </div>
 
@@ -82,32 +82,34 @@
         </form>
         <div class="quiz-name-wrapper">
           <div *ngIf="questionForm.get('questionType').value === '1'" class="quiz-name-input kr2-textfield">
-            <p>True/False!</p>
+            <p>{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.TRUE_FALSE.LABEL' | translate}}</p>
             <div class="action-btns-wrapper">
               <!-- <button class="true-btn" data-qtest="cancel-create-quiz-btn">True</button>
               <button class="false-btn" data-qtest="cancel-create-quiz-btn">False</button> -->
-              <input [(ngModel)]="answerTrueFalse" class="true-false" name="true-false-opt" type="radio" value="True"><label style="margin-right: 100px; font-size: 20px">True</label>
-              <input [(ngModel)]="answerTrueFalse" class="true-false" name="true-false-opt" type="radio" value="False"  checked="checked"><label style="font-size: 20px">False</label>
+              <input [(ngModel)]="answerTrueFalse" class="true-false" name="true-false-opt" type="radio" value="True">
+              <label style="margin-right: 100px; font-size: 20px">{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.TRUE_FALSE.TRUE' | translate}}</label>
+              <input [(ngModel)]="answerTrueFalse" class="true-false" name="true-false-opt" type="radio" value="False"  checked="checked">
+              <label style="font-size: 20px">{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.TRUE_FALSE.FALSE' | translate}}</label>
             </div>
           </div>
           <div *ngIf="questionForm.get('questionType').value === '2'" class="quiz-name-input kr2-textfield">
-            <p>Type answer</p>
-            <input [(ngModel)]="answerTypeAnswer" type="text" id="name-input" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
+            <p>{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.TYPE_ANSWER.LABEL' | translate}}</p>
+            <input [(ngModel)]="answerTypeAnswer" type="text" id="name-input" placeholder="{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.TYPE_ANSWER.PLACEHOLDER' | translate}}" data-qtest="quiz-name-input-field" maxlength="60">
           </div>
           <div *ngIf="questionForm.get('questionType').value === '3'" class="quiz-name-input kr2-textfield text-left">
             <ol>
               <li *ngFor="let option of options">
                 <button [style.background-color]="option.is_correct ? 'green' : 'red'" type="button" class="btn btn-dark"  (click)="isCorrectOption(option)">{{option.is_correct}}</button>
-                <input [(ngModel)]="option.text"  class="mt-1 mb-1" type="text" id="select-option-input" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
+                <input [(ngModel)]="option.text"  class="mt-1 mb-1" type="text" id="select-option-input" placeholder="{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.TYPE_ANSWER.PLACEHOLDER' | translate}}" data-qtest="quiz-name-input-field" maxlength="60">
               </li>
             </ol>
           </div>
           <div *ngIf="questionForm.get('questionType').value === '4'" class="quiz-name-input kr2-textfield">
-            <p>Select sequence</p>
+            <p>{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.SELECT_SEQUENCE.LABEL' | translate}}</p>
             <ol>
             <div cdkDropList (cdkDropListDropped)="drop($event)">
                 <li *ngFor="let option of optionsSequence; let i = index" class="pop" cdkDrag>
-                  <input [(ngModel)]="option.text" type="text" id="select-sequence-input" placeholder="Answer" data-qtest="quiz-name-input-field" maxlength="60">
+                  <input [(ngModel)]="option.text" type="text" id="select-sequence-input" placeholder="{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.TYPE_ANSWER.PLACEHOLDER' | translate}}" data-qtest="quiz-name-input-field" maxlength="60">
                 </li>
             </div>
             </ol>
@@ -115,9 +117,10 @@
         </div>
       </div>
       <div class="action-btns-wrapper">
-        <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" data-toggle="collapse" data-target="#collapseOne">Cancel</button>
+        <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" data-toggle="collapse" data-target="#collapseOne">
+          {{'QUIZ_EDIT.QUESTION_FORM.BUTTON.CANCEL' | translate}}</button>
         <button [disabled]="questionForm.invalid || questionForm.controls['questionType'].value === 'not selected' ||
-        questionForm.controls['questionTime'].value === 'not selected'" class="save-btn" data-qtest="create-quiz-btn" (click)="createQuestion()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Next</span></button>
+        questionForm.controls['questionTime'].value === 'not selected'" class="save-btn" data-qtest="create-quiz-btn" (click)="createQuestion()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">{{'QUIZ_EDIT.QUESTION_FORM.BUTTON.NEXT' | translate}}</span></button>
       </div>
     </div>
   </div>

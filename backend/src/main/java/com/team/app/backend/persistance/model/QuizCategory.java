@@ -1,6 +1,7 @@
 package com.team.app.backend.persistance.model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,15 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class QuizCategory {
-
     private Long id;
     private String name;
     private String description;
-
-    public QuizCategory(Long id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-    }
 }

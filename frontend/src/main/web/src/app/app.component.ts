@@ -4,7 +4,10 @@ import {Router} from '@angular/router';
 import {UserService} from './services/user.service';
 import {NotificationService} from './services/notification.service';
 import {Notification} from './entities/notification';
+import {SettingsService} from "./services/settings.service";
+import {TranslateService} from "@ngx-translate/core";
 import {WebSocketService} from "./web-socket.service";
+
 
 
 @Component({
@@ -20,6 +23,7 @@ export class AppComponent {
   constructor(private http: HttpClient,
               private userService: UserService,
               private router: Router,
+              public translate: TranslateService,
               private notificationService: NotificationService,
               private webSocketAPI: WebSocketService) {
 

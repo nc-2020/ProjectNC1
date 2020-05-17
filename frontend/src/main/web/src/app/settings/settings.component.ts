@@ -9,6 +9,7 @@ import {APPROVE_NOTIFICATION, SYSTEM_NOTIFICATION} from '../parameters';
 })
 export class SettingsComponent implements OnInit {
 
+
   approveCategoryId = APPROVE_NOTIFICATION;
   systemCategoryId = SYSTEM_NOTIFICATION;
   systemNotificationsOn: boolean;
@@ -16,7 +17,7 @@ export class SettingsComponent implements OnInit {
   constructor(private settingsService: SettingsService, private userService: UserService) { }
 
   ngOnInit(): void {
-  this.getNotificationSettings();
+    this.getNotificationSettings();
   }
 
   getNotificationSettings() {

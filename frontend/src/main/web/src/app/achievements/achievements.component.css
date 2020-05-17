@@ -8,10 +8,11 @@ body {
   display: flex;
   height: 145px;
   width: 560px;
+  align-items: center;
 }
 
 .achievement-box-icon {
-  background-image: url("https://cdn3.iconfinder.com/data/icons/project-management-49/50/20-128.png");
+  background-image: url("https://cdn3.iconfinder.com/data/icons/project-management-49/50/66-128.png");
   border: 5px solid rgb(75, 92, 105);
   outline: 2px solid rgb(64, 81, 102);
   height: 140px;
@@ -94,3 +95,8 @@ body {
   width: 376px;
   animation: skill-100 3s;
 }
+.form-control {
+  width: 50%;
+}
+
+

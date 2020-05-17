@@ -13,7 +13,11 @@ export class SettingsService {
 
   private apiURL = 'http://localhost:8080/api';
 
+  // private apiURL = '/api';
+
+
   constructor(private http: HttpClient, private userService: UserService) { }
+
 
   getNotificationSettings(userId: number) {
     return  this.http.get<Notification[]>(this.apiURL + `/notification/settings/get/${userId}`,

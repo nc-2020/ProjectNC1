@@ -4,21 +4,20 @@
       <ul class="nav nav-tabs">
         <li class="nav-item" >
           <a  data-target="#announcement" (click)="editOnly = false" data-toggle="tab" class="nav-link active show text-white" role="button" aria-expanded="false">
-            <strong>Announcements</strong></a>
+            <strong>{{'DASHBOARD.SIDEBAR.TABS.ANNOUNCEMENTS.TABS.ANNOUNCEMENTS.TITLE' | translate}}</strong></a>
         </li>
         <li *ngIf="getRole() !=='user' " class="nav-item">
           <a  data-target="#approve" (click)="editOnly = false"  data-toggle="tab" role="button" aria-expanded="false" class="nav-link text-white">
-            <strong>Announcements for approving</strong></a>
+            <strong>{{'DASHBOARD.SIDEBAR.TABS.ANNOUNCEMENTS.TABS.ANNOUNCEMENT_APPROVE.TITLE' | translate}}</strong></a>
         </li>
         <li class="nav-item" >
           <a  data-target="#create" data-toggle="tab" role="button" aria-expanded="false" class="nav-link text-white">
-            <strong>Create announcement</strong></a>
+            <strong>{{'DASHBOARD.SIDEBAR.TABS.ANNOUNCEMENTS.TABS.CREATE_ANNOUNCEMENT.TITLE' | translate}}</strong></a>
         </li>
       </ul>
     </div>
     <div class="pt-4 tab-content">
       <div  class="tab-pane active show" id="announcement">
-
         <div *ngIf="!editOnly" class="raw">
           <app-announcement  (onChanged)="editAnn($event)" *ngFor="let announcement of announcements" [announcement] = "announcement"> </app-announcement>
         </div>
@@ -27,7 +26,7 @@
 
       <div  class="tab-pane" id="approve">
         <div *ngIf="!editOnly" class="raw">
-          <h1 *ngIf="newAnnouncements.length == 0 ">No announcements for approving</h1>
+          <h2 *ngIf="newAnnouncements.length == 0 ">{{'DASHBOARD.SIDEBAR.TABS.ANNOUNCEMENTS.TABS.ANNOUNCEMENT_APPROVE.NO_SHOW' | translate}}</h2>
           <app-announcement  (onChanged)="editAnn($event)" *ngFor="let announcement of getNewAnnouncements()" [announcement] = "announcement"> </app-announcement>
         </div>
         <app-announcement-edit *ngIf="editOnly" [announcement]="announcement"  [editOnly]="editOnly"></app-announcement-edit>
@@ -37,7 +36,6 @@
           <app-announcement-edit [editOnly]="false"></app-announcement-edit>
         </div>
       </div>
-
     </div>
   </div>
 </div>

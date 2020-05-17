@@ -1,6 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UserAchievement} from "../entities/user-achievement";
 import {formatPercent} from "@angular/common";
+import {Achievement} from "../entities/achievement";
+import {AnnouncementService} from "../services/announcement.service";
+import {UserService} from "../services/user.service";
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-achievements',
@@ -10,31 +14,57 @@ import {formatPercent} from "@angular/common";
 export class AchievementsComponent implements OnInit {
   @Input()
   userAchievement: UserAchievement;
+  @Input()
+  achievement : Achievement;
+  role: string;
   linkToIconAchievement;
   urlIcon;
   percentStatus;
+  played;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.percentStatus = (this.userAchievement.played / this.userAchievement.quizAmount * 100);
-    this.getIcon()
+    this.role = this.getRole();
+    if (this.role === 'user') {
+      if (this.userAchievement.played >= this.userAchievement.quizAmount) {
+        this.percentStatus = 100;
+        this.played = this.userAchievement.quizAmount;
+      } else {
+        this.percentStatus = (this.userAchievement.played / this.userAchievement.quizAmount * 100);
+        this.played = this.userAchievement.played;
+      }
+      this.getIcon(this.userAchievement.title);
+    } else {
+      this.getIcon(this.achievement.title);
+    }
     this.urlIcon = 'url("' + this.linkToIconAchievement +'")';
   }
 
-  getIcon() {
-    if (this.userAchievement.title === 'Geography mind') {
-      this.linkToIconAchievement = 'https://cdn3.iconfinder.com/data/icons/project-management-49/50/34-128.png';
-    } else if (this.userAchievement.title === 'Programming mind') {
-      this.linkToIconAchievement = 'https://cdn3.iconfinder.com/data/icons/project-management-49/50/20-128.png';
-    } else if (this.userAchievement.title === 'Math mind') {
-      this.linkToIconAchievement = 'https://cdn3.iconfinder.com/data/icons/project-management-49/50/26-128.png';
-    } else if (this.userAchievement.title === 'History mind') {
-      this.linkToIconAchievement = 'https://cdn3.iconfinder.com/data/icons/project-management-49/50/69-128.png';
-    } else if (this.userAchievement.title === 'Modern mind') {
-      this.linkToIconAchievement = 'https://cdn3.iconfinder.com/data/icons/project-management-49/50/48-128.png';
-    } else {
-      this.linkToIconAchievement = 'https://cdn3.iconfinder.com/data/icons/project-management-49/50/61-128.png';
+  getRole() {
+    return this.userService.user.role.name;
+  }
+
+  getIcon(title) {
+    switch (title) {
+      case 'Geography mind':
+        this.linkToIconAchievement = 'https://cdn3.iconfinder.com/data/icons/project-management-49/50/34-128.png';
+        break;
+      case 'Programming mind':
+        this.linkToIconAchievement = 'https://cdn3.iconfinder.com/data/icons/project-management-49/50/20-128.png';
+        break;
+      case 'Math mind':
+        this.linkToIconAchievement = 'https://cdn3.iconfinder.com/data/icons/project-management-49/50/26-128.png';
+        break;
+      case 'History mind':
+        this.linkToIconAchievement = 'https://cdn3.iconfinder.com/data/icons/project-management-49/50/69-128.png';
+        break;
+      case 'Modern mind':
+        this.linkToIconAchievement = 'https://cdn3.iconfinder.com/data/icons/project-management-49/50/48-128.png';
+        break;
+      default:
+        this.linkToIconAchievement = 'https://cdn3.iconfinder.com/data/icons/project-management-49/50/61-128.png';
+        break;
     }
   }
 

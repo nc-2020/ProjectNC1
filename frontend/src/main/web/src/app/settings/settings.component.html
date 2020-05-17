@@ -3,7 +3,7 @@
     <div class="col">
       <div *ngIf="getUserRole() === 'user'" class="row">
         <div class="col">
-          <h2 class="text-left">Notifications</h2>
+          <h2 class="text-left">{{'DASHBOARD.SIDEBAR.TABS.SETTINGS.NOTIFICATIONS' | translate}}</h2>
       <div class="form-group text-left">
         <div class="custom-control custom-switch">
           <input type="checkbox"  (change)="changeSetting(approveCategoryId, $event)" class="custom-control-input" id="customSwitch1" [checked]="approveNotificationsOn">

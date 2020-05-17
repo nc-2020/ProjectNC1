@@ -1,5 +1,6 @@
 package com.team.app.backend.persistance.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Achievement {
     private Long id;
     private String title;
@@ -15,14 +17,4 @@ public class Achievement {
     private byte[] icon;
     private Long creatorUserId;
     private Long categoryId;
-
-    public Achievement(Long id, String title, Long amountOfQuizzes, Long amountOfCreated, byte[] icon, Long creatorUserId, Long categoryId) {
-        this.id = id;
-        this.title = title;
-        this.amountOfQuizzes = amountOfQuizzes;
-        this.amountOfCreated = amountOfCreated;
-        this.icon = icon;
-        this.creatorUserId = creatorUserId;
-        this.categoryId = categoryId;
-    }
 }

@@ -1,0 +1,43 @@
+<div class="justify-content-center">
+  <div class="achievement-box mt-5 ml-3 text-center">
+    <div class="achievement-box-icon">
+    </div>
+    <div class="achievement-box-namebar-area">
+      <span>{{title}}</span>
+      <div class="achievement-box-bar">
+        <div class="">
+        </div>
+      </div>
+      <span>0/{{amountOfQuizzes}}</span>
+    </div>
+  </div>
+
+  <form [formGroup]="achievementForm">
+    <div class="form text-left mt-2 ml-4">
+      <label class="custom-file ml-2 mb-2">
+        <input type="file" id="file" class="custom-file-input" style="height: 1px; width: 1px">
+        <span class="btn text-white custom-file-control">{{'DASHBOARD.SIDEBAR.TABS.ACHIEVEMENTS.TABS.CREATE_ACHIEVEMENT.FORM.CHOOSE_IMAGE' | translate}}</span>
+      </label>
+
+      <label for="name-input">{{'DASHBOARD.SIDEBAR.TABS.ACHIEVEMENTS.TABS.CREATE_ACHIEVEMENT.FORM.TITLE.LABEL' | translate}}</label>
+      <input [(ngModel)]=title class="form-control" name="title" formControlName="title" type="text" id="name-input" placeholder="{{'DASHBOARD.SIDEBAR.TABS.ACHIEVEMENTS.TABS.CREATE_ACHIEVEMENT.FORM.TITLE.PLACEHOLDER' | translate}}" maxlength="20">
+      <div class="achievement-description-validation" *ngIf="achievementForm.controls['title'].invalid && achievementForm.controls['title'].touched">
+        {{'DASHBOARD.SIDEBAR.TABS.ACHIEVEMENTS.TABS.CREATE_ACHIEVEMENT.FORM.TITLE.VALIDATION' | translate}}
+      </div>
+      <label for="quantity">{{'DASHBOARD.SIDEBAR.TABS.ACHIEVEMENTS.TABS.CREATE_ACHIEVEMENT.FORM.QUANTITY.LABEL' | translate}}</label>
+      <input [(ngModel)]="amountOfQuizzes" class="form-control" formControlName="quantity" type="number" id="quantity" placeholder="{{'DASHBOARD.SIDEBAR.TABS.ACHIEVEMENTS.TABS.CREATE_ACHIEVEMENT.FORM.QUANTITY.PLACEHOLDER' | translate}}" name="quantity" min="1">
+      <div class="achievement-description-validation" *ngIf="achievementForm.controls['quantity'].invalid && achievementForm.controls['quantity'].touched">
+        {{'DASHBOARD.SIDEBAR.TABS.ACHIEVEMENTS.TABS.CREATE_ACHIEVEMENT.FORM.QUANTITY.VALIDATION' | translate}}
+      </div>
+      <p>{{'DASHBOARD.SIDEBAR.TABS.ACHIEVEMENTS.TABS.CREATE_ACHIEVEMENT.FORM.CATEGORY.LABEL' | translate}}</p>
+      <select id="category" multiple class="custom-select" formControlName="category">
+        <option value="{{category.id}}" *ngFor="let category of categoriesList" [ngValue]="category">{{category.name}}</option>
+      </select>
+      <div class="achievement-description-validation" *ngIf="achievementForm.controls['category'].invalid && achievementForm.controls['title'].touched
+          && achievementForm.controls['quantity'].touched">
+        {{'DASHBOARD.SIDEBAR.TABS.ACHIEVEMENTS.TABS.CREATE_ACHIEVEMENT.FORM.CATEGORY.VALIDATION' | translate}}
+      </div>
+    </div>
+    <button [disabled]="achievementForm.invalid" class="btn btn-primary mt-2 mr-1" (click)="createAchievement()">{{'DASHBOARD.SIDEBAR.TABS.ACHIEVEMENTS.TABS.CREATE_ACHIEVEMENT.FORM.BUTTON.CREATE' | translate}}</button>
+  </form>
+</div>
