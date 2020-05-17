@@ -5,6 +5,7 @@ import {Observable, of, throwError} from "rxjs";
 import {catchError, tap, finalize} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {UserInvite} from '../entities/user-invite';
+import {ADMIN_ROLE_ID, MODER_ROLE_ID, USER_ROLE_ID} from "../parameters";
 
 @Injectable({
   providedIn: 'root'
@@ -84,12 +85,32 @@ export class UserService {
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.get<User[]>(this.userUrl + `/search/${term}`, { headers: new HttpHeaders()
+    let range = this.setRoleRange();
+    return this.http.get<User[]>(this.userUrl + `/search/${term}/${range[0]}/${range[1]}`,
+      { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(
       catchError(error => {return of([])})
     );
   }
-
+  private setRoleRange() {
+    let firstRole: number;
+    let lastRole: number;
+    if (this.user.role.name === 'super admin') {
+      firstRole = MODER_ROLE_ID;
+      lastRole = ADMIN_ROLE_ID;
+    } else {
+      if (this.user.role.name === 'admin') {
+        firstRole = MODER_ROLE_ID;
+        lastRole = MODER_ROLE_ID;
+      } else {
+        if (this.user.role.name === 'user') {
+          firstRole = USER_ROLE_ID;
+          lastRole = USER_ROLE_ID;
+        }
+      }
+    }
+    return [firstRole, lastRole];
+  }
   sendUserInvite(userInvite: UserInvite): Observable<UserInvite> {
     console.log("sent invite");
     console.log(userInvite);

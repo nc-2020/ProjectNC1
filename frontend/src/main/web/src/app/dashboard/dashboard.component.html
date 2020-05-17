@@ -57,8 +57,8 @@
       <main role="main" class="col-md-9 ml-sm-auto col-lg-9 px-1 align-self-start" >
         <div *ngIf="tab === 'Users' || tab === 'Friends' || tab === 'Admins-Moderators' || tab==='Moderators' || tab === 'Quizzes' " class=" main-frame container-fluid my-5 ">
           <form *ngIf="tab !== 'Quizzes'" class="form-inline ml-3 my-2 my-lg-0" >
-            <input #searchBox id="search-box"  class="form-control my-2" type="text" placeholder="Search" style="width: 70%">
-            <button for="search-box" class="btn btn-secondary my-2 my-sm-0" (click)="search(searchBox.value)" type="submit" style="width: auto">Search</button>
+            <input #searchBox id="search-box"  class="form-control my-2 mx-auto" type="text" placeholder="Search" style="width: 70%">
+            <button for="search-box" class="btn btn-secondary my-2 my-sm-0 mx-1" (click)="search(searchBox.value)" type="submit" style="width: auto">Search</button>
             <button *ngIf="getUserRole()==='admin' || getUserRole()==='super admin'" class="btn btn-success my-2 mx-auto my-sm-0"
                     (click)="profileSet(true)"  style="width: auto">Add</button>
           </form>

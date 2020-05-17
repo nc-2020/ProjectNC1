@@ -15,9 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin("*")
+
 @RestController
-//@RequestMapping("api/notification")
+@RequestMapping("api/notification")
 public class NotificationController {
 
     @Autowired

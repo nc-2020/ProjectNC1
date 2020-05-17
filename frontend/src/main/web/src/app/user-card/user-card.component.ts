@@ -33,14 +33,14 @@ export class UserCardComponent implements OnInit {
 
   }
 
-
-
-
   goToProfile() {
     this.onChanged.emit(this.user);
   }
   userRole() {
     return this.userService.user.role.name;
+  }
+  getUserId() {
+    return this.userService.user.id;
   }
 
   sendInvite() {

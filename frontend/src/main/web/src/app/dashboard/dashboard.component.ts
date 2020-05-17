@@ -30,10 +30,8 @@ export class DashboardComponent implements OnInit {
   categoriesList: Category[] = [];
   isVisible = true;
 
-
   private searchQuizTerms = new Subject<string>();
   private searchUserTerms = new Subject<string>();
-  @ViewChild(UserCardComponent, {static: false}) userCardChild: UserCardComponent;
 
   constructor(private userService: UserService, private quizService: QuizService, private achievementService: AchievementService,
               private categoryService: CategoryService,
@@ -52,7 +50,6 @@ export class DashboardComponent implements OnInit {
     this.users$ = this.searchUserTerms.pipe(
       debounceTime(DEBOUNCE_TIME),
       distinctUntilChanged(),
-      // switch to new search observable each time the term changes
       switchMap((term: string) => this.userService.searchUsers(term)),
     );
 

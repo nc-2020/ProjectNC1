@@ -4,6 +4,8 @@ import com.team.app.backend.persistance.dao.AnnouncementDao;
 import com.team.app.backend.persistance.dao.mappers.AnnouncementRowMapper;
 import com.team.app.backend.persistance.model.Announcement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -12,10 +14,15 @@ import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@PropertySource("classpath:sql_query.properties")
 @Repository
 public class AnnouncementDaoImpl implements AnnouncementDao {
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    Environment env;
 
     private AnnouncementRowMapper announcementRowMapper = new AnnouncementRowMapper();
 
@@ -27,7 +34,7 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
     @Override
     public void create(Announcement announcement) {
         jdbcTemplate.update(
-                "INSERT INTO announcement(title, text, date, image, status_id, cat_id, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                env.getProperty("create.announcement"),
                 announcement.getTitle(),
                 announcement.getText(),
                 announcement.getDate(),
@@ -41,7 +48,7 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
     @Override
     public void update(Announcement announcement) {
         jdbcTemplate.update(
-                "UPDATE announcement set title = ?, text = ?, date = ?, image = ?, status_id = ?, cat_id = ?, user_id = ? where id = ?",
+                env.getProperty("update.announcement"),
                 announcement.getTitle(),
                 announcement.getText(),
                 announcement.getDate(),
@@ -56,25 +63,25 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
     @Override
     public void delete(Long id) {
         jdbcTemplate.update(
-                "DELETE from announcement where id = ?",
+                env.getProperty("delete.announcement"),
                 id
         );
     }
     @Override
     public List<Announcement> getCreated() {
-        return jdbcTemplate.query("select an.id, an.title, an.text, an.date, an.image, an.status_id, an.cat_id, an.user_id from announcement  an where status_id = 1"
+        return jdbcTemplate.query(env.getProperty("get.created.announcement")
                 ,announcementRowMapper);
 
     }
     @Override
     public List<Announcement> getAll() {
-        return jdbcTemplate.query("select an.id, an.title, an.text, an.date, an.image, an.status_id, an.cat_id, an.user_id from announcement  an where status_id <> 1 order by an.status_id desc, an.date desc;"
+        return jdbcTemplate.query(env.getProperty("get.all.announcement")
                 ,announcementRowMapper);
 
     }
     @Override
     public void approve(Long id) {
-        jdbcTemplate.update("UPDATE announcement set status_id = 2  where id = ?", id);
+        jdbcTemplate.update(env.getProperty("approve.announcement"), id);
     }
 
 
