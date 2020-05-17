@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserDao {
 
-    List<User> searchByString(String searchstring);
+    List<User> searchByString(String searchstring, int firstRole, int lastRole);
 
     void save(User user);
 

@@ -1,16 +1,16 @@
 <div class="container" id="bod">
   <div class="row">
     <div class="col">
-      <div class="row">
+      <div *ngIf="getUserRole() === 'user'" class="row">
         <div class="col">
           <h2 class="text-left">{{'DASHBOARD.SIDEBAR.TABS.SETTINGS.NOTIFICATIONS' | translate}}</h2>
       <div class="form-group text-left">
         <div class="custom-control custom-switch">
-          <input type="checkbox"  (change)="changeSetting(1, $event)" class="custom-control-input" id="customSwitch1" [checked]="checkNotification('approve')">
+          <input type="checkbox"  (change)="changeSetting(approveCategoryId, $event)" class="custom-control-input" id="customSwitch1" [checked]="approveNotificationsOn">
           <label class="custom-control-label" for="customSwitch1">Approve notifications</label>
         </div>
         <div class="custom-control custom-switch">
-          <input type="checkbox" (change)="changeSetting(3, $event)" class="custom-control-input" id="customSwitch2"  [checked]="checkNotification('system')">
+          <input type="checkbox" (change)="changeSetting(systemCategoryId, $event)" class="custom-control-input" id="customSwitch2"  [checked]="systemNotificationsOn">
           <label class="custom-control-label" for="customSwitch2">System notifications</label>
         </div>
       </div>

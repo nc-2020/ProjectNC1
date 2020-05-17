@@ -9,7 +9,7 @@
 
       </div>
         <div class="col-2 col-sm-5 col-md-auto col-lg-6 text-center align-self-center">
-          <div *ngIf="userRole() ==='user'" class="input-group justify-content-center">
+          <div *ngIf="userRole() ==='user' && getUserId() !== user.id" class="input-group justify-content-center">
             <form [formGroup]="inviteForm" novalidate>
               <input id="message" class="form-control" formControlName="inviteText" required placeholder="{{'DASHBOARD.SEARCH.USER_CARD.INVITE_MESSAGE' | translate}}" aria-label="Invite message" aria-describedby="basic-addon2">
             </form>

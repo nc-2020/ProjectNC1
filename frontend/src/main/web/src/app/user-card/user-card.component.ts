@@ -39,6 +39,9 @@ export class UserCardComponent implements OnInit {
   userRole() {
     return this.userService.user.role.name;
   }
+  getUserId() {
+    return this.userService.user.id;
+  }
 
   sendInvite() {
     this.clicked = true;

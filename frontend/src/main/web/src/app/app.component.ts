@@ -1,12 +1,14 @@
 import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import { catchError, tap, finalize } from 'rxjs/operators';
 import {UserService} from './services/user.service';
 import {NotificationService} from './services/notification.service';
 import {Notification} from './entities/notification';
 import {SettingsService} from "./services/settings.service";
 import {TranslateService} from "@ngx-translate/core";
+import {WebSocketService} from "./web-socket.service";
+
+
 
 @Component({
   selector: 'app-root',
@@ -23,14 +25,29 @@ export class AppComponent {
               private router: Router,
               public translate: TranslateService,
               private notificationService: NotificationService,
-              private settingsService: SettingsService ) {
+              private webSocketAPI: WebSocketService) {
 
   }
+
+  // greeting: any;
+  // name: string='';
+
+  // connect() {
+  //   this.webSocketAPI.connect();
+  // }
+  //
+  // disconnect() {
+  //   this.webSocketAPI.disconnect();
+  // }
+  //
+  // sendMessage() {
+  //   this.webSocketAPI.send(this.name);
+  // }
+
 
   ngOnInit(): void {
     if(this.userService.user.role.name === 'user') {
       this.getNotifications();
-      this.getNotificationSettings();
     }
   }
 
@@ -38,14 +55,9 @@ export class AppComponent {
   deleteNotifications() {
     this.notificationService.delete(this.notifications.filter(x => x.seen)).subscribe();
   }
-  getNotificationSettings() {
-    this.settingsService.getNotificationSettings(+this.userService.user.id).
-    subscribe(res => this.settingsService.notificationSettings = res);
-  }
 
   ngOnDestroy(): void {
-    localStorage.removeItem('user');
-
+    localStorage.clear();
   }
   getNewNotifications(): Notification[] {
     return this.notifications.filter(x => !x.seen);

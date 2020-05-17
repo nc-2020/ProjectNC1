@@ -40,18 +40,8 @@ public class QuizServiceImpl implements QuizService {
 
 
 
-
     @Override
     public Long addDefQuestion(QuestionDefAddDto questionDefAddDto) {
-//        Question question = new Question();
-//        question.setQuiz_id((long)questionDefAddDto.getQuiz_id());
-//        question.setType(questionDefAddDto.getType());
-//        question.setImage(questionDefAddDto.getImage());
-//        question.setText(questionDefAddDto.getText());
-//        question.setMax_points(questionDefAddDto.getMax_points());
-//        question.setTime(questionDefAddDto.getTime());
-//        Long id = questionDao.save(question);
-//        System.out.println(id);
         Long id = addQuestion(questionDefAddDto);
         for (DefOptionDto defOptionDto: questionDefAddDto.getOptions()) {
             DefaultQuest defaultQuest=new DefaultQuest();

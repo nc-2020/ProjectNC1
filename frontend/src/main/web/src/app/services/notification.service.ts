@@ -14,11 +14,15 @@ export class NotificationService {
   // private apiUrl = '/api/notification';
   constructor(private http: HttpClient, private userService: UserService) { }
 
+//!
    body = {
     target: 'targetId',
     subset: "fruits",
     reason: "rotten"
   };
+
+
+
   getAll(userId: number) {
     return this.http.get<Notification[]>(this.apiUrl + `/get/${userId}`,  {
       headers: new HttpHeaders()

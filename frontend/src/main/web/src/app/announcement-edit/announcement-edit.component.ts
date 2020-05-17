@@ -16,16 +16,6 @@ export class AnnouncementEditComponent implements OnInit {
   editOnly = false;
   @Input()
   announcement: Announcement = {} as Announcement;
-  //   id: '8',
-  //   title: 'New epic big super announcement',
-  //   text: 'Some quick example text to build on the card title and make up the bulk of the card`s content.',
-  //   userId: '1',
-  //   date: '2019-01-21T05:47:08.644',
-  //   statusId: 1,
-  //   categoryId: '1'
-  //
-  //
-  // };
   error = '';
   message = '';
 
