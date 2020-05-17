@@ -63,17 +63,6 @@ public class UserController {
         }else{
             model.put("message", "Exception while deleted");
         }
-            //{
-//            return new ResponseEntity<>(
-//                    "User was deleted!",
-//                    HttpStatus.OK
-//            );
-//        }else{
-//            return new ResponseEntity<>(
-//                    "Some error while deleting!",
-//                    HttpStatus.CONFLICT);
-//        }
-
 
         return model;
     }

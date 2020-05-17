@@ -58,33 +58,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider)).and().cors();
     }
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        final CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(List.of("*"));
-//        configuration.setAllowedMethods(List.of("HEAD",
-//                "GET", "POST", "PUT", "DELETE", "PATCH"));
-//        configuration.setAllowCredentials(true);
-//        configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
-//        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        final CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Stream.of("*").collect(Collectors.toList()));
-//        configuration.setAllowedMethods(Stream.of("HEAD",
-//                "GET", "POST", "PUT", "DELETE", "PATCH").collect(Collectors.toList()));
-//        configuration.setAllowCredentials(true);
-//        configuration.setAllowedHeaders(Stream.of("Authorization", "Cache-Control", "Content-Type").collect(Collectors.toList()));
-//        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        source.registerCorsConfiguration("/api/**", configuration);
-//        source.registerCorsConfiguration("/v2/api-docs", configuration);
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
 
 
     @Bean
@@ -108,6 +81,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/scripts.js",
                 "https://brain-duel.herokuapp.com*",
                 "/main*.js",
+                "/ua.svg",
+                "/gb.svg",
+                "/assets/i18n/en.json",
+                "/assets/i18n/ua.json",
                 "/assets/loader_brainduel.svg",
                 "/assets/logo_brainduel.png",
                 "/vendor*.js"

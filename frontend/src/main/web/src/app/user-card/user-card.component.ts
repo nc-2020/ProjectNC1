@@ -49,6 +49,7 @@ export class UserCardComponent implements OnInit {
       inviteText: this.inviteForm.get('inviteText').value,
       userIdFrom: +this.userService.user.id,
       userIdTo: +this.user.id,
+      usernameFrom: this.userService.user.username
     } as UserInvite).subscribe(data  => {
       this.nameSendButton = 'Invitation was sent';
     });

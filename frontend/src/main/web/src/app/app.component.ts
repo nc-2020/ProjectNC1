@@ -44,11 +44,16 @@ export class AppComponent {
   //   this.webSocketAPI.send(this.name);
   // }
 
+  setTranslate(language: string) {
+    localStorage.setItem('language', language);
+    this.translate.use(language);
+  }
 
   ngOnInit(): void {
     if(this.userService.user.role.name === 'user') {
       this.getNotifications();
     }
+    this.translate.use(localStorage.getItem('language'));
   }
 
   @HostListener('window:beforeunload')
