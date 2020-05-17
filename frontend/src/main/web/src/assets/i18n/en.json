@@ -1,0 +1,274 @@
+{
+  "HOME": {
+    "TITLE": "Welcome",
+    "LOGIN_TEXT": "Login to see your greeting",
+    "WELCOME": "We glad to see you"
+  },
+
+  "HEADER": {
+    "HOME": "Home",
+    "LOGIN": "Login"
+  },
+
+  "LOGIN": {
+    "TITLE": "USER LOGIN",
+    "WELCOME": "Welcome to BrainDuel!",
+    "FORM": {
+      "USERNAME": "USERNAME",
+      "PASSWORD": "PASSWORD",
+      "REMEMBER_ME": "Remember me",
+      "BUTTON": {
+        "LOGIN": "Login"
+      },
+      "FORGOT_PASSWORD": "Forgot password?",
+      "SIGN_UP": "Sign up"
+    }
+  },
+
+  "SIGN_UP": {
+    "TITLE": "USER SIGN UP",
+    "TEXT": "for BrainDuel",
+    "FORM": {
+      "FIRST_NAME": "FIRST NAME",
+      "LAST_NAME": "LAST NAME",
+      "EMAIL": "EMAIL",
+      "PASSWORD": "PASSWORD",
+      "CONFIRM_PASSWORD": "CONFIRM PASSWORD",
+      "BUTTON": {
+        "SIGN_UP": "SIGN UP"
+      }
+    }
+  },
+
+  "DASHBOARD": {
+    "SEARCH": {
+      "BUTTON": {
+        "SEARCH": "SEARCH"
+      },
+
+      "USER_CARD": {
+        "INVITE_MESSAGE": "Invite message*",
+        "BUTTON": {
+          "SEND_INVITATION": "Send invitation"
+        },
+        "FIRST_NAME": "First name: ",
+        "LAST_NAME": "Last name: ",
+        "EMAIL": "Email: "
+      }
+    },
+
+    "CATEGORIES": "Categories",
+
+    "SIDEBAR": {
+      "QUIZZES": "QUIZZES",
+      "PROFILE": "PROFILE",
+      "FRIENDS": "FRIENDS",
+      "ANNOUNCEMENT": "ANNOUNCEMENT",
+      "ACHIEVEMENTS": "ACHIEVEMENTS",
+      "SETTINGS": "SETTINGS",
+
+      "TABS": {
+        "QUIZZES": {
+          "TABS": {
+            "QUIZZES": {
+              "TITLE": "Quizzes",
+              "BUTTON": {
+                "PLAY": "Play",
+                "Test": "Test",
+                "Edit": "Edit"
+              }
+            },
+            "MY_QUIZZES": {
+              "TITLE": "My quizzes"
+            },
+            "FAVORITE": {
+              "TITLE": "Favorite"
+            },
+            "SUGGESTIONS": {
+              "TITLE": "Suggestions"
+            }
+          }
+        },
+
+        "PROFILE": {
+          "TABS": {
+            "PROFILE": {
+              "TITLE": "Profile",
+              "USER_PROFILE": "USER PROFILE",
+              "SUPER_ADMIN_PROFILE": "SUPER ADMIN PROFILE",
+              "UPLOAD": "Upload a different photo",
+              "CHOOSE_FILE": "Choose file"
+            },
+            "EDIT": {
+              "FIRST_NAME": "First name",
+              "LAST_NAME": "Last name",
+              "EMAIL": "Email",
+              "USERNAME": "Username",
+              "BUTTON": {
+                "SET_NEW_PASSWORD": "Set new password",
+                "SAVE_CHANGES": "Save Changes"
+              },
+              "CURRENT_PASSWORD": "Current password",
+              "NEW_PASSWORD": "New password"
+            }
+          }
+        },
+
+        "FRIENDS": {
+          "TITLE": "Friends",
+          "INVITES": "INVITES",
+          "NO_TO_SHOW": "No friends to show"
+        },
+
+        "ANNOUNCEMENTS": {
+          "TABS": {
+            "ANNOUNCEMENTS": {
+              "TITLE": "Announcements"
+            },
+            "CREATE_ANNOUNCEMENT": {
+              "TITLE": "Create announcement",
+              "FORM": {
+                "TITLE": "Title",
+                "TEXT": "Text",
+                "BUTTON": {
+                  "ADD": "ADD"
+                },
+                "SELECT_IMAGE": "Select an announcement image",
+                "CHOOSE_FILE": "CHOOSE FILE"
+              }
+            }
+          }
+        },
+
+        "ACHIEVEMENTS": {
+          "TABS": {
+            "ACHIEVEMENTS": {
+              "TITLE": "Achievements"
+            },
+            "CREATE_ACHIEVEMENT": {
+              "TITLE": "Create achievement",
+              "FORM": {
+                "TITLE": "Title for achievement",
+                "QUANTITY": "",
+                "CATEGORY": "",
+                "BUTTON": {
+                  "CREATE": "CREATE"
+                },
+                "SELECT_IMAGE": "Select an announcement image",
+                "CHOOSE_IMAGE": "CHOOSE IMAGE"
+              }
+            }
+          }
+        },
+
+        "SETTINGS": {
+          "NOTIFICATIONS": "Notifications",
+          "BUTTON": {
+            "APPROVE_NOTIFICATIONS": "Approve notifications",
+            "SYSTEM_NOTIFICATIONS": "System notifications"
+          }
+        },
+
+        "ADMINS_MODERATORS": {
+          "EDIT": {
+            "FORM": {
+              "FIRST_NAME": "First name",
+              "LAST_NAME": "Last name",
+              "EMAIL": "Email",
+              "USERNAME": "Username",
+              "PASSWORD": "Password",
+              "CONFIRM_PASSWORD": "Confirm password",
+              "RADIO_BUTTON": {
+                "ADMIN": "Admin",
+                "MODERATOR": "Moderator"
+              }
+            },
+            "UPLOAD": "Upload a different photo",
+            "CHOOSE_FILE": "Choose file"
+          }
+        }
+      }
+    }
+  },
+
+  "CREATE_QUIZ": {
+    "TITLE": "Create a quiz",
+    "NAME": "1. Name this quiz*",
+    "DESCRIPTION": "2. Description",
+    "CHOOSE_CATEGORIES": "3. Choose relevant categories*",
+
+    "NAME_PLACEHOLDER": "Quiz name",
+    "DESCRIPTION_PLACEHOLDER": "Quiz description",
+    "CATEGORIES_PLACEHOLDER": "Categories",
+
+    "NAME_VALIDATION": "Please enter a quiz name",
+    "DESCRIPTION_VALIDATION": "Please enter a quiz description",
+    "CATEGORIES_VALIDATION": "Please select one or more categories",
+
+    "BUTTON": {
+      "NEXT": "Next",
+      "Cancel": "Cancel"
+    }
+  },
+
+  "QUIZ_EDIT": {
+    "TITLE": "My Questions",
+
+    "QUESTION_FORM": {
+      "NAME": {
+        "LABEL": "Question",
+        "PLACEHOLDER": "Question name",
+        "VALIDATION": "Please enter a question"
+      },
+      "SELECT_TYPE": {
+        "LABEL": "Select type of question",
+        "PLACEHOLDER": "Choose type",
+        "TYPE_VALIDATION": "Please select type of question",
+        "OPTIONS": {
+          "TRUE_FALSE": {
+            "LABEL": "True/False",
+            "TRUE": "True",
+            "False": "False"
+          },
+          "TYPE_ANSWER": {
+            "PLACEHOLDER": "Answer"
+          },
+          "SELECT_OPTION": {
+            "LABEL": "Select option",
+            "PLACEHOLDER": "Answer",
+            "BUTTON": {
+              "TRUE": "TRUE",
+              "FALSE": "FALSE"
+            }
+          },
+          "SELECT_SEQUENCE": {
+            "LABEL": "Select sequence",
+            "PLACEHOLDER": "Answer"
+          }
+        }
+      },
+      "SELECT_TIME": {
+        "LABEL": "Select time",
+        "PLACEHOLDER": "Choose time",
+        "TIME_VALIDATION": "Please select time for question",
+        "OPTIONS": {
+          "SECOND": "SECOND",
+          "SECONDS": "SECONDS",
+          "MINUTE": "MINUTE",
+          "MINUTES": "MINUTES"
+        }
+      },
+
+      "BUTTON": {
+        "NEXT": "Next",
+        "Cancel": "Cancel"
+      }
+    },
+
+    "BUTTON": {
+      "ADD_QUESTION": "Add question",
+      "DONE": "Done"
+    }
+  }
+}
+

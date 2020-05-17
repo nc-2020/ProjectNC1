@@ -10,15 +10,10 @@ import {Notification} from '../entities/notification';
   providedIn: 'root'
 })
 export class NotificationService {
-  private apiUrl = 'http://localhost:8080/api/notification';
-  // private apiUrl = '/api/notification';
+  // private apiUrl = 'http://localhost:8080/api/notification';
+  private apiUrl = '/api/notification';
   constructor(private http: HttpClient, private userService: UserService) { }
 
-  private handleError<T>(operation= 'opeartion') {
-    return (error: any): Observable<T> => {
-      return throwError(error);
-    };
-  }
    body = {
     target: 'targetId',
     subset: "fruits",
@@ -44,4 +39,9 @@ export class NotificationService {
     );
   }
 
+  private handleError<T>(operation= 'operation') {
+    return (error: any): Observable<T> => {
+      return throwError(error);
+    };
+  }
 }

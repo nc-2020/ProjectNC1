@@ -6,6 +6,7 @@ import {UserService} from './services/user.service';
 import {NotificationService} from './services/notification.service';
 import {Notification} from './entities/notification';
 import {SettingsService} from "./services/settings.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ export class AppComponent {
   constructor(private http: HttpClient,
               private userService: UserService,
               private router: Router,
+              public translate: TranslateService,
               private notificationService: NotificationService,
               private settingsService: SettingsService ) {
 

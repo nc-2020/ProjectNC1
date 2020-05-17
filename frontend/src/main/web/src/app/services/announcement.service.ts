@@ -10,21 +10,14 @@ import {UserService} from "./user.service";
   providedIn: 'root'
 })
 export class AnnouncementService {
-  apiURL = 'http://localhost:8080/api';
-  // apiURL = '/api';
+  // apiURL = 'http://localhost:8080/api';
+  apiURL = '/api';
   private readonly token: string;
   private httpHeader: HttpHeaders;
 
   constructor(private http: HttpClient, private userService: UserService) {
     this.token = this.userService.getToken();
     this.httpHeader = new HttpHeaders().set('Authorization',  `Bearer_${this.token}`);
-  }
-
-  private handleError<T>(operation= 'operation') {
-    return (error: any): Observable<T> => {
-      console.log(operation + ' ' + error);
-      return throwError(error);
-    };
   }
 
   getAll() {
@@ -71,5 +64,12 @@ export class AnnouncementService {
       .pipe(
       catchError(this.handleError<any>('updateAnnouncement'))
     );
+  }
+
+  private handleError<T>(operation= 'operation') {
+    return (error: any): Observable<T> => {
+      console.log(operation + ' ' + error);
+      return throwError(error);
+    };
   }
 }

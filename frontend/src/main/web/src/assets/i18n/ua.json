@@ -1,0 +1,42 @@
+{
+  "HOME": {
+    "TITLE": "Ласкаво просимо",
+    "LOGIN_TEXT": "Увійдіть, щоб побачити своє привітання",
+    "WELCOME": "Ми раді бачити вас"
+  },
+
+  "HEADER": {
+    "HOME": "Головна",
+    "LOGIN": "Вхід"
+  },
+
+  "LOGIN": {
+    "TITLE": "USER LOGIN",
+    "WELCOME": "Welcome to BrainDuel!",
+    "FORM": {
+      "USERNAME": "ІМ'Я КОРИСТУВАЧА",
+      "PASSWORD": "PASSWORD",
+      "REMEMBER_ME": "Remember me",
+      "BUTTON": {
+        "LOGIN": "Login"
+      },
+      "FORGOT_PASSWORD": "Forgot password?",
+      "SIGN_UP": "Sign up"
+    }
+  },
+
+  "SIGN_UP": {
+    "TITLE": "USER SIGN UP",
+    "TEXT": "for BrainDuel",
+    "FORM": {
+      "USERNAME": "ІМ'Я КОРИСТУВАЧА",
+      "PASSWORD": "PASSWORD",
+      "REMEMBER_ME": "Remember me",
+      "BUTTON": {
+        "LOGIN": "Login"
+      },
+      "FORGOT_PASSWORD": "Forgot password?",
+      "SIGN_UP": "Sign up"
+    }
+  }
+}

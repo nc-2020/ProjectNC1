@@ -9,12 +9,11 @@ import {UserService} from "./user.service";
   providedIn: 'root'
 })
 export class QuestionService {
+  // private questionsUrl = 'http://localhost:8080/api/question/';  // URL to web api
+  // private apiUrl = 'http://localhost:8080/api';
+  private questionsUrl = '/api/question/';  // URL to web api
+  private apiUrl = '/api';
 
-  private questionsUrl = 'http://localhost:8080/api/question/';  // URL to web api
-  // private questionsUrl = '/api/question/';  // URL to web api
-  private apiUrl = 'http://localhost:8080/api';
-
-  // private apiUrl = '/api';
   private readonly token: string;
   private httpHeader: HttpHeaders;
 

@@ -7,10 +7,13 @@
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/home">Home</a>
+        <a class="nav-link" routerLink="/home">{{'HEADER.HOME' | translate}}</a>
       </li>
       <li *ngIf="!authenticated()" class="nav-item">
-        <a class="nav-link" routerLink="/login">Login</a>
+        <a class="nav-link" routerLink="/login">{{'HEADER.LOGIN' | translate}}</a>
+      </li>
+      <li *ngIf="authenticated()" class="nav-item">
+        <a class="nav-link" (click)="logout()">Logout</a>
       </li>
       <li *ngIf="authenticated()" class="nav-item">
         <a class="nav-link" routerLink="/dashboard">Dashboard</a>
@@ -34,8 +37,11 @@
           </div>
         </div>
       </div>
+
       <a *ngIf="authenticated()" class="btn bg-secondary btn-sm mr-3" routerLink="/quiz-create">Create quiz</a>
-      <a *ngIf="authenticated()" class="btn bg-secondary btn-sm"  (click)="logout()">Logout</a>
+<!--      <a *ngIf="authenticated()" class="btn bg-secondary btn-sm"  (click)="logout()">Logout</a>-->
+      <a (click)="translate.use('en')" class="btn btn-lg" role="button"><span class="flag-icon flag-icon-gb"></span></a>
+      <a (click)="translate.use('ua')" class="btn btn-lg" role="button"><span class="flag-icon flag-icon-ua"></span></a>
     </form>
   </div>
 </nav>
