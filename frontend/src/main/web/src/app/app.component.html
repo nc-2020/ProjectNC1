@@ -16,7 +16,7 @@
         <a class="nav-link" routerLink="/dashboard">Dashboard</a>
       </li>
     </ul>
-    <form class="form-inline  mt-2 mt-md-0">
+    <form class="form-inline  mt-2 mt-md-0" >
       <div *ngIf="authenticated() && getRole() ==='user' && notifications.length > 0" class="btn-group dropbuttom mr-2">
         <a class="btn dropdown-toggle border"
            id="dropdownMenuButton" data-toggle="dropdown">
@@ -34,11 +34,15 @@
           </div>
         </div>
       </div>
+
+      <button type="button" class="btn bg-secondary btn-sm mr-3" data-toggle="modal" data-target="#joinModal">Join game</button>
       <a *ngIf="authenticated()" class="btn bg-secondary btn-sm mr-3" routerLink="/quiz-create">Create quiz</a>
       <a *ngIf="authenticated()" class="btn bg-secondary btn-sm"  (click)="logout()">Logout</a>
     </form>
   </div>
+  
 </nav>
+
 <router-outlet></router-outlet>
 <app-my-loader></app-my-loader>
 

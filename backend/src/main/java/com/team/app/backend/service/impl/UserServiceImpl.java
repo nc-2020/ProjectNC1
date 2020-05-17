@@ -8,6 +8,7 @@ import com.team.app.backend.persistance.dao.UserDao;
 import com.team.app.backend.persistance.model.Role;
 import com.team.app.backend.persistance.model.User;
 import com.team.app.backend.persistance.model.UserStatus;
+import com.team.app.backend.service.EmailsService;
 import com.team.app.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.Email;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +33,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private JavaMailSender mailSender;
+
+    @Autowired
+    private EmailsService emailsService;
+
 
     @Override
     public User findByUsername(String username) {
@@ -99,7 +105,7 @@ public class UserServiceImpl implements UserService {
         user.setActivate_link("ttest");
         user.setRegistr_date(new Date());
         user.setRole(new Role(userCreateDto.getRole().getName() =="admin" ? 3L : 2L ,userCreateDto.getRole().getName()));
-        user.setStatus(new UserStatus(1L,"REGISTERED"));
+        user.setStatus(new UserStatus(2L,"ativated"));
         userDao.save(user);
         return userDao.findByUsername(userCreateDto.getUsername());
     }
@@ -132,18 +138,8 @@ public class UserServiceImpl implements UserService {
         user.setRole(new Role(1L,"USER"));
         user.setStatus(new UserStatus(1L,"REGISTERED"));
 
-        String recipientAddress = user.getEmail();
-        String subject = "Registration Confirmation";
-        String confirmationUrl = "/api/user/activate?token=" + user.getActivate_link();
-        String message = "Welcome on our site!" +
-                "To continue press net link ";
 
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setFrom("Brain-duel");
-        email.setTo(recipientAddress);
-        email.setSubject(subject);
-        email.setText(message + " https://brainduel.herokuapp.com/" + confirmationUrl); //change to heroku brainduek
-        mailSender.send(email);
+        mailSender.send(emailsService.activationLetter(user.getEmail(),user.getActivate_link()));
         userDao.save(user);
 
     }

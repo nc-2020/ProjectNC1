@@ -1,14 +1,24 @@
 <section  class="min-vh-100" id="cover">
   <div class="container text-white p-2 align-items-center w-50" id="bod0" style="height: 15rem" *ngIf="interval===null && indexQuestion === 0">
     <h2 class="mt-2">Before start playing</h2>
-    <div class="row">
+    <div class="row" *ngIf="getUserJoin()!==null">
       <div class="col">
         <button class="btn btn-primary my-2 w-50" (click)="startNewGame(); startQuestionTimer()" >Start new game!</button>
       </div>
     </div>
+    <div class="row" *ngIf="getUserJoin()===null">
+      <div class="col">
+        <h4>Waiting for host to start game...</h4>
+      </div>
+    </div>
     <div class="row">
       <div class="col">
-        <button class="btn btn-primary mt-2 w-50">Invite Friends</button>
+        <button class="btn btn-primary mt-2 w-50" type="button" data-toggle="collapse" data-target="#inviteFriendCollapse" aria-expanded="false" aria-controls="collapseExample">
+          Invite Friends
+        </button>
+        <div class="collapse" id="inviteFriendCollapse">
+          <h4>Access code : {{access_code}}</h4>
+        </div>
       </div>
     </div>
   </div>

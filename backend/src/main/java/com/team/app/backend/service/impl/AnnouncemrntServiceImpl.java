@@ -2,8 +2,11 @@ package com.team.app.backend.service.impl;
 
 import com.team.app.backend.persistance.dao.AnnouncementDao;
 import com.team.app.backend.persistance.dao.NotificationDao;
+import com.team.app.backend.persistance.dao.UserActivityDao;
+import com.team.app.backend.persistance.dao.UserDao;
 import com.team.app.backend.persistance.model.Announcement;
 import com.team.app.backend.persistance.model.Notification;
+import com.team.app.backend.persistance.model.UserActivity;
 import com.team.app.backend.service.AnnouncementService;
 import com.team.app.backend.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +28,30 @@ public class AnnouncemrntServiceImpl implements AnnouncementService {
     private AnnouncementDao announcementDao;
 
     @Autowired
+    private UserActivityDao userActivityDao;
+
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
     private NotificationService notificationService;
 
     @Transactional
     public void createAnnouncement(Announcement announcement) {
+
         announcement.setCategoryId(1L);
         long millis=System.currentTimeMillis();
-        java.sql.Date date = new java.sql.Date(millis);
+        java.sql.Timestamp date = new java.sql.Timestamp(millis);
         announcement.setDate(date);
+
+        UserActivity userActivity=new UserActivity();
+        userActivity.setCategoryId(4L);
+        userActivity.setDate(new java.sql.Timestamp(millis));
+        userActivity.setUserId(announcement.getUserId());
+        userActivity.setText(String.format("%s created announcement titled \"%s\"",userDao.get(announcement.getUserId()).getUsername(),announcement.getTitle()));
+
+        userActivityDao.create(userActivity);
+
         announcementDao.create(announcement);
     }
 

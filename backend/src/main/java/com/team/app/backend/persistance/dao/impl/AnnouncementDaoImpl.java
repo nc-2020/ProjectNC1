@@ -62,13 +62,13 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
     }
     @Override
     public List<Announcement> getCreated() {
-        return jdbcTemplate.query("select an.id, an.title, an.text, an.date, an.image, an.status_id, an.cat_id, an.user_id from announcement  an where status_id = 1"
+        return jdbcTemplate.query("select an.id, an.title, an.text, an.date::DATE, an.image, an.status_id, an.cat_id, an.user_id from announcement  an where status_id = 1"
                 ,announcementRowMapper);
 
     }
     @Override
     public List<Announcement> getAll() {
-        return jdbcTemplate.query("select an.id, an.title, an.text, an.date, an.image, an.status_id, an.cat_id, an.user_id from announcement  an where status_id <> 1 order by an.status_id desc, an.date desc;"
+        return jdbcTemplate.query("select an.id, an.title, an.text, an.date::DATE, an.image, an.status_id, an.cat_id, an.user_id from announcement  an where status_id <> 1 order by an.status_id desc, an.date desc;"
                 ,announcementRowMapper);
 
     }

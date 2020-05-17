@@ -13,6 +13,8 @@ import {Category} from '../entities/category';
 import {Achievement} from "../entities/achievement";
 import {AchievementService} from "../services/achievement.service";
 import {UserAchievement} from "../entities/user-achievement";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Session} from "../entities/session";
 
 @Component({
   selector: 'app-dashboard',
@@ -28,7 +30,8 @@ export class DashboardComponent implements OnInit {
   achievementList: UserAchievement[] = [];
   categoriesList: Category[] = [];
   isVisible = true;
-
+  joinForm: FormGroup;
+  message='';
 
   private searchQuizTerms = new Subject<string>();
   private searchUserTerms = new Subject<string>();
@@ -37,7 +40,9 @@ export class DashboardComponent implements OnInit {
   constructor(private userService: UserService, private quizService: QuizService, private achievementService: AchievementService,
               private categoryService: CategoryService,
               private location: Location, private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private fb: FormBuilder,
+    ) { }
 
   ngOnInit(): void {
     this.getCategories();
@@ -54,6 +59,7 @@ export class DashboardComponent implements OnInit {
       // switch to new search observable each time the term changes
       switchMap((term: string) => this.userService.searchUsers(term)),
     );
+    this.setJoinForm();
 
   }
 
@@ -107,4 +113,22 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+
+
+  private setJoinForm() {
+    this.joinForm = this.fb.group({
+      accessCode: ["", [Validators.required, Validators.minLength(3)]]
+    } );
+  }
+  connectToSession(accessCode:string){
+    this.userService.user.joined=true;
+    this.quizService.joinSession(accessCode).subscribe((session: Session) => {
+     this.router.navigate(['/quiz/' + session.quiz_id + '/' + session.id])
+    }, error => this.message = error.message)
+  }
+
+  submit() {
+    this.connectToSession(this.joinForm.get('accessCode').value);
+  }
+
 }

@@ -1,5 +1,6 @@
 package com.team.app.backend.persistance.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Announcement extends Message {
@@ -11,7 +12,7 @@ public class Announcement extends Message {
        super();
     }
 
-    public Announcement(Long id, String title, String text, Date date, byte[] image, Long statusId,Long categoryId, Long userId) {
+    public Announcement(Long id, String title, String text, Timestamp date, byte[] image, Long statusId, Long categoryId, Long userId) {
         super( id,  text, date, categoryId, userId);
         this.title = title;
         this.image = image;

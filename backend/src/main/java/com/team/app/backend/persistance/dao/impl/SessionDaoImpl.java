@@ -33,7 +33,7 @@ public class SessionDaoImpl implements SessionDao {
                             new String[] {"id"}
                     );
                     ps.setString(1, session.getAccess_code());
-                    ps.setDate(2, session.getDate());
+                    ps.setTimestamp(2, session.getDate());
                     ps.setLong(3, session.getQuiz_id());
                     ps.setLong(4, session.getStatus().getId());
                     return ps;
@@ -54,7 +54,7 @@ public class SessionDaoImpl implements SessionDao {
                     session
                             .setId(resultSet.getLong("id"))
                             .setAccess_code(resultSet.getString("access_code"))
-                            .setDate(resultSet.getDate("date"))
+                            .setDate(resultSet.getTimestamp("date"))
                             .setQuiz_id(resultSet.getLong("quiz_id"))
                             .setStatus(new SessionStatus(resultSet.getLong("status_id"),resultSet.getString("status_name")));
                     return session;
@@ -77,7 +77,7 @@ public class SessionDaoImpl implements SessionDao {
                             new String[] {"id"}
                     );
                     ps.setString(1, session.getAccess_code());
-                    ps.setDate(2, session.getDate());
+                    ps.setTimestamp(2, session.getDate());
                     ps.setLong(3, session.getQuiz_id());
                     ps.setLong(4, session.getId());
                     return ps;
@@ -92,6 +92,34 @@ public class SessionDaoImpl implements SessionDao {
         jdbcTemplate.update("UPDATE session SET status_id =? WHERE id = ?",
                 new Object[]{status_id,ses_id}
         );
+    }
+
+
+
+
+    @Override
+    public boolean checkAccesCodeAvailability(String access_code) {
+        return jdbcTemplate.queryForObject(
+                "SELECT ? IN (SELECT access_code FROM session WHERE status_id = 1)",
+                new Object[]{access_code},Boolean.class
+        );
+    }
+
+    @Override
+    public Session getSessionByCode(String access_code) {
+        String sql = "S.id,S.access_code,S.date,S.quiz_id,S.status_id ,SS.name AS status_name FROM session S INNER JOIN ses_status SS ON S.status_id = SS.id WHERE S.access_code = ? AND S.status_id = 1";
+        return jdbcTemplate.queryForObject(
+            sql, new Object[]{access_code},
+                (resultSet, i) -> {
+                    Session session = new Session();
+                    session
+                            .setId(resultSet.getLong("id"))
+                            .setAccess_code(resultSet.getString("access_code"))
+                            .setDate(resultSet.getTimestamp("date"))
+                            .setQuiz_id(resultSet.getLong("quiz_id"))
+                            .setStatus(new SessionStatus(resultSet.getLong("status_id"),resultSet.getString("status_name")));
+                    return session;
+                });
     }
 
 

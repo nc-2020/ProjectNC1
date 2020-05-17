@@ -23,10 +23,12 @@ public class OptionsController {
     public List<Option> getOptions(@PathVariable("id") long id) {
         return optionService.getOptions(id);
     }
+
     @GetMapping("/default_options/{id}")
     public List<DefaultQuest> getDefOptions(@PathVariable("id") long id) {
         return optionService.getDefaultOption(id);
     }
+
     @GetMapping("/sequence_options/{id}")
     public List<SeqOption> getSeqOptions(@PathVariable("id") long id) {
         return optionService.getSeqOption(id);

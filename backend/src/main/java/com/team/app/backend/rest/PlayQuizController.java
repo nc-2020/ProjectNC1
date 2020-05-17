@@ -48,12 +48,9 @@ public class PlayQuizController {
             @PathVariable("quiz_id") long quiz_id) {
         Quiz quiz = quizService.getQuiz(quiz_id);
         Session session = sessionService.newSessionForQuiz(quiz);
-        //String accessCode = AccessCodeProvider.createAccessCode(session, quiz);
-        session.setAccess_code(session.getId().toString());
         sessionService.updateSession(session);
         User user = userService.getUserById(user_id);
-
-        UserToSession userToSession = userToSessionService.createNewUserToSession(user, session);
+        userToSessionService.createNewUserToSession(user, session);
 
         return ResponseEntity.ok(session);
     }
@@ -66,20 +63,26 @@ public class PlayQuizController {
     }
 
 
-    @GetMapping("join")
-    public ResponseEntity joinQuiz(
-            @RequestParam("user_id") Long user_id,
-            @RequestParam("access_code") Long accessCode
+    @GetMapping("access_code/{ses_id}")
+    public ResponseEntity getAccessCode(
+            @PathVariable("ses_id") long ses_id
+
     ) {
-        //Quiz quiz = quizService.getQuiz(
-                //AccessCodeProvider.parseAccessCode(accessCode).get("quiz_id"));
-        //sessionService.getSessionById(
-         //       AccessCodeProvider.parseAccessCode(accessCode).get("session_id") Session session = );
-        Session session = sessionService.getSessionById(accessCode);
-        if(session.getStatus().getId()==1){
+        Session session = sessionService.getSessionById(ses_id);
+        return ResponseEntity.ok(session.getAccess_code());
+
+    }
+
+    @GetMapping("join")
+    public ResponseEntity getAccessCode(
+            @RequestParam("user_id") Long user_id,
+            @RequestParam("access_code") String accessCode
+    ) {
+        Session session = sessionService.getSessionByAccessCode(accessCode);
+        if(session != null){
             User user = userService.getUserById(user_id);
-            UserToSession userToSession = userToSessionService.createNewUserToSession(user, session);
-            return ResponseEntity.ok("");
+            userToSessionService.createNewUserToSession(user, session);
+            return ResponseEntity.ok(session);
         }else{
             throw new BadCredentialsException("Session already in progress or finished");
         }

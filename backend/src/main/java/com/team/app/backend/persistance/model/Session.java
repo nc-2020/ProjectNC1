@@ -3,13 +3,14 @@ package com.team.app.backend.persistance.model;
 import org.jasypt.util.text.BasicTextEncryptor;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Session {
 
     private Long id;
-    private Long quizId;
+    private Long quiz_id;
     private String accessCode;
-    private Date date;
+    private Timestamp date;
     private SessionStatus status;
 
     public SessionStatus getStatus() {
@@ -22,14 +23,14 @@ public class Session {
 
     public Session() {}
 
-    public Session(Long quiz_id) {
-        long millis=System.currentTimeMillis();
-        java.sql.Date date=new java.sql.Date(millis);
-        this.quizId = quiz_id;
+    public Session(Long quiz_id, String accessCode, Timestamp date, SessionStatus status) {
+        this.quiz_id = quiz_id;
+        this.accessCode = accessCode;
         this.date = date;
-        this.accessCode = "";
-        this.status=new SessionStatus(1L,"waiting");
+        this.status = status;
     }
+
+
 
     public Long getId() {
         return id;
@@ -41,11 +42,11 @@ public class Session {
     }
 
     public Long getQuiz_id() {
-        return quizId;
+        return quiz_id;
     }
 
     public Session setQuiz_id(Long quiz_id) {
-        this.quizId = quiz_id;
+        this.quiz_id = quiz_id;
         return this;
     }
 
@@ -58,11 +59,11 @@ public class Session {
         return this;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public Session setDate(Date date) {
+    public Session setDate(Timestamp date) {
         this.date = date;
         return this;
     }

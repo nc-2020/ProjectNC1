@@ -1,15 +1,15 @@
 package com.team.app.backend.persistance.model;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public abstract class Message {
     private Long id;
     private String text;
-    private Date date;
+    private Timestamp date;
     private Long categoryId;
     private Long userId;
 
-    public Message(Long id, String text, Date date, Long categoryId, Long userId) {
+    public Message(Long id, String text, Timestamp date, Long categoryId, Long userId) {
         this.id = id;
         this.text = text;
         this.date = date;
@@ -19,7 +19,7 @@ public abstract class Message {
 
     public Message() {
         long millis=System.currentTimeMillis();
-        java.sql.Date date = new java.sql.Date(millis);
+        java.sql.Timestamp date = new java.sql.Timestamp(millis);
         this.date = date;
     }
     public Long getId() {
@@ -38,11 +38,11 @@ public abstract class Message {
         this.text = text;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 

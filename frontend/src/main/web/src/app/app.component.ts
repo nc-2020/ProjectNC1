@@ -6,6 +6,9 @@ import {UserService} from './services/user.service';
 import {NotificationService} from './services/notification.service';
 import {Notification} from './entities/notification';
 import {SettingsService} from "./services/settings.service";
+import {QuizService} from "./services/quiz.service";
+import {Session} from "./entities/session";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -21,7 +24,8 @@ export class AppComponent {
               private userService: UserService,
               private router: Router,
               private notificationService: NotificationService,
-              private settingsService: SettingsService ) {
+              private settingsService: SettingsService ,
+              ) {
 
   }
 
@@ -29,8 +33,10 @@ export class AppComponent {
     if(this.userService.user.role.name === 'user') {
       this.getNotifications();
       this.getNotificationSettings();
+
     }
   }
+
 
   @HostListener('window:beforeunload')
   deleteNotifications() {
@@ -57,11 +63,13 @@ export class AppComponent {
     this.userService.logout().subscribe(
       _ => this.router.navigateByUrl('/login'));
   }
-getRole() {
+  getRole() {
     return this.userService.user.role.name;
-}
+  }
   authenticated() {
     return this.userService.authenticated;
   }
+
+
 
 }

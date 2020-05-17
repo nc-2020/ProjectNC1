@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 @Transactional
@@ -21,9 +22,30 @@ public class SessionServiceImpl implements SessionService {
     UserToSessionService userToSessionService;
 
 
+    private String generateAccessCode(){
+        Random rnd = new Random();
+        int number = rnd.nextInt(999999);
+        String access_code = String.format("%06d", number);
+        while(sessionDao.checkAccesCodeAvailability(access_code)) {
+            number = rnd.nextInt(999999);
+            access_code = String.format("%06d", number);
+        }
+        return access_code;
+    }
+
+
     @Override
     public Session newSessionForQuiz(Quiz quiz) {
-        return sessionDao.save(new Session(quiz.getId()));
+        long millis=System.currentTimeMillis();
+        java.sql.Timestamp date=new java.sql.Timestamp(millis);
+
+        Session session= new Session(
+                quiz.getId(),
+                generateAccessCode(),
+                date,
+                new SessionStatus(1L,"waiting")
+        );
+        return sessionDao.save(session);
     }
 
     @Override
@@ -44,5 +66,11 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public void setSesionStatus(Long ses_id, SessionStatus sessionStatus) {
         sessionDao.setSesionStatus(ses_id,sessionStatus.getId());
+    }
+
+    @Override
+    public Session getSessionByAccessCode(String access_code) {
+        if(sessionDao.checkAccesCodeAvailability(access_code))return sessionDao.getSessionByCode(access_code);
+        return null;
     }
 }

@@ -58,3 +58,17 @@ h2{
 [class*='col-']:last-of-type {
   padding-right: 0;
 }
+
+color-black{
+  color: black;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+input.ng-valid.ng-touched {
+  border: 1px solid green;
+}
+small{
+  color: red;
+}

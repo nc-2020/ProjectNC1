@@ -34,8 +34,8 @@
               </a>
             </li>
             <li class="nav-item border-bottom">
-              <a class="nav-link btn" (click)="changeTab('News')">
-                <strong>News</strong>
+              <a class="nav-link btn" (click)="changeTab('Activity')">
+                <strong>Friends Activities</strong>
               </a>
             </li>
             <li  class="nav-item border-bottom">
@@ -60,6 +60,30 @@
       </nav>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-9 px-1 align-self-start" >
+        <div class="modal fade" id="joinModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+                <form [formGroup]="joinForm" (ngSubmit)="submit()">
+                  <div class="col-lg-11 ml-lg-3 mt-5 alert alert-danger" [hidden]="!message">
+                    There was a problem. {{message }}.
+                  </div>
+                  <div class="form-group">
+                    <h4 class="col-form-label form-control-label" style="color: black">Enter you friends access code</h4>
+                    <input type="text" formControlName="accessCode"  class="form-control text-center"  placeholder="Access Code" required [minlength]="6" [maxlength]="6">
+                    <div *ngIf="joinForm.get('accessCode').invalid && joinForm.get('accessCode').touched"
+                      class="validation">
+                      <small *ngIf="joinForm.get('accessCode').errors.required">
+                        Access Code cannot be empty
+                      </small>
+                    </div>
+                  </div>
+                  <button  class="btn btn-primary btn-lg" type="submit" [disabled]="joinForm.invalid">Join</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
         <div *ngIf="tab === 'Users' || tab === 'Friends' || tab === 'Admins-Moderators' || tab==='Moderators' || tab === 'Quizzes' " class=" main-frame container-fluid my-5 ">
           <form *ngIf="tab !== 'Quizzes'" class="form-inline ml-3 my-2 my-lg-0" >
             <input #searchBox id="search-box"  class="form-control my-2" type="text" placeholder="Search" style="width: 70%">
@@ -100,6 +124,7 @@
         <app-user-profile *ngIf="tab === 'Profile' || tab === 'AddProfile'" [user]="user" [editOnly]="tab === 'Profile'? false : true" ></app-user-profile>
         <app-settings *ngIf="tab === 'Settings'"></app-settings>
         <app-announcement-dashboard *ngIf="tab === 'Announcement'" ></app-announcement-dashboard>
+        <app-user-activity-dashboard *ngIf="tab === 'Activity'"></app-user-activity-dashboard>
       </main>
     </div>
   </div>

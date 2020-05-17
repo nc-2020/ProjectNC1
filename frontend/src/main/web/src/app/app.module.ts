@@ -32,7 +32,8 @@ import {FriendsComponent} from './friends/friends.component';
 import {UserInviteCardComponent} from './friends/user-invite-card/user-invite-card.component';
 import { AchievementsComponent } from './achievements/achievements.component';
 import { SettingsComponent } from './settings/settings.component';
-
+import { UserActivityDashboardComponent } from './user-activity-dashboard/user-activity-dashboard.component';
+import { UserActivityComponent } from './user-activity/user-activity.component';
 
 
 
@@ -58,7 +59,9 @@ import { SettingsComponent } from './settings/settings.component';
     FriendsComponent,
     UserInviteCardComponent,
     AchievementsComponent,
-    SettingsComponent
+    SettingsComponent,
+    UserActivityDashboardComponent,
+    UserActivityComponent
   ],
   imports: [
     BrowserModule,
