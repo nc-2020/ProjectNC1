@@ -103,16 +103,20 @@
                 <input [(ngModel)]="option.text"  class="mt-1 mb-1" type="text" id="select-option-input" placeholder="{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.TYPE_ANSWER.PLACEHOLDER' | translate}}" data-qtest="quiz-name-input-field" maxlength="60">
               </li>
             </ol>
+            <a type="button" (click)="addOption('select')"><mat-icon>add_circle</mat-icon></a>
+            <a type="button" (click)="deleteOption('select')"><mat-icon>remove_circle</mat-icon></a>
           </div>
-          <div *ngIf="questionForm.get('questionType').value === '4'" class="quiz-name-input kr2-textfield">
-            <p>{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.SELECT_SEQUENCE.LABEL' | translate}}</p>
+          <div *ngIf="questionForm.get('questionType').value === '4'" class="quiz-name-input kr2-textfield text-left">
+            <p class="text-center">{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.SELECT_SEQUENCE.LABEL' | translate}}</p>
             <ol>
             <div cdkDropList (cdkDropListDropped)="drop($event)">
-                <li *ngFor="let option of optionsSequence; let i = index" class="pop" cdkDrag>
-                  <input [(ngModel)]="option.text" type="text" id="select-sequence-input" placeholder="{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.TYPE_ANSWER.PLACEHOLDER' | translate}}" data-qtest="quiz-name-input-field" maxlength="60">
+                <li *ngFor="let option of optionsSequence" class="pop">
+                  <input [(ngModel)]="option.text" type="text" id="select-sequence-input" cdkDrag placeholder="{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.TYPE_ANSWER.PLACEHOLDER' | translate}}" data-qtest="quiz-name-input-field" maxlength="60">
                 </li>
             </div>
             </ol>
+            <a type="button"(click)="addOption('sequence')"><mat-icon>add_circle</mat-icon></a>
+            <a type="button"(click)="deleteOption('sequence')"><mat-icon>remove_circle</mat-icon></a>
           </div>
         </div>
       </div>

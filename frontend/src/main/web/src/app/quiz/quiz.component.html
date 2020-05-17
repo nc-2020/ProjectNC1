@@ -1,35 +1,35 @@
 <section  class="min-vh-100" id="cover">
   <div class="container text-white p-2 align-items-center w-50" id="bod0" style="height: 15rem" *ngIf="interval===null && indexQuestion === 0">
-    <h2 class="mt-2">Before start playing</h2>
+    <h2 class="mt-2">{{'PLAY_QUIZ.START_MENU.TITLE' | translate}}</h2>
     <div class="row">
       <div class="col">
-        <button class="btn btn-primary my-2 w-50" (click)="startNewGame(); startQuestionTimer()" >Start new game!</button>
+        <button class="btn btn-primary my-2 w-50" (click)="startNewGame(); startQuestionTimer()" >{{'PLAY_QUIZ.START_MENU.BUTTON.START' | translate}}</button>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <button class="btn btn-primary mt-2 w-50">Invite Friends</button>
+        <button class="btn btn-primary mt-2 w-50">{{'PLAY_QUIZ.START_MENU.BUTTON.INVITE' | translate}}</button>
       </div>
     </div>
   </div>
   <div *ngIf="interval===null && indexQuestion === questions.length - 1" class="container text-white p-2 align-items-center w-50" style="height: 15rem" [hidden]="interval">
-    <h2 class="mt-2">Your score is {{getScore()}}</h2>
+    <h2 class="mt-2">{{'PLAY_QUIZ.RESULT.TEXT' | translate}} {{getScore()}}</h2>
 
     <app-quiz-aprove-form *ngIf="getUserRole() !== 'user'" [userId]="72" [quizId]="quizId">  <!--fix hard code!!!!!!!!1-->
     </app-quiz-aprove-form>
-    <a routerLink="/dashboard"><h3>Go back to quizzes</h3></a>
+    <a routerLink="/dashboard"><h3>{{'PLAY_QUIZ.RESULT.BUTTON' | translate}}</h3></a>
   </div>
   <div class="container text-white p-0" id="bod1" *ngIf="interval!==null" >
     <nav class="w-100 navbar-expand-md">
       <ul class="navbar-nav  justify-content-between">
         <li class="nav-item">
-          <label class="ml-2 mr-2">Question {{indexQuestion + 1}}/{{questions.length}}</label>
+          <label class="ml-2 mr-2">{{'PLAY_QUIZ.GAME.QUESTION' | translate}} {{indexQuestion + 1}}/{{questions.length}}</label>
         </li>
         <li class="nav-item">
-          <label class="ml-2">Score {{getScore()}}/{{questions.length}}</label>
+          <label class="ml-2">{{'PLAY_QUIZ.GAME.SCORE' | translate}} {{getScore()}}/{{questions.length}}</label>
         </li>
         <li class="nav-item">
-          <label class="mr-2" [class.text-warning]="timer < 5"> Time left {{timer}}</label>
+          <label class="mr-2" [class.text-warning]="timer < 5"> {{'PLAY_QUIZ.GAME.TIME_LEFT' | translate}} {{timer}}</label>
         </li>
       </ul>
     </nav>
@@ -38,16 +38,16 @@
         <div class="container " id="bod2">
           <div id="questions" class="row mt-2">
             <div class="col text-right">
-              <button (click)="nextQuestion(true)" class="btn text-right my-1 btn-primary">Skip</button>
+              <button (click)="nextQuestion(true)" class="btn text-right my-1 btn-primary">{{'PLAY_QUIZ.GAME.BUTTON.SKIP' | translate}}</button>
             </div>
           </div>
 
           <div class="row mt-2">
             <div *ngIf="optionType === 3" class="col text-right">
-              <button (click)="sendOptionAnswer()" class="btn text-right my-1 btn-success">Send</button>
+              <button (click)="sendOptionAnswer()" class="btn text-right my-1 btn-success">{{'PLAY_QUIZ.GAME.BUTTON.SEND' | translate}}</button>
             </div>
             <div *ngIf="optionType === 4" class="col text-right">
-              <button (click)="seqAnswer()" class="btn text-right my-1 btn-success">Send</button>
+              <button (click)="seqAnswer()" class="btn text-right my-1 btn-success">{{'PLAY_QUIZ.GAME.BUTTON.SEND' | translate}}</button>
             </div>
           </div>
           <div class="row mt-1 justify-content-center">
@@ -62,17 +62,17 @@
         <div id="options" class="row mb-2 justify-content-center">
           <div *ngIf="optionType === 1" class="col-12">
             <div class="row justify-content-between">
-              <button (click)="defAnswer('True')" class="col btn mx-1 btn-success">True</button>
+              <button (click)="defAnswer('True')" class="col btn mx-1 btn-success">{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.SELECT_OPTION.BUTTON.TRUE' | translate}}</button>
             </div>
             <div class="row  my-2 justify-content-between">
-              <button (click)="defAnswer('False')" class="col btn mx-1 btn-success">False</button>
+              <button (click)="defAnswer('False')" class="col btn mx-1 btn-success">{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.SELECT_OPTION.BUTTON.FALSE' | translate}}</button>
             </div>
           </div>
 
           <div *ngIf="optionType === 2" class="input-group mb-3 col-12" style="text-align: center">
-            <input #ans type="text" class="form-control" placeholder="Type answer" aria-label="Type answer" aria-describedby="basic-addon2">
+            <input #ans type="text" class="form-control" placeholder="{{'QUIZ_EDIT.QUESTION_FORM.SELECT_TYPE.OPTIONS.TYPE_ANSWER.PLACEHOLDER' | translate}}" aria-label="Type answer" aria-describedby="basic-addon2">
             <div class="input-group-append">
-              <button (click)="defAnswer(ans.value)" class="col btn mx-1 btn-success" type="button">Send</button>
+              <button (click)="defAnswer(ans.value)" class="col btn mx-1 btn-success" type="button">{{'PLAY_QUIZ.GAME.BUTTON.SEND' | translate}}</button>
             </div>
           </div>
           <div *ngIf="optionType === 3" class="col-12">
