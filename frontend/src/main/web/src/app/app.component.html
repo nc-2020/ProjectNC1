@@ -1,19 +1,22 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
-  <a class="navbar-brand">BrainDuel</a>
+  <a class="navbar-brand" routerLink="/home">{{'HEADER.BRAND' | translate}}</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
           aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/home">Home</a>
+      <li *ngIf="!authenticated()" class="nav-item">
+        <a class="nav-link" routerLink="/home">{{'HEADER.HOME' | translate}}</a>
       </li>
       <li *ngIf="!authenticated()" class="nav-item">
-        <a class="nav-link" routerLink="/login">Login</a>
+        <a class="nav-link" routerLink="/login">{{'HEADER.LOGIN' | translate}}</a>
       </li>
       <li *ngIf="authenticated()" class="nav-item">
-        <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+        <a class="nav-link" (click)="logout()">{{'HEADER.LOGOUT' | translate}}</a>
+      </li>
+      <li *ngIf="authenticated()" class="nav-item">
+        <a class="nav-link" routerLink="/dashboard">{{'HEADER.DASHBOARD' | translate}}</a>
       </li>
     </ul>
     <form class="form-inline  mt-2 mt-md-0" >
@@ -34,13 +37,16 @@
           </div>
         </div>
       </div>
-
-      <button type="button" class="btn bg-secondary btn-sm mr-3" data-toggle="modal" data-target="#joinModal">Join game</button>
+      <button *ngIf="authenticated()" type="button" class="btn bg-secondary btn-sm mr-3" data-toggle="modal" data-target="#joinModal">Join game</button>
       <a *ngIf="authenticated()" class="btn bg-secondary btn-sm mr-3" routerLink="/quiz-create">Create quiz</a>
       <a *ngIf="authenticated()" class="btn bg-secondary btn-sm"  (click)="logout()">Logout</a>
+      <a *ngIf="authenticated()" class="btn bg-secondary btn-sm mr-3" routerLink="/quiz-create">{{'HEADER.BUTTON.CREATE QUIZ' | translate}}</a>
+<!--      <a *ngIf="authenticated()" class="btn bg-secondary btn-sm"  (click)="logout()">Logout</a>-->
+      <a (click)="translate.use('en')" class="btn btn-lg" role="button"><span class="flag-icon flag-icon-gb"></span></a>
+      <a (click)="translate.use('ua')" class="btn btn-lg" role="button"><span class="flag-icon flag-icon-ua"></span></a>
     </form>
   </div>
-  
+
 </nav>
 
 <router-outlet></router-outlet>

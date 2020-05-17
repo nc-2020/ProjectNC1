@@ -1,20 +1,13 @@
 package com.team.app.backend.rest;
 
 import com.team.app.backend.dto.FinishedQuizDto;
-import com.team.app.backend.dto.UserAnswerDto;
 import com.team.app.backend.persistance.model.*;
 import com.team.app.backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,6 +41,7 @@ public class PlayQuizController {
             @PathVariable("quiz_id") long quiz_id) {
         Quiz quiz = quizService.getQuiz(quiz_id);
         Session session = sessionService.newSessionForQuiz(quiz);
+
         sessionService.updateSession(session);
         User user = userService.getUserById(user_id);
         userToSessionService.createNewUserToSession(user, session);
@@ -69,7 +63,7 @@ public class PlayQuizController {
 
     ) {
         Session session = sessionService.getSessionById(ses_id);
-        return ResponseEntity.ok(session.getAccess_code());
+        return ResponseEntity.ok(session.getAccessCode());
 
     }
 

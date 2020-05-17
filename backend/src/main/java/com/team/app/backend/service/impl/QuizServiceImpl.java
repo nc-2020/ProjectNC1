@@ -46,7 +46,6 @@ public class QuizServiceImpl implements QuizService {
 
 
 
-
     @Override
     public Long addDefQuestion(QuestionDefAddDto questionDefAddDto) {
         Long id = addQuestion(questionDefAddDto);
@@ -182,7 +181,8 @@ public class QuizServiceImpl implements QuizService {
         quiz.setDate(date);
         quiz.setImage(quizAddDto.getImage());
         quiz.setUser_id(user_id);
-        quiz.setStatus_Id(new QuizStatus( 1L,"created"));
+        quiz.setStatus(new QuizStatus( 1L,"created"));
+
         Long quiz_id= quizDao.save(quiz);
 
         for (Long cat_id:quizAddDto.getCategories()) {

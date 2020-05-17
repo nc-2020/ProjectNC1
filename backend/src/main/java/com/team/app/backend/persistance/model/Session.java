@@ -47,14 +47,15 @@ public class Session {
 
     public Session setQuiz_id(Long quiz_id) {
         this.quiz_id = quiz_id;
+
         return this;
     }
 
-    public String getAccess_code() {
+    public String getAccessCode() {
         return accessCode;
     }
 
-    public Session setAccess_code(String access_code) {
+    public Session setAccessCode(String access_code) {
         this.accessCode = access_code;
         return this;
     }

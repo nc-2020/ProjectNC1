@@ -27,7 +27,7 @@ public interface UserService {
 
     User createNewUser(UserCreateDto userCreateDto);
 
-    List<User> searchUsers(String string);
+    List<User> searchUsers(String string, int firstRole, int lastRole);
 
     void registerNewUserAccount(UserRegistrationDto userDto)
             throws UserAlreadyExistsException;

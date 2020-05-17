@@ -55,13 +55,12 @@ public class AnnouncemrntServiceImpl implements AnnouncementService {
         announcementDao.create(announcement);
     }
 
-    @Transactional(propagation= Propagation.SUPPORTS)
     @Override
     public List<Announcement> getCreated() {
         return announcementDao.getCreated();
     }
 
-    @Transactional(propagation= Propagation.SUPPORTS)
+
     @Override
     public List<Announcement> getAll() {
         return announcementDao.getAll();
@@ -81,7 +80,7 @@ public class AnnouncemrntServiceImpl implements AnnouncementService {
         }
         notificationService.create(notification);
     }
-    @Transactional(propagation= Propagation.SUPPORTS)
+
     public Announcement  getAnnouncement(Long id) {
        return new Announcement();
     }

@@ -19,7 +19,7 @@ import {AnnouncementEditComponent} from './announcement-edit/announcement-edit.c
 import {QuizComponent} from './quiz/quiz.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {LoaderService} from './services/loader.service';
 import {LoaderInterceptor} from './interceptors/loader-interceptor.service';
 import {MyLoaderComponent} from './components/my-loader/my-loader.component';
@@ -34,8 +34,15 @@ import { AchievementsComponent } from './achievements/achievements.component';
 import { SettingsComponent } from './settings/settings.component';
 import { UserActivityDashboardComponent } from './user-activity-dashboard/user-activity-dashboard.component';
 import { UserActivityComponent } from './user-activity/user-activity.component';
+import { AchievementDashboardComponent } from './achievement-dashboard/achievement-dashboard.component';
+import { AchievementCreateComponent } from './achievement-create/achievement-create.component';
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 
-
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -61,20 +68,30 @@ import { UserActivityComponent } from './user-activity/user-activity.component';
     AchievementsComponent,
     SettingsComponent,
     UserActivityDashboardComponent,
-    UserActivityComponent
+    UserActivityComponent,
+    AchievementDashboardComponent,
+    AchievementCreateComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule,
     AppRoutingModule,
     DragDropModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatSelectModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      },
+      defaultLanguage: 'en'
+    })
   ],
   providers: [
     LoaderService,

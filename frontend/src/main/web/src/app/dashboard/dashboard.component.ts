@@ -15,6 +15,7 @@ import {AchievementService} from "../services/achievement.service";
 import {UserAchievement} from "../entities/user-achievement";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Session} from "../entities/session";
+import {DEBOUNCE_TIME} from "../parameters";
 
 @Component({
   selector: 'app-dashboard',
@@ -27,7 +28,6 @@ export class DashboardComponent implements OnInit {
   user: User;
   users$: Observable<User[]>;
   quizes$: Observable<Quiz[]>;
-  achievementList: UserAchievement[] = [];
   categoriesList: Category[] = [];
   isVisible = true;
   joinForm: FormGroup;
@@ -35,7 +35,6 @@ export class DashboardComponent implements OnInit {
 
   private searchQuizTerms = new Subject<string>();
   private searchUserTerms = new Subject<string>();
-  @ViewChild(UserCardComponent, {static: false}) userCardChild: UserCardComponent;
 
   constructor(private userService: UserService, private quizService: QuizService, private achievementService: AchievementService,
               private categoryService: CategoryService,
@@ -49,14 +48,13 @@ export class DashboardComponent implements OnInit {
     this.tab = this.route.snapshot.paramMap.get('tab');
     this.user = this.tab === 'Profile' ? this.userService.user : {role: {}} as User;
     this.quizes$ = this.searchQuizTerms.pipe(
-      debounceTime(300),
+      debounceTime(DEBOUNCE_TIME),
       distinctUntilChanged(),
       switchMap((term: string) => this.quizService.searchQuizzes(term)),
     );
     this.users$ = this.searchUserTerms.pipe(
-      debounceTime(300),
+      debounceTime(DEBOUNCE_TIME),
       distinctUntilChanged(),
-      // switch to new search observable each time the term changes
       switchMap((term: string) => this.userService.searchUsers(term)),
     );
     this.setJoinForm();
@@ -70,7 +68,6 @@ export class DashboardComponent implements OnInit {
     } else {
       this.searchUserTerms.next(term);
     }
-
   }
   profileSet( editOnly?: boolean, user?: User) {
     this.user = (user ? user : {role: {}} as User);
@@ -79,9 +76,6 @@ export class DashboardComponent implements OnInit {
 
   changeTab(tab: string) {
     this.tab = tab;
-    if (this.tab === 'Achievements') {
-      this.getAchievement();
-    }
     this.router.navigateByUrl(`dashboard/${tab}`);
     this.isVisible = true;
   }
@@ -106,14 +100,6 @@ export class DashboardComponent implements OnInit {
       }
     )
   }
-  getAchievement() {
-    this.achievementService.getAchievements().subscribe(
-      (data: UserAchievement[]) => {
-        this.achievementList = data;
-      }
-    );
-  }
-
 
   private setJoinForm() {
     this.joinForm = this.fb.group({
@@ -130,5 +116,6 @@ export class DashboardComponent implements OnInit {
   submit() {
     this.connectToSession(this.joinForm.get('accessCode').value);
   }
+
 
 }

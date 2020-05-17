@@ -106,7 +106,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/runtime*.js",
                 "/styles*.js",
                 "/scripts.js",
-                "https://brainduel.herokuapp.com/*",
+                "https://brain-duel.herokuapp.com*",
                 "/main*.js",
                 "/assets/loader_brainduel.svg",
                 "/assets/logo_brainduel.png",

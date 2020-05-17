@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("api")
 public class UserController {
@@ -23,10 +22,13 @@ public class UserController {
 
 
 
-    @GetMapping("/user/search/{name}")
-    public List<User> searchUser(@PathVariable("name") String name) {
-        List<User> list = userService.searchUsers(name);
-        return userService.searchUsers(name);
+    @GetMapping("/user/search/{name}/{first}/{last}")
+    public List<User> searchUser(
+            @PathVariable("name") String name,
+            @PathVariable("first") int firstRole,
+            @PathVariable("last") int lastRole) {
+        System.out.println(firstRole);
+        return userService.searchUsers(name, firstRole, lastRole);
     }
 
 

@@ -1,0 +1,364 @@
+{
+  "HOME": {
+    "TITLE": "Welcome",
+    "LOGIN_TEXT": "Login to see your greeting",
+    "WELCOME": "We glad to see you"
+  },
+
+  "HEADER": {
+    "BRAND": "BrainDuel",
+    "HOME": "Home",
+    "LOGIN": "Login",
+    "LOGOUT": "Logout",
+    "DASHBOARD": "Dashboard",
+    "BUTTON": {
+      "CREATE QUIZ": "CREATE QUIZ"
+    }
+  },
+
+  "LOGIN": {
+    "TITLE": "USER LOGIN",
+    "WELCOME": "Welcome to BrainDuel!",
+    "FORM": {
+      "USERNAME": "USERNAME",
+      "PASSWORD": "PASSWORD",
+      "REMEMBER_ME": "Remember me",
+      "BUTTON": {
+        "LOGIN": "Login"
+      },
+      "FORGOT_PASSWORD": "Forgot password?",
+      "SIGN_UP": "Sign up"
+    },
+    "ALERT": "There was a problem logging in. Please try again."
+  },
+
+  "SIGN_UP": {
+    "TITLE": "USER SIGN UP",
+    "TEXT": "for BrainDuel",
+    "FORM": {
+      "USER_NAME": {
+        "LABEL": "USERNAME",
+        "VALIDATION_EMPTY": "Username cannot be empty"
+      },
+      "FIRST_NAME": {
+        "LABEL": "FIRST NAME",
+        "VALIDATION_EMPTY": "First name cannot be empty"
+      },
+      "LAST_NAME": {
+        "LABEL": "LAST NAME",
+        "VALIDATION_EMPTY": "Last name cannot be empty"
+      },
+      "EMAIL": {
+        "LABEL": "EMAIL",
+        "VALIDATION_EMPTY": "Email cannot be empty",
+        "VALIDATION_VALID": "Please fill in a valid email address"
+      },
+      "PASSWORD": {
+        "LABEL": "PASSWORD",
+        "VALIDATION_EMPTY": "Password cannot be empty",
+        "VALIDATION_VALID": "Password must be at least",
+        "VALIDATION_VALID_ADD_TEXT": " characters long"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "CONFIRM PASSWORD",
+        "VALIDATION_EMPTY": "Confirm Password is required",
+        "VALIDATION_VALID": "Passwords must match"
+      },
+      "BUTTON": {
+        "SIGN_UP": "SIGN UP"
+      }
+    },
+    "ALERT": "There was a problem."
+  },
+
+  "DASHBOARD": {
+    "SEARCH": {
+      "PLACEHOLDER": "Search",
+      "BUTTON": {
+        "SEARCH": "SEARCH",
+        "ADD": "Add"
+      },
+      "USER_CARD": {
+        "INVITE_MESSAGE": "Invite message*",
+        "BUTTON": {
+          "SEND_INVITATION": "Send invitation"
+        },
+        "FIRST_NAME": "First name: ",
+        "LAST_NAME": "Last name: ",
+        "EMAIL": "Email: ",
+        "ADMIN_BUTTON": {
+          "EDIT": "Edit profile"
+        }
+      },
+      "CATEGORIES": "Categories"
+    },
+
+    "SIDEBAR": {
+      "QUIZZES": "Quizzes",
+      "PROFILE": " Profile",
+      "FRIENDS": " Friends",
+      "ADMINS_MODERATORS": " Admins/Moderators",
+      "MODERATORS": " Moderators",
+      "ANNOUNCEMENT": " Announcement",
+      "ACHIEVEMENTS": " Achievements",
+      "SETTINGS": " Settings",
+      "TABS": {
+        "FRIENDS": {
+          "LABEL": "Friends",
+          "INVITES": "INVITES",
+          "NO_TO_SHOW": "No friends to show"
+        },
+
+        "ANNOUNCEMENTS": {
+          "TABS": {
+            "ANNOUNCEMENTS": {
+              "TITLE": "Announcements"
+            },
+
+            "ANNOUNCEMENT_APPROVE": {
+              "TITLE": "Announcements for approving",
+              "NO_SHOW": "No announcements for approving",
+              "CREATED": "Created",
+              "BUTTON": {
+                "EDIT": "Edit",
+                "DELETE": "Delete",
+                "APPROVE": "Approve",
+                "DISAPPROVE": "Disapprove"
+              }
+            },
+            "CREATE_ANNOUNCEMENT": {
+              "TITLE": "Create an announcement",
+              "FORM": {
+                "TITLE": "Title",
+                "TEXT": "Text",
+                "BUTTON": {
+                  "SAVE_CHANGES": "SAVE CHANGES",
+                  "ADD": "ADD"
+                },
+                "SELECT_IMAGE": "Select an announcement image",
+                "CHOOSE_FILE": "CHOOSE FILE",
+                "IMPORTANT": "Mark as important"
+              },
+              "ALERT": "There is a problem."
+            }
+          }
+        },
+
+        "ACHIEVEMENTS": {
+          "TABS": {
+            "ACHIEVEMENTS": {
+              "TITLE": "Achievements"
+            },
+            "CREATE_ACHIEVEMENT": {
+              "TITLE": "Create achievement",
+              "FORM": {
+                "TITLE": {
+                  "LABEL": "Title",
+                  "PLACEHOLDER": "Achievement title",
+                  "VALIDATION": "Please enter a title"
+                },
+                "QUANTITY": {
+                  "LABEL": "Quantity",
+                  "PLACEHOLDER": "Quantity to get an achievement",
+                  "VALIDATION": "Please enter a quantity more than 0"
+                },
+                "CATEGORY": {
+                  "LABEL": "Category",
+                  "VALIDATION": "Please choose a category"
+                },
+                "BUTTON": {
+                  "CREATE": "CREATE"
+                },
+                "CHOOSE_IMAGE": "CHOOSE IMAGE"
+              }
+            }
+          }
+        },
+
+        "SETTINGS": {
+          "NOTIFICATIONS": "Notifications",
+          "BUTTON": {
+            "APPROVE_NOTIFICATIONS": "Approve notifications",
+            "SYSTEM_NOTIFICATIONS": "System notifications"
+          }
+        },
+
+        "ADMINS_MODERATORS": {
+          "EDIT": {
+            "FORM": {
+              "FIRST_NAME": "First name",
+              "LAST_NAME": "Last name",
+              "EMAIL": "Email",
+              "USERNAME": "Username",
+              "PASSWORD": "Password",
+              "CONFIRM_PASSWORD": "Confirm password",
+              "RADIO_BUTTON": {
+                "ADMIN": "Admin",
+                "MODERATOR": "Moderator"
+              }
+            },
+            "UPLOAD": "Upload a different photo",
+            "CHOOSE_FILE": "Choose file"
+          }
+        }
+      }
+    },
+
+    "PROFILE": {
+      "PROFILE": {
+        "LABEL": "Profile",
+        "USER_PROFILE": "USER PROFILE",
+        "SUPER_ADMIN_PROFILE": "SUPER ADMIN PROFILE",
+        "UPLOAD": "Upload a different photo",
+        "CHOOSE_FILE": "Choose file"
+      },
+      "EDIT": {
+        "LABEL": "Edit",
+        "FIRST_NAME": "First name",
+        "LAST_NAME": "Last name",
+        "EMAIL": "Email",
+        "USERNAME": "Username",
+        "BUTTON": {
+          "SET_NEW_PASSWORD": "Set new password",
+          "SAVE_CHANGES": "Save Changes",
+          "ADD": "Add"
+        },
+        "CURRENT_PASSWORD": "Current password",
+        "NEW_PASSWORD": "New password",
+        "ALERT": "There was a problem."
+      }
+    }
+  },
+
+  "QUIZ_DASHBOARD": {
+    "QUIZZES": {
+      "LABEL": "Quizzes",
+      "NO_SHOW": "No quizzes to show"
+    },
+    "MY_QUIZZES": {
+      "LABEL": "My Quizzes",
+      "NO_SHOW": "No your quizzes to show"
+    },
+    "FAVORITE": {
+      "LABEL": "Favorite",
+      "NO_SHOW": "No favorite quizzes to show"
+    },
+    "SUGGESTIONS": {
+      "LABEL": "Suggestions",
+      "NO_SHOW": "No suggestions to show"
+    },
+    "BUTTON": {
+      "PLAY": "Play",
+      "TEST": "Test",
+      "EDIT": "Edit"
+    }
+  },
+
+  "CREATE_QUIZ": {
+    "TITLE": "Create a quiz",
+    "NAME": "1. Name this quiz*",
+    "DESCRIPTION": "2. Description*",
+    "CHOOSE_CATEGORIES": "3. Choose relevant categories*",
+
+    "NAME_PLACEHOLDER": "Quiz name",
+    "DESCRIPTION_PLACEHOLDER": "Quiz description",
+    "CATEGORIES_PLACEHOLDER": "Categories",
+
+    "NAME_VALIDATION": "Please enter a quiz name",
+    "DESCRIPTION_VALIDATION": "Please enter a quiz description",
+    "CATEGORIES_VALIDATION": "Please select one or more categories",
+
+    "BUTTON": {
+      "NEXT": "Next",
+      "CANCEL": "Cancel"
+    }
+  },
+
+  "QUIZ_EDIT": {
+    "TITLE": "My Questions",
+
+    "QUESTION_FORM": {
+      "NAME": {
+        "LABEL": "Question: ",
+        "PLACEHOLDER": "Question name",
+        "VALIDATION": "Please enter a question"
+      },
+      "SELECT_TYPE": {
+        "LABEL": "Select the type of question",
+        "PLACEHOLDER": "Choose type",
+        "TYPE_VALIDATION": "Please select the type of question",
+        "OPTIONS": {
+          "TRUE_FALSE": {
+            "LABEL": "True/False",
+            "TRUE": "True",
+            "FALSE": "False"
+          },
+          "TYPE_ANSWER": {
+            "LABEL": "Type Answer",
+            "PLACEHOLDER": "Answer"
+          },
+          "SELECT_OPTION": {
+            "LABEL": "Select option",
+            "PLACEHOLDER": "Answer",
+            "BUTTON": {
+              "TRUE": "TRUE",
+              "FALSE": "FALSE"
+            }
+          },
+          "SELECT_SEQUENCE": {
+            "LABEL": "Select sequence",
+            "PLACEHOLDER": "Answer"
+          }
+        }
+      },
+      "SELECT_TIME": {
+        "LABEL": "Select time",
+        "PLACEHOLDER": "Choose time",
+        "TIME_VALIDATION": "Please select time for question",
+        "OPTIONS": {
+          "SECONDS": "seconds",
+          "MINUTE": "minute"
+        }
+      },
+
+      "BUTTON": {
+        "NEXT": "Next",
+        "CANCEL": "Cancel"
+      }
+    },
+
+    "BUTTON": {
+      "ADD_QUESTION": "Add question",
+      "DONE": "Done"
+    }
+  },
+
+  "PLAY_QUIZ": {
+    "START_MENU": {
+      "TITLE": "Before start playing",
+      "BUTTON": {
+        "START": "Start a new game!",
+        "INVITE": "Invite friends"
+      }
+    },
+    "GAME": {
+      "QUESTION": "Question",
+      "SCORE": "Score",
+      "TIME_LEFT": "Time left",
+      "BUTTON": {
+        "SKIP": "Skip",
+        "SEND": "Send"
+      }
+    },
+    "RESULT": {
+      "TEXT": "Your score is",
+      "BUTTON": "Go back to quizzes"
+    }
+  },
+
+  "LOADER": {
+   "MESSAGE": "Please wait..."
+  }
+
+}
+

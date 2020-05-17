@@ -1,10 +1,15 @@
 package com.team.app.backend.persistance.model;
 
 import java.sql.Timestamp;
-import java.util.Date;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+
+
+@Getter
+@Setter
 public class Notification extends Message{
-
     private boolean seen;
 
 
@@ -16,13 +21,4 @@ public class Notification extends Message{
     public Notification() {
         this.seen = false;
     }
-
-    public boolean isSeen() {
-        return seen;
-    }
-
-    public void setSeen(boolean seen) {
-        this.seen = seen;
-    }
-
 }

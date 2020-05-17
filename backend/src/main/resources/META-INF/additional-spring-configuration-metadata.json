@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "achievement.all",
+      "type": "java.lang.String",
+      "description": "Description for achievement.all."
+  }
+] }

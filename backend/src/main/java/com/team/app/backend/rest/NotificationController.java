@@ -5,6 +5,9 @@ import com.team.app.backend.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin
+
 @RestController
 @RequestMapping("api/notification")
 public class NotificationController {
@@ -56,7 +59,12 @@ public class NotificationController {
         return ResponseEntity.ok().build();
 
     }
-    
+//    @MessageMapping("/notifications")
+//    @SendTo("/topic/getall")
+//    public Notification greeting() throws Exception {
+//        Thread.sleep(1000); // simulated delay
+//        return new Notification();
+//    }
     @GetMapping("/get/{id}")
     public ResponseEntity getAll (@PathVariable("id") Long user_id) {
         List<Notification>  notifications = null;
