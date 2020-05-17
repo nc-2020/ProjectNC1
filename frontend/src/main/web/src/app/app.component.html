@@ -35,6 +35,7 @@
         </div>
       </div>
       <a  class="btn bg-secondary btn-sm"  (click)="connect()">Connenct</a>
+      <a  class="btn bg-secondary btn-sm"  (click)="sendMessage()">Send</a>
       <a  class="btn bg-secondary btn-sm"  (click)="disconnect()">Disconnect</a>
       <a *ngIf="authenticated()" class="btn bg-secondary btn-sm mr-3" routerLink="/quiz-create">Create quiz</a>
       <a *ngIf="authenticated()" class="btn bg-secondary btn-sm"  (click)="logout()">Logout</a>

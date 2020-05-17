@@ -134,7 +134,6 @@ export class UserService {
     return this.http.get<UserInvite[]>(this.userUrl + '/invite/friends/' + this.user.id, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(
       tap(response => {
-        console.log(response);
       }),
       catchError(this.handleError<any>('getFriendsList'))
     );

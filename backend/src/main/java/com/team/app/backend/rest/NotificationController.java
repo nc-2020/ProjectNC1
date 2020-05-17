@@ -15,9 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin
+@CrossOrigin("*")
 @RestController
-@RequestMapping("api/notification")
+//@RequestMapping("api/notification")
 public class NotificationController {
 
     @Autowired
@@ -59,19 +59,11 @@ public class NotificationController {
         return ResponseEntity.ok().build();
 
     }
-//    @MessageMapping("/notifications/{id}")
-//    @SendTo("/topic/get-all/{id}")
-//        public ResponseEntity getAll (@DestinationVariable Long user_id) {
-//        List<Notification>  notifications = null;
-//        try {
-//            notifications = notificationService.getAll(user_id);
-//        }
-//        catch (DataAccessException sqlEx)
-//        {
-//            ResponseEntity.badRequest();
-//        }
-//        return ResponseEntity.ok(notifications);
-//
+//    @MessageMapping("/notifications")
+//    @SendTo("/topic/getall")
+//    public Notification greeting() throws Exception {
+//        Thread.sleep(1000); // simulated delay
+//        return new Notification();
 //    }
     @GetMapping("/get/{id}")
     public ResponseEntity getAll (@PathVariable("id") Long user_id) {
