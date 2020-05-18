@@ -1,5 +1,6 @@
 package com.team.app.backend.rest;
 
+import com.team.app.backend.dto.RecoveryDto;
 import com.team.app.backend.dto.UserLoginDto;
 import com.team.app.backend.exception.DisabledUserException;
 import com.team.app.backend.exception.NotActivatedUserException;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
@@ -37,14 +39,13 @@ public class LoginController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody UserLoginDto requestDto) {
         try {
             String username = requestDto.getUsername();
-            String password = passwordEncoder.encode(requestDto.getPassword());
+            System.out.println(username +" "+ requestDto.getPassword());
+
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
             User user = userService.findByUsername(username);
 
@@ -78,10 +79,14 @@ public class LoginController {
             return ResponseEntity.ok().body(response);
         } catch (AuthenticationException e) {
             e.printStackTrace();
-            throw new BadCredentialsException("Username or password are not valid");
+            return ResponseEntity
+                    .status(HttpStatus.FORBIDDEN)
+                    .body("Username or password are not valid");
         } catch (DisabledUserException | NotActivatedUserException e) {
             e.printStackTrace();
-            throw new BadCredentialsException("This user is not activated");
+            return ResponseEntity
+                    .status(HttpStatus.FORBIDDEN)
+                    .body("This user is not activated");
         }
     }
 
@@ -93,13 +98,26 @@ public class LoginController {
 //                HttpStatus.OK);
 //    }
 
+    @PostMapping("/recovery")
+    @ResponseBody
+
+    public ResponseEntity recovery(@RequestBody RecoveryDto recoveryDto){
+        String email = recoveryDto.getEmail();
+        System.out.println(email);
+        if(userService.isEmailRegistered(email)){
+            userService.sendRecoveryLetter(email);
+            return ResponseEntity.ok(true);
+        }
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body("No such email");
+    }
     //TO DO
     @PostMapping("/logout")
     public Map<String, Object> logout() {
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("content", "Hello World");
         return model;
-
     }
 
 }

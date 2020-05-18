@@ -4,6 +4,7 @@ import com.team.app.backend.persistance.dao.UserActivityDao;
 import com.team.app.backend.persistance.dao.mappers.UserActivityRowMapper;
 import com.team.app.backend.persistance.model.UserActivity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,9 @@ public class UserActivityDaoImpl implements UserActivityDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    Environment env;
+
     private UserActivityRowMapper userActivityRowMapper = new UserActivityRowMapper();
 
     public UserActivityDaoImpl(DataSource dataSource) {
@@ -25,7 +29,7 @@ public class UserActivityDaoImpl implements UserActivityDao {
     @Override
     public void create(UserActivity userActivity) {
         jdbcTemplate.update(
-                "INSERT INTO user_activ( text, date, cat_id, user_id) VALUES (?, ?, ?, ?)",
+                env.getProperty("create.activity"),
                 userActivity.getText(),
                 userActivity.getDate(),
                 userActivity.getCategoryId(),
@@ -35,15 +39,15 @@ public class UserActivityDaoImpl implements UserActivityDao {
 
     @Override
     public UserActivity get(Long id) {
-        String sql ="SELECT id, date, cat_id, user_id, text FROM public.user_activ WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql,new Object[]{id}
+        return jdbcTemplate.queryForObject(env.getProperty("get.activity"),
+                new Object[]{id}
                 ,userActivityRowMapper);
     }
 
     @Override
     public void update(UserActivity userActivity) {
         jdbcTemplate.update(
-                "UPDATE user_activ set text = ?, date = ?,  cat_id = ?, user_id = ? where id = ?",
+                env.getProperty("update.activity"),
                 userActivity.getText(),
                 userActivity.getDate(),
                 userActivity.getCategoryId(),
@@ -55,22 +59,14 @@ public class UserActivityDaoImpl implements UserActivityDao {
     @Override
     public void delete(Long id) {
         jdbcTemplate.update(
-                "DELETE from user_activ where id = ?",
-                id
+                env.getProperty("delete.activity"),id
         );
     }
 
     @Override
     public List<UserActivity> getFriendsActivities(Long user_id) {
-        String sql ="SELECT id, date, cat_id, user_id, text FROM public.user_activ \n" +
-                "WHERE user_id IN (SELECT user_id_from\n" +
-                "                  FROM friend_to\n" +
-                "                  WHERE user_id_to = ?)\n" +
-                "     OR user_id IN (SELECT user_id_to\n" +
-                "                    FROM friend_to\n" +
-                "                    WHERE user_id_from = ?)\n" +
-                "ORDER BY date DESC";
-        return jdbcTemplate.query(sql,new Object[]{user_id,user_id}
+        return jdbcTemplate.query(env.getProperty("get.friends.activities"),
+                new Object[]{user_id,user_id}
                 ,userActivityRowMapper);
     }
 }

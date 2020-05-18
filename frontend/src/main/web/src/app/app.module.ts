@@ -36,6 +36,7 @@ import { UserActivityDashboardComponent } from './user-activity-dashboard/user-a
 import { UserActivityComponent } from './user-activity/user-activity.component';
 import { AchievementDashboardComponent } from './achievement-dashboard/achievement-dashboard.component';
 import { AchievementCreateComponent } from './achievement-create/achievement-create.component';
+import { PassRecoveryComponent } from './pass-recovery/pass-recovery.component';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 
@@ -70,7 +71,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserActivityDashboardComponent,
     UserActivityComponent,
     AchievementDashboardComponent,
-    AchievementCreateComponent
+    AchievementCreateComponent,
+    PassRecoveryComponent
   ],
   imports: [
     BrowserModule,

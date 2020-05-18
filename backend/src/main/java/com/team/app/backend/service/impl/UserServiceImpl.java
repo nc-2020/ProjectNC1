@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.constraints.Email;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -138,8 +139,7 @@ public class UserServiceImpl implements UserService {
         user.setRole(new Role(1L,"USER"));
         user.setStatus(new UserStatus(1L,"REGISTERED"));
 
-
-        mailSender.send(emailsService.activationLetter(user.getEmail(),user.getActivate_link()));
+        mailSender.send(emailsService.activationLetter(user));
         userDao.save(user);
 
     }
@@ -150,6 +150,9 @@ public class UserServiceImpl implements UserService {
         if(check)userDao.activateByToken(token);
         return check;
     }
+
+
+
 
     @Override
     public boolean checkRegistDate(User user) {
@@ -165,6 +168,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isUserRegistered(String username) {
         return userDao.findByUsername(username) != null;
+    }
+
+    @Override
+    public boolean isEmailRegistered(String email) {
+        return userDao.checkEmail(email);
+    }
+
+    @Override
+    public void sendRecoveryLetter(String email) {
+        User user = userDao.getUserByEmail(email);
+        String password = new Random().ints(10, 33, 122).collect(StringBuilder::new,
+                StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+        user.setPassword(passwordEncoder.encode(password));
+        mailSender.send(emailsService.recoveryPasswordEmail(user,password));
+        userDao.update(user);
     }
 
     @Override

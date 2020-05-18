@@ -38,6 +38,10 @@ public interface UserService {
 
     boolean isUserRegistered(String username);
 
+    boolean isEmailRegistered(String email);
+
+    void sendRecoveryLetter(String email);
+
     String getUserPassword(String username);
 
     User findByUsername(String username);

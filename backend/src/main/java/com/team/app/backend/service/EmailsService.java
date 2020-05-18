@@ -1,5 +1,6 @@
 package com.team.app.backend.service;
 
+import com.team.app.backend.persistance.model.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
@@ -9,31 +10,37 @@ import org.springframework.stereotype.Service;
 public class EmailsService {
 
 
-    public SimpleMailMessage activationLetter(String recipientAddress, String activate_link) {
+    public SimpleMailMessage activationLetter(User user) {
         String subject = "Registration Confirmation";
-        String confirmationUrl = "/api/user/activate?token=" + activate_link;
-        String message = "Welcome on our site!" +
-                "To continue press next link ";
+        String confirmationUrl = "https://brainduel.herokuapp.com/api/user/activate?token=" + user.getActivate_link();
+        String message = "Hi, " +user.getLastName()+" "+user.getFirstName()+"\n"+
+                "Welcome on our site!\n"+
+                "To confirm registration of your account, please press next link :\n"+
+                confirmationUrl+
+                "\nThank you and happy playing!\n"+
+                "Good luck,\n"+"Your Brain-Duel Team";
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("Brain-duel");
-        email.setTo(recipientAddress);
+        email.setTo(user.getEmail());
         email.setSubject(subject);
-        email.setText(message + " https://brainduel.herokuapp.com" + confirmationUrl);
+        email.setText(message);
         return email;
     }
 
-    public SimpleMailMessage recoveryPasswordEmail(String recipientAddress, String activate_link) {
-//        String subject = "Registration Confirmation";
-//        String confirmationUrl = "/api/user/activate?token=" + activate_link;
-//        String message = "Welcome on our site!" +
-//                "To continue press next link ";
+    public SimpleMailMessage recoveryPasswordEmail(User user,String password) {
+        String subject = "New Password";
+        String message = "Hi, " +user.getLastName()+" "+user.getFirstName()+"\n"+
+                "You or someone else requested resetting a password for account "+user.getUsername()+
+                "\nYour new password:\n"+
+                password+
+                "\nBest luck,\n"+"Your Brain-Duel Team";
 
         SimpleMailMessage email = new SimpleMailMessage();
-//        email.setFrom("Brain-duel");
-//        email.setTo(recipientAddress);
-//        email.setSubject(subject);
-//        email.setText(message + " https://brainduel.herokuapp.com" + confirmationUrl);
+        email.setFrom("Brain-duel");
+        email.setTo(user.getEmail());
+        email.setSubject(subject);
+        email.setText(message);
         return email;
     }
 }

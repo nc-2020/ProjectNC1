@@ -26,4 +26,8 @@ public interface UserDao {
 
     boolean checkTokenAvailability(String token);
 
+    boolean checkEmail(String email);
+
+    User getUserByEmail(String email);
+
 }

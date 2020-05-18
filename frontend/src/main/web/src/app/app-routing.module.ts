@@ -10,6 +10,7 @@ import {QuizCreateComponent} from "./quiz-create/quiz-create.component";
 import {QuizEditComponent} from "./quiz-edit/quiz-edit.component";
 import {QuizDashboardComponent} from "./quiz-dashboard/quiz-dashboard.component";
 import {QuizComponent} from "./quiz/quiz.component";
+import {PassRecoveryComponent} from "./pass-recovery/pass-recovery.component";
 
 
 const routes: Routes = [
@@ -24,7 +25,9 @@ const routes: Routes = [
   { path: 'quiz-edit/:id', component: QuizEditComponent },
   { path: 'quiz-dashboard', component: QuizDashboardComponent },
   { path: 'quiz/:id', component: QuizComponent },
-  { path: 'quiz/:id/:sessionId', component: QuizComponent }
+  { path: 'quiz/:id/:sessionId', component: QuizComponent },
+  { path: 'pass-reset', component: PassRecoveryComponent }
+
 ];
 
 @NgModule({
