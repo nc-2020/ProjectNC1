@@ -10,4 +10,6 @@ public interface AchievementDao {
     List<UserAchievement> getUserAchievements(long userId);
     List<Achievement> getAchievements();
     void createAchievement(Achievement achievement);
+    void setUserAchievement(long userId, long achId);
+    Long checkUserAchievement(long userId);
 }

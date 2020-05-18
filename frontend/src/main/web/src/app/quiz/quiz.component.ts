@@ -190,8 +190,10 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   startNewGame() {
-    this.quizService.startSession(this.sessionId).subscribe(data =>
-      console.log(data))
+    if (this.getUserRole() === 'user') {
+      this.quizService.startSession(this.sessionId).subscribe(data =>
+        console.log(data))
+    }
   }
 
   finishSession() {

@@ -31,6 +31,12 @@ public class AchievementController {
         return ResponseEntity.ok().body(achievementService.getUserAchievements(id));
     }
 
+    @GetMapping("check/{user_id}")
+    public ResponseEntity checkUserAchievements(@PathVariable("user_id") long id) {
+        achievementService.checkUserAchievement(id);
+        return (ResponseEntity) ResponseEntity.ok();
+    }
+
     @PostMapping("/create")
     public ResponseEntity createAchievement(@RequestBody Achievement achievement) {
         Map<String, String> response = new HashMap<>();
