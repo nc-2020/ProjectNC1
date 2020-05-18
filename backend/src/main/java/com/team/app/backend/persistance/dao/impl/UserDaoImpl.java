@@ -106,7 +106,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public String getUserLanguage(Long id) {
         return jdbcTemplate.queryForObject(
-                "SELECT lan.name FROM users INNER JOIN languages lan ON users.lang_id = lan.id WHERE users.id = ? ",
+                "SELECT lan.name FROM users INNER JOIN languages lan ON COALESCE(users.lang_id,1) = lan.id WHERE users.id = ? ",
                 new Object[]{id},String.class
         );
     }

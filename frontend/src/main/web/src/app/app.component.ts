@@ -29,20 +29,6 @@ export class AppComponent {
 
   }
 
-  // greeting: any;
-  // name: string='';
-
-  // connect() {
-  //   this.webSocketAPI.connect();
-  // }
-  //
-  // disconnect() {
-  //   this.webSocketAPI.disconnect();
-  // }
-  //
-  // sendMessage() {
-  //   this.webSocketAPI.send(this.name);
-  // }
 
   setTranslate(language: string) {
     localStorage.setItem('language', language);
