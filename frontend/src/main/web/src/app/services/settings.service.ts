@@ -30,4 +30,9 @@ export class SettingsService {
       { headers: new HttpHeaders()
           .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
   }
+  setLanguage(lang: string) {
+    return  this.http.put(this.apiURL + `/change/${lang}`, null,
+      { headers: new HttpHeaders()
+          .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+  }
 }

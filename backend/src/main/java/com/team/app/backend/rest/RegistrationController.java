@@ -7,13 +7,14 @@ import com.team.app.backend.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("api")
 public class RegistrationController {
@@ -26,6 +27,9 @@ public class RegistrationController {
     @Autowired
     UserDao userDao;
 
+    @Autowired
+    MessageSource messageSource;
+
     @PostMapping("/sign-up")
     public ResponseEntity registerUserAccount(
             @RequestBody UserRegistrationDto userDto) {
@@ -35,8 +39,8 @@ public class RegistrationController {
 
         }
         catch (UserAlreadyExistsException e) {
-            return  ResponseEntity.badRequest().body(
-                    "User with username " + userDto.getUsername() + " already exists.");
+            String[] params = new String[]{userDto.getUsername()};
+            return  ResponseEntity.badRequest().body(messageSource.getMessage("user.exist", params, LocaleContextHolder.getLocale()));
 
         }
         return ResponseEntity.ok().body(new HashMap<String,String>());
@@ -45,15 +49,6 @@ public class RegistrationController {
     }
 
 
-
-
-    @GetMapping("/resource")
-    public Map<String, Object> home() {
-        Map<String, Object> model = new HashMap<String, Object>();
-        model.put("id", UUID.randomUUID().toString());
-        model.put("content", "Hello World");
-        return model;
-    }
 
     @GetMapping(value = "/{path:[^\\.]*}")
     public String redirect() {

@@ -26,7 +26,6 @@ public class NotificationDaoImpl implements NotificationDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-
     @Override
     public void create(Notification not) {
 

@@ -25,7 +25,7 @@ export class AppComponent {
               private router: Router,
               public translate: TranslateService,
               private notificationService: NotificationService,
-              private webSocketAPI: WebSocketService) {
+              private settingsService: SettingsService) {
 
   }
 
@@ -47,6 +47,7 @@ export class AppComponent {
   setTranslate(language: string) {
     localStorage.setItem('language', language);
     this.translate.use(language);
+    this.settingsService.setLanguage(language).subscribe();
   }
 
   ngOnInit(): void {
@@ -58,7 +59,8 @@ export class AppComponent {
 
   @HostListener('window:beforeunload')
   deleteNotifications() {
-    this.notificationService.delete(this.notifications.filter(x => x.seen)).subscribe();
+    this.notificationService.delete(this.notifications.filter(x => x.seen)).
+    subscribe();
   }
 
   ngOnDestroy(): void {
