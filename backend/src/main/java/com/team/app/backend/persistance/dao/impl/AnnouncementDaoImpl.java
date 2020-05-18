@@ -14,7 +14,6 @@ import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@PropertySource("classpath:sql_query.properties")
 @Repository
 public class AnnouncementDaoImpl implements AnnouncementDao {
 

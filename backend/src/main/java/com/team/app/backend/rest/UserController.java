@@ -6,6 +6,8 @@ import com.team.app.backend.dto.UserUpdateDto;
 import com.team.app.backend.persistance.model.User;
 import com.team.app.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +22,8 @@ public class UserController {
     @Autowired
     UserService userService;
 
-
+    @Autowired
+    MessageSource messageSource;
 
     @GetMapping("/user/search/{name}/{first}/{last}")
     public List<User> searchUser(
@@ -49,8 +52,9 @@ public class UserController {
     @GetMapping("user/activate")
     public ResponseEntity activateUser(
             @RequestParam("token") String token){
-        if(userService.activateUserAccount(token))return ResponseEntity.ok("You successfully registered");
-        else return ResponseEntity.ok("You registration time is out of date");
+        if(userService.activateUserAccount(token))return ResponseEntity.
+                ok(messageSource.getMessage("registry.success", null, LocaleContextHolder.getLocale()));
+        else return ResponseEntity.ok(messageSource.getMessage("registry.bad", null, LocaleContextHolder.getLocale()));
     }
 
 
@@ -59,9 +63,9 @@ public class UserController {
         Map<String, Object> model = new HashMap<String, Object>();
         if(userService.deleteUser(id)){
 
-            model.put("message", "User was deleted");
+            model.put("message", messageSource.getMessage("delete.user.success", null, LocaleContextHolder.getLocale()));
         }else{
-            model.put("message", "Exception while deleted");
+            model.put("message", messageSource.getMessage("delete.user.bad", null, LocaleContextHolder.getLocale()));
         }
 
         return model;

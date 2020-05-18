@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ViewChild, AfterViewChecked, AfterViewInit} from '@angular/core';
+import {Component, OnInit, Input, ViewChild, AfterViewChecked, AfterViewInit, ElementRef} from '@angular/core';
 import {UserService} from '../services/user.service';
 import { QuizService } from '../services/quiz.service';
 import { User } from '../entities/user';
@@ -23,7 +23,7 @@ import {DEBOUNCE_TIME} from "../parameters";
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
+  @ViewChild('closeModal') closeModal: ElementRef;
   tab = '';
   user: User;
   users$: Observable<User[]>;
@@ -107,9 +107,10 @@ export class DashboardComponent implements OnInit {
     } );
   }
   connectToSession(accessCode:string){
-    this.userService.user.joined=true;
+    // this.userService.user.joined=true;
     this.quizService.joinSession(accessCode).subscribe((session: Session) => {
-     this.router.navigate(['/quiz/' + session.quiz_id + '/' + session.id])
+     this.router.navigate(['/quiz/' + session.quiz_id + '/' + session.id]);
+      this.closeModal.nativeElement.click()
     }, error => this.message = error.message)
   }
 

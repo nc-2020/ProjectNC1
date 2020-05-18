@@ -246,6 +246,12 @@
         "NEW_PASSWORD": "New password",
         "ALERT": "There was a problem."
       }
+    },
+    "JOIN FORM":{
+      "LABEL":"Enter you friends access code",
+      "VALIDATION":"Access code cannot be empty",
+      "BUTTON":"Join",
+      "PLACEHOLDER":"Access code"
     }
   },
 
@@ -354,7 +360,9 @@
 
   "PLAY_QUIZ": {
     "START_MENU": {
+      "JOIN": "Waiting for host to start game...",
       "TITLE": "Before start playing",
+      "ACCESS_CODE":"Access code",
       "BUTTON": {
         "START": "Start a new game!",
         "INVITE": "Invite friends"

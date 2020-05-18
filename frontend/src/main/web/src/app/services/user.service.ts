@@ -129,7 +129,7 @@ export class UserService {
       tap(response => {
         console.log(response);
       }),
-      catchError(this.handleError<any>('sendUserInvite'))
+      catchError(this.handleError<any>('getUserInvite'))
     );
   }
 

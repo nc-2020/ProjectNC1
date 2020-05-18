@@ -8,6 +8,8 @@ import com.team.app.backend.persistance.model.User;
 import com.team.app.backend.service.UserService;
 //import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +28,9 @@ public class ResetPasswordController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    MessageSource messageSource;
+
     @PostMapping("/reset-password")
     public ResponseEntity resetPassword(@RequestBody ResetPasswordDto resetPasswordDto)
             throws NotMatchingPasswordsException, UserNotFoundException {
@@ -33,14 +38,13 @@ public class ResetPasswordController {
         User user = userService.findByUsername(resetPasswordDto.getUsername());
 
         if (user == null) {
-            throw new UserNotFoundException(
-                    "No user with username: " + resetPasswordDto.getUsername() + " found in the database"
-            );
+            String[] params = new String[]{resetPasswordDto.getUsername()};
+            throw new UserNotFoundException(messageSource.getMessage("user.notexist", params, LocaleContextHolder.getLocale()));
         }
 
         if (!passwordEncoder.matches(resetPasswordDto.getOldPassword(), user.getPassword())) {
             throw new NotMatchingPasswordsException(
-                    "Old password from the database and old password obtained from the request don't match"
+                    messageSource.getMessage("password.not.match", null, LocaleContextHolder.getLocale())
             );
         }
 
@@ -50,7 +54,7 @@ public class ResetPasswordController {
 
         userService.updateUser(userUpdateDto);
 
-        return ResponseEntity.ok("User password successfully reset");
+        return ResponseEntity.ok(messageSource.getMessage("password.reset", null, LocaleContextHolder.getLocale()));
 
     }
 

@@ -25,7 +25,7 @@ export class QuizEditComponent implements OnInit, OnDestroy {
   questions: Question[] = [];
   titleEditor = 'Add a question';
 
-  numberOfOptions = 4;
+  numberOfOptions = 2;
   options: Option[] = Array.from({length: this.numberOfOptions},()=>
     ({
       is_correct: false,
@@ -62,8 +62,37 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     this.titleEditor = 'Edit a question';
   }
 
+  addOption(optionType: string){
+    if (optionType === 'select') {
+      const option: Option = {
+        is_correct: false,
+        text: ""
+      }
+      if (this.options.length < 4) {
+        this.options.push(option);
+      }
+    } else {
+      const option: SequenceOption = {
+        serial_num: null,
+        text: ""
+      }
+      if (this.optionsSequence.length < 4) {
+        this.optionsSequence.push(option);
+      }
+    }
 
-
+  }
+  deleteOption(optionType: string){
+    if (optionType === 'select') {
+      if (this.options.length > 2) {
+        this.options.pop();
+      }
+    } else {
+      if (this.optionsSequence.length > 2) {
+        this.optionsSequence.pop();
+      }
+    }
+  }
 
   //CRUD
   getQuestions(): void {

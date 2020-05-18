@@ -30,4 +30,9 @@ public interface UserDao {
 
     User getUserByEmail(String email);
 
+    void changeLanguage(Long langId, Long userId);
+
+    String getUserLanguage(Long id);
+
+
 }

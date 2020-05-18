@@ -46,3 +46,8 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+backend/backend.iml
+frontend/frontend.iml
+ProjectDiagram.drawio
+brain-duel.iml
