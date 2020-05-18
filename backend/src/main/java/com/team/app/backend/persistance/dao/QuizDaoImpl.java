@@ -138,9 +138,9 @@ public class QuizDaoImpl implements QuizDao {
     }
 
     @Override
-    public List<Quiz> searchQuizes(String[] categories, String searchstring) {
+    public List<Quiz> searchQuizes(String[] categories, String searchstring, int dateOption, String user) {
 		String search="%"+searchstring+"%";
-		String query = "select distinct Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id, Q.user_id, QS.name as status_name from quiz Q INNER JOIN quiz_to_categ QTC ON Q.id = QTC.quiz_id INNER JOIN quiz_category QC ON QC.id = QTC.cat_id INNER JOIN quiz_status QS ON QS.id = Q.status_id where (Q.title LIKE ? or Q.description LIKE ?)";
+		String query = "select distinct Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id, Q.user_id, QS.name as status_name from quiz Q INNER JOIN quiz_to_categ QTC ON Q.id = QTC.quiz_id INNER JOIN quiz_category QC ON QC.id = QTC.cat_id INNER JOIN quiz_status QS ON QS.id = Q.status_id INNER JOIN users U ON Q.user_id = U.id where (LOWER(Q.title) LIKE LOWER(?) or LOWER(Q.description) LIKE LOWER(?))";
         if (categories.length != 0) {
 			String cat = "";
 			for (int i = 0; i < categories.length - 1; i++) {
@@ -148,6 +148,22 @@ public class QuizDaoImpl implements QuizDao {
 			}
 			cat += "'" + categories[categories.length - 1] + "'";
 			query += " and QC.name IN (" + cat + ")"; 
+		}
+		switch (dateOption) {
+			case 1:
+				query += " and Q.date = CURRENT_DATE";
+				break;
+			case 2:
+				query += " and Q.date >= (CURRENT_DATE - INTERVAL '7' DAY)";
+				break;
+			case 3:
+				query += " and Q.date >= (CURRENT_DATE - INTERVAL '1' MONTH)";
+				break;
+			default:
+				break;
+		}
+		if (user != "") {
+			query += " and U.username LIKE '" + user + "'";
 		}
         //System.out.println(cat+" "+search);
         return jdbcTemplate.query(query
