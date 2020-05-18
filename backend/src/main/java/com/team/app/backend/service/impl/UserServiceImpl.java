@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @Service
@@ -174,5 +175,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getUserPassword(String username) {
         return userDao.getUserPasswordByUsername(username);
+    }
+
+    @Override
+    public void changeLanguage(String lang , Long userId) {
+        if(lang.equals("en"))
+            userDao.changeLanguage(1L,userId);
+        else
+            userDao.changeLanguage(2L,userId);
+    }
+    @Override
+    public Locale getUserLanguage(Long id) {
+        String lan = userDao.getUserLanguage(id);
+        if(lan.equals("ua")) {
+            return new Locale("ua", "ua");
+        } else {
+            return Locale.US;
+        }
     }
 }

@@ -6,8 +6,12 @@
           <h2 class="text-left">{{'DASHBOARD.SIDEBAR.TABS.SETTINGS.NOTIFICATIONS' | translate}}</h2>
       <div class="form-group text-left">
         <div class="custom-control custom-switch">
-          <input type="checkbox"  (change)="changeSetting(approveCategoryId, $event)" class="custom-control-input" id="customSwitch1" [checked]="approveNotificationsOn">
-          <label class="custom-control-label" for="customSwitch1">Approve notifications</label>
+          <input type="checkbox"  (change)="changeSetting(announcementCategoryId, $event)" class="custom-control-input" id="customSwitch1" [checked]="announcementNotificationsOn">
+          <label class="custom-control-label" for="customSwitch1">Announcement notifications</label>
+        </div>
+        <div class="custom-control custom-switch">
+          <input type="checkbox"  (change)="changeSetting(quizCategoryId, $event)" class="custom-control-input" id="customSwitch3" [checked]="quizNotificationsOn">
+          <label class="custom-control-label" for="customSwitch3">Quiz notifications</label>
         </div>
         <div class="custom-control custom-switch">
           <input type="checkbox" (change)="changeSetting(systemCategoryId, $event)" class="custom-control-input" id="customSwitch2"  [checked]="systemNotificationsOn">

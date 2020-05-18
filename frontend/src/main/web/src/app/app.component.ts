@@ -47,7 +47,7 @@ export class AppComponent {
   setTranslate(language: string) {
     localStorage.setItem('language', language);
     this.translate.use(language);
-    this.settingsService.setLanguage(language).subscribe();
+    this.settingsService.setLanguage(language, this.userService.user).subscribe();
   }
 
   ngOnInit(): void {
