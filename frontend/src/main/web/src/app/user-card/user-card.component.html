@@ -14,7 +14,7 @@
               <input id="message" class="form-control" formControlName="inviteText" required placeholder="{{'DASHBOARD.SEARCH.USER_CARD.INVITE_MESSAGE' | translate}}" aria-label="Invite message" aria-describedby="basic-addon2">
             </form>
             <div class="input-group-append mr-5">
-              <button [disabled]="inviteForm.invalid" type="submit" class="btn btn-primary" (click)="sendInvite()">{{nameSendButton}}</button>
+              <button [disabled]="inviteForm.invalid || clicked" type="submit" class="btn btn-primary" (click)="sendInvite()">{{nameSendButton}}</button>
             </div>
           </div>
           <div class="btn-group text-right">
