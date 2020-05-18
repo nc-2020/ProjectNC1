@@ -67,7 +67,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
     this.optionSwitcher();
     if (this.indexQuestion === this.questions.length - 1) {
-      console.log('finished!')
+
         this.finishSession();
     }
   }
@@ -179,7 +179,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   getScore(): number {
     let score = 0;
     this.userAnswers.forEach(x => score += x.points);
-    return score;
+    return score < 0 ? 0 : score;
   }
 
 
@@ -195,6 +195,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   finishSession() {
+
     this.quizService.sendSessionStats({
       ses_id : this.sessionId,
       user_id : +this.userService.user.id,
