@@ -7,6 +7,9 @@ import com.team.app.backend.persistance.model.User;
 import com.team.app.backend.security.jwt.JwtTokenProvider;
 import com.team.app.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContext;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,11 +22,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.i18n.LocaleContextResolver;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
-@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class LoginController {
@@ -40,6 +49,9 @@ public class LoginController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    MessageSource messageSource;
+
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody UserLoginDto requestDto) {
         try {
@@ -47,17 +59,15 @@ public class LoginController {
             String password = passwordEncoder.encode(requestDto.getPassword());
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
             User user = userService.findByUsername(username);
-
+            String[] params = new String[]{username};
             if (user == null) {
-                throw new UsernameNotFoundException("User with username: " + username + " not found");
+                throw new UsernameNotFoundException(messageSource.getMessage("user.notfound", params, LocaleContextHolder.getLocale()));
             }
-
-
             if(user.getStatus().getId()==1){
-                throw new NotActivatedUserException("This user wasnt activated. Check your email");
+                throw new NotActivatedUserException(messageSource.getMessage("user.not.active", null, LocaleContextHolder.getLocale()));
             }
             if(user.getStatus().getId()==3){
-                throw new DisabledUserException("This user was deactivated!)");
+                throw new DisabledUserException(messageSource.getMessage("user.deactive", null, LocaleContextHolder.getLocale()));
             }
             String token = jwtTokenProvider.createToken(user);
 
@@ -78,20 +88,13 @@ public class LoginController {
             return ResponseEntity.ok().body(response);
         } catch (AuthenticationException e) {
             e.printStackTrace();
-            throw new BadCredentialsException("Username or password are not valid");
+            throw new BadCredentialsException(messageSource.getMessage("user.invalid", null, LocaleContextHolder.getLocale()));
         } catch (DisabledUserException | NotActivatedUserException e) {
             e.printStackTrace();
-            throw new BadCredentialsException("This user is not activated");
+            throw new BadCredentialsException(messageSource.getMessage("user.noactive", null, LocaleContextHolder.getLocale()));
         }
     }
 
-    //testing jwt
-//    @GetMapping("/get-user/{id}")
-//    public ResponseEntity<String> getUser(@PathVariable Long id) {
-//        return new ResponseEntity<>(
-//                userService.getUserById(id).toString(),
-//                HttpStatus.OK);
-//    }
 
     //TO DO
     @PostMapping("/logout")
@@ -101,5 +104,6 @@ public class LoginController {
         return model;
 
     }
+
 
 }

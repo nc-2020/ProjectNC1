@@ -26,4 +26,8 @@ public interface UserDao {
 
     boolean checkTokenAvailability(String token);
 
+    void changeLanguage(Long langId, Long userId);
+
+    String getUserLanguage(Long id);
+
 }

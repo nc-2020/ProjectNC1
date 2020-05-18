@@ -4,6 +4,8 @@ import com.team.app.backend.dto.FinishedQuizDto;
 import com.team.app.backend.persistance.model.*;
 import com.team.app.backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +36,9 @@ public class PlayQuizController {
 
     @Autowired
     private UserAnswerService userAnswerService;
+
+    @Autowired
+    MessageSource messageSource;
 
     @GetMapping("play/{user_id}/{quiz_id}")
     public ResponseEntity playQuiz(
@@ -74,7 +79,7 @@ public class PlayQuizController {
             UserToSession userToSession = userToSessionService.createNewUserToSession(user, session);
             return ResponseEntity.ok("");
         }else{
-            throw new BadCredentialsException("Session already in progress or finished");
+            throw new BadCredentialsException(messageSource.getMessage("session.start", null, LocaleContextHolder.getLocale()));
         }
 
     }
@@ -100,7 +105,7 @@ public class PlayQuizController {
     @PostMapping("finish")
     public ResponseEntity finishQuiz(@RequestBody FinishedQuizDto finishedQuizDto) {
         userToSessionService.insertScore(finishedQuizDto);
-        return ResponseEntity.ok("result added");
+        return ResponseEntity.ok(messageSource.getMessage("result.ok", null, LocaleContextHolder.getLocale()));
     }
 
 }

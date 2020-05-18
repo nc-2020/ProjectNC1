@@ -14,7 +14,6 @@ import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 @Repository
 public class AnnouncementDaoImpl implements AnnouncementDao {
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {SettingsService} from "../services/settings.service";
 import {UserService} from "../services/user.service";
-import {APPROVE_NOTIFICATION, SYSTEM_NOTIFICATION} from '../parameters';
+import {ANNOUNCEMENT_NOTIFICATION, SYSTEM_NOTIFICATION, QUIZ_NOTIFICATION} from '../parameters';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -10,10 +10,12 @@ import {APPROVE_NOTIFICATION, SYSTEM_NOTIFICATION} from '../parameters';
 export class SettingsComponent implements OnInit {
 
 
-  approveCategoryId = APPROVE_NOTIFICATION;
+  announcementCategoryId = ANNOUNCEMENT_NOTIFICATION;
+  quizCategoryId = QUIZ_NOTIFICATION;
   systemCategoryId = SYSTEM_NOTIFICATION;
   systemNotificationsOn: boolean;
-  approveNotificationsOn: boolean;
+  announcementNotificationsOn: boolean;
+  quizNotificationsOn: boolean;
   constructor(private settingsService: SettingsService, private userService: UserService) { }
 
   ngOnInit(): void {
@@ -32,14 +34,17 @@ export class SettingsComponent implements OnInit {
 
   }
   checkNotification() {
-    console.log(this.settingsService.notificationSettings);
     this.settingsService.notificationSettings.
     forEach(not => {
-      if (not.categoryId === APPROVE_NOTIFICATION) {
-        this.approveNotificationsOn = not.seen;
+      if (not.categoryId === ANNOUNCEMENT_NOTIFICATION) {
+        this.announcementNotificationsOn = not.seen;
       } else {
         if (not.categoryId === SYSTEM_NOTIFICATION) {
           this.systemNotificationsOn = not.seen;
+        } else {
+          if (not.categoryId === QUIZ_NOTIFICATION) {
+            this.quizNotificationsOn = not.seen;
+          }
         }
       }
     });

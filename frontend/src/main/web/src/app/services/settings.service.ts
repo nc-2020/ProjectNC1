@@ -4,6 +4,7 @@ import {UserService} from "./user.service";
 import {Observable} from "rxjs";
 import {Notification} from '../entities/notification';
 import {tap} from "rxjs/operators";
+import {User} from "../entities/user";
 @Injectable({
   providedIn: 'root'
 })
@@ -27,6 +28,11 @@ export class SettingsService {
   }
   setNotificationSetting(notification) {
     return  this.http.post<Notification>(this.apiURL + '/notification/settings', notification,
+      { headers: new HttpHeaders()
+          .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+  }
+  setLanguage(lang: string, user: User) {
+    return  this.http.put(this.apiURL + `/change/${lang}`, user,
       { headers: new HttpHeaders()
           .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
   }
