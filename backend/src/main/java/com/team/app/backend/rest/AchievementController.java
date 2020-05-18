@@ -31,10 +31,17 @@ public class AchievementController {
         return ResponseEntity.ok().body(achievementService.getUserAchievements(id));
     }
 
-    @GetMapping("check/{user_id}")
+    @PostMapping("set/{user_id}")
     public ResponseEntity checkUserAchievements(@PathVariable("user_id") long id) {
-        achievementService.checkUserAchievement(id);
-        return (ResponseEntity) ResponseEntity.ok();
+        Map<String, String> response = new HashMap<>();
+        try {
+            achievementService.setUserAchievement(id);
+        } catch (DataAccessException sqlEx){
+            response.put("message", "There is a problem while creating achievement");
+            ResponseEntity.badRequest().body(response);
+        }
+        response.put("message", "Achievement was set!");
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/create")

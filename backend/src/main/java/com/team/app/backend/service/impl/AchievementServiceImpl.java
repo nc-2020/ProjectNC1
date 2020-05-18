@@ -32,9 +32,7 @@ public class AchievementServiceImpl implements AchievementService {
     }
 
     @Override
-    public void checkUserAchievement(long userId) {
-        long id = achievementDao.checkUserAchievement(userId);
-        System.out.println("DAO only " + achievementDao.checkUserAchievement(userId));
-        System.out.println("CHECK ACHIEVEMENT " + id);
+    public void setUserAchievement(long userId) {
+        achievementDao.setUserAchievement(userId);
     }
 }

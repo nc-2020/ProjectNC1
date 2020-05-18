@@ -11,6 +11,7 @@ import {Option} from "../entities/option";
 import {Answer} from "../entities/answer";
 import {UserService} from "../services/user.service";
 import {UserSessionResult} from "../entities/UserSessionResult";
+import {AchievementService} from "../services/achievement.service";
 
 @Component({
   selector: 'app-quiz',
@@ -43,6 +44,7 @@ export class QuizComponent implements OnInit, OnDestroy {
               private optionService: OptionService,
               private route: ActivatedRoute,
               private questionService: QuestionService,
+              private achievementService: AchievementService,
               private userService: UserService) { }
 
   ngOnInit(): void {
@@ -134,7 +136,7 @@ export class QuizComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < this.optionsSequence.length; i++) {
       if (i + 1 === this.optionsSequence[i].serial_num) {
-        questionPoints += 0.25;
+        questionPoints += 1/this.optionsSequence.length;
       }
     }
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id,
@@ -203,6 +205,11 @@ export class QuizComponent implements OnInit, OnDestroy {
       score : this.getScore()
     } as UserSessionResult).subscribe(data => {
       console.log(data);
+      console.log('Session finished, check achievements');
+      this.achievementService.setUserAchievement().subscribe(data => {
+        console.log(data);
+        console.log('set achiv');
+      });
     })
   }
 

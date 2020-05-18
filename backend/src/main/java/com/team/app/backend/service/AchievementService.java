@@ -9,5 +9,5 @@ public interface AchievementService {
     List<UserAchievement> getUserAchievements(long id);
     List<Achievement> getAchievements();
     void createAchievement(Achievement achievement);
-    void checkUserAchievement(long userId);
+    void setUserAchievement(long userId);
 }
