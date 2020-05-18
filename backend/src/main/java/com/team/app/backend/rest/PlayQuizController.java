@@ -1,20 +1,15 @@
 package com.team.app.backend.rest;
 
 import com.team.app.backend.dto.FinishedQuizDto;
-import com.team.app.backend.dto.UserAnswerDto;
 import com.team.app.backend.persistance.model.*;
 import com.team.app.backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +37,9 @@ public class PlayQuizController {
     @Autowired
     private UserAnswerService userAnswerService;
 
+    @Autowired
+    MessageSource messageSource;
+
     @GetMapping("play/{user_id}/{quiz_id}")
     public ResponseEntity playQuiz(
             @PathVariable("user_id") long user_id,
@@ -49,7 +47,7 @@ public class PlayQuizController {
         Quiz quiz = quizService.getQuiz(quiz_id);
         Session session = sessionService.newSessionForQuiz(quiz);
         //String accessCode = AccessCodeProvider.createAccessCode(session, quiz);
-        session.setAccess_code(session.getId().toString());
+        session.setAccessCode(session.getId().toString());
         sessionService.updateSession(session);
         User user = userService.getUserById(user_id);
 
@@ -81,7 +79,7 @@ public class PlayQuizController {
             UserToSession userToSession = userToSessionService.createNewUserToSession(user, session);
             return ResponseEntity.ok("");
         }else{
-            throw new BadCredentialsException("Session already in progress or finished");
+            throw new BadCredentialsException(messageSource.getMessage("session.start", null, LocaleContextHolder.getLocale()));
         }
 
     }
@@ -107,7 +105,7 @@ public class PlayQuizController {
     @PostMapping("finish")
     public ResponseEntity finishQuiz(@RequestBody FinishedQuizDto finishedQuizDto) {
         userToSessionService.insertScore(finishedQuizDto);
-        return ResponseEntity.ok("result added");
+        return ResponseEntity.ok(messageSource.getMessage("result.ok", null, LocaleContextHolder.getLocale()));
     }
 
 }

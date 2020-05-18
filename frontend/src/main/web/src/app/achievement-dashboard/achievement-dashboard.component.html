@@ -1,0 +1,36 @@
+<div class="container-fluid mt-5" id="onTop">
+  <div class= "raw">
+    <div class="col-lg-12 order-lg-2 mt-2">
+      <ul class="nav nav-tabs">
+        <li class="nav-item" >
+          <a data-target="#achievement" data-toggle="tab" class="nav-link active show text-white" role="button" aria-expanded="false">
+            <strong>{{'DASHBOARD.SIDEBAR.TABS.ACHIEVEMENTS.TABS.ACHIEVEMENTS.TITLE' | translate}}</strong></a>
+        </li>
+        <li *ngIf="getRole() !== 'user'" class="nav-item" >
+          <a  data-target="#create" data-toggle="tab" role="button" aria-expanded="false" class="nav-link text-white">
+            <strong>{{'DASHBOARD.SIDEBAR.TABS.ACHIEVEMENTS.TABS.CREATE_ACHIEVEMENT.TITLE' | translate}}</strong></a>
+        </li>
+      </ul>
+    </div>
+    <div class="pt-4 tab-content">
+      <div  class="tab-pane active show" id="achievement">
+        <div class="raw">
+          <div *ngIf="getRole() === 'user'; else elseBlock">
+            <app-achievements *ngFor="let userAchievement of userAchievementList" [userAchievement]="userAchievement"></app-achievements>
+          </div>
+          <ng-template #elseBlock >
+            <div class="raw">
+              <app-achievements *ngFor="let achievement of achievementList" [achievement]="achievement"></app-achievements>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      <div  class="tab-pane" id="create">
+        <div class="raw">
+          <app-achievement-create></app-achievement-create>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

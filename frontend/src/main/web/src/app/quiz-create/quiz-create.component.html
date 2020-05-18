@@ -1,23 +1,23 @@
 <section class="min-vh-100" id="cover">
-	<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-	<div class="container d-flex justify-content-center">
-		<div class="kr-modal-body">
-			<div class="banner">
-				<div class="title">
-					Create a quiz
-				</div>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+  <div class="container d-flex justify-content-center">
+    <div class="kr-modal-body">
+      <div class="banner">
+        <div class="title">
+          {{'CREATE_QUIZ.TITLE' | translate}}
+        </div>
       </div>
       <form [formGroup]="quizForm" novalidate>
         <div class="form">
           <div class="form-group text-left">
             <div class="quiz-name-wrapper">
               <div class="quiz-name-input kr2-textfield">
-                <label>1. Name this quiz*</label>
-                <input class="form-control" name="title" formControlName="title" type="text" id="name-input" placeholder="Quiz name" data-qtest="quiz-name-input-field" maxlength="20">
+                <label>{{'CREATE_QUIZ.NAME'| translate}}</label>
+                <input class="form-control" name="title" formControlName="title" type="text" id="name-input" placeholder="{{'CREATE_QUIZ.NAME_PLACEHOLDER' | translate}}" data-qtest="quiz-name-input-field" maxlength="20">
 
                 <div class="quiz-name-validation"
                      *ngIf="quizForm.controls['title'].invalid && quizForm.controls['title'].touched">
-                  Please enter a quiz name
+                  {{'CREATE_QUIZ.NAME_VALIDATION' | translate}}
                 </div>
               </div>
             </div>
@@ -25,23 +25,23 @@
           <div class="form-group text-left">
             <div class="quiz-name-wrapper">
               <div class="quiz-name-input kr2-textfield">
-                <label>2. Description*</label>
-                <input class="form-control" name="description" formControlName="description" type="text" id="name-input" placeholder="Quiz description" data-qtest="quiz-name-input-field" maxlength="20">
+                <label>{{'CREATE_QUIZ.DESCRIPTION' | translate}}</label>
+                <input class="form-control" name="description" formControlName="description" type="text" id="name-input" placeholder="{{'CREATE_QUIZ.DESCRIPTION_PLACEHOLDER' | translate}}" data-qtest="quiz-name-input-field" maxlength="20">
 
                 <div class="quiz-description-validation"
                      *ngIf="quizForm.controls['description'].invalid && quizForm.controls['description'].touched">
-                  Please enter a quiz description
+                  {{'CREATE_QUIZ.DESCRIPTION_VALIDATION' | translate}}
                 </div>
-                <label class="mt-2">3. Choose relevant categories*</label>
+                <label class="mt-2">{{'CREATE_QUIZ.CHOOSE_CATEGORIES' | translate}}</label>
                 <mat-form-field color="primary">
-                  <mat-label class="text-center">Categories</mat-label>
-                  <mat-select class="form-control" name="categories" formControlName="categories" multiple>
+                  <mat-label class="text-center">{{'CREATE_QUIZ.CATEGORIES_PLACEHOLDER' | translate}}</mat-label>
+                  <mat-select class="form-control" formControlName="categories" multiple>
                     <mat-option *ngFor="let category of categoriesList" [value]="category">{{category.name}}</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <div class="quiz-description-validation"
                      *ngIf="quizForm.controls['categories'].invalid && quizForm.controls['categories'].touched">
-                  Please select one or more categories
+                  {{'CREATE_QUIZ.CATEGORIES_VALIDATION' | translate}}
                 </div>
               </div>
             </div>
@@ -49,13 +49,13 @@
         </div>
         <div class="form-group">
           <div class="action-btns-wrapper">
-            <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="goBack()">Cancel</button>
-            <button [disabled]="quizForm.invalid" class="save-btn" data-qtest="create-quiz-btn" (click)="createQuiz()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">Next</span></button>
+            <button class="cancel-btn" data-qtest="cancel-create-quiz-btn" (click)="goBack()">{{'CREATE_QUIZ.BUTTON.CANCEL' | translate}}</button>
+            <button [disabled]="quizForm.invalid" class="save-btn" data-qtest="create-quiz-btn" (click)="createQuiz()"><i class="fas fa-spinner kr-anim-spin hidden"></i><span class="">{{'CREATE_QUIZ.BUTTON.NEXT' | translate}}</span></button>
           </div>
         </div>
       </form>
 
-		</div>
+    </div>
 
-	</div>
+  </div>
 </section>

@@ -8,12 +8,15 @@ import com.team.app.backend.dto.UserRegistrationDto;
 import com.team.app.backend.persistance.model.User;
 
 import java.util.List;
+import java.util.Locale;
 
 public interface UserService {
 
 
     //TODO: IMPLEMENT
     String getUserNameById(Long id);
+
+    void changeLanguage(String lang , Long userId);
 
     User updateUser(UserUpdateDto userDto);
 
@@ -27,7 +30,7 @@ public interface UserService {
 
     User createNewUser(UserCreateDto userCreateDto);
 
-    List<User> searchUsers(String string);
+    List<User> searchUsers(String string, int firstRole, int lastRole);
 
     void registerNewUserAccount(UserRegistrationDto userDto)
             throws UserAlreadyExistsException;
@@ -41,4 +44,6 @@ public interface UserService {
     String getUserPassword(String username);
 
     User findByUsername(String username);
+
+    Locale getUserLanguage(Long id);
 }

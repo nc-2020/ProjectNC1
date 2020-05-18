@@ -24,10 +24,10 @@ public class UserDaoImpl implements UserDao {
 
 
     @Override
-    public List<User> searchByString(String searchstring) {
+    public List<User> searchByString(String searchstring, int firstRole, int lastRole) {
         String search="%"+searchstring+"%";
-        String sql="SELECT U.id,U.firstname,U.lastname,U.username,U.image,U.password,U.email,U.registr_date,U.activate_link,U.status_id,US.name as status_name,U.role_id,R.name as role_name FROM users U INNER JOIN user_status US ON U.status_id = US.id INNER JOIN role R ON R.id = U.role_id WHERE U.username LIKE ? OR U.firstname LIKE ? OR U.lastname LIKE ?";
-        return jdbcTemplate.query(sql,new Object[]{search,search,search}, userRowMapper);
+        String sql="SELECT U.id,U.firstname,U.lastname,U.username,U.image,U.password,U.email,U.registr_date,U.activate_link,U.status_id,US.name as status_name,U.role_id,R.name as role_name FROM users U INNER JOIN user_status US ON U.status_id = US.id INNER JOIN role R ON R.id = U.role_id WHERE (U.username LIKE ? OR U.firstname LIKE ? OR U.lastname LIKE ?) and U.role_id between ? and ?";
+        return jdbcTemplate.query(sql,new Object[]{search,search,search, firstRole, lastRole}, userRowMapper);
     }
 
     @Override
@@ -103,6 +103,13 @@ public class UserDaoImpl implements UserDao {
                 new Object[]{username},String.class
         );
     }
+    @Override
+    public String getUserLanguage(Long id) {
+        return jdbcTemplate.queryForObject(
+                "SELECT lan.name FROM users INNER JOIN languages lan ON users.lang_id = lan.id WHERE users.id = ? ",
+                new Object[]{id},String.class
+        );
+    }
 
     @Override
     public User getUserByToken(String token) {
@@ -129,5 +136,13 @@ public class UserDaoImpl implements UserDao {
         );
     }
 
+    @Override
+    public void changeLanguage(Long langId , Long userId) {
+        jdbcTemplate.update(
+                "UPDATE users set lang_id = ? WHERE id = ?",
+                langId, userId
+        );
+
+    }
 
 }

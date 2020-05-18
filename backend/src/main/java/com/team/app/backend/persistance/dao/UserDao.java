@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserDao {
 
-    List<User> searchByString(String searchstring);
+    List<User> searchByString(String searchstring, int firstRole, int lastRole);
 
     void save(User user);
 
@@ -25,5 +25,9 @@ public interface UserDao {
     void activateByToken(String token);
 
     boolean checkTokenAvailability(String token);
+
+    void changeLanguage(Long langId, Long userId);
+
+    String getUserLanguage(Long id);
 
 }

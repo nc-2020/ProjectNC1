@@ -5,19 +5,21 @@ import {Observable, of, throwError} from "rxjs";
 import {catchError, tap, finalize} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {UserInvite} from '../entities/user-invite';
+import {ADMIN_ROLE_ID, MODER_ROLE_ID, USER_ROLE_ID} from "../parameters";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+
   authenticated = localStorage.getItem('user') ? true : false;
   user: User = JSON.parse(localStorage.getItem('user'));
 
-
   private userUrl = 'http://localhost:8080/api/user';
-
+  private apiUrl = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient, private router: Router) {
+
   }
   getToken() {
     return this.user.token;
@@ -31,25 +33,24 @@ export class UserService {
   updateUser(user: User) {
     return this.http.put<User>(this.userUrl + '/update', user,{ headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(
-      catchError(this.handleError<any>('signUp'))
+      catchError(this.handleError<any>('updateUser'))
     );
   }
   createUser(user: User) {
-
     return this.http.post<User>(this.userUrl + '/create', user, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(
-      catchError(this.handleError<any>('signUp'))
+      catchError(this.handleError<any>('createUser'))
     );
   }
 
   deleteUser(user: User) {
     return this.http.delete<User>(this.userUrl + `/delete/${user.id}`,{ headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(
-      catchError(this.handleError<any>('signUp'))
+      catchError(this.handleError<any>('deleteUser'))
     );
   }
   signUp(user: User): Observable<any> {
-    return this.http.post<User>('http://localhost:8080/api/sign-up', user,{
+    return this.http.post<User>(this.apiUrl + '/sign-up', user,{
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
       responseType: 'json'
     }).pipe(
@@ -59,7 +60,7 @@ export class UserService {
   }
 
   login(user): Observable<User> {
-    return this.http.post<any>('http://localhost:8080/api/login', user).pipe(
+    return this.http.post<any>( this.apiUrl+ '/login', user).pipe(
       tap(response => {
         this.user = response;
         localStorage.setItem('user', JSON.stringify(response));
@@ -68,9 +69,9 @@ export class UserService {
     );
   }
   logout() {
-    return this.http.post<User>('http://localhost:8080/api/logout', this.user, { headers: new HttpHeaders()
+    return this.http.post<User>( this.apiUrl + '/logout', this.user, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(finalize(() => {
-      this.authenticated = false; localStorage.removeItem('user'); this.router.navigateByUrl('/login')
+      this.authenticated = false; localStorage.clear(); this.router.navigateByUrl('/login')
     }), catchError(this.handleError<any>('logout')))
   }
 
@@ -84,12 +85,32 @@ export class UserService {
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.get<User[]>(this.userUrl + `/search/${term}`, { headers: new HttpHeaders()
+    let range = this.setRoleRange();
+    return this.http.get<User[]>(this.userUrl + `/search/${term}/${range[0]}/${range[1]}`,
+      { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(
       catchError(error => {return of([])})
     );
   }
-
+  private setRoleRange() {
+    let firstRole: number;
+    let lastRole: number;
+    if (this.user.role.name === 'super admin') {
+      firstRole = MODER_ROLE_ID;
+      lastRole = ADMIN_ROLE_ID;
+    } else {
+      if (this.user.role.name === 'admin') {
+        firstRole = MODER_ROLE_ID;
+        lastRole = MODER_ROLE_ID;
+      } else {
+        if (this.user.role.name === 'user') {
+          firstRole = USER_ROLE_ID;
+          lastRole = USER_ROLE_ID;
+        }
+      }
+    }
+    return [firstRole, lastRole];
+  }
   sendUserInvite(userInvite: UserInvite): Observable<UserInvite> {
     console.log("sent invite");
     console.log(userInvite);
@@ -134,7 +155,6 @@ export class UserService {
     return this.http.get<UserInvite[]>(this.userUrl + '/invite/friends/' + this.user.id, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(
       tap(response => {
-        console.log(response);
       }),
       catchError(this.handleError<any>('getFriendsList'))
     );

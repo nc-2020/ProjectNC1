@@ -1,7 +1,6 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
-import { Quiz } from '../entities/quiz';
-import { QuizCardComponent } from '../quiz-card/quiz-card.component';
-import { QuizService } from '../services/quiz.service';
+import {Component, OnInit} from '@angular/core';
+import {Quiz} from '../entities/quiz';
+import {QuizService} from '../services/quiz.service';
 import {UserService} from "../services/user.service";
 
 @Component({
@@ -22,7 +21,6 @@ export class QuizDashboardComponent implements OnInit {
     if (this.getRole() === 'user') {
       this.getQuizzes();
       this.getUserQuizzes();
-      this.getFavorite();
       this.getSuggestions();
     } else {
       this.getCreatedQuizzes();
@@ -37,7 +35,10 @@ export class QuizDashboardComponent implements OnInit {
   }
   getQuizzes(): void {
     this.quizService.getQuizzes()
-      .subscribe(quizzes => this.quizzes = quizzes);
+      .subscribe(quizzes => {
+        console.log(quizzes);
+        this.quizzes = quizzes
+      });
   }
 
   getUserQuizzes(): void {
@@ -52,7 +53,10 @@ export class QuizDashboardComponent implements OnInit {
 
   getSuggestions(): void {
     this.quizService.getSuggestionsQuizzes()
-      .subscribe(quizzes => this.suggestionQuizzes = quizzes)
+      .subscribe(quizzes => {
+        console.log(quizzes)
+        this.suggestionQuizzes = quizzes
+      })
   }
 
   deleteQuiz(quiz: Quiz) {
@@ -62,5 +66,8 @@ export class QuizDashboardComponent implements OnInit {
 
   quizTab(tab: string) {
       this.currentTab = tab;
+      if (tab === 'Favorite') {
+        this.getFavorite();
+      }
   }
 }

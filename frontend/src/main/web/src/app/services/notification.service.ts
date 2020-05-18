@@ -10,23 +10,21 @@ import {Notification} from '../entities/notification';
   providedIn: 'root'
 })
 export class NotificationService {
-
-  apiURL = 'http://localhost:8080/api/notification';
-
+  private apiUrl = 'http://localhost:8080/api/notification';
+  // private apiUrl = '/api/notification';
   constructor(private http: HttpClient, private userService: UserService) { }
 
-  private handleError<T>(operation= 'opeartion') {
-    return (error: any): Observable<T> => {
-      return throwError(error);
-    };
-  }
+//!
    body = {
     target: 'targetId',
     subset: "fruits",
     reason: "rotten"
   };
+
+
+
   getAll(userId: number) {
-    return this.http.get<Notification[]>(this.apiURL + `/get/${userId}`,  {
+    return this.http.get<Notification[]>(this.apiUrl + `/get/${userId}`,  {
       headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)
     }).pipe(
@@ -40,9 +38,14 @@ export class NotificationService {
         .set('Authorization',  `Bearer_${this.userService.getToken()}`),
       body: notification
     }
-    return this.http.delete<Notification>(this.apiURL + `/delete`, options).pipe(
+    return this.http.delete<Notification>(this.apiUrl + `/delete`, options).pipe(
       catchError(this.handleError<any>('delete'))
     );
   }
 
+  private handleError<T>(operation= 'operation') {
+    return (error: any): Observable<T> => {
+      return throwError(error);
+    };
+  }
 }

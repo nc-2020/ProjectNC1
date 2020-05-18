@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @Service
@@ -38,8 +39,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> searchUsers(String string) {
-        return userDao.searchByString(string);
+    public List<User> searchUsers(String string, int firstRole, int lastRole) {
+        return userDao.searchByString(string, firstRole, lastRole);
     }
 
 
@@ -142,7 +143,7 @@ public class UserServiceImpl implements UserService {
         email.setFrom("Brain-duel");
         email.setTo(recipientAddress);
         email.setSubject(subject);
-        email.setText(message + " http://localhost:8080" + confirmationUrl); //change to heroku brainduek
+        email.setText(message + " https://brainduel.herokuapp.com/" + confirmationUrl); //change to heroku brainduek
         mailSender.send(email);
         userDao.save(user);
 
@@ -157,7 +158,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkRegistDate(User user) {
-        System.out.println("time"+user.getRegistr_date().getTime()+"    "+new Date().getTime());
+        System.out.println("time"+user.getRegistr_date().getTime() + "    " + new Date().getTime());
         return new Date().getTime()-user.getRegistr_date().getTime()<86400000;
     }
 
@@ -174,5 +175,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getUserPassword(String username) {
         return userDao.getUserPasswordByUsername(username);
+    }
+
+    @Override
+    public void changeLanguage(String lang , Long userId) {
+        if(lang.equals("en"))
+            userDao.changeLanguage(1L,userId);
+        else
+            userDao.changeLanguage(2L,userId);
+    }
+    @Override
+    public Locale getUserLanguage(Long id) {
+        String lan = userDao.getUserLanguage(id);
+        if(lan.equals("ua")) {
+            return new Locale("ua", "ua");
+        } else {
+            return Locale.US;
+        }
     }
 }

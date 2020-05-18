@@ -1,12 +1,11 @@
 <section   class="min-vh-100" id="cover">
   <div class="col text-center text-white">
-    <h1>Greeting</h1>
+    <h1>{{'HOME.TITLE' | translate}}</h1>
     <div class="container" [hidden]="!authenticated()">
-      <p>Hello</p>
-      <p>We glad to see you</p>
+      <p>{{'HOME.WELCOME' | translate}}</p>
     </div>
     <div [hidden]="authenticated()">
-      <p>Login to see your greeting</p>
+      <p>{{'HOME.LOGIN_TEXT' | translate}}</p>
     </div>
   </div>
 </section>

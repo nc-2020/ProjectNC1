@@ -12,22 +12,29 @@ import {UserService} from "./user.service";
 export class CategoryService {
 
   private categoriesUrl = 'http://localhost:8080/api/category';
-
+  private apiUrl = 'http://localhost:8080/api';
+  // private categoriesUrl = '/api/category';
+  // private apiUrl = '/api';
+  private readonly token: string;
+  private httpHeader: HttpHeaders;
 
   constructor(private http: HttpClient, private userService: UserService) {
+    this.token = this.userService.getToken();
+    this.httpHeader = new HttpHeaders().set('Authorization',  `Bearer_${this.token}`);
   }
 
   getCategory(category: Category) {
-
-    return this.http.get<Category>(this.categoriesUrl + `/get/${category.id}`).pipe(
-
+    return this.http.get<Category>(this.categoriesUrl + `/get/${category.id}`,
+      {headers: this.httpHeader})
+      .pipe(
       catchError(this.handleError<any>('getCategory'))
     );
   }
 
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>('http://localhost:8080/api/categories', { headers: new HttpHeaders()
-        .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
+    return this.http.get<Category[]>(this.apiUrl + '/categories',
+      { headers: this.httpHeader})
+      .pipe(
       catchError(this.handleError<any>('getCategory'))
     );
   }

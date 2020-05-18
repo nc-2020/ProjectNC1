@@ -1,26 +1,58 @@
-<div class="achievement-box">
-  <div class="achievement-box-icon">
+<div *ngIf="role === 'user'; else elseBlock" class="achievement-box mt-5 ml-3 text-center">
+  <div class="achievement-box-icon" [ngStyle]="{'background-image': urlIcon}">
   </div>
   <div class="achievement-box-namebar-area">
-    <span>{{achievement.title}}</span>
+    <span>{{userAchievement.title}}</span>
     <div class="achievement-box-bar">
-      <div class="">
+      <div class="{{boxStatus()}}" [ngStyle]= "{'width':  percentStatus + '%', 'to': percentStatus +'%'}">
       </div>
     </div>
-    <span>0/{{achievement.amountOfQuizzes}}</span>
+    <span>{{played}}/{{userAchievement.quizAmount}}</span>
   </div>
 </div>
-<!--<div class="achievement-box">-->
-<!--  <div class="achievement-box-icon">-->
-<!--  </div>-->
-<!--  <div class="achievement-box-namebar-area">-->
-<!--    <span>Your math progress</span>-->
-<!--    <div class="achievement-box-bar">-->
-<!--      <div class="achievement-box-status-50">-->
+<ng-template #elseBlock>
+  <div class="achievement-box mt-5 ml-3 text-center">
+    <div class="achievement-box-icon" [ngStyle]="{'background-image': urlIcon}">
+    </div>
+    <div class="achievement-box-namebar-area">
+      <span>{{achievement.title}}</span>
+      <div class="achievement-box-bar">
+        <div class="">
+        </div>
+      </div>
+      <span>0/{{achievement.amountOfQuizzes}}</span>
+    </div>
+  </div>
+</ng-template>
+
+<!--<div class="justify-content-center" *ngIf="create">-->
+<!--  <div class="achievement-box mt-5 text-center">-->
+<!--    <div class="achievement-box-icon" [ngStyle]="{'background-image': urlIcon}">-->
+<!--    </div>-->
+<!--    <div class="achievement-box-namebar-area">-->
+<!--      <span>Lol</span>-->
+<!--      <div class="achievement-box-bar">-->
+<!--        <div class="">-->
+<!--        </div>-->
 <!--      </div>-->
+<!--      <span>0/{{achievement.amountOfQuizzes}}</span>-->
 <!--    </div>-->
 <!--  </div>-->
+
+<!--  <form [formGroup]="achievementForm">-->
+<!--    <div class="form text-left mt-2 ml-4">-->
+<!--        <label for="name-input">Title</label>-->
+<!--        <input class="form-control" name="title" formControlName="title" type="text" id="name-input" placeholder="Achievement title" maxlength="20">-->
+
+<!--        <label for="quantity">Quantity</label>-->
+<!--        <input class="form-control" formControlName="quantity" type="number" id="quantity" name="quantity" min="1">-->
+<!--    </div>-->
+<!--  </form>-->
 <!--</div>-->
+
+
+
+
 <!--<div class="achievement-box">-->
 <!--  <div class="achievement-box-icon">-->
 <!--  </div>-->

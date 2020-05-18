@@ -4,6 +4,8 @@ import com.team.app.backend.persistance.model.Announcement;
 import com.team.app.backend.persistance.model.UserInvite;
 import com.team.app.backend.service.UserInviteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +18,12 @@ import java.util.Map;
 @RestController
 @RequestMapping("api/user/invite")
 public class UserInviteController {
+
     @Autowired
     UserInviteService userInviteService;
+
+    @Autowired
+    MessageSource messageSource;
 
     @PostMapping("/send")
     public ResponseEntity sendUserInvite(@RequestBody UserInvite userInvite) {
@@ -27,10 +33,10 @@ public class UserInviteController {
             userInviteService.sendUserInvite(userInvite);
         } catch (DataAccessException sqlEx){
             System.out.println(sqlEx);
-            response.put("message", "There is a problem while creating user invite");
+            response.put("message", messageSource.getMessage("invite.fail.create", null, LocaleContextHolder.getLocale()));
             ResponseEntity.badRequest().body(response);
         }
-        response.put("message", "Invite was sent!");
+        response.put("message", messageSource.getMessage("invite.create", null, LocaleContextHolder.getLocale()));
 
         return ResponseEntity.ok(response);
     }
@@ -48,10 +54,10 @@ public class UserInviteController {
         }
         catch (DataAccessException sqlEx){
             System.out.println(sqlEx);
-            model.put("message", "There is a problem while updating invite");
+            model.put("message", messageSource.getMessage("invite.update.fail", null, LocaleContextHolder.getLocale()));
             return ResponseEntity.badRequest().body(model);
         }
-        model.put("message", "Updated");
+        model.put("message", messageSource.getMessage("invite.updated", null, LocaleContextHolder.getLocale()));
         return ResponseEntity.ok(model);
     }
 
@@ -63,10 +69,10 @@ public class UserInviteController {
         }
         catch (DataAccessException sqlEx) {
             System.out.println(sqlEx);
-            model.put("message", "There is a problem while declining invite");
+            model.put("message", messageSource.getMessage("invite.decline.fail", null, LocaleContextHolder.getLocale()));
             return ResponseEntity.badRequest().body(model);
         }
-        model.put("message", "Declined");
+        model.put("message", messageSource.getMessage("invite.decline", null, LocaleContextHolder.getLocale()));
         return ResponseEntity.ok(model);
     }
 
@@ -84,10 +90,10 @@ public class UserInviteController {
         }
         catch (DataAccessException sqlEx) {
             System.out.println(sqlEx);
-            model.put("message", "There is a problem while delete friend");
+            model.put("message", messageSource.getMessage("friends.fail.delete", null, LocaleContextHolder.getLocale()));
             return ResponseEntity.badRequest().body(model);
         }
-        model.put("message", "Deleted");
+        model.put("message", messageSource.getMessage("announcement.deleted", null, LocaleContextHolder.getLocale()));
         return ResponseEntity.ok(model);
     }
 }

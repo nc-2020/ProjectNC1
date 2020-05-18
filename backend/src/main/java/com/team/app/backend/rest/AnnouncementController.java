@@ -3,6 +3,8 @@ package com.team.app.backend.rest;
 import com.team.app.backend.persistance.model.Announcement;
 import com.team.app.backend.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,13 +13,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin
+
 @RestController
 @RequestMapping("api/announcement")
 public class AnnouncementController {
 
     @Autowired
     AnnouncementService announcementService;
+
+    @Autowired
+    MessageSource messageSource;
 
     @PostMapping("/create")
     public ResponseEntity createAnnouncement(@RequestBody Announcement announcement) {
@@ -26,10 +31,10 @@ public class AnnouncementController {
             announcementService.createAnnouncement(announcement);
         }
         catch(DataAccessException sqlEx){
-            response.put("message","There is a problem while creating announcement");
+            response.put("message",messageSource.getMessage("announcement.fail", null, LocaleContextHolder.getLocale()));
             ResponseEntity.badRequest().body(response);
         }
-        response.put("message","Created!");
+        response.put("message",messageSource.getMessage("announcement.success", null, LocaleContextHolder.getLocale()));
         return  ResponseEntity.ok(response);
     }
     @GetMapping("/created")
@@ -76,10 +81,10 @@ public class AnnouncementController {
             announcementService.updateAnnouncement(announcement);
         }
         catch(DataAccessException sqlEx){
-            model.put("message","There is a problem while updating announcement");
+            model.put("message",messageSource.getMessage("announcement.fail.upd", null, LocaleContextHolder.getLocale()));
             return ResponseEntity.badRequest().body(model);
         }
-        model.put("message","Updated");
+        model.put("message",messageSource.getMessage("announcement.updated", null, LocaleContextHolder.getLocale()));
         return ResponseEntity.ok(model);
     }
 
@@ -91,10 +96,10 @@ public class AnnouncementController {
 
         }
         catch(DataAccessException sqlEx){
-           model.put("message","There is a problem while updating announcement");
+           model.put("message",messageSource.getMessage("announcement.fail.delete", null, LocaleContextHolder.getLocale()));
             return ResponseEntity.badRequest().body(model);
         }
-        model.put("message","Updated");
+        model.put("message",messageSource.getMessage("announcement.deleted", null, LocaleContextHolder.getLocale()));
         return ResponseEntity.ok(model);
     }
 }

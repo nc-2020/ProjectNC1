@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {SettingsService} from "../services/settings.service";
 import {UserService} from "../services/user.service";
-import {Notification} from '../entities/notification';
+import {ANNOUNCEMENT_NOTIFICATION, SYSTEM_NOTIFICATION, QUIZ_NOTIFICATION} from '../parameters';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -10,30 +10,46 @@ import {Notification} from '../entities/notification';
 export class SettingsComponent implements OnInit {
 
 
-
+  announcementCategoryId = ANNOUNCEMENT_NOTIFICATION;
+  quizCategoryId = QUIZ_NOTIFICATION;
+  systemCategoryId = SYSTEM_NOTIFICATION;
+  systemNotificationsOn: boolean;
+  announcementNotificationsOn: boolean;
+  quizNotificationsOn: boolean;
   constructor(private settingsService: SettingsService, private userService: UserService) { }
 
   ngOnInit(): void {
-  this.getNotificationSettings();
+    this.getNotificationSettings();
   }
-  checkNotification(name: string): boolean {
-    if (name === 'approve' && this.settingsService.notificationSettings.length >= 0) {
-      return this.settingsService.notificationSettings[0].seen;
-    }
-    if (name === 'system' && this.settingsService.notificationSettings.length >= 2) {
-      return this.settingsService.notificationSettings[2].seen;
-    }
-    return true;
 
-  }
   getNotificationSettings() {
-    this.settingsService.getNotificationSettings(+this.userService.user.id).
-    subscribe(res => this.settingsService.notificationSettings = res);
+    this.settingsService.getNotificationSettings(+this.userService.user.id).subscribe(
+      res => this.checkNotification());
   }
 
   changeSetting(catId: number, event) {
-    this.settingsService.setNotificationSetting({categoryId: catId, userId: +this.userService.user.id, seen: event.target.checked}).
+    this.settingsService.setNotificationSetting(
+      {categoryId: catId, userId: +this.userService.user.id, seen: event.target.checked}).
     subscribe();
 
+  }
+  checkNotification() {
+    this.settingsService.notificationSettings.
+    forEach(not => {
+      if (not.categoryId === ANNOUNCEMENT_NOTIFICATION) {
+        this.announcementNotificationsOn = not.seen;
+      } else {
+        if (not.categoryId === SYSTEM_NOTIFICATION) {
+          this.systemNotificationsOn = not.seen;
+        } else {
+          if (not.categoryId === QUIZ_NOTIFICATION) {
+            this.quizNotificationsOn = not.seen;
+          }
+        }
+      }
+    });
+  }
+  getUserRole() {
+    return this.userService.user.role.name;
   }
 }

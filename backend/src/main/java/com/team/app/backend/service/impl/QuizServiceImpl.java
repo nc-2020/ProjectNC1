@@ -11,7 +11,10 @@ import com.team.app.backend.dto.QuizAddDto;
 import com.team.app.backend.persistance.dao.*;
 import com.team.app.backend.persistance.model.*;
 import com.team.app.backend.service.QuizService;
+import com.team.app.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,20 +41,14 @@ public class QuizServiceImpl implements QuizService {
     @Autowired
     private QuizCategoryDao quizCategoryDao;
 
+    @Autowired
+    MessageSource messageSource;
 
-
+    @Autowired
+    UserService userService;
 
     @Override
     public Long addDefQuestion(QuestionDefAddDto questionDefAddDto) {
-//        Question question = new Question();
-//        question.setQuiz_id((long)questionDefAddDto.getQuiz_id());
-//        question.setType(questionDefAddDto.getType());
-//        question.setImage(questionDefAddDto.getImage());
-//        question.setText(questionDefAddDto.getText());
-//        question.setMax_points(questionDefAddDto.getMax_points());
-//        question.setTime(questionDefAddDto.getTime());
-//        Long id = questionDao.save(question);
-//        System.out.println(id);
         Long id = addQuestion(questionDefAddDto);
         for (DefOptionDto defOptionDto: questionDefAddDto.getOptions()) {
             DefaultQuest defaultQuest=new DefaultQuest();
@@ -197,7 +194,7 @@ public class QuizServiceImpl implements QuizService {
         quiz.setDate(date);
         quiz.setImage(quizAddDto.getImage());
         quiz.setUser_id((long)quizAddDto.getUser_id());
-        quiz.setStatus_Id(new QuizStatus( 1L,"created"));
+        quiz.setStatus(new QuizStatus( 1L,"created"));
         Long quiz_id= quizDao.save(quiz);
         for (Long cat_id:quizAddDto.getCategories()) {
             quizCategoryDao.addQuizToCategory(quiz_id,cat_id);
@@ -221,11 +218,12 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public void aproveQuiz(Quiz quiz) {
         Notification notification = new Notification();
-        notification.setCategoryId(1L);
+        notification.setCategoryId(2L);
         notification.setUserId(quiz.getUser_id());
+        String[] params = new String[]{quiz.getTitle()};
         if(quiz.getStatus().getName().equals("approved")) {
             quizDao.approve(quiz.getId());
-            notification.setText("Quiz approved!)");
+            notification.setText(messageSource.getMessage("quiz.approved", params, userService.getUserLanguage(quiz.getUser_id())));
         } else {
             notification.setText(quiz.getDescription());
             quizDao.delete(quiz.getId());

@@ -3,7 +3,7 @@ export interface Quiz {
   title?: string;
   description: string;
   status?: {id?: number, name?: string};
-  favourite?: boolean;
+  favorite?: boolean;
   user_id: string;
   categories?: any;
   image?: string;

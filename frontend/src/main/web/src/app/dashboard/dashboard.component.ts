@@ -12,6 +12,8 @@ import {CategoryService} from '../services/category.service';
 import {Category} from '../entities/category';
 import {Achievement} from "../entities/achievement";
 import {AchievementService} from "../services/achievement.service";
+import {UserAchievement} from "../entities/user-achievement";
+import {DEBOUNCE_TIME} from "../parameters";
 
 @Component({
   selector: 'app-dashboard',
@@ -24,7 +26,6 @@ export class DashboardComponent implements OnInit {
   user: User;
   users$: Observable<User[]>;
   quizes$: Observable<Quiz[]>;
-  achievementList: Achievement[] = [];
   categoriesList: Category[] = [];
   isVisible = true;
   term: string = "";
@@ -35,7 +36,6 @@ export class DashboardComponent implements OnInit {
 
   private searchQuizTerms = new Subject<any>();
   private searchUserTerms = new Subject<string>();
-  @ViewChild(UserCardComponent, {static: false}) userCardChild: UserCardComponent;
 
   constructor(private userService: UserService, private quizService: QuizService, private achievementService: AchievementService,
               private categoryService: CategoryService,
@@ -47,15 +47,14 @@ export class DashboardComponent implements OnInit {
     this.tab = this.route.snapshot.paramMap.get('tab');
     this.user = this.tab === 'Profile' ? this.userService.user : {role: {}} as User;
     this.quizes$ = this.searchQuizTerms.pipe(
-      debounceTime(300),
+      debounceTime(DEBOUNCE_TIME),
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
       switchMap((obj: any) => this.quizService.searchQuizzes(obj.title, obj.categories, obj.dateOption, obj.user)),
     );
     this.users$ = this.searchUserTerms.pipe(
-      debounceTime(300),
+      debounceTime(DEBOUNCE_TIME),
       distinctUntilChanged(),
-      // switch to new search observable each time the term changes
       switchMap((term: string) => this.userService.searchUsers(term)),
     );
 
@@ -68,7 +67,6 @@ export class DashboardComponent implements OnInit {
     } else {
       this.searchUserTerms.next(this.term);
     }
-
   }
   profileSet( editOnly?: boolean, user?: User) {
     this.user = (user ? user : {role: {}} as User);
@@ -77,9 +75,6 @@ export class DashboardComponent implements OnInit {
 
   changeTab(tab: string) {
     this.tab = tab;
-    if (this.tab === 'Achievements') {
-      this.getAchievements();
-    }
     this.router.navigateByUrl(`dashboard/${tab}`);
     this.isVisible = true;
   }
@@ -103,12 +98,5 @@ export class DashboardComponent implements OnInit {
         this.categoriesList = data;
       }
     )
-  }
-  getAchievements() {
-    this.achievementService.getAchievements().subscribe(
-      (data: Achievement[]) => {
-        this.achievementList = data;
-      }
-    );
   }
 }

@@ -1,0 +1,362 @@
+{
+  "HOME": {
+    "TITLE": "Ласкаво просимо",
+    "LOGIN_TEXT": "Увійдіть, щоб побачити своє привітання",
+    "WELCOME": "Ми раді бачити вас"
+  },
+
+  "HEADER": {
+    "BRAND": "BrainDuel",
+    "HOME": "Головна",
+    "LOGIN": "Вхід",
+    "LOGOUT": "Вихід",
+    "DASHBOARD": "Головна",
+    "BUTTON": {
+      "CREATE QUIZ": "СТВОРИТИ КВІЗ"
+    }
+  },
+
+  "LOGIN": {
+    "TITLE": "ВХІД КОРИСТУВАЧА",
+    "WELCOME": "Ласкаво просимо у BrainDuel!",
+    "FORM": {
+      "USERNAME": "ІМ'Я КОРИСТУВАЧА",
+      "PASSWORD": "Пароль",
+      "REMEMBER_ME": "Запам'ятати мене",
+      "BUTTON": {
+        "LOGIN": "Вхід"
+      },
+      "FORGOT_PASSWORD": "Забули пароль?",
+      "SIGN_UP": "Зареєструватися"
+    },
+    "ALERT": "Під час авторизації виникла проблема. Будь ласка, спробуйте ще раз."
+  },
+
+  "SIGN_UP": {
+    "TITLE": "РЕЄСТРАЦІЯ КОРИСТУВАЧА",
+    "TEXT": "до BrainDuel",
+    "FORM": {
+      "USER_NAME": {
+        "LABEL": "ІМ'Я КОРИСТУВАЧА",
+        "VALIDATION_EMPTY": "Ім'я користувача не може бути порожнім"
+      },
+      "FIRST_NAME": {
+        "LABEL": "ІМ'Я",
+        "VALIDATION_EMPTY": "Ім'я не може бути порожнім"
+      },
+      "LAST_NAME": {
+        "LABEL": "ПРІЗВИЩЕ",
+        "VALIDATION_EMPTY": "Прізвище не може бути порожнім"
+      },
+      "EMAIL": {
+        "LABEL": "EMAIL",
+        "VALIDATION_EMPTY": "Email не може бути порожнім",
+        "VALIDATION_VALID": "Будь ласка, заповніть дійсну електронну адресу"
+      },
+      "PASSWORD": {
+        "LABEL": "ПАРОЛЬ",
+        "VALIDATION_EMPTY": "Пароль не може бути порожнім",
+        "VALIDATION_VALID": "Пароль повинен бути не менше",
+        "VALIDATION_VALID_ADD_TEXT": " символів"
+      },
+      "CONFIRM_PASSWORD": {
+        "LABEL": "ПІДТВЕРДИТИ ПАРОЛЬ",
+        "VALIDATION_EMPTY": "Підтвердження пароля потрібно",
+        "VALIDATION_VALID": "Паролі повинні відповідати"
+      },
+      "BUTTON": {
+        "SIGN_UP": "РЕЄСТРАЦІЯ"
+      }
+    },
+    "ALERT": "Виникла проблема."
+  },
+
+  "DASHBOARD": {
+    "SEARCH": {
+      "PLACEHOLDER": "Пошук",
+      "BUTTON": {
+        "SEARCH": "Пошук",
+        "ADD": "Додайте"
+      },
+      "USER_CARD": {
+        "INVITE_MESSAGE": "Текст запрошення*",
+        "BUTTON": {
+          "SEND_INVITATION": "Надіслати запрошення"
+        },
+        "FIRST_NAME": "Ім'я: ",
+        "LAST_NAME": "Прізвище: ",
+        "EMAIL": "Email: ",
+        "ADMIN_BUTTON": {
+          "EDIT": "Редагувати профіль"
+        }
+      },
+      "CATEGORIES": "Категорії"
+    },
+
+    "SIDEBAR": {
+      "QUIZZES": "Квізи",
+      "PROFILE": " Профіль",
+      "FRIENDS": " Друзі",
+      "ADMINS_MODERATORS": " Адміністратори / модератори",
+      "MODERATORS": " Модератори",
+      "ANNOUNCEMENT": " Оголошення",
+      "ACHIEVEMENTS": " Досягнення",
+      "SETTINGS": " Налаштування",
+      "TABS": {
+        "FRIENDS": {
+          "LABEL": "Друзі",
+          "INVITES": "Запрошення",
+          "NO_TO_SHOW": "Немає друзів для показу"
+        },
+
+        "ANNOUNCEMENTS": {
+          "TABS": {
+            "ANNOUNCEMENTS": {
+              "TITLE": "Оголошення"
+            },
+
+            "ANNOUNCEMENT_APPROVE": {
+              "TITLE": "Оголошення для затвердження",
+              "NO_SHOW": "Немає оголошень для затвердження",
+              "CREATED": "Створено",
+              "BUTTON": {
+                "EDIT": "Редагувати",
+                "DELETE": "Видалити",
+                "APPROVE": "Затвердити",
+                "DISAPPROVE": "Відхилити"
+              }
+            },
+            "CREATE_ANNOUNCEMENT": {
+              "TITLE": "Створити оголошення",
+              "FORM": {
+                "TITLE": "Назва",
+                "TEXT": "Текст",
+                "BUTTON": {
+                  "SAVE_CHANGES": "ЗБЕРЕГТИ ЗМІНИ",
+                  "ADD": "ДОДАТИ"
+                },
+                "SELECT_IMAGE": "Виберіть зображення оголошення",
+                "CHOOSE_FILE": "ВИБЕРІТЬ ФАЙЛ",
+                "IMPORTANT": "Позначте як важливе"
+              },
+              "ALERT": "Виникає проблема."
+            }
+          }
+        },
+
+        "ACHIEVEMENTS": {
+          "TABS": {
+            "ACHIEVEMENTS": {
+              "TITLE": "Досягнення"
+            },
+            "CREATE_ACHIEVEMENT": {
+              "TITLE": "Створіть досягнення",
+              "FORM": {
+                "TITLE": {
+                  "LABEL": "Назва",
+                  "PLACEHOLDER": "Назва досягнення",
+                  "VALIDATION": "Введіть назву"
+                },
+                "QUANTITY": {
+                  "LABEL": "Quantity",
+                  "PLACEHOLDER": "Кількість, щоб отримати досягнення",
+                  "VALIDATION": "Будь ласка, введіть кількість більше ніж 0"
+                },
+                "CATEGORY": {
+                  "LABEL": "Категорія",
+                  "VALIDATION": "Виберіть категорію"
+                },
+                "BUTTON": {
+                  "CREATE": "СТВОРИТИ"
+                },
+                "CHOOSE_IMAGE": "ОБРАТИ Зображення"
+              }
+            }
+          }
+        },
+
+        "SETTINGS": {
+          "NOTIFICATIONS": "Повідомлення",
+          "BUTTON": {
+            "APPROVE_NOTIFICATIONS": "Затвердити повідомлення",
+            "SYSTEM_NOTIFICATIONS": "Системні повідомлення"
+          }
+        },
+
+        "ADMINS_MODERATORS": {
+          "EDIT": {
+            "FORM": {
+              "FIRST_NAME": "Ім'я",
+              "LAST_NAME": "Прізвище",
+              "EMAIL": "Email",
+              "USERNAME": "Ім'я користувача",
+              "PASSWORD": "Пароль",
+              "CONFIRM_PASSWORD": "Підтвердьте пароль",
+              "RADIO_BUTTON": {
+                "ADMIN": "Адміністратор",
+                "MODERATOR": "Модератор"
+              }
+            },
+            "UPLOAD": "Завантажте іншу фотографію",
+            "CHOOSE_FILE": "Виберіть файл"
+          }
+        }
+      }
+    },
+
+    "PROFILE": {
+      "PROFILE": {
+        "LABEL": "Профіль",
+        "USER_PROFILE": "ПРОФІЛЬ КОРИСТУВАЧА",
+        "SUPER_ADMIN_PROFILE": "ПРОФІЛЬ СУПЕР АДМІН",
+        "UPLOAD": "Завантажте іншу фотографію",
+        "CHOOSE_FILE": "Виберіть файл"
+      },
+      "EDIT": {
+        "LABEL": "Редагувати",
+        "FIRST_NAME": "Ім'я",
+        "LAST_NAME": "Прізвище",
+        "EMAIL": "Email",
+        "USERNAME": "Ім'я користувача",
+        "BUTTON": {
+          "SET_NEW_PASSWORD": "Встановити новий пароль",
+          "SAVE_CHANGES": "Зберегти зміни",
+          "ADD": "Додати"
+        },
+        "CURRENT_PASSWORD": "Поточний пароль",
+        "NEW_PASSWORD": "Новий пароль",
+        "ALERT": "Виникла проблема."
+      }
+    }
+  },
+
+  "QUIZ_DASHBOARD": {
+    "QUIZZES": {
+      "LABEL": "Квізи",
+      "NO_SHOW": "Немає квізів для показу"
+    },
+    "MY_QUIZZES": {
+      "LABEL": "Мої Квізи",
+      "NO_SHOW": "Немає ваших квізів для показу"
+    },
+    "FAVORITE": {
+      "LABEL": "Улюблені",
+      "NO_SHOW": "Немає улюблених квізів для показу"
+    },
+    "SUGGESTIONS": {
+      "LABEL": "Рекомендованні",
+      "NO_SHOW": "Немає рекомендованних для показу"
+    },
+    "BUTTON": {
+      "PLAY": "Грати",
+      "TEST": "Тест",
+      "EDIT": "Редагувати"
+    }
+  },
+
+  "CREATE_QUIZ": {
+    "TITLE": "Створіть квіз",
+    "NAME": "1. Назвіть цей квіз *",
+    "DESCRIPTION": "2. Опис *",
+    "CHOOSE_CATEGORIES": "3. Виберіть відповідні категорії *",
+
+    "NAME_PLACEHOLDER": "Назва квіза",
+    "DESCRIPTION_PLACEHOLDER": "Опис квіза",
+    "CATEGORIES_PLACEHOLDER": "Категорії",
+
+    "NAME_VALIDATION": "Введіть назву квіза",
+    "DESCRIPTION_VALIDATION": "Введіть опис квіза",
+    "CATEGORIES_VALIDATION": "Виберіть одну чи більше категорій",
+
+    "BUTTON": {
+      "NEXT": "Далі",
+      "CANCEL": "Скасувати"
+    }
+  },
+
+  "QUIZ_EDIT": {
+    "TITLE": "Мої Запитання",
+
+    "QUESTION_FORM": {
+      "NAME": {
+        "LABEL": "Запитання: ",
+        "PLACEHOLDER": "Назва питання",
+        "VALIDATION": "Введіть запитання"
+      },
+      "SELECT_TYPE": {
+        "LABEL": "Виберіть тип запитання",
+        "PLACEHOLDER": "Виберіть тип",
+        "TYPE_VALIDATION": "Виберіть тип запитання",
+        "OPTIONS": {
+          "TRUE_FALSE": {
+            "LABEL": "Вірно / невірно",
+            "TRUE": "Вірно",
+            "FALSE": "Невірно"
+          },
+          "TYPE_ANSWER": {
+            "LABEL": "Введіть відповідь",
+            "PLACEHOLDER": "Відповідь"
+          },
+          "SELECT_OPTION": {
+            "LABEL": "Виберіть варіант",
+            "PLACEHOLDER": "Відповідь",
+            "BUTTON": {
+              "TRUE": "Вірно",
+              "FALSE": "Невірно"
+            }
+          },
+          "SELECT_SEQUENCE": {
+            "LABEL": "Виберіть послідовність",
+            "PLACEHOLDER": "Відповідь"
+          }
+        }
+      },
+      "SELECT_TIME": {
+        "LABEL": "Виберіть час",
+        "PLACEHOLDER": "Виберіть час",
+        "TIME_VALIDATION": "Виберіть час для запитання",
+        "OPTIONS": {
+          "SECONDS": "секунд",
+          "MINUTE": "хвилина"
+        }
+      },
+
+      "BUTTON": {
+        "NEXT": "Далі",
+        "CANCEL": "Скасувати"
+      }
+    },
+
+    "BUTTON": {
+      "ADD_QUESTION": "Додати запитання",
+      "DONE": "Готово"
+    }
+  },
+
+  "PLAY_QUIZ": {
+    "START_MENU": {
+      "TITLE": "Перш ніж почати грати",
+      "BUTTON": {
+        "START": "Почніть нову гру!",
+        "INVITE": "Запросити друзів"
+      }
+    },
+    "GAME": {
+      "QUESTION": "Питання",
+      "SCORE": "Рахунок",
+      "TIME_LEFT": "Часу залишилось",
+      "BUTTON": {
+        "SKIP": "Пропустити",
+        "SEND": "Надіслати"
+      }
+    },
+    "RESULT": {
+      "TEXT": "Ваш рахунок",
+      "BUTTON": "Повернутися до квізів"
+    }
+  },
+
+  "LOADER": {
+    "MESSAGE": "Будь ласка, зачекайте ..."
+  }
+}

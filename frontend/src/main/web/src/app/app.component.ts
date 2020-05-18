@@ -1,11 +1,14 @@
 import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import { catchError, tap, finalize } from 'rxjs/operators';
 import {UserService} from './services/user.service';
 import {NotificationService} from './services/notification.service';
 import {Notification} from './entities/notification';
 import {SettingsService} from "./services/settings.service";
+import {TranslateService} from "@ngx-translate/core";
+import {WebSocketService} from "./web-socket.service";
+
+
 
 @Component({
   selector: 'app-root',
@@ -20,30 +23,48 @@ export class AppComponent {
   constructor(private http: HttpClient,
               private userService: UserService,
               private router: Router,
+              public translate: TranslateService,
               private notificationService: NotificationService,
-              private settingsService: SettingsService ) {
+              private settingsService: SettingsService) {
 
+  }
+
+  // greeting: any;
+  // name: string='';
+
+  // connect() {
+  //   this.webSocketAPI.connect();
+  // }
+  //
+  // disconnect() {
+  //   this.webSocketAPI.disconnect();
+  // }
+  //
+  // sendMessage() {
+  //   this.webSocketAPI.send(this.name);
+  // }
+
+  setTranslate(language: string) {
+    localStorage.setItem('language', language);
+    this.translate.use(language);
+    this.settingsService.setLanguage(language, this.userService.user).subscribe();
   }
 
   ngOnInit(): void {
     if(this.userService.user.role.name === 'user') {
       this.getNotifications();
-      this.getNotificationSettings();
     }
+    this.translate.use(localStorage.getItem('language'));
   }
 
   @HostListener('window:beforeunload')
   deleteNotifications() {
-    this.notificationService.delete(this.notifications.filter(x => x.seen)).subscribe();
-  }
-  getNotificationSettings() {
-    this.settingsService.getNotificationSettings(+this.userService.user.id).
-    subscribe(res => this.settingsService.notificationSettings = res);
+    this.notificationService.delete(this.notifications.filter(x => x.seen)).
+    subscribe();
   }
 
   ngOnDestroy(): void {
-    localStorage.removeItem('user');
-
+    localStorage.clear();
   }
   getNewNotifications(): Notification[] {
     return this.notifications.filter(x => !x.seen);

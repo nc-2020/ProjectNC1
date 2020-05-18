@@ -27,15 +27,26 @@ export class QuizCardComponent implements OnInit {
   }
 
   public toggleSelected(quiz: Quiz) {
-    quiz.favourite = !quiz.favourite;
+    quiz.favorite = !quiz.favorite;
   }
 
   createSession() {
     if (this.getUserRole() === 'user') {
       this.quizService.getSession(this.quiz.id).subscribe((session: Session) => {
-        console.log(session);
           this.router.navigate(['/quiz/' + this.quiz.id + '/' + session.id]);
       })
     }
+  }
+
+  addFavorite() {
+    this.quizService.addFavoriteQuiz(this.quiz.id).subscribe(data => {
+      this.quiz.favorite = true
+    });
+  }
+
+  deleteFavorite() {
+    this.quizService.deleteFavoriteQuiz(this.quiz.id).subscribe(data => {
+      this.quiz.favorite = false
+    });
   }
 }
