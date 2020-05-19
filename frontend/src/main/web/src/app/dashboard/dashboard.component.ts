@@ -30,10 +30,15 @@ export class DashboardComponent implements OnInit {
   quizes$: Observable<Quiz[]>;
   categoriesList: Category[] = [];
   isVisible = true;
+  term: string = "";
+  selectedCategories: string[] = [];
+  selectedDateOption: number = 4;
+  quizUser: string = "";
   joinForm: FormGroup;
   message='';
 
-  private searchQuizTerms = new Subject<string>();
+
+  private searchQuizTerms = new Subject<any>();
   private searchUserTerms = new Subject<string>();
 
   constructor(private userService: UserService, private quizService: QuizService, private achievementService: AchievementService,
@@ -50,7 +55,8 @@ export class DashboardComponent implements OnInit {
     this.quizes$ = this.searchQuizTerms.pipe(
       debounceTime(DEBOUNCE_TIME),
       distinctUntilChanged(),
-      switchMap((term: string) => this.quizService.searchQuizzes(term)),
+      // switch to new search observable each time the term changes
+      switchMap((obj: any) => this.quizService.searchQuizzes(obj.title, obj.categories, obj.dateOption, obj.user)),
     );
     this.users$ = this.searchUserTerms.pipe(
       debounceTime(DEBOUNCE_TIME),
@@ -61,12 +67,12 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  search(term: string): void {
+  search(): void {
     this.isVisible = false;
     if (this.tab === 'Quizzes') {
-      this.searchQuizTerms.next(term);
+      this.searchQuizTerms.next({ title: this.term, categories: this.selectedCategories, dateOption: this.selectedDateOption, user: this.quizUser });
     } else {
-      this.searchUserTerms.next(term);
+      this.searchUserTerms.next(this.term);
     }
   }
   profileSet( editOnly?: boolean, user?: User) {

@@ -12,14 +12,12 @@ import java.sql.SQLException;
 public class QuizRowMapper implements RowMapper<Quiz> {
     @Override
     public Quiz mapRow(ResultSet resultSet, int rownumber) throws SQLException {
-        Quiz res = new Quiz((long) resultSet.getInt("id"),
+        return new Quiz((long) resultSet.getInt("id"),
                 resultSet.getString("title"),
                 resultSet.getDate("date"),
                 resultSet.getString("description"),
                 resultSet.getBytes("image"),
                 new QuizStatus((long)resultSet.getInt("status_id"),resultSet.getString("status_name")),
                 (long) resultSet.getInt("user_id"));
-        if (resultSet.getMetaData().getColumnCount()==9)res.setFavorite(resultSet.getBoolean("favorite"));
-        return res;
     }
 }

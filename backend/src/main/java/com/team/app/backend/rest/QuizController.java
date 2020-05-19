@@ -1,6 +1,7 @@
 package com.team.app.backend.rest;
 
 import com.team.app.backend.dto.QuizAddDto;
+import com.team.app.backend.dto.QuizCategoryDto;
 import com.team.app.backend.dto.QuestionDefAddDto;
 import com.team.app.backend.dto.QuestionOptAddDto;
 import com.team.app.backend.dto.QuestionSeqAddDto;
@@ -11,7 +12,6 @@ import com.team.app.backend.service.UserQuizFavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -147,10 +147,10 @@ public class QuizController {
         return quizService.getUserQuizes(id);
     }
 
-    @GetMapping("/quiz/search/{category}/{searchstring}")
-    public List<Quiz> searchQuizes(@PathVariable("category") String category,@PathVariable("searchstring") String searchstring) {
-        System.out.println(category+" "+searchstring);
-        return quizService.searchQuizes(category,searchstring);
+    @PostMapping("/quiz/search")
+    public List<Quiz> searchQuizes(@RequestBody QuizCategoryDto quizCategoryDto) {
+        System.out.println(quizCategoryDto.getTitle());
+        return quizService.searchQuizes(quizCategoryDto.getCategories(),quizCategoryDto.getTitle(),quizCategoryDto.getDateOption(),quizCategoryDto.getUser());
     }
 
 	@GetMapping("/quiz/search/{searchstring}")
@@ -158,6 +158,7 @@ public class QuizController {
         System.out.println(searchstring);
         return quizService.searchQuizes(searchstring);
     }
+
 
     @PostMapping("/quiz/approve")
     public ResponseEntity approveQuiz(@RequestBody Quiz quiz) {
