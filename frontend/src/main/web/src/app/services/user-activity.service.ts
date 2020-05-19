@@ -14,7 +14,8 @@ import {UserActivity} from "../entities/user-activity";
 })
 export class UserActivityService {
 
-  apiURL = 'http://localhost:8080/api';
+  // apiURL = 'http://localhost:8080/api';
+  apiURL = '/api';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

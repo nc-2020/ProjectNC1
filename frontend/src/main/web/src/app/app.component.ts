@@ -15,7 +15,7 @@ import {TranslateService} from "@ngx-translate/core";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnChanges, OnDestroy, OnInit{
+export class AppComponent implements OnDestroy, OnInit{
 
   title = 'ui-app';
   deletedNotifications: Notification[] = [];
@@ -25,7 +25,6 @@ export class AppComponent implements OnChanges, OnDestroy, OnInit{
               private router: Router,
               public translate: TranslateService,
               public notificationService: NotificationService,
-              private notificationService: NotificationService,
               private settingsService: SettingsService) {
 
   }
