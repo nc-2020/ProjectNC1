@@ -10,6 +10,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.core.env.Environment;
 
 
 import javax.sql.DataSource;
@@ -22,6 +23,9 @@ public class QuizDaoImpl implements QuizDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+    private Environment env;
 
     @Autowired
     private QuizRowMapper quizRowMapper;
@@ -94,12 +98,38 @@ public class QuizDaoImpl implements QuizDao {
     }
 
     @Override
-    public List<Quiz> searchQuizes(String category, String searchstring) {
-        String cat=category;
-        String search="%"+searchstring+"%";
-        System.out.println(cat+" "+search);
-        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id where Q."+cat+"::text LIKE ? "
-                ,new Object[] {search},
+    public List<Quiz> searchQuizes(String[] categories, String searchstring, int dateOption, String user) {
+		String sqlQuizSearch = env.getProperty("search.quiz");
+		String search = "%"+searchstring+"%";
+		String[] searchCategories = {"geography", "programming", "math", "history", "modern"};
+		String searchDate = "10 YEAR";
+		String searchUsername = "%%";
+        if (categories.length != 0) {
+			for (int i = 0; i < categories.length; i++) {
+				searchCategories[i] = categories[i];
+			}
+			for (int j = categories.length; j < 5; j++) {
+				searchCategories[j] = "";
+			}
+		}
+		switch (dateOption) {
+			case 1:
+				searchDate = "0 DAY";
+				break;
+			case 2:
+				searchDate = "7 DAY";
+				break;
+			case 3:
+				searchDate = "1 MONTH";
+				break;
+			default:
+				break;
+		}
+		if (user != "") {
+			searchUsername = user;
+		}
+        //System.out.println(cat+" "+search);
+        return jdbcTemplate.query(sqlQuizSearch, new Object[] {search, search, searchCategories[0], searchCategories[1], searchCategories[2], searchCategories[3], searchCategories[4], searchUsername},
                 quizRowMapper);
     }
 	
@@ -107,7 +137,7 @@ public class QuizDaoImpl implements QuizDao {
     public List<Quiz> searchQuizes(String searchstring) {
         String search="%"+searchstring+"%";
         System.out.println(search);
-        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id,QS.name as status_name , Q.user_id from quiz Q INNER JOIN quiz_status QS ON QS.id = Q.status_id where Q.title LIKE ? "
+        return jdbcTemplate.query("select Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id, Q.user_id from quiz Q where Q.title LIKE ? "
                 ,new Object[] {search},
                 quizRowMapper);
     }
