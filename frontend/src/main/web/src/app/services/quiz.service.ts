@@ -132,7 +132,7 @@ export class QuizService {
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.post<Quiz[]>(`${this.quizzesUrl}/search`, { title: term, categories: cat, dateOption: date, user: userName }, { headers: new HttpHeaders()
+    return this.http.post<Quiz[]>(this.quizzesUrl + '/search', { title: term, categories: cat, dateOption: date, user: userName }, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
       catchError(this.handleError<Quiz[]>('searchQuizzes', []))
     );

@@ -9,6 +9,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.core.env.Environment;
 
 
 import javax.sql.DataSource;
@@ -21,6 +22,9 @@ public class QuizDaoImpl implements QuizDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+    private Environment env;
 
     @Autowired
     private QuizRowMapper quizRowMapper;
@@ -139,35 +143,37 @@ public class QuizDaoImpl implements QuizDao {
 
     @Override
     public List<Quiz> searchQuizes(String[] categories, String searchstring, int dateOption, String user) {
-		String search="%"+searchstring+"%";
-		String query = "select distinct Q.id,Q.title,Q.date,Q.description,Q.image,Q.status_id, Q.user_id, QS.name as status_name from quiz Q INNER JOIN quiz_to_categ QTC ON Q.id = QTC.quiz_id INNER JOIN quiz_category QC ON QC.id = QTC.cat_id INNER JOIN quiz_status QS ON QS.id = Q.status_id INNER JOIN users U ON Q.user_id = U.id where (LOWER(Q.title) LIKE LOWER(?) or LOWER(Q.description) LIKE LOWER(?))";
+		String sqlQuizSearch = env.getProperty("search.quiz");
+		String search = "%"+searchstring+"%";
+		String[] searchCategories = {"geography", "programming", "math", "history", "modern"};
+		String searchDate = "10 YEAR";
+		String searchUsername = "%%";
         if (categories.length != 0) {
-			String cat = "";
-			for (int i = 0; i < categories.length - 1; i++) {
-				cat += "'" + categories[i] + "', ";
+			for (int i = 0; i < categories.length; i++) {
+				searchCategories[i] = categories[i];
 			}
-			cat += "'" + categories[categories.length - 1] + "'";
-			query += " and QC.name IN (" + cat + ")"; 
+			for (int j = categories.length; j < 5; j++) {
+				searchCategories[j] = "";
+			}
 		}
 		switch (dateOption) {
 			case 1:
-				query += " and Q.date = CURRENT_DATE";
+				searchDate = "0 DAY";
 				break;
 			case 2:
-				query += " and Q.date >= (CURRENT_DATE - INTERVAL '7' DAY)";
+				searchDate = "7 DAY";
 				break;
 			case 3:
-				query += " and Q.date >= (CURRENT_DATE - INTERVAL '1' MONTH)";
+				searchDate = "1 MONTH";
 				break;
 			default:
 				break;
 		}
 		if (user != "") {
-			query += " and U.username LIKE '" + user + "'";
+			searchUsername = user;
 		}
         //System.out.println(cat+" "+search);
-        return jdbcTemplate.query(query
-                ,new Object[] {search, search},
+        return jdbcTemplate.query(sqlQuizSearch, new Object[] {search, search, searchCategories[0], searchCategories[1], searchCategories[2], searchCategories[3], searchCategories[4], searchUsername},
                 quizRowMapper);
     }
 	
