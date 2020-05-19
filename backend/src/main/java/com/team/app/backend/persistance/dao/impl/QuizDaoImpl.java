@@ -30,10 +30,6 @@ public class QuizDaoImpl implements QuizDao {
     @Autowired
     private QuizRowMapper quizRowMapper;
 
-    @Autowired
-    Environment env;
-
-
     public QuizDaoImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
