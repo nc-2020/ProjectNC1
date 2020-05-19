@@ -173,12 +173,7 @@ public class QuizController {
     @GetMapping("/quiz/created")
     public ResponseEntity getCreatedQuizs() {
         List<Quiz> quizzes;
-        try {
-            quizzes = quizService.getCreated();
-        }
-        catch (DataAccessException sqlEx) {
-            return ResponseEntity.badRequest().build();
-        }
+        quizzes = quizService.getCreated();
         return ResponseEntity.ok().body(quizzes);
     }
 }

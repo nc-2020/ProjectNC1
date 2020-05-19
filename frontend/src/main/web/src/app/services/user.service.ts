@@ -126,7 +126,7 @@ export class UserService {
       tap(response => {
         console.log(response);
       }),
-      catchError(this.handleError<any>('sendUserInvite'))
+      catchError(this.handleError<any>('getUserInvite'))
     );
   }
 
@@ -164,5 +164,15 @@ export class UserService {
         console.log(response);
       }),
       catchError(this.handleError<any>('deleteFriendFromList')))
+  }
+
+  recoveryPassword(email:string){
+    console.log(email);
+    return this.http.post(this.apiUrl + '/recovery',JSON.stringify({email:email}) ,{
+      headers: new HttpHeaders().set('Content-Type', 'application/json'),
+      responseType: 'json'
+    }).pipe(
+      catchError(this.handleError<any>('recoveryPassword'))
+    );
   }
 }

@@ -37,15 +37,18 @@
           </div>
         </div>
       </div>
-
+      <button *ngIf="authenticated()" type="button" class="btn bg-secondary btn-sm mr-3" data-toggle="modal" data-target="#joinModal">{{'HEADER.BUTTON.JOIN GAME' | translate}}</button>
       <a *ngIf="authenticated()" class="btn bg-secondary btn-sm mr-3" routerLink="/quiz-create">{{'HEADER.BUTTON.CREATE QUIZ' | translate}}</a>
 <!--      <a *ngIf="authenticated()" class="btn bg-secondary btn-sm"  (click)="logout()">Logout</a>-->
+
       <a (click)="setTranslate('en')" class="btn btn-lg" role="button"><span class="flag-icon flag-icon-gb"></span></a>
       <a (click)="setTranslate('ua')" class="btn btn-lg" role="button"><span class="flag-icon flag-icon-ua"></span></a>
 
     </form>
   </div>
+
 </nav>
+
 <router-outlet></router-outlet>
 <app-my-loader></app-my-loader>
 
