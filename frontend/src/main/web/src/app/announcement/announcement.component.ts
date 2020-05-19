@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Announcement} from "../entities/announcement";
-import {AnnouncementService} from "../services/announcement.service";
-import {UserService} from "../services/user.service";
-import {User} from "../entities/user";
+import {Announcement} from '../entities/announcement';
+import {AnnouncementService} from '../services/announcement.service';
+import {UserService} from '../services/user.service';
+import {ANNOUNCEMENT_APPROVED, ANNOUNCEMENT_CREATED} from '../parameters';
 
 @Component({
   selector: 'app-announcement',
@@ -11,6 +11,7 @@ import {User} from "../entities/user";
 })
 export class AnnouncementComponent implements OnInit {
 
+  announcementCreated = ANNOUNCEMENT_CREATED;
   @Input()
   announcement: Announcement ;
   @Output()
@@ -29,16 +30,16 @@ export class AnnouncementComponent implements OnInit {
   }
   delete() {
     this.announcementService.deleteAnnouncement(+this.announcement.id).
-    subscribe(resp => {window.location.reload()},
-        error => {this.error = error.message});
+    subscribe(resp => {window.location.reload(); },
+        error => {this.error = error.message; });
   }
   ngOnInit(): void {
   }
   approve(approved: boolean) {
-    this.announcement.statusId = approved ? 2 : 0;
+    this.announcement.statusId = approved ? ANNOUNCEMENT_APPROVED : 0;
     this.announcementService.approve(this.announcement).
     subscribe(resp => {},
-      error => {this.announcement.statusId = 1 ; this.error = error.message;})
+      error => {this.announcement.statusId = ANNOUNCEMENT_CREATED ; this.error = error.message; });
 
   }
 

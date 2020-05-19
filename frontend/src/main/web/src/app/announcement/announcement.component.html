@@ -27,9 +27,9 @@
             </div>
             <div *ngIf="getRole() !== 'user'" class="mt-5 align-items-end" >
               <a  (click)="edit()" class="card-link btn border">{{'DASHBOARD.SIDEBAR.TABS.ANNOUNCEMENTS.TABS.ANNOUNCEMENT_APPROVE.BUTTON.EDIT' | translate}}</a>
-              <a *ngIf="announcement.statusId !== 1" (click)="delete()" class="btn border mx-2">{{'DASHBOARD.SIDEBAR.TABS.ANNOUNCEMENTS.TABS.ANNOUNCEMENT_APPROVE.BUTTON.DELETE' | translate}}</a>
-              <a *ngIf="announcement.statusId === 1" (click)="approve(true)" class="btn border mx-2">{{'DASHBOARD.SIDEBAR.TABS.ANNOUNCEMENTS.TABS.ANNOUNCEMENT_APPROVE.BUTTON.APPROVE' | translate}}</a>
-              <a *ngIf="announcement.statusId === 1" (click)="approve(false)" class="btn border">{{'DASHBOARD.SIDEBAR.TABS.ANNOUNCEMENTS.TABS.ANNOUNCEMENT_APPROVE.BUTTON.DISAPPROVE' | translate}}</a>
+              <a *ngIf="announcement.statusId !== announcementCreated" (click)="delete()" class="btn border mx-2">{{'DASHBOARD.SIDEBAR.TABS.ANNOUNCEMENTS.TABS.ANNOUNCEMENT_APPROVE.BUTTON.DELETE' | translate}}</a>
+              <a *ngIf="announcement.statusId === announcementCreated" (click)="approve(true)" class="btn border mx-2">{{'DASHBOARD.SIDEBAR.TABS.ANNOUNCEMENTS.TABS.ANNOUNCEMENT_APPROVE.BUTTON.APPROVE' | translate}}</a>
+              <a *ngIf="announcement.statusId === announcementCreated" (click)="approve(false)" class="btn border">{{'DASHBOARD.SIDEBAR.TABS.ANNOUNCEMENTS.TABS.ANNOUNCEMENT_APPROVE.BUTTON.DISAPPROVE' | translate}}</a>
             </div>
           </div>
         </div>
