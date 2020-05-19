@@ -53,10 +53,23 @@ export class QuizService {
       .pipe(catchError(this.handleError('startSession')));
   }
 
-  joinSession(accessCode) {
-    return this.http.get(this.quizzesUrl + `/join/?user_id=${this.userId}&access_code=` + accessCode,
-      { headers: this.httpHeader})
-      .pipe(catchError(this.handleError('joinSession')));
+
+  joinSession(accessCode): Observable<Session> {
+    return this.http.get<Session>(this.quizzesUrl + `/join/?user_id=${this.userId}&access_code=` + accessCode,
+      { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+      .pipe(
+        catchError(this.handleError<Session>('joinSession')
+        ));
+  }
+  
+
+  getAccessCode(sessionId): Observable<string> {
+    return this.http.get<string>(this.quizzesUrl + `/access_code/${sessionId}`,{ headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+      .pipe(
+        catchError(this.handleError<string>('getAccessCode')
+        ));
   }
 
   getStatsSession(sessionId): Observable<SessionStats[]> {
@@ -88,6 +101,7 @@ export class QuizService {
       { headers: this.httpHeader})
       .pipe(catchError(this.handleError<Quiz[]>('getFavoriteQuizzes', [])));
   }
+
 
   addFavoriteQuiz(quizId) {
     return this.http.post(this.quizzesUrl + '/favorite/' + quizId + '/' + this.userId,'Add favorite quiz',

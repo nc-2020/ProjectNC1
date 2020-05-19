@@ -14,7 +14,7 @@ public class NotificationRowMapper implements RowMapper<Notification> {
                 resultSet.getLong("id"),
                 resultSet.getString("text"),
                 resultSet.getBoolean("seen"),
-                resultSet.getDate("date"),
+                resultSet.getTimestamp("date"),
                 resultSet.getLong("cat_id"),
                 resultSet.getLong("user_id"));
     }

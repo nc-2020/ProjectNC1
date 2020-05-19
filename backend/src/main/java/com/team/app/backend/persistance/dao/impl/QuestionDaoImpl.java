@@ -4,6 +4,7 @@ import com.team.app.backend.persistance.dao.QuestionDao;
 import com.team.app.backend.persistance.dao.mappers.QuestionRowMapper;
 import com.team.app.backend.persistance.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -24,13 +25,14 @@ public class QuestionDaoImpl implements QuestionDao {
     @Autowired
     private QuestionRowMapper questionRowMapper;
 
-
+    @Autowired
+    Environment env;
 
 
     @Override
     public List<Question> getQuizQusetions(Long id) {
-            return jdbcTemplate.query("SELECT Q.id, Q.time, Q.text, Q.max_points, Q.image, Q.type_id, QT.name AS type_name, Q.quiz_id FROM question Q INNER JOIN quest_type QT ON Q.type_id=QT.id where Q.quiz_id = ? "
-                    ,new Object[] { id },
+            return jdbcTemplate.query(env.getProperty("get.quiz.questions"),
+                    new Object[] { id },
                     questionRowMapper);
 
     }
@@ -38,7 +40,7 @@ public class QuestionDaoImpl implements QuestionDao {
     @Override
     public Question getQuestion(Long id) {
         return jdbcTemplate.queryForObject(
-        "SELECT Q.id, Q.time, Q.text, Q.max_points, Q.image, Q.type_id, QT.name AS type_name, Q.quiz_id FROM question Q INNER JOIN quest_type QT ON Q.type_id=QT.id WHERE Q.id = ?",
+                env.getProperty("get.question"),
                 new Object[]{id},
                 questionRowMapper
         );
@@ -46,11 +48,11 @@ public class QuestionDaoImpl implements QuestionDao {
 
     @Override
     public Long save(Question question) {
-        String sql="INSERT INTO question( time, text, max_points, image, type_id, quiz_id) VALUES ( ?, ?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(
                 connection -> {
-                    PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
+                    PreparedStatement ps = connection.prepareStatement(env.getProperty("create.question"),
+                            new String[] {"id"});
                     ps.setInt(1, question.getTime());
                     ps.setString(2, question.getText());
                     ps.setInt(3, question.getMax_points());
@@ -65,22 +67,10 @@ public class QuestionDaoImpl implements QuestionDao {
     }
 
 
-//        Long id =(long) jdbcTemplate.update(
-//                ,
-//                question.getTime(),
-//                question.getText(),
-//                question.getMax_points(),
-//                question.getImage(),
-//                question.getType().getId(),
-//                question.getQuiz_id()
-//        );
-//        return id;
-//    }
-
     @Override
     public void update(Question question) {
         jdbcTemplate.update(
-                "UPDATE public.question SET time =?, text=?, max_points=?, image=?, type_id=?, quiz_id=? WHERE id = ?",
+                env.getProperty("update.question"),
                 question.getTime(),
                 question.getText(),
                 question.getMax_points(),
@@ -93,8 +83,9 @@ public class QuestionDaoImpl implements QuestionDao {
 
     @Override
     public void delete(Long id) {
+
         jdbcTemplate.update(
-                "DELETE from question where id = ?",
+                env.getProperty("delete.question"),
                 id
         );
     }

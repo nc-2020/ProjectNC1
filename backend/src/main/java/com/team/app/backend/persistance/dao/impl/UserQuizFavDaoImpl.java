@@ -2,6 +2,7 @@ package com.team.app.backend.persistance.dao.impl;
 
 import com.team.app.backend.persistance.dao.UserQuizFavDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,9 @@ public class UserQuizFavDaoImpl implements UserQuizFavDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    Environment env;
+
 
     public UserQuizFavDaoImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
@@ -23,7 +27,7 @@ public class UserQuizFavDaoImpl implements UserQuizFavDao {
     @Override
     public void makeFavorite(Long user_id, Long quiz_id) {
         jdbcTemplate.update(
-                "INSERT INTO user_quiz_fav(user_id, quiz_id) VALUES (?, ?)",
+                env.getProperty("create.favourite"),
                 user_id, quiz_id);
     }
 
@@ -31,7 +35,7 @@ public class UserQuizFavDaoImpl implements UserQuizFavDao {
     public void deleteFavorite(Long user_id, Long quiz_id) {
         System.out.println(user_id+" "+quiz_id);
         jdbcTemplate.update(
-                "DELETE from user_quiz_fav where user_id = ? AND quiz_id = ?",
+                env.getProperty("delete.favourite"),
                 user_id,quiz_id
         );
     }

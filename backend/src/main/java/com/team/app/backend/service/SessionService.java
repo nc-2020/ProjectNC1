@@ -16,5 +16,5 @@ public interface SessionService {
 
     void setSesionStatus(Long ses_id,SessionStatus sessionStatus);
 
-
+    Session getSessionByAccessCode(String access_code);
 }

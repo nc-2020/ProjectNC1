@@ -8,7 +8,7 @@
       <p class="card-text"> {{quiz.description}}</p>
     </div>
     <div class="btn-group justify-content-between" role="group" aria-label="First group">
-      <a *ngIf="getUserRole() !== 'user'" routerLink="/quiz/{{quiz.id}}" class="btn btn-secondary">{{'QUIZ_DASHBOARD.BUTTON.TEST' | translate}}</a>
+      <a *ngIf="getUserRole() !== 'user'" routerLink="/quiz/{{quiz.id}}/0" class="btn btn-secondary">{{'QUIZ_DASHBOARD.BUTTON.TEST' | translate}}</a>
       <a *ngIf="getUserRole() === 'user'" style="color: black" class="btn btn-secondary" (click)="createSession()">{{'QUIZ_DASHBOARD.BUTTON.PLAY' | translate}}</a>
       <a *ngIf="isEdit" routerLink="/quiz-edit/{{quiz.id}}" class="btn btn-secondary">{{'QUIZ_DASHBOARD.BUTTON.EDIT' | translate}}</a>
       <button *ngIf="!isEdit && getUserRole() === 'user'" class="favourite_btn" mat-icon-button color="warn">

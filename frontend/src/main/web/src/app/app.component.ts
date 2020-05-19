@@ -25,6 +25,7 @@ export class AppComponent implements OnDestroy, OnInit{
               private router: Router,
               public translate: TranslateService,
               public notificationService: NotificationService,
+              private notificationService: NotificationService,
               private settingsService: SettingsService) {
 
   }
@@ -42,6 +43,7 @@ export class AppComponent implements OnDestroy, OnInit{
     }
     this.translate.use(localStorage.getItem('language'));
   }
+
 
   @HostListener('window:beforeunload')
   deleteNotifications() {
@@ -65,11 +67,13 @@ export class AppComponent implements OnDestroy, OnInit{
       _ => {this.router.navigateByUrl('/login');
       this.notificationService.notifications = []});
   }
-getRole() {
+  getRole() {
     return this.userService.user.role.name;
-}
+  }
   authenticated() {
     return this.userService.authenticated;
   }
+
+
 
 }
