@@ -4,6 +4,7 @@ import {UserService} from '../services/user.service';
 import {AnnouncementService} from '../services/announcement.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from "@angular/router";
+import {ANNOUNCEMENT_APPROVED, ANNOUNCEMENT_CREATED, ANNOUNCEMENT_IMPORTANT} from "../parameters";
 
 @Component({
   selector: 'app-announcement-edit',
@@ -21,7 +22,9 @@ export class AnnouncementEditComponent implements OnInit {
 
   announcementForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private announcementService: AnnouncementService, private userService: UserService) { }
+  constructor(private fb: FormBuilder, private router: Router,
+              private announcementService: AnnouncementService,
+              private userService: UserService) { }
 
   ngOnInit(): void {
     this.announcementForm = this.fb.group({
@@ -39,7 +42,8 @@ export class AnnouncementEditComponent implements OnInit {
     this.cleanMessage();
     this.announcement.title = this.announcementForm.get('title').value;
     this.announcement.text = this.announcementForm.get('text').value;
-    this.announcementService.updateAnnouncement(this.announcement).subscribe(resp => {this.message = 'Announcement updated!';},
+    this.announcementService.updateAnnouncement(this.announcement).
+    subscribe(resp => {this.message = 'Announcement updated!';},
       error => {this.error = error.message;});
   }
 
@@ -68,12 +72,12 @@ export class AnnouncementEditComponent implements OnInit {
   }
   selectStatus(): number {
     if (this.getUserRole() === 'user') {
-      return 1;
+      return ANNOUNCEMENT_CREATED;
     }
     if(this.announcementForm.get('important').value) {
-      return 3;
+      return ANNOUNCEMENT_IMPORTANT;
     } else {
-      return 2;
+      return ANNOUNCEMENT_APPROVED;
     }
   }
   submit() {

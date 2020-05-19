@@ -10,6 +10,7 @@ import {Observable} from "rxjs";
 import {stringify} from "querystring";
 import * as bcrypt from 'bcryptjs';
 import {HashBcrypt} from "../util/hashBcrypt";
+import {NotificationService} from "../services/notification.service";
 
 
 @Component({
@@ -28,14 +29,19 @@ export class AuthorizationComponent implements OnInit {
   });
 
 
-  constructor(private fb: FormBuilder, private app: UserService, private http: HttpClient, private router: Router) {
+  constructor(private fb: FormBuilder,
+              private app: UserService,
+              private http: HttpClient,
+              private router: Router,
+              private notification: NotificationService) {
   }
 
   login() {
     this.app.login({username: this.userForm.get('username').value,
       password: this.userForm.get('password').value}).
     subscribe(
-      res => {this.router.navigateByUrl('/dashboard');},
+      res => {this.router.navigateByUrl('/dashboard');
+              this.notification.getAll(+this.app.user.id)},
       error => {this.error = error});
 
   }
