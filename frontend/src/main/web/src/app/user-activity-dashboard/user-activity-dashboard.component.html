@@ -6,19 +6,10 @@
           <a  data-target="#user-activities" data-toggle="tab" class="nav-link active show text-white" role="button" aria-expanded="false">
             <strong>All</strong></a>
         </li>
-        <li  class="nav-item">
-          <a  data-target="#quizes"   data-toggle="tab" role="button" aria-expanded="false" class="nav-link text-white">
-            <strong>Quizes</strong></a>
-        </li>
-        <li class="nav-item" >
-          <a  data-target="#ach" data-toggle="tab" role="button" aria-expanded="false" class="nav-link text-white">
-            <strong>Achievments</strong></a>
-        </li>
       </ul>
     </div>
     <div class="pt-4 tab-content">
       <div  class="tab-pane active show" id="user-activities">
-
         <div *ngIf="userActivitys.length > 0; else elseBlock" class="raw">
           <app-user-activity  *ngFor="let userActivity of userActivitys"  [userActivity] = "userActivity"> </app-user-activity>
         </div>
@@ -27,18 +18,8 @@
         </ng-template>
       </div>
 
-      <div  class="tab-pane" id="quizes">
-        <div *ngIf="!editOnly" class="raw">
-          <!--<h1 *ngIf="newAnnouncements.length == 0 ">No announcements for approving</h1>-->
-          <!--<app-announcement  (onChanged)="editAnn($event)" *ngFor="let announcement of getNewAnnouncements()" [announcement] = "announcement"> </app-announcement>-->
-        </div>
-      </div>
 
-      <div  class="tab-pane" id="ach">
-        <div class="raw">
-          <!--<app-announcement-edit [editOnly]="false"></app-announcement-edit>-->
-        </div>
-      </div>
+
 
     </div>
   </div>

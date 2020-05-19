@@ -190,6 +190,7 @@
 
         "SETTINGS": {
           "NOTIFICATIONS": "Повідомлення",
+          "ACTIVITIES":"Активності друзів",
           "BUTTON": {
             "APPROVE_NOTIFICATIONS": "Затвердити повідомлення",
             "SYSTEM_NOTIFICATIONS": "Системні повідомлення"

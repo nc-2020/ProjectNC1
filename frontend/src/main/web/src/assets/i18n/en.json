@@ -189,6 +189,7 @@
 
         "SETTINGS": {
           "NOTIFICATIONS": "Notifications",
+          "ACTIVITIES":"Friends activities",
           "BUTTON": {
             "APPROVE_NOTIFICATIONS": "Approve notifications",
             "SYSTEM_NOTIFICATIONS": "System notifications"
