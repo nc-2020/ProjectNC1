@@ -25,6 +25,7 @@ export class AppComponent {
               private router: Router,
               public translate: TranslateService,
               private notificationService: NotificationService,
+
               private settingsService: SettingsService) {
 
   }
@@ -42,6 +43,7 @@ export class AppComponent {
     }
     this.translate.use(localStorage.getItem('language'));
   }
+
 
   @HostListener('window:beforeunload')
   deleteNotifications() {
@@ -64,11 +66,13 @@ export class AppComponent {
     this.userService.logout().subscribe(
       _ => this.router.navigateByUrl('/login'));
   }
-getRole() {
+  getRole() {
     return this.userService.user.role.name;
-}
+  }
   authenticated() {
     return this.userService.authenticated;
   }
+
+
 
 }

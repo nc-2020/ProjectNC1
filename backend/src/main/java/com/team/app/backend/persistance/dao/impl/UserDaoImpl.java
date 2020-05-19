@@ -4,6 +4,7 @@ import com.team.app.backend.persistance.dao.UserDao;
 import com.team.app.backend.persistance.dao.mappers.UserRowMapper;
 import com.team.app.backend.persistance.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
@@ -17,6 +18,9 @@ public class UserDaoImpl implements UserDao {
 
     @Autowired
     private UserRowMapper userRowMapper;
+
+    @Autowired
+    Environment env;
 
     public UserDaoImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
@@ -137,12 +141,26 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public boolean checkEmail(String email) {
+        return jdbcTemplate.queryForObject(
+                "SELECT ? IN (SELECT email FROM users)",
+                new Object[]{email},Boolean.class
+        );
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return jdbcTemplate.queryForObject(
+                env.getProperty("get.user.by.email"),
+                new Object[]{email},
+                userRowMapper);
+    }
+
     public void changeLanguage(Long langId , Long userId) {
         jdbcTemplate.update(
                 "UPDATE users set lang_id = ? WHERE id = ?",
                 langId, userId
         );
-
     }
 
 }

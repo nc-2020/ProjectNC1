@@ -23,6 +23,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   questionOptionPoints = 0;
   quizId;
   sessionId;
+  access_code='';
   quizScore = 0;
   questions: Question[] = [];
   userAnswers: Answer[] = [];
@@ -51,6 +52,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.routeSub = this.route.params.subscribe(params => {
       this.quizId = params['id'];
       this.sessionId = params['sessionId'];
+      this.getAccessCode();
     });
     this.getQuestions();
 
@@ -191,6 +193,10 @@ export class QuizComponent implements OnInit, OnDestroy {
     return this.userService.user.role.name;
   }
 
+  getUserJoin(){
+    return this.userService.user.joined;
+  }
+
   startNewGame() {
     if (this.getUserRole() === 'user') {
       this.quizService.startSession(this.sessionId).subscribe(data =>
@@ -198,7 +204,14 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  getAccessCode(){
+    this.quizService.getAccessCode(this.sessionId).subscribe(data =>
+      this.access_code=data)
+  }
+
   finishSession() {
+    this.userService.user.joined=null;
 
     this.quizService.sendSessionStats({
       ses_id : this.sessionId,
@@ -213,5 +226,7 @@ export class QuizComponent implements OnInit, OnDestroy {
       });
     })
   }
+
+
 
 }

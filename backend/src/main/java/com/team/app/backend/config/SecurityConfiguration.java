@@ -29,6 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String SIGN_UP_ENDPOINT = "/api/sign-up";
     private static final String ROOT_ENDPOINT = "/";
     private static final String ACTIVATE_ENDPOINT = "/api/user/activate*";
+    private static final String RECOVERY_ENDPOINT = "/api/recovery";
 
 
     @Autowired
@@ -52,6 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/index.html").permitAll()
                 .antMatchers(SIGN_UP_ENDPOINT).permitAll()
                 .antMatchers(ROOT_ENDPOINT).permitAll()
+                .antMatchers(RECOVERY_ENDPOINT).permitAll()
                 .antMatchers(HttpMethod.GET,ACTIVATE_ENDPOINT + "*")
                 .permitAll()
                 .anyRequest().authenticated()

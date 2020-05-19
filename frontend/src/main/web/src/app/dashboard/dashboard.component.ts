@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ViewChild, AfterViewChecked, AfterViewInit} from '@angular/core';
+import {Component, OnInit, Input, ViewChild, AfterViewChecked, AfterViewInit, ElementRef} from '@angular/core';
 import {UserService} from '../services/user.service';
 import { QuizService } from '../services/quiz.service';
 import { User } from '../entities/user';
@@ -13,6 +13,8 @@ import {Category} from '../entities/category';
 import {Achievement} from "../entities/achievement";
 import {AchievementService} from "../services/achievement.service";
 import {UserAchievement} from "../entities/user-achievement";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Session} from "../entities/session";
 import {DEBOUNCE_TIME} from "../parameters";
 
 @Component({
@@ -21,13 +23,15 @@ import {DEBOUNCE_TIME} from "../parameters";
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
+  @ViewChild('closeModal') closeModal: ElementRef;
   tab = '';
   user: User;
   users$: Observable<User[]>;
   quizes$: Observable<Quiz[]>;
   categoriesList: Category[] = [];
   isVisible = true;
+  joinForm: FormGroup;
+  message='';
 
   private searchQuizTerms = new Subject<string>();
   private searchUserTerms = new Subject<string>();
@@ -35,7 +39,9 @@ export class DashboardComponent implements OnInit {
   constructor(private userService: UserService, private quizService: QuizService, private achievementService: AchievementService,
               private categoryService: CategoryService,
               private location: Location, private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private fb: FormBuilder,
+    ) { }
 
   ngOnInit(): void {
     this.getCategories();
@@ -51,6 +57,7 @@ export class DashboardComponent implements OnInit {
       distinctUntilChanged(),
       switchMap((term: string) => this.userService.searchUsers(term)),
     );
+    this.setJoinForm();
 
   }
 
@@ -93,4 +100,23 @@ export class DashboardComponent implements OnInit {
       }
     )
   }
+
+  private setJoinForm() {
+    this.joinForm = this.fb.group({
+      accessCode: ["", [Validators.required, Validators.minLength(3)]]
+    } );
+  }
+  connectToSession(accessCode:string){
+    // this.userService.user.joined=true;
+    this.quizService.joinSession(accessCode).subscribe((session: Session) => {
+     this.router.navigate(['/quiz/' + session.quiz_id + '/' + session.id]);
+      this.closeModal.nativeElement.click()
+    }, error => this.message = error.message)
+  }
+
+  submit() {
+    this.connectToSession(this.joinForm.get('accessCode').value);
+  }
+
+
 }
