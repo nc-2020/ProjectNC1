@@ -39,7 +39,6 @@ public class AchievementServiceImpl implements AchievementService {
     @Override
     public void setUserAchievement(long userId) {
         achievementDao.setUserAchievement(userId);
-        //userActivityService.setAchievmentActivity(userId);
     }
 
 }

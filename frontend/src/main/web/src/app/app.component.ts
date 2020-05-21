@@ -87,6 +87,4 @@ export class AppComponent {
     return this.userService.authenticated;
   }
 
-
-
 }
