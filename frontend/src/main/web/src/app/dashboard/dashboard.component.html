@@ -93,20 +93,30 @@
         </div>
         <div *ngIf="tab === 'Users' || tab === 'Friends' || tab === 'Admins-Moderators' || tab==='Moderators' || tab === 'Quizzes' " class=" main-frame container-fluid my-5 ">
           <form *ngIf="tab !== 'Quizzes'" class="form-inline ml-3 my-2 my-lg-0" >
-            <input #searchBox id="search-box"  class="form-control my-2 mx-auto" type="text" placeholder="{{'DASHBOARD.SEARCH.PLACEHOLDER' | translate}}" style="width: 70%">
-            <button for="search-box" class="btn btn-secondary my-2 my-sm-0 mx-1" (click)="search(searchBox.value)" type="submit" style="width: auto">{{'DASHBOARD.SEARCH.BUTTON.SEARCH' | translate}}</button>
+            <input [(ngModel)]="term" name="term" id="search-box"  class="form-control my-2" type="text" placeholder="Search" style="width: 70%">
+            <button for="search-box" class="btn btn-secondary my-2 my-sm-0" (click)="search()" type="submit" style="width: auto">Search</button>
             <button *ngIf="getUserRole()==='admin' || getUserRole()==='super admin'" class="btn btn-success my-2 mx-auto my-sm-0"
                     (click)="profileSet(true)"  style="width: auto">{{'DASHBOARD.SEARCH.BUTTON.ADD' | translate}}</button>
           </form>
           <form *ngIf="tab === 'Quizzes'" class="form-inline ml-3 my-2 my-lg-0" >
-            <input #searchBox id="search-quiz"  class="form-control my-2 mr-3" type="text" placeholder="{{'DASHBOARD.SEARCH.PLACEHOLDER' | translate}}" style="width: 70%">
-            <mat-form-field color="primary" id="dropListCategory">
-              <mat-label class="text-center">{{'DASHBOARD.SEARCH.CATEGORIES' | translate}}</mat-label>
-              <mat-select multiple>
-                <mat-option *ngFor="let category of categoriesList" [value]="category">{{category.name}}</mat-option>
+            <input [(ngModel)]="term" name="term" id="search-quiz"  class="form-control my-2 mr-3" type="text" placeholder="Search" style="width: 70%">
+            <mat-form-field color="Warn" id="dropListCategory">
+              <mat-label class="text-center">Categories</mat-label>
+              <mat-select [(value)]="selectedCategories" multiple>
+                <mat-option *ngFor="let category of categoriesList" [value]="category.name">{{category.name}}</mat-option>
               </mat-select>
             </mat-form-field>
-            <button for="search-box" class="btn btn-secondary my-2 mx-2 my-sm-0" (click)="search(searchBox.value)" type="submit" style="width: auto">{{'DASHBOARD.SEARCH.BUTTON.SEARCH' | translate}}</button>
+            <input [(ngModel)]="quizUser" name="quizUser" id="search-quiz-by-user"  class="form-control my-2 mr-3" type="text" placeholder="User name" style="width: 70%">
+            <mat-form-field color="Warn" id="dropListCategory">
+              <mat-label class="text-center">Time period</mat-label>
+              <mat-select [(value)]="selectedDateOption">
+                <mat-option [value]="1">Today</mat-option>
+                <mat-option [value]="2">For week</mat-option>
+                <mat-option [value]="3">For month</mat-option>
+                <mat-option [value]="4">For all time</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button for="search-box" class="btn btn-secondary my-2 mx-2 my-sm-0" (click)="search()" type="submit" style="width: auto">Search</button>
             <button *ngIf="getUserRole()==='admin' || getUserRole()==='super admin'" class="btn btn-success my-2 mx-2 my-sm-0"
                     (click)="profileSet(true)"  style="width: auto">{{'DASHBOARD.SEARCH.BUTTON.ADD' | translate}}</button>
           </form>

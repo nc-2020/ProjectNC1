@@ -15,8 +15,11 @@ export class UserService {
   authenticated = localStorage.getItem('user') ? true : false;
   user: User = JSON.parse(localStorage.getItem('user'));
 
-  private userUrl = 'http://localhost:8080/api/user';
-  private apiUrl = 'http://localhost:8080/api';
+  // private userUrl = 'http://localhost:8080/api/user';
+  // private apiUrl = 'http://localhost:8080/api';
+
+  private userUrl = '/api/user';
+  private apiUrl = '/api';
 
   constructor(private http: HttpClient, private router: Router) {
 
@@ -60,7 +63,7 @@ export class UserService {
   }
 
   login(user): Observable<User> {
-    return this.http.post<any>( this.apiUrl+ '/login', user).pipe(
+    return this.http.post<any>( this.apiUrl + '/login', user).pipe(
       tap(response => {
         this.user = response;
         localStorage.setItem('user', JSON.stringify(response));
@@ -112,12 +115,9 @@ export class UserService {
     return [firstRole, lastRole];
   }
   sendUserInvite(userInvite: UserInvite): Observable<UserInvite> {
-    console.log("sent invite");
-    console.log(userInvite);
     return this.http.post<UserInvite>(this.userUrl + '/invite/send', userInvite, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(
         tap(response => {
-          console.log(response);
         }),
       catchError(this.handleError<any>('sendUserInvite'))
     );
