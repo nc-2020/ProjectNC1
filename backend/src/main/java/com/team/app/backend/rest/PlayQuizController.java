@@ -6,6 +6,7 @@ import com.team.app.backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
@@ -78,12 +79,15 @@ public class PlayQuizController {
             @RequestParam("access_code") String accessCode
     ) {
         Session session = sessionService.getSessionByAccessCode(accessCode);
+        System.out.println(session);
         if(session != null){
+            System.out.println("not null ses");
             User user = userService.getUserById(user_id);
             userToSessionService.createNewUserToSession(user, session);
             return ResponseEntity.ok(session);
         }else{
-            throw new BadCredentialsException(messageSource.getMessage("session.start", null, LocaleContextHolder.getLocale()));
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(messageSource.getMessage("session.start", null, LocaleContextHolder.getLocale()));
         }
 
     }

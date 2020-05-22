@@ -224,6 +224,14 @@
       }
     },
 
+    "USER_ACTIVITY":{
+      "CREATE_QUIZ":" created quiz named ",
+      "PLAYED_QUIZ":" played quiz named ",
+      "LIKE_QUIZ":" liked quiz called ",
+      "ANN_CREATE":" created announcement called ",
+      "ACH_REC":" received achievement called "
+    },
+
     "PROFILE": {
       "PROFILE": {
         "LABEL": "Profile",

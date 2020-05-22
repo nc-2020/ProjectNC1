@@ -35,7 +35,8 @@ public class UserQuizFavoriteServiceImpl implements UserQuizFavoriteService {
         userActivity.setCategoryId(5L);
         userActivity.setDate(date);
         userActivity.setUserId(user_id);
-        userActivity.setText(String.format("%s liked quiz called \"%s\"",userDao.get(user_id).getUsername(),quizDao.get(quiz_id).getTitle()));
+        //userActivity.setText(String.format("%s liked quiz called \"%s\"",userDao.get(user_id).getUsername(),quizDao.get(quiz_id).getTitle()));
+        userActivity.setElem_id(quiz_id);
         userActivityDao.create(userActivity);
         userQuizFavDao.makeFavorite(user_id,quiz_id);
     }

@@ -11,7 +11,12 @@
             <div class="alert alert-danger" [hidden]="!message" >
               {{message}}
             </div>
-            <h4  class="card-title" style="">{{userActivity.text}} </h4>
+            <h4  *ngIf="userActivity.categoryId===quizPlayCatId" class="card-title" style="">{{userActivity.username}}{{'DASHBOARD.USER_ACTIVITY.PLAYED_QUIZ' | translate}}"{{userActivity.elem_name}}"</h4>
+            <h4  *ngIf="userActivity.categoryId===quizCreateCatId" class="card-title" style="">{{userActivity.username}}{{'DASHBOARD.USER_ACTIVITY.CREATE_QUIZ' | translate}}"{{userActivity.elem_name}}"</h4>
+            <h4  *ngIf="userActivity.categoryId===quizLikeCatId" class="card-title" style="">{{userActivity.username}}{{'DASHBOARD.USER_ACTIVITY.LIKE_QUIZ' | translate}}"{{userActivity.elem_name}}"</h4>
+            <h4  *ngIf="userActivity.categoryId===annCreateCatId" class="card-title" style="">{{userActivity.username}}{{'DASHBOARD.USER_ACTIVITY.ANN_CREATE' | translate}}"{{userActivity.elem_name}}"</h4>
+            <h4  *ngIf="userActivity.categoryId===achRecCatId" class="card-title" style="">{{userActivity.username}}{{'DASHBOARD.USER_ACTIVITY.PLAY_QUIZ' | translate}}"{{userActivity.elem_name}}"</h4>
+
             <div class ="text-muted">
               {{userActivity.date | date:'short'}}
             </div>

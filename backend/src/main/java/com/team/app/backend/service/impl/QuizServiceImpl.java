@@ -200,6 +200,7 @@ public class QuizServiceImpl implements QuizService {
         userActivity.setCategoryId(2L);
         userActivity.setDate(new java.sql.Timestamp(millis));
         userActivity.setUserId(user_id);
+        userActivity.setElem_id(quiz.getId());
         userActivity.setText(String.format("%s created quiz named \"%s\"",userDao.get(user_id).getUsername(),quiz_name));
         userActivityDao.create(userActivity);
         return quiz_id;
