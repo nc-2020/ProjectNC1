@@ -17,9 +17,9 @@ public class SpringJdbcConfiguration {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://ec2-54-217-204-34.eu-west-1.compute.amazonaws.com:5432/d2q1r015780tbg");
-        dataSource.setUsername("auewlydijtwktd");
-        dataSource.setPassword("571df7407fd1073d91d2d43e3c085880564337693979e4e00e7bce1771228bf9");
+        dataSource.setUrl("jdbc:postgresql://ec2-46-137-79-235.eu-west-1.compute.amazonaws.com:5432/d9slfpqhmrvt6o");
+        dataSource.setUsername("vgicoasopqmert");
+        dataSource.setPassword("c8251c662c253a247023ad3dab0bf1891a4c99c0db50781ee5e271045e8d5452");
         return dataSource;
     }
     @Bean

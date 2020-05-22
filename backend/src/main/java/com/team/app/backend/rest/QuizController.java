@@ -122,9 +122,6 @@ public class QuizController {
         return quizService.getSuggestion(user_id);
     }
 
-
-
-
     @GetMapping("quiz/category/{category}")
     public List<Quiz> categoryQuizes(@PathVariable("category") String category) {
         return quizService.getCategoryQuizes(category);
