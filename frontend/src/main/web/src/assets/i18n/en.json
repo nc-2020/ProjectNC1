@@ -188,11 +188,18 @@
         },
 
         "SETTINGS": {
-          "NOTIFICATIONS": "Notifications",
-          "ACTIVITIES":"Friends activities",
-          "BUTTON": {
-            "APPROVE_NOTIFICATIONS": "Approve notifications",
-            "SYSTEM_NOTIFICATIONS": "System notifications"
+          "NOTIFICATIONS": {
+            "TITLE":"Notifications",
+            "ANN_SETTING":"Announcement notifications",
+            "QUIZ_SETTING":"Quiz notifications",
+            "SYSTEM_SETTING":"System notifications"
+          },
+          "ACTIVITIES": {
+            "TITLE":"Friends activities",
+            "ANN_SETTING":"Friends announcements",
+            "QUIZ_CREATE_SETTING":"Friends quiz creates",
+            "QUIZ_PLAY_SETTING":"Friends quiz plays",
+            "QUIZ_LIKE_SETTING":"Friends quiz likes"
           }
         },
 
@@ -229,7 +236,9 @@
       "PLAYED_QUIZ":" played quiz named ",
       "LIKE_QUIZ":" liked quiz called ",
       "ANN_CREATE":" created announcement called ",
-      "ACH_REC":" received achievement called "
+      "ACH_REC":" received achievement called ",
+      "TITLE": "Friends Activities",
+      "NO_SHOW": "No friends activities to show"
     },
 
     "PROFILE": {

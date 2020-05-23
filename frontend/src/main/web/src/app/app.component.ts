@@ -26,14 +26,13 @@ export class AppComponent implements OnDestroy, OnInit{
               public translate: TranslateService,
               public notificationService: NotificationService,
               private settingsService: SettingsService) {
-
   }
 
 
   setTranslate(language: string) {
     localStorage.setItem('language', language);
     this.translate.use(language);
-    this.settingsService.setLanguage(language, this.userService.user).subscribe();
+    this.settingsService.setLanguage(language, this.userService.user);
   }
 
   ngOnInit(): void {
@@ -42,7 +41,6 @@ export class AppComponent implements OnDestroy, OnInit{
     }
     this.translate.use(localStorage.getItem('language'));
   }
-
 
   @HostListener('window:beforeunload')
   deleteNotifications() {
@@ -72,5 +70,4 @@ export class AppComponent implements OnDestroy, OnInit{
   authenticated() {
     return this.userService.authenticated;
   }
-
 }

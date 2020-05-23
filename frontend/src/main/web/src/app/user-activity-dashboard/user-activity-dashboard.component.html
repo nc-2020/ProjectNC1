@@ -4,7 +4,7 @@
       <ul class="nav nav-tabs">
         <li class="nav-item" >
           <a  data-target="#user-activities" data-toggle="tab" class="nav-link active show text-white" role="button" aria-expanded="false">
-            <strong>All</strong></a>
+            <strong>{{'DASHBOARD.USER_ACTIVITY.TITLE' | translate}}</strong></a>
         </li>
       </ul>
     </div>
@@ -14,7 +14,7 @@
           <app-user-activity  *ngFor="let userActivity of userActivitys"  [userActivity] = "userActivity"> </app-user-activity>
         </div>
         <ng-template #elseBlock>
-          <h2>No friends activities </h2>
+          <h2>{{'DASHBOARD.USER_ACTIVITY.NO_SHOW' | translate}}</h2>
         </ng-template>
       </div>
 
