@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import {DashboardComponent} from "../dashboard/dashboard.component";
 import {MustMatchValidator} from "../registration/_helpers/must-match.validator";
 import {HashBcrypt} from "../util/hashBcrypt";
+import {UploadFilesService} from "../services/upload-files.service";
 
 @Component({
   selector: 'app-user-profile',
@@ -18,21 +19,53 @@ export class UserProfileComponent implements OnInit {
 
   @Input()
   editOnly = false;
-
   error = '';
   message = '';
 
+  uploadResponse = { status: '', message: '', filePath: '' };
+
+  form: FormGroup;
   userForm: FormGroup;
+  imageUrl: string = 'https://img.icons8.com/plasticine/100/000000/user-male-circle.png';
 
-
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) { }
+  constructor(private fb: FormBuilder,
+              private userService: UserService,
+              private router: Router,
+              private uploadFilesService: UploadFilesService) { }
 
   ngOnInit(): void {
     this.setUserForm();
+
+    this.form = this.fb.group({
+      avatar: ['']
+    });
   }
+
+
+
+  onFileChange(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.form.get('avatar').setValue(file);
+    }
+  }
+
+  onSubmit() {
+    const formData = new FormData();
+    formData.append('file', this.form.get('avatar').value);
+    this.uploadFilesService.upload(formData).subscribe(
+      (res : string) => this.imageUrl = res,
+      error => {
+        console.log(error.text);
+      }
+    );
+  }
+
+
   userRole() {
     return this.userService.user.role.name;
   }
+
 
   private setUserForm() {
     this.userForm = this.fb.group({
@@ -42,7 +75,7 @@ export class UserProfileComponent implements OnInit {
       username: [this.user.username, [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(3)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(3)]],
-      role: [{value: null, disabled: this.userRole() === 'super admin' ? false : true}]
+      role: [{value: null, disabled: this.userRole() === 'super admin' ? false : true}],
     } );
     this.setProperties();
   }
