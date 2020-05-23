@@ -4,5 +4,10 @@
       "name": "achievement.all",
       "type": "java.lang.String",
       "description": "Description for achievement.all."
-  }
-] }
+    },
+    {
+      "name": "amazonProperties.endpointUrl",
+      "type": "java.lang.String",
+      "description": "Description for amazonProperties.endpointUrl."
+    }
+  ] }
