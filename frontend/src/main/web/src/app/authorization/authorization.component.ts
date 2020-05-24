@@ -43,7 +43,7 @@ export class AuthorizationComponent implements OnInit {
       password: this.userForm.get('password').value}).
     subscribe(
       res => {this.router.navigateByUrl('/dashboard');
-              this.notification.getAll(+this.app.user.id)},
+              this.notification.initializeWebSocketConnection()},
       error => {this.error = error});
 
   }

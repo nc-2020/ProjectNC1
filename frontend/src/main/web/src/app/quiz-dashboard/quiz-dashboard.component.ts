@@ -38,7 +38,6 @@ export class QuizDashboardComponent implements OnInit {
   getQuizzes(): void {
     this.quizService.getQuizzes()
       .subscribe(quizzes => {
-        console.log(quizzes);
         this.quizzes = quizzes
       });
   }
@@ -56,7 +55,6 @@ export class QuizDashboardComponent implements OnInit {
   getSuggestions(): void {
     this.quizService.getSuggestionsQuizzes()
       .subscribe(quizzes => {
-        console.log(quizzes)
         this.suggestionQuizzes = quizzes
       })
   }

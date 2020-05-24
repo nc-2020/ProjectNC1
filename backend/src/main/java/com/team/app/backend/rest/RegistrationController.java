@@ -50,9 +50,9 @@ public class RegistrationController {
 
 
 
-    @GetMapping(value = "/{path:[^\\.]*}")
-    public String redirect() {
-        return "forward:/";
-    }
+//    @GetMapping(value = "/{path:[^\\.]*}")
+//    public String redirect() {
+//        return "forward:/";
+//    }
 
 }

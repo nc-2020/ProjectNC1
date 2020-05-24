@@ -6,6 +6,7 @@ import {NotificationService} from './services/notification.service';
 import {Notification} from './entities/notification';
 import {SettingsService} from "./services/settings.service";
 import {TranslateService} from "@ngx-translate/core";
+import {WebSocketService} from "./web-socket.service";
 
 
 //import {WebSocketService} from "./web-socket.service";
@@ -16,12 +17,11 @@ import {TranslateService} from "@ngx-translate/core";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnDestroy, OnInit{
-  title = 'ui-app';
-  deletedNotifications: Notification[] = [];
 
-  constructor(private http: HttpClient,
-              private userService: UserService,
+export class AppComponent implements OnDestroy, OnInit{
+  
+  title = 'ui-app';
+  constructor(private userService: UserService,
               private router: Router,
               public translate: TranslateService,
               public notificationService: NotificationService,
@@ -36,16 +36,11 @@ export class AppComponent implements OnDestroy, OnInit{
   }
 
   ngOnInit(): void {
-    if(this.userService.user.role.name === 'user' && this.userService.authenticated) {
-      this.getNotifications();
-    }
     this.translate.use(localStorage.getItem('language'));
   }
 
-  @HostListener('window:beforeunload')
-  deleteNotifications() {
-    this.notificationService.delete(this.deletedNotifications).
-    subscribe(res => {this.deletedNotifications = []});
+  deleteNotification(notification) {
+    this.notificationService.delete([notification]);
   }
 
   ngOnDestroy(): void {
@@ -54,15 +49,11 @@ export class AppComponent implements OnDestroy, OnInit{
   getNewNotifications(): Notification[] {
     return this.notificationService.notifications.filter(x => !x.seen);
   }
-  getNotifications() {
-      this.notificationService.getAll(+this.userService.user.id).
-      subscribe(res => {},
-      error => this.notificationService.notifications = []);
-  }
+
   logout() {
     this.userService.logout().subscribe(
       _ => {this.router.navigateByUrl('/login');
-      this.notificationService.notifications = []});
+            this.notificationService.disconnect()});
   }
   getRole() {
     return this.userService.user.role.name;
