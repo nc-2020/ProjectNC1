@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Quiz} from '../entities/quiz';
 import {QuizService} from '../services/quiz.service';
 import {UserService} from "../services/user.service";
+import {SessionStats} from "../entities/session-stats";
 
 @Component({
   selector: 'app-quiz-dashboard',
@@ -13,6 +14,7 @@ export class QuizDashboardComponent implements OnInit {
   userQuizzes: Quiz[] = [];
   favoriteQuizzes: Quiz[] = [];
   suggestionQuizzes: Quiz[] = [];
+  sessionStats:SessionStats[]=[];
   currentTab = 'Quizzes';
 
   constructor(private quizService: QuizService, private userService: UserService) { }

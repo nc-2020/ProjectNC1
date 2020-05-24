@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ViewChild, AfterViewChecked, AfterViewInit} from '@angular/core';
+import {Component, OnInit, Input, ViewChild, AfterViewChecked, AfterViewInit, ElementRef} from '@angular/core';
 import {UserService} from '../services/user.service';
 import { QuizService } from '../services/quiz.service';
 import { User } from '../entities/user';
@@ -13,6 +13,8 @@ import {Category} from '../entities/category';
 import {Achievement} from "../entities/achievement";
 import {AchievementService} from "../services/achievement.service";
 import {UserAchievement} from "../entities/user-achievement";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Session} from "../entities/session";
 import {DEBOUNCE_TIME} from "../parameters";
 
 @Component({
@@ -21,21 +23,30 @@ import {DEBOUNCE_TIME} from "../parameters";
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
+  @ViewChild('closeModal') closeModal: ElementRef;
   tab = '';
   user: User;
   users$: Observable<User[]>;
   quizes$: Observable<Quiz[]>;
   categoriesList: Category[] = [];
   isVisible = true;
+  term: string = "";
+  selectedCategories: string[] = [];
+  selectedDateOption: number = 4;
+  quizUser: string = "";
+  joinForm: FormGroup;
+  join_message=false;
 
-  private searchQuizTerms = new Subject<string>();
+
+  private searchQuizTerms = new Subject<any>();
   private searchUserTerms = new Subject<string>();
 
   constructor(private userService: UserService, private quizService: QuizService, private achievementService: AchievementService,
               private categoryService: CategoryService,
               private location: Location, private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private fb: FormBuilder,
+    ) { }
 
   ngOnInit(): void {
     this.getCategories();
@@ -44,22 +55,24 @@ export class DashboardComponent implements OnInit {
     this.quizes$ = this.searchQuizTerms.pipe(
       debounceTime(DEBOUNCE_TIME),
       distinctUntilChanged(),
-      switchMap((term: string) => this.quizService.searchQuizzes(term)),
+      // switch to new search observable each time the term changes
+      switchMap((obj: any) => this.quizService.searchQuizzes(obj.title, obj.categories, obj.dateOption, obj.user)),
     );
     this.users$ = this.searchUserTerms.pipe(
       debounceTime(DEBOUNCE_TIME),
       distinctUntilChanged(),
       switchMap((term: string) => this.userService.searchUsers(term)),
     );
+    this.setJoinForm();
 
   }
 
-  search(term: string): void {
+  search(): void {
     this.isVisible = false;
     if (this.tab === 'Quizzes') {
-      this.searchQuizTerms.next(term);
+      this.searchQuizTerms.next({ title: this.term, categories: this.selectedCategories, dateOption: this.selectedDateOption, user: this.quizUser });
     } else {
-      this.searchUserTerms.next(term);
+      this.searchUserTerms.next(this.term);
     }
   }
   profileSet( editOnly?: boolean, user?: User) {
@@ -93,4 +106,23 @@ export class DashboardComponent implements OnInit {
       }
     )
   }
+
+  private setJoinForm() {
+    this.joinForm = this.fb.group({
+      accessCode: ["", [Validators.required, Validators.minLength(3)]]
+    } );
+  }
+  connectToSession(accessCode:string){
+    // this.userService.user.joined=true;
+    this.quizService.joinSession(accessCode).subscribe(res => {
+     this.router.navigate(['/quiz/' + res.quiz_id + '/' + res.id]);
+      this.closeModal.nativeElement.click()
+    }, error => {console.log(error.error);console.log("JOIN MES"+this.join_message)})
+  }
+
+  submit() {
+    this.connectToSession(this.joinForm.get('accessCode').value);
+  }
+
+
 }

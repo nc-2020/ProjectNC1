@@ -21,7 +21,7 @@ export class FriendsComponent implements OnInit {
   getUserInvites(): void {
     this.userService.getUserInvite().subscribe(userInvites => {
       this.userInvites = userInvites
-      console.log(userInvites);
+      console.log('From Friends' + userInvites);
     })
   }
 

@@ -22,6 +22,7 @@ export class AuthorizationComponent implements OnInit {
 
 
   error = false;
+  error_massage='';
 
   userForm: FormGroup = this.fb.group({
     username: ['', [Validators.required, Validators.minLength(3)]],
@@ -37,6 +38,7 @@ export class AuthorizationComponent implements OnInit {
   }
 
   login() {
+    this.error_massage='';
     this.app.login({username: this.userForm.get('username').value,
       password: this.userForm.get('password').value}).
     subscribe(

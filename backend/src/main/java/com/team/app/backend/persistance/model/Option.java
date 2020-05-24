@@ -12,5 +12,5 @@ import lombok.Setter;
 public class Option extends OptionObj {
     private Boolean is_correct;
     private String text;
-    private byte[] image;
+    private String image;
 }

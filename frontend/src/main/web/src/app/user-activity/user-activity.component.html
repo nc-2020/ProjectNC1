@@ -1,0 +1,30 @@
+  <div class="container-fluid">
+    <div  class="card mb-3" style="background: rgba(255,245,215,0.1);">
+      <div  class="row no-gutters">
+        <div  class="row col justify-content-center">
+          <img  src="https://img.icons8.com/plasticine/100/000000/user-male-circle.png"
+                class="col-4 col-sm-2 col-md-2 col-lg-1 align-self-center card-img">
+          <div  class="col-10 col-sm-9 col-md-9 col-lg-10 align-self-center" style="">
+            <div class="alert alert-danger" [hidden]="!error" >
+              There is a problem.
+            </div>
+            <div class="alert alert-danger" [hidden]="!message" >
+              {{message}}
+            </div>
+            <h4  *ngIf="userActivity.categoryId===quizPlayCatId" class="card-title" style="">{{userActivity.username}}{{'DASHBOARD.USER_ACTIVITY.PLAYED_QUIZ' | translate}}"{{userActivity.elem_name}}"</h4>
+            <h4  *ngIf="userActivity.categoryId===quizCreateCatId" class="card-title" style="">{{userActivity.username}}{{'DASHBOARD.USER_ACTIVITY.CREATE_QUIZ' | translate}}"{{userActivity.elem_name}}"</h4>
+            <h4  *ngIf="userActivity.categoryId===quizLikeCatId" class="card-title" style="">{{userActivity.username}}{{'DASHBOARD.USER_ACTIVITY.LIKE_QUIZ' | translate}}"{{userActivity.elem_name}}"</h4>
+            <h4  *ngIf="userActivity.categoryId===annCreateCatId" class="card-title" style="">{{userActivity.username}}{{'DASHBOARD.USER_ACTIVITY.ANN_CREATE' | translate}}"{{userActivity.elem_name}}"</h4>
+            <h4  *ngIf="userActivity.categoryId===achRecCatId" class="card-title" style="">{{userActivity.username}}{{'DASHBOARD.USER_ACTIVITY.PLAY_QUIZ' | translate}}"{{userActivity.elem_name}}"</h4>
+
+            <div class ="text-muted">
+              {{userActivity.date | date:'short'}}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+

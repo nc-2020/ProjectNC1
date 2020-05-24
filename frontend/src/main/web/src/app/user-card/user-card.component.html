@@ -1,7 +1,7 @@
 <div class="container-fluid my-1">
   <div class="card flex-fill"  style="color: #2d2d2d;height: 55%">
     <div class="row flex-fill h-auto no-gutters align-items-center">
-      <div class="col-4 col-sm-1 col-md-2 col-lg-1 ">
+      <div class="col-4 row-4 col-sm-1 col-md-2 col-lg-1 ">
         <img src="https://img.icons8.com/plasticine/100/000000/user-male-circle.png" class="card-img rounded-circle">
         <h5>
           <span class="badge bg-primary" style="color: white;">{{user.username}}</span>
@@ -14,7 +14,7 @@
               <input id="message" class="form-control" formControlName="inviteText" required placeholder="{{'DASHBOARD.SEARCH.USER_CARD.INVITE_MESSAGE' | translate}}" aria-label="Invite message" aria-describedby="basic-addon2">
             </form>
             <div class="input-group-append mr-5">
-              <button [disabled]="inviteForm.invalid" type="submit" class="btn btn-primary" (click)="sendInvite()">{{nameSendButton}}</button>
+              <button [disabled]="inviteForm.invalid || clicked" type="submit" class="btn btn-primary" (click)="sendInvite()">{{nameSendButton}}</button>
             </div>
           </div>
           <div class="btn-group text-right">

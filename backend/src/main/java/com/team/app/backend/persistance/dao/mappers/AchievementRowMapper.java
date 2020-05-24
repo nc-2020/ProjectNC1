@@ -14,7 +14,7 @@ public class AchievementRowMapper implements RowMapper<Achievement> {
                 resultSet.getString("title"),
                 resultSet.getLong("quiz_amount"),
                 resultSet.getLong("created_amount"),
-                resultSet.getBytes("image"),
+                resultSet.getString("image"),
                 resultSet.getLong("user_id"),
                 resultSet.getLong("cat_id")
         );

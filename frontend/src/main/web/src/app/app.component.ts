@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy,OnChanges, HostListener} from '@angular/core';
+import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {UserService} from './services/user.service';
@@ -9,6 +9,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {WebSocketService} from "./web-socket.service";
 
 
+//import {WebSocketService} from "./web-socket.service";
 
 
 @Component({
@@ -16,8 +17,9 @@ import {WebSocketService} from "./web-socket.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements  OnDestroy, OnInit{
 
+export class AppComponent implements OnDestroy, OnInit{
+  
   title = 'ui-app';
   constructor(private userService: UserService,
               private router: Router,
@@ -30,7 +32,7 @@ export class AppComponent implements  OnDestroy, OnInit{
   setTranslate(language: string) {
     localStorage.setItem('language', language);
     this.translate.use(language);
-    this.settingsService.setLanguage(language, this.userService.user).subscribe();
+    this.settingsService.setLanguage(language, this.userService.user);
   }
 
   ngOnInit(): void {
@@ -53,9 +55,9 @@ export class AppComponent implements  OnDestroy, OnInit{
       _ => {this.router.navigateByUrl('/login');
             this.notificationService.disconnect()});
   }
-getRole() {
+  getRole() {
     return this.userService.user.role.name;
-}
+  }
   authenticated() {
     return this.userService.authenticated;
   }

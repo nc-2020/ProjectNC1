@@ -23,12 +23,14 @@ export class UserInviteCardComponent implements OnInit {
   acceptUserInvite(): void {
     this.userService.acceptUserInvite(this.userInvite.id).subscribe(userInvites => {
       console.log(userInvites);
+      this.onInviteAction('Accepted');
     });
   }
 
   declineUserInvite(): void {
     this.userService.declineUserInvite(this.userInvite.id).subscribe(userInvites => {
       console.log(userInvites);
+      this.onInviteAction('Declined');
     });
   }
 

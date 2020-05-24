@@ -11,6 +11,8 @@ import {Option} from "../entities/option";
 import {Answer} from "../entities/answer";
 import {UserService} from "../services/user.service";
 import {UserSessionResult} from "../entities/UserSessionResult";
+import {AchievementService} from "../services/achievement.service";
+import {SessionStats} from "../entities/session-stats";
 
 @Component({
   selector: 'app-quiz',
@@ -22,8 +24,10 @@ export class QuizComponent implements OnInit, OnDestroy {
   questionOptionPoints = 0;
   quizId;
   sessionId;
+  access_code='';
   quizScore = 0;
   questions: Question[] = [];
+  stats:SessionStats[]=[];
   userAnswers: Answer[] = [];
   optionalAnswers: Option[] = [];
   questionOptions = new Map();
@@ -43,12 +47,14 @@ export class QuizComponent implements OnInit, OnDestroy {
               private optionService: OptionService,
               private route: ActivatedRoute,
               private questionService: QuestionService,
+              private achievementService: AchievementService,
               private userService: UserService) { }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
       this.quizId = params['id'];
       this.sessionId = params['sessionId'];
+      this.getAccessCode();
     });
     this.getQuestions();
 
@@ -134,7 +140,7 @@ export class QuizComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < this.optionsSequence.length; i++) {
       if (i + 1 === this.optionsSequence[i].serial_num) {
-        questionPoints += 0.25;
+        questionPoints += 1/this.optionsSequence.length;
       }
     }
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id,
@@ -189,12 +195,29 @@ export class QuizComponent implements OnInit, OnDestroy {
     return this.userService.user.role.name;
   }
 
+  getUserJoin(){
+    return this.userService.user.joined;
+  }
+
   startNewGame() {
-    this.quizService.startSession(this.sessionId).subscribe(data =>
-      console.log(data))
+    if (this.getUserRole() === 'user') {
+      this.quizService.startSession(this.sessionId).subscribe(data =>
+        console.log(data))
+    }
+  }
+
+  getStats(){
+    this.quizService.getStatsSession(this.sessionId).subscribe(
+      data =>this.stats = data)
+
+  }
+  getAccessCode(){
+    this.quizService.getAccessCode(this.sessionId).subscribe(data =>
+      this.access_code=data)
   }
 
   finishSession() {
+    this.userService.user.joined=null;
 
     this.quizService.sendSessionStats({
       ses_id : this.sessionId,
@@ -202,7 +225,15 @@ export class QuizComponent implements OnInit, OnDestroy {
       score : this.getScore()
     } as UserSessionResult).subscribe(data => {
       console.log(data);
-    })
+      console.log('Session finished, check achievements');
+      this.achievementService.setUserAchievement().subscribe(data => {
+        console.log(data);
+        console.log('set achiv');
+      });
+    });
+    this.getStats();
   }
+
+
 
 }
