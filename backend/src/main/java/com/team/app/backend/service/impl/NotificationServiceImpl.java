@@ -38,7 +38,7 @@ public class NotificationServiceImpl implements NotificationService {
         listeners.remove(sessionId);
     }
 
-    @Scheduled(fixedDelay = 3000)
+    @Scheduled(fixedDelay = 2000)
     public void dispatch() {
         for (Map.Entry<String,Long> listener : listeners.entrySet()) {
             SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);

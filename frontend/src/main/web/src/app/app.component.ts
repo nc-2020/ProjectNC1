@@ -1,15 +1,14 @@
-import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
 import {UserService} from './services/user.service';
 import {NotificationService} from './services/notification.service';
 import {Notification} from './entities/notification';
 import {SettingsService} from "./services/settings.service";
 import {TranslateService} from "@ngx-translate/core";
-import {WebSocketService} from "./web-socket.service";
 
 
-//import {WebSocketService} from "./web-socket.service";
+
+
 
 
 @Component({
@@ -19,7 +18,7 @@ import {WebSocketService} from "./web-socket.service";
 })
 
 export class AppComponent implements OnDestroy, OnInit{
-  
+
   title = 'ui-app';
   constructor(private userService: UserService,
               private router: Router,

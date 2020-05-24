@@ -96,6 +96,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/assets/loader_brainduel.svg",
                 "/assets/logo_brainduel.png",
                 "/vendor*.js",
+                "/assets/stomp.min.js",
+                "/assets/sockjs.min.js",
                 "/ws/**"
         );
     }
