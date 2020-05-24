@@ -4,19 +4,59 @@ import com.team.app.backend.persistance.dao.NotificationDao;
 import com.team.app.backend.persistance.model.Notification;
 import com.team.app.backend.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessageType;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-import java.util.List;
+import java.util.*;
 
-@Service()
+@Service
 public class NotificationServiceImpl implements NotificationService {
 
     @Autowired
     private NotificationDao notificationDao;
+    @Autowired
+    private final SimpMessagingTemplate template;
 
+    private Map<String,Long> listeners = new HashMap<>();
+
+    @Autowired
+    public NotificationServiceImpl(SimpMessagingTemplate template) {
+        this.template = template;
+    }
+
+    public void add(String sessionId, Long userId) {
+        listeners.put(sessionId,userId);
+    }
+
+    public void remove(String sessionId) {
+        listeners.remove(sessionId);
+    }
+
+    @Scheduled(fixedDelay = 3000)
+    public void dispatch() {
+        for (Map.Entry<String,Long> listener : listeners.entrySet()) {
+            SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
+            headerAccessor.setSessionId(listener.getKey());
+            headerAccessor.setLeaveMutable(true);
+            template.convertAndSendToUser(
+                    listener.getKey(),
+                    "/notification",
+                    getAll(listener.getValue()),
+                    headerAccessor.getMessageHeaders());
+        }
+    }
+
+    @EventListener
+    public void sessionDisconnectionHandler(SessionDisconnectEvent event) {
+        String sessionId = event.getSessionId();
+        remove(sessionId);
+    }
     @Transactional
     @Override
     public void create(Notification not) {

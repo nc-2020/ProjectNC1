@@ -7,6 +7,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -15,19 +16,25 @@ import java.util.Map;
 
 
 @RestController
-//@RequestMapping("api/notification")
+@RequestMapping("api/notification")
 public class NotificationController {
 
     @Autowired
     NotificationService notificationService;
 
-    private final SimpMessagingTemplate template;
 
-    @Autowired
-    NotificationController(SimpMessagingTemplate template){
-        this.template = template;
+    @MessageMapping("/delete/notifications")
+    public void delete(List<Notification> notifications) {
+
+        notificationService.delete(notifications);
     }
-    
+    @MessageMapping("/get/notifications")
+    public void getAll(Long userId, StompHeaderAccessor stompHeaderAccessor){
+
+        notificationService.add(stompHeaderAccessor.getSessionId(), userId);
+
+    }
+
     @PostMapping("/create")
     public ResponseEntity create(@RequestBody Notification not) {
         try {
@@ -52,40 +59,9 @@ public class NotificationController {
         return ResponseEntity.ok().build();
 
     }
-    @DeleteMapping("/delete")
-    public ResponseEntity delete(@RequestBody List<Notification> notifications) {
-        try {
-            notificationService.delete(notifications);
-        }
-        catch (DataAccessException sqlEx)
-        {
-            ResponseEntity.badRequest();
-        }
-        return ResponseEntity.ok().build();
-
-    }
 
 
 
-
-    @MessageMapping("/get/topic")
-    public void sendMessage(Long userId){
-
-        this.template.convertAndSend("/topic",  "Pop");
-    }
-    @GetMapping("/get/{id}")
-    public ResponseEntity getAll (@PathVariable("id") Long user_id) {
-        List<Notification>  notifications = null;
-        try {
-            notifications = notificationService.getAll(user_id);
-        }
-        catch (DataAccessException sqlEx)
-        {
-            ResponseEntity.badRequest();
-        }
-        return ResponseEntity.ok(notifications);
-
-    }
     @GetMapping("/settings/get/{id}")
     public  ResponseEntity getSetting(@PathVariable("id") Long userId) {
         List<Notification> notifications = null;

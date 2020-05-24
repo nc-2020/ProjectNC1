@@ -19,22 +19,13 @@ import {WebSocketService} from "./web-socket.service";
 export class AppComponent implements  OnDestroy, OnInit{
 
   title = 'ui-app';
-  deletedNotifications: Notification[] = [];
   constructor(private userService: UserService,
               private router: Router,
               public translate: TranslateService,
               public notificationService: NotificationService,
-              private settingsService: SettingsService,
-              private webSocketService: WebSocketService) {
+              private settingsService: SettingsService) {
+  }
 
-  }
-  getNot() {
-      this.webSocketService.getNotifications(+this.userService.user.id);
-
-  }
-  connect() {
-    this.webSocketService.initializeWebSocketConnection();
-  }
 
   setTranslate(language: string) {
     localStorage.setItem('language', language);
@@ -43,16 +34,11 @@ export class AppComponent implements  OnDestroy, OnInit{
   }
 
   ngOnInit(): void {
-    if(this.userService.user.role.name === 'user' && this.userService.authenticated) {
-      this.getNotifications();
-    }
     this.translate.use(localStorage.getItem('language'));
   }
 
-  @HostListener('window:beforeunload')
-  deleteNotifications() {
-    this.notificationService.delete(this.deletedNotifications).
-    subscribe(res => {this.deletedNotifications = []});
+  deleteNotification(notification) {
+    this.notificationService.delete([notification]);
   }
 
   ngOnDestroy(): void {
@@ -61,15 +47,11 @@ export class AppComponent implements  OnDestroy, OnInit{
   getNewNotifications(): Notification[] {
     return this.notificationService.notifications.filter(x => !x.seen);
   }
-  getNotifications() {
-      this.notificationService.getAll(+this.userService.user.id).
-      subscribe(res => {},
-      error => this.notificationService.notifications = []);
-  }
+
   logout() {
     this.userService.logout().subscribe(
       _ => {this.router.navigateByUrl('/login');
-      this.notificationService.notifications = []});
+            this.notificationService.disconnect()});
   }
 getRole() {
     return this.userService.user.role.name;

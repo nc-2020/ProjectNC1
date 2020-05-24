@@ -31,19 +31,15 @@
         <div class="dropdown-menu" (click)="$event.stopPropagation()" style="background: rgba(0,0,0,0.3)">
           <div class="container-fluid" id="scroll" >
             <div *ngFor="let not of getNewNotifications().slice(0,5)" class="alert alert-dismissible alert-secondary">
-              <button type="button" (click)="not.seen = true; deletedNotifications.push(not)" class="close" data-dismiss="alert">&times;</button>
+              <button type="button" (click)="not.seen = true; deleteNotification(not)" class="close" data-dismiss="alert">&times;</button>
               <strong>{{not.text}}</strong> <p> {{not.date}}
             </div>
           </div>
         </div>
       </div>
-
       <a *ngIf="authenticated()" class="btn bg-secondary btn-sm mr-3" routerLink="/quiz-create">{{'HEADER.BUTTON.CREATE QUIZ' | translate}}</a>
-      <a *ngIf="authenticated()" class="btn bg-secondary btn-sm"  (click)="getNot()">Get</a>
-      <a *ngIf="authenticated()" class="btn bg-secondary btn-sm"  (click)="connect()">Connect</a>
       <a (click)="setTranslate('en')" class="btn btn-lg" role="button"><span class="flag-icon flag-icon-gb"></span></a>
       <a (click)="setTranslate('ua')" class="btn btn-lg" role="button"><span class="flag-icon flag-icon-ua"></span></a>
-
     </form>
   </div>
 </nav>
