@@ -1,5 +1,6 @@
 package com.team.app.backend.service;
 
+import com.team.app.backend.dto.SessionStatsDto;
 import com.team.app.backend.persistance.model.*;
 
 import java.util.List;

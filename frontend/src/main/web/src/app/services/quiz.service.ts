@@ -74,9 +74,18 @@ export class QuizService {
 
   getStatsSession(sessionId): Observable<SessionStats[]> {
     return this.http.get<SessionStats[]>(this.quizzesUrl + `/stats/${sessionId}`,
-      { headers: this.httpHeader})
+      { headers: new HttpHeaders()
+          .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(catchError(this.handleError<SessionStats[]>('getStatsSession')));
   }
+
+  getTopStats(quizId): Observable<SessionStats[]> {
+    return this.http.get<SessionStats[]>(this.quizzesUrl + `/topstats/${quizId}`,
+      { headers: new HttpHeaders()
+          .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+      .pipe(catchError(this.handleError<SessionStats[]>('getTopStats')));
+  }
+
 
   sendSessionStats(userSessionResult: UserSessionResult) {
     return this.http.post<UserSessionResult>(this.quizzesUrl + `/finish`, userSessionResult,

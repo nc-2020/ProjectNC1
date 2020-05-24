@@ -1,13 +1,6 @@
 package com.team.app.backend.service.impl;
 
-import com.team.app.backend.dto.DefOptionDto;
-import com.team.app.backend.dto.OptionDto;
-import com.team.app.backend.dto.SeqOptionDto;
-import com.team.app.backend.dto.QuestionDefAddDto;
-import com.team.app.backend.dto.QuestionDto;
-import com.team.app.backend.dto.QuestionOptAddDto;
-import com.team.app.backend.dto.QuestionSeqAddDto;
-import com.team.app.backend.dto.QuizAddDto;
+import com.team.app.backend.dto.*;
 import com.team.app.backend.persistance.dao.*;
 import com.team.app.backend.persistance.model.*;
 import com.team.app.backend.service.QuizService;
@@ -239,5 +232,10 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public List<Quiz> getCreated() {
         return this.quizDao.getCreated();
+    }
+
+    @Override
+    public List<SessionStatsDto> getTopStats(Long quizId) {
+        return quizDao.getTopStats(quizId);
     }
 }

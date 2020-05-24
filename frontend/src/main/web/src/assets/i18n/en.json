@@ -396,7 +396,15 @@
       }
     },
     "RESULT": {
+      "TABLE":{
+        "TITLE":"Best results",
+        "USERNAME":"Username",
+        "SCORE":"Score",
+        "TIME":"Time"
+      },
       "TEXT": "Your score is",
+      "SECONDS":"seconds",
+      "TIME": "Your time is",
       "BUTTON": "Go back to quizzes"
     }
   },

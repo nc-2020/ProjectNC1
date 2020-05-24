@@ -21,8 +21,40 @@
       </div>
     </div>
   </div>
-  <div *ngIf="interval===null && indexQuestion === questions.length - 1" class="container text-white p-2 align-items-center w-50" style="height: 15rem" [hidden]="interval">
+  <div *ngIf="interval===null && finish" class="container text-white p-2 align-items-center w-50" [hidden]="interval">
+    <div *ngIf="topStats.length > 0; else elseBlock" class="raw">
+      <div class="card card-cascade narrower" style="background-color: transparent; border:1px solid">
+        <div class="align-items-center">
+          <h3>{{'PLAY_QUIZ.RESULT.TABLE.TITLE' | translate}}</h3>
+        </div>
+        <div class="table-wrapper">
+          <table class="table table-hover mb-0 text-white">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th class="th-lg">{{'PLAY_QUIZ.RESULT.TABLE.USERNAME' | translate}}</th>
+              <th class="th-lg">{{'PLAY_QUIZ.RESULT.TABLE.SCORE' | translate}}</th>
+              <th class="th-lg">{{'PLAY_QUIZ.RESULT.TABLE.TIME' | translate}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr  *ngFor="let sessionStat of topStats">
+              <td>{{sessionStat.place}}</td>
+              <td>{{sessionStat.username}}</td>
+              <td>{{sessionStat.score}}</td>
+              <td>{{sessionStat.time}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <ng-template #elseBlock>
+      <h2>{{'PLAY_QUIZ.RESULT.TABLE.NO_RES' | translate}}You are the first one who played this quiz</h2>
+    </ng-template>
+
     <h2 class="mt-2">{{'PLAY_QUIZ.RESULT.TEXT' | translate}} {{getScore()}}</h2>
+    <h2 class="mt-2">{{'PLAY_QUIZ.RESULT.TIME' | translate}} {{timeSpent}} {{'PLAY_QUIZ.RESULT.SECONDS' | translate}}</h2>
     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#sessionStats" aria-expanded="false" aria-controls="collapseExample">
       Show stats
     </button>
@@ -42,7 +74,7 @@
           <label class="ml-2 mr-2">{{'PLAY_QUIZ.GAME.QUESTION' | translate}} {{indexQuestion + 1}}/{{questions.length}}</label>
         </li>
         <li class="nav-item">
-          <label class="ml-2">{{'PLAY_QUIZ.GAME.SCORE' | translate}} {{getScore()}}/{{questions.length}}</label>
+          <label class="ml-2">{{'PLAY_QUIZ.GAME.SCORE' | translate}} {{getScore()}}/{{questions.length*10}}</label>
         </li>
         <li class="nav-item">
           <label class="mr-2" [class.text-warning]="timer < 5"> {{'PLAY_QUIZ.GAME.TIME_LEFT' | translate}} {{timer}}</label>

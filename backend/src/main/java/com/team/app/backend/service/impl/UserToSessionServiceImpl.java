@@ -34,8 +34,9 @@ public class UserToSessionServiceImpl implements UserToSessionService {
 
     @Override
     public UserToSession createNewUserToSession(User user, Session session) {
-        UserToSession userToSession = new UserToSession(user.getId(), session.getId());
-        System.out.println("user"+user.getId()+"ses"+session.getId());
+        UserToSession userToSession = new UserToSession();
+        userToSession.setUser_id(user.getId());
+        userToSession.setSession_id(session.getId());
         return userToSessionDao.save(userToSession);
     }
 
@@ -48,11 +49,14 @@ public class UserToSessionServiceImpl implements UserToSessionService {
     public void insertScore(FinishedQuizDto finishedQuizDto) {
         Session session=sessionDao.getById(finishedQuizDto.getSes_id());
         Long user_id =finishedQuizDto.getUser_id();
+        System.out.println("service "+finishedQuizDto.getUser_id()+" "+finishedQuizDto.getSes_id()+" "+finishedQuizDto.getTime()+" "+finishedQuizDto.getScore());
 
         UserToSession userToSession = new UserToSession();
-        userToSession.setScore(finishedQuizDto.getScore())
-                .setSession_id(session.getId())
-                .setUser_id(user_id);
+        userToSession.setScore(finishedQuizDto.getScore());
+        userToSession.setSession_id(session.getId());
+        userToSession.setUser_id(user_id);
+        userToSession.setTime(finishedQuizDto.getTime());
+
 
         UserActivity userActivity=new UserActivity();
         userActivity.setCategoryId(1L);

@@ -1,5 +1,6 @@
 package com.team.app.backend.persistance.dao.impl;
 
+import com.team.app.backend.dto.SessionStatsDto;
 import com.team.app.backend.persistance.dao.QuizDao;
 import com.team.app.backend.persistance.dao.mappers.QuizRowMapper;
 import com.team.app.backend.persistance.model.Quiz;
@@ -196,6 +197,23 @@ public class QuizDaoImpl implements QuizDao {
         return jdbcTemplate.query(
                 env.getProperty("get.created.quizes"),
                 quizRowMapper);
+    }
+
+    @Override
+    public List<SessionStatsDto> getTopStats(Long quizId) {
+        return jdbcTemplate.query(
+                env.getProperty("get.top.stats"),
+                new Object[]{quizId},
+                (resultSet, i) -> {
+                    SessionStatsDto sessionStatsDto = new SessionStatsDto();
+                    sessionStatsDto.setPlace(resultSet.getInt("place"));
+                    sessionStatsDto.setScore(resultSet.getInt("score"));
+                    sessionStatsDto.setTime(resultSet.getInt("time"));
+                    sessionStatsDto.setUsername(resultSet.getString("username"));
+                    return sessionStatsDto;
+                });
+
+
     }
 
 

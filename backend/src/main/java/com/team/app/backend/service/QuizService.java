@@ -1,10 +1,6 @@
 package com.team.app.backend.service;
 
-import com.team.app.backend.dto.QuestionDefAddDto;
-import com.team.app.backend.dto.QuestionDto;
-import com.team.app.backend.dto.QuestionOptAddDto;
-import com.team.app.backend.dto.QuestionSeqAddDto;
-import com.team.app.backend.dto.QuizAddDto;
+import com.team.app.backend.dto.*;
 import com.team.app.backend.persistance.model.Question;
 import com.team.app.backend.persistance.model.Quiz;
 
@@ -52,4 +48,7 @@ public interface QuizService {
     void aproveQuiz(Quiz quiz);
 
     List<Quiz> getCreated();
+
+    List<SessionStatsDto>getTopStats(Long quizId);
+
 }
