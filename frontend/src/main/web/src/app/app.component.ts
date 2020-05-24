@@ -8,7 +8,7 @@ import {SettingsService} from "./services/settings.service";
 import {TranslateService} from "@ngx-translate/core";
 
 
-import {WebSocketService} from "./web-socket.service";
+//import {WebSocketService} from "./web-socket.service";
 
 
 @Component({
@@ -25,8 +25,7 @@ export class AppComponent implements OnDestroy, OnInit{
               private router: Router,
               public translate: TranslateService,
               public notificationService: NotificationService,
-              private settingsService: SettingsService,
-              private webSocketAPI:WebSocketService) {
+              private settingsService: SettingsService) {
   }
 
 
@@ -37,8 +36,6 @@ export class AppComponent implements OnDestroy, OnInit{
   }
 
   ngOnInit(): void {
-    this.webSocketAPI.connect();
-    this.webSocketAPI.send("test");
     if(this.userService.user.role.name === 'user' && this.userService.authenticated) {
       this.getNotifications();
     }
@@ -73,19 +70,5 @@ export class AppComponent implements OnDestroy, OnInit{
   authenticated() {
     return this.userService.authenticated;
   }
-  connect(){
-    this.webSocketAPI.connect();
-  }
 
-  disconnect(){
-    this.webSocketAPI.disconnect();
-  }
-
-  sendMessage(){
-    this.webSocketAPI.send("test");
-  }
-
-  handleMessage(message){
-    console.log(message)
-  }
 }
