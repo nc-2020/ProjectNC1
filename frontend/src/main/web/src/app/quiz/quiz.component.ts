@@ -67,7 +67,6 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
     this.optionSwitcher();
     if (this.indexQuestion === this.questions.length - 1) {
-
         this.finishSession();
     }
   }
