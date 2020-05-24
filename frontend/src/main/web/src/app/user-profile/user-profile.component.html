@@ -3,12 +3,29 @@
   <div class="container">
     <div class="row my-2">
       <div class="col-lg-4 order-lg-1 text-center">
-        <img src="https://img.icons8.com/plasticine/100/000000/user-male-circle.png" width="150" height="150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+        <img [src]="imageUrl"  width="150" height="150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
         <h6 class="mt-2">{{'DASHBOARD.PROFILE.PROFILE.UPLOAD' | translate}}</h6>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <label class="custom-file">
-          <input type="file" id="file" class="custom-file-input">
+          <input type="file" id="file" class="custom-file-input" formControlName="avatar" name="avatar" (change)="onFileChange($event)"/>
           <span class="custom-file-control">{{'DASHBOARD.PROFILE.PROFILE.CHOOSE_FILE' | translate}}</span>
         </label>
+          <button class="btn btn-primary" type="submit">Upload</button>
+        </form>
+        <div>
+          <div *ngIf="uploadResponse.status === 'error'">
+            {{ uploadResponse.message }}
+          </div>
+          <div *ngIf="uploadResponse.status === 'progress'">
+            <div role="progressbar" [style.width.%]="uploadResponse.message" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+              {{uploadResponse.message}}%
+            </div>
+          </div>
+
+<!--            <input type="file" name="avatar" (change)="onFileChange($event)" />-->
+
+
+        </div>
       </div>
       <div class="col-lg-8 order-lg-2">
         <ul class="nav nav-tabs">
