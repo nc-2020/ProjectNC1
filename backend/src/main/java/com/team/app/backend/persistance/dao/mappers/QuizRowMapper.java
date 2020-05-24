@@ -16,7 +16,7 @@ public class QuizRowMapper implements RowMapper<Quiz> {
                 resultSet.getString("title"),
                 resultSet.getDate("date"),
                 resultSet.getString("description"),
-                resultSet.getBytes("image"),
+                resultSet.getString("image"),
                 new QuizStatus((long)resultSet.getInt("status_id"),resultSet.getString("status_name")),
                 (long) resultSet.getInt("user_id"));
     }

@@ -157,7 +157,7 @@ public class QuizDaoImpl implements QuizDao {
                     ps.setString(1, quiz.getTitle());
                     ps.setDate(2,  quiz.getDate());
                     ps.setString(3, quiz.getDescription());
-                    ps.setBytes(4, quiz.getImage());
+                    ps.setString(4, quiz.getImage());
                     ps.setLong(5,quiz.getStatus().getId());
                     System.out.println( quiz.getUser_id());
                     ps.setLong(6, quiz.getUser_id());

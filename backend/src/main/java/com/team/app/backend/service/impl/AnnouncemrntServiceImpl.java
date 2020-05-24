@@ -57,7 +57,8 @@ public class AnnouncemrntServiceImpl implements AnnouncementService {
         userActivity.setCategoryId(4L);
         userActivity.setDate(new java.sql.Timestamp(millis));
         userActivity.setUserId(announcement.getUserId());
-        userActivity.setText(String.format("%s created announcement titled \"%s\"",userDao.get(announcement.getUserId()).getUsername(),announcement.getTitle()));
+        userActivity.setElem_id(announcement.getId());
+        //userActivity.setText(String.format("%s created announcement titled \"%s\"",userDao.get(announcement.getUserId()).getUsername(),announcement.getTitle()));
 
         userActivityDao.create(userActivity);
 

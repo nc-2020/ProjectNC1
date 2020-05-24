@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
   selectedDateOption: number = 4;
   quizUser: string = "";
   joinForm: FormGroup;
-  message='';
+  join_message=false;
 
 
   private searchQuizTerms = new Subject<any>();
@@ -114,10 +114,10 @@ export class DashboardComponent implements OnInit {
   }
   connectToSession(accessCode:string){
     // this.userService.user.joined=true;
-    this.quizService.joinSession(accessCode).subscribe((session: Session) => {
-     this.router.navigate(['/quiz/' + session.quiz_id + '/' + session.id]);
+    this.quizService.joinSession(accessCode).subscribe(res => {
+     this.router.navigate(['/quiz/' + res.quiz_id + '/' + res.id]);
       this.closeModal.nativeElement.click()
-    }, error => this.message = error.message)
+    }, error => {console.log(error.error);console.log("JOIN MES"+this.join_message)})
   }
 
   submit() {

@@ -11,10 +11,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Announcement extends Message {
     private String title;
-    private byte[] image;
+    private String image;
     private Long statusId;
 
-    public Announcement(Long id, String title, String text, Timestamp date, byte[] image, Long statusId, Long categoryId, Long userId) {
+    public Announcement(Long id, String title, String text, Timestamp date, String image, Long statusId, Long categoryId, Long userId) {
         super( id,  text, date, categoryId, userId);
         this.title = title;
         this.image = image;

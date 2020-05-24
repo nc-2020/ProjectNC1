@@ -14,12 +14,12 @@ public class Question {
     private Integer time;
     private String text;
     private Integer max_points;
-    private byte[] image;
+    private String image;
     private QuestionType type;
     private Long quiz_id;
 
 
-    public Question(Long id, Integer time, String text, Integer max_points, byte[] image, QuestionType type, Long quiz_id) {
+    public Question(Long id, Integer time, String text, Integer max_points, String image, QuestionType type, Long quiz_id) {
         this.id = id;
         this.time = time;
         this.text = text;

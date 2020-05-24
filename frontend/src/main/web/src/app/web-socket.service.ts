@@ -7,12 +7,12 @@ import {UserService} from "./services/user.service";
   providedIn: 'root'
 })
 export class WebSocketService {
-  webSocketEndPoint = 'http://localhost:8080/ws';
-  topic = '/topic/getall';
+  webSocketEndPoint = 'http://localhost:8080/socket';
+  topic = '/message';
   stompClient: any;
   answers: string;
   constructor(private userService: UserService) {
-
+    this.connect();
   }
   connect() {
 
@@ -23,7 +23,7 @@ export class WebSocketService {
         "Authorization" : "Bearer_"+this.userService.getToken()
       }, function(frame) {
       console.log('Connected: ' + frame);
-      this.stompClient.subscribe('/topic/getall', function(messageOutput) {
+      this.stompClient.subscribe(this.topic, function(messageOutput) {
         console.log(JSON.parse(messageOutput.body));
       });
     });
@@ -48,7 +48,7 @@ export class WebSocketService {
 
   send(message) {
     console.log('calling logout api via web socket');
-    this.stompClient.send('/app/notifications', {}, JSON.stringify(message));
+    this.stompClient.send('/hello', {}, JSON.stringify(message));
   }
 
   onMessageReceived(message) {

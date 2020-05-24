@@ -189,11 +189,18 @@
         },
 
         "SETTINGS": {
-          "NOTIFICATIONS": "Повідомлення",
-          "ACTIVITIES":"Активності друзів",
-          "BUTTON": {
-            "APPROVE_NOTIFICATIONS": "Затвердити повідомлення",
-            "SYSTEM_NOTIFICATIONS": "Системні повідомлення"
+          "NOTIFICATIONS": {
+            "TITLE":"Повідомлення",
+            "ANN_SETTING":"Повідомлення про оголошення",
+            "QUIZ_SETTING":"Повідомлення про квізи",
+            "SYSTEM_SETTING":"Системні повідомлення"
+          },
+          "ACTIVITIES": {
+            "TITLE":"Активності друзів",
+            "ANN_SETTING":"Створення оголошень друзями",
+            "QUIZ_CREATE_SETTING":"Створеня квізів друзями",
+            "QUIZ_PLAY_SETTING":"Ігри вквізи друзів",
+            "QUIZ_LIKE_SETTING":"Вподобання квізів друзями"
           }
         },
 
@@ -216,6 +223,15 @@
           }
         }
       }
+    },
+    "USER_ACTIVITY":{
+      "CREATE_QUIZ":" створив квіз з назвою ",
+      "PLAYED_QUIZ":" зіграв в квіз з назвою ",
+      "LIKE_QUIZ":" вподобав квіз з назвою ",
+      "ANN_CREATE":" створив оголошення з назвою ",
+      "ACH_REC":" отримав відзнаку з назвою ",
+      "TITLE": "Активності друзів",
+      "NO_SHOW": "Немає активностей друзів для показу"
     },
 
     "PROFILE": {

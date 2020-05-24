@@ -14,7 +14,7 @@ public class Achievement {
     private String title;
     private Long amountOfQuizzes;
     private Long amountOfCreated;
-    private byte[] icon;
+    private String icon;
     private Long creatorUserId;
     private Long categoryId;
 }

@@ -58,8 +58,8 @@ public class UserToSessionServiceImpl implements UserToSessionService {
         userActivity.setCategoryId(1L);
         userActivity.setDate(session.getDate());
         userActivity.setUserId(user_id);
-        userActivity.setText(String.format("%s played quiz named \"%s\"",userDao.get(user_id).getUsername(),quizDao.get(session.getQuiz_id()).getTitle()));
-
+        //userActivity.setText(String.format("%s played quiz named \"%s\"",userDao.get(user_id).getUsername(),quizDao.get(session.getQuiz_id()).getTitle()));
+        userActivity.setElem_id(session.getQuiz_id());
         userActivityDao.create(userActivity);
         userToSessionDao.update(userToSession);
     }

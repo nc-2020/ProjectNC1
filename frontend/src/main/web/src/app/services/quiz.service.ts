@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {catchError} from "rxjs/operators";
+import {catchError, tap} from "rxjs/operators";
 import {Observable, of} from "rxjs";
 import {Quiz} from "../entities/quiz";
 import {UserService} from "./user.service";
 import {Session} from "../entities/session";
 import {SessionStats} from "../entities/session-stats";
 import {UserSessionResult} from "../entities/UserSessionResult";
+import {User} from "../entities/user";
 
 @Injectable({
   providedIn: 'root'
@@ -59,10 +60,9 @@ export class QuizService {
       { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
       .pipe(
-        catchError(this.handleError<Session>('joinSession')
+        catchError(this.handleError<any>('joinSession')
         ));
   }
-
 
   getAccessCode(sessionId): Observable<string> {
     return this.http.get<string>(this.quizzesUrl + `/access_code/${sessionId}`,{ headers: new HttpHeaders()

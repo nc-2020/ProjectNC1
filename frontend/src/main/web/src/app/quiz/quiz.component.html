@@ -1,11 +1,12 @@
 <section  class="min-vh-100" id="cover">
   <div class="container text-white p-2 align-items-center w-50" id="bod0" style="height: 15rem" *ngIf="interval===null && indexQuestion === 0">
     <h2 class="mt-2">{{'PLAY_QUIZ.START_MENU.TITLE' | translate}}</h2>
-    <div class="row">
+    <div class="row" >
       <div class="col">
         <button class="btn btn-primary my-2 w-50" (click)="startNewGame(); startQuestionTimer()" >{{'PLAY_QUIZ.START_MENU.BUTTON.START' | translate}}</button>
       </div>
     </div>
+
 <!--    <div class="row" *ngIf="getUserJoin()===null">-->
 <!--      <div class="col">-->
 <!--        <h4>{{'PLAY_QUIZ.START_MENU.JOIN' | translate}}</h4>-->
@@ -22,7 +23,14 @@
   </div>
   <div *ngIf="interval===null && indexQuestion === questions.length - 1" class="container text-white p-2 align-items-center w-50" style="height: 15rem" [hidden]="interval">
     <h2 class="mt-2">{{'PLAY_QUIZ.RESULT.TEXT' | translate}} {{getScore()}}</h2>
-
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#sessionStats" aria-expanded="false" aria-controls="collapseExample">
+      Show stats
+    </button>
+    <div class="collapse" id="sessionStats">
+      <ul *ngFor="let stat of stats" >
+      {{stat.username}} : {{stat.score}}
+      </ul>
+    </div>
     <app-quiz-aprove-form *ngIf="getUserRole() !== 'user'" [userId]="72" [quizId]="quizId">
     </app-quiz-aprove-form>
     <a routerLink="/dashboard"><h3>{{'PLAY_QUIZ.RESULT.BUTTON' | translate}}</h3></a>

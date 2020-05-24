@@ -26,7 +26,7 @@ export class UserActivityDashboardComponent implements OnInit {
 
   getAll() {
     this.userActivityService.getAll().
-    subscribe(res => {this.userActivitys = res},
+    subscribe(res => {this.userActivitys = res;console.table(res)},
       error => this.userActivitys = [] );
   }
 

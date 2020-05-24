@@ -36,7 +36,8 @@ public class UserActivityDaoImpl implements UserActivityDao {
                 userActivity.getText(),
                 userActivity.getDate(),
                 userActivity.getCategoryId(),
-                userActivity.getUserId()
+                userActivity.getUserId(),
+                userActivity.getElem_id()
         );
     }
 
@@ -55,6 +56,7 @@ public class UserActivityDaoImpl implements UserActivityDao {
                 userActivity.getDate(),
                 userActivity.getCategoryId(),
                 userActivity.getUserId(),
+                userActivity.getElem_id(),
                 userActivity.getId()
         );
     }
@@ -91,14 +93,5 @@ public class UserActivityDaoImpl implements UserActivityDao {
                 setting.isEnabled());
     }
 
-//    @Override
-//    public void setAchievmentActivity(Long user_id) {
-//        jdbcTemplate.update(
-//                env.getProperty("create.ach.activity"),
-//                userActivity.getText(),
-//                userActivity.getDate(),
-//                userActivity.getCategoryId(),
-//                userActivity.getUserId()
-//        );
-//    }
+
 }

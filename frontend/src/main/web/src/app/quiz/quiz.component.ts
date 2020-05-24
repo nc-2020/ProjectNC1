@@ -12,6 +12,7 @@ import {Answer} from "../entities/answer";
 import {UserService} from "../services/user.service";
 import {UserSessionResult} from "../entities/UserSessionResult";
 import {AchievementService} from "../services/achievement.service";
+import {SessionStats} from "../entities/session-stats";
 
 @Component({
   selector: 'app-quiz',
@@ -26,6 +27,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   access_code='';
   quizScore = 0;
   questions: Question[] = [];
+  stats:SessionStats[]=[];
   userAnswers: Answer[] = [];
   optionalAnswers: Option[] = [];
   questionOptions = new Map();
@@ -204,7 +206,11 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
+  getStats(){
+    this.quizService.getStatsSession(this.sessionId).subscribe(
+      data =>this.stats = data)
 
+  }
   getAccessCode(){
     this.quizService.getAccessCode(this.sessionId).subscribe(data =>
       this.access_code=data)
@@ -224,7 +230,8 @@ export class QuizComponent implements OnInit, OnDestroy {
         console.log(data);
         console.log('set achiv');
       });
-    })
+    });
+    this.getStats();
   }
 
 
