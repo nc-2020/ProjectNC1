@@ -9,7 +9,7 @@ public class UserCreateDto {
     private String username;
     private String email;
     private String password;
-    private byte[] image;
+    private String image;
     private Role role;
 
     public String getFirstName() {
@@ -52,11 +52,11 @@ public class UserCreateDto {
         this.password = password;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

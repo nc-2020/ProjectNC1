@@ -13,12 +13,16 @@ declare var Stomp;
 export class NotificationService {
 
   private apiUrl = 'http://localhost:8080/api/notification';
+
+  // private apiUrl = '/api/notification'
+
   private serverUrl = 'http://localhost:8080/ws';
   constructor(private http: HttpClient, private userService: UserService) {
     if (userService.authenticated && userService.user.role.name === 'user') {
       this.initializeWebSocketConnection();
     }
   }
+
   notifications: Notification[] = [];
 
   public stompClient;
@@ -47,14 +51,6 @@ export class NotificationService {
   getNotifications() {
     this.stompClient.send('/app/get/notifications' , {}, this.userService.user.id);
   }
-  // getAll(userId: number) {
-  //   return this.http.get<Notification[]>(this.apiUrl + `/get/${userId}`,  {
-  //     headers: new HttpHeaders()
-  //       .set('Authorization',  `Bearer_${this.userService.getToken()}`)
-  //   }).pipe( tap(res => this.notifications = res),
-  //     catchError(this.handleError<any>('getAll'))
-  //   );
-  // }
 
   delete(notification: Notification[]) {
       this.stompClient.send('/app/delete/notifications' , {}, JSON.stringify(notification));

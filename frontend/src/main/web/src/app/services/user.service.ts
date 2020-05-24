@@ -18,6 +18,9 @@ export class UserService {
   private userUrl = 'http://localhost:8080/api/user';
   private apiUrl = 'http://localhost:8080/api';
 
+  // private userUrl = '/api/user';
+  // private apiUrl = '/api';
+
   constructor(private http: HttpClient, private router: Router) {
 
   }
@@ -126,7 +129,7 @@ export class UserService {
       tap(response => {
         console.log(response);
       }),
-      catchError(this.handleError<any>('sendUserInvite'))
+      catchError(this.handleError<any>('getUserInvite'))
     );
   }
 
@@ -164,5 +167,15 @@ export class UserService {
         console.log(response);
       }),
       catchError(this.handleError<any>('deleteFriendFromList')))
+  }
+
+  recoveryPassword(email:string){
+    console.log(email);
+    return this.http.post(this.apiUrl + '/recovery',JSON.stringify({email:email}) ,{
+      headers: new HttpHeaders().set('Content-Type', 'application/json'),
+      responseType: 'json'
+    }).pipe(
+      catchError(this.handleError<any>('recoveryPassword'))
+    );
   }
 }

@@ -44,13 +44,13 @@ export class UserCardComponent implements OnInit {
   }
 
   sendInvite() {
-    this.clicked = true;
     this.userService.sendUserInvite({
       inviteText: this.inviteForm.get('inviteText').value,
       userIdFrom: +this.userService.user.id,
       userIdTo: +this.user.id,
       usernameFrom: this.userService.user.username
     } as UserInvite).subscribe(data  => {
+      this.clicked = true;
       this.nameSendButton = 'Invitation was sent';
     });
   }

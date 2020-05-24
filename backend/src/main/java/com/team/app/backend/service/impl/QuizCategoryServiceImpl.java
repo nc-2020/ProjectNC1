@@ -17,7 +17,7 @@ public class QuizCategoryServiceImpl implements QuizCategoryService {
     @Autowired
     private QuizCategoryDao quizCategoryDao;
     @Override
-    public void createQuizCategory(QuizCategory announcement) {
+    public void createQuizCategory(QuizCategory quizCategory) {
 
     }
 
@@ -27,7 +27,7 @@ public class QuizCategoryServiceImpl implements QuizCategoryService {
     }
 
     @Override
-    public void updateQuizCategory(QuizCategory announcement) {
+    public void updateQuizCategory(QuizCategory quizCategory) {
 
     }
 

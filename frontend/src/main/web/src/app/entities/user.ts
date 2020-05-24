@@ -8,4 +8,5 @@ export interface User {
   role: {id?: string, name: string};
   image?: string;
   token?: string;
+  joined?:boolean;
 }

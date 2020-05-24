@@ -26,8 +26,13 @@ public interface UserDao {
 
     boolean checkTokenAvailability(String token);
 
+    boolean checkEmail(String email);
+
+    User getUserByEmail(String email);
+
     void changeLanguage(Long langId, Long userId);
 
     String getUserLanguage(Long id);
+
 
 }

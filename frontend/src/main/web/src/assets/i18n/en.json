@@ -12,7 +12,8 @@
     "LOGOUT": "Logout",
     "DASHBOARD": "Dashboard",
     "BUTTON": {
-      "CREATE QUIZ": "CREATE QUIZ"
+      "CREATE QUIZ": "CREATE QUIZ",
+      "JOIN GAME":"JOIN GAME"
     }
   },
 
@@ -30,6 +31,16 @@
       "SIGN_UP": "Sign up"
     },
     "ALERT": "There was a problem logging in. Please try again."
+  },
+  "RECOVERY_PASS":{
+    "TITLE":"RESET PASSWORD",
+    "TEXT":"Enter your e-mail address below. We will reset your previous password and send message on your email with the new one ",
+    "PLACEHOLDER": "EMAIL",
+    "VALIDATION_EMPTY": "Email cannot be empty",
+    "VALIDATION_VALID": "Please fill in a valid email address",
+    "BUTTON":"SEND MESSAGE",
+    "ERROR":"No accounts registered with this email",
+    "SUCCESS":"Message sent! Check your email"
   },
 
   "SIGN_UP": {
@@ -99,6 +110,7 @@
       "FRIENDS": " Friends",
       "ADMINS_MODERATORS": " Admins/Moderators",
       "MODERATORS": " Moderators",
+      "ACTIVITIES":" Friends activities",
       "ANNOUNCEMENT": " Announcement",
       "ACHIEVEMENTS": " Achievements",
       "SETTINGS": " Settings",
@@ -176,12 +188,21 @@
         },
 
         "SETTINGS": {
-          "NOTIFICATIONS": "Notifications",
-          "BUTTON": {
-            "APPROVE_NOTIFICATIONS": "Approve notifications",
-            "SYSTEM_NOTIFICATIONS": "System notifications"
+          "NOTIFICATIONS": {
+            "TITLE":"Notifications",
+            "ANN_SETTING":"Announcement notifications",
+            "QUIZ_SETTING":"Quiz notifications",
+            "SYSTEM_SETTING":"System notifications"
+          },
+          "ACTIVITIES": {
+            "TITLE":"Friends activities",
+            "ANN_SETTING":"Friends announcements",
+            "QUIZ_CREATE_SETTING":"Friends quiz creates",
+            "QUIZ_PLAY_SETTING":"Friends quiz plays",
+            "QUIZ_LIKE_SETTING":"Friends quiz likes"
           }
         },
+
 
         "ADMINS_MODERATORS": {
           "EDIT": {
@@ -201,7 +222,23 @@
             "CHOOSE_FILE": "Choose file"
           }
         }
+      },
+      "JOIN FORM":{
+        "LABEL":"Enter your friend access code",
+        "VALIDATION":"Access Code cannot be empty",
+        "BUTTON":"JOIN",
+        "PLACEHOLDER":"Access Code"
       }
+    },
+
+    "USER_ACTIVITY":{
+      "CREATE_QUIZ":" created quiz named ",
+      "PLAYED_QUIZ":" played quiz named ",
+      "LIKE_QUIZ":" liked quiz called ",
+      "ANN_CREATE":" created announcement called ",
+      "ACH_REC":" received achievement called ",
+      "TITLE": "Friends Activities",
+      "NO_SHOW": "No friends activities to show"
     },
 
     "PROFILE": {
@@ -227,6 +264,12 @@
         "NEW_PASSWORD": "New password",
         "ALERT": "There was a problem."
       }
+    },
+    "JOIN FORM":{
+      "LABEL":"Enter you friends access code",
+      "VALIDATION":"Access code cannot be empty",
+      "BUTTON":"Join",
+      "PLACEHOLDER":"Access code"
     }
   },
 
@@ -335,7 +378,9 @@
 
   "PLAY_QUIZ": {
     "START_MENU": {
+      "JOIN": "Waiting for host to start game...",
       "TITLE": "Before start playing",
+      "ACCESS_CODE":"Access code",
       "BUTTON": {
         "START": "Start a new game!",
         "INVITE": "Invite friends"

@@ -140,11 +140,25 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public boolean checkEmail(String email) {
+        return jdbcTemplate.queryForObject(
+                "SELECT ? IN (SELECT email FROM users)",
+                new Object[]{email},Boolean.class
+        );
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return jdbcTemplate.queryForObject(
+                env.getProperty("get.user.by.email"),
+                new Object[]{email},
+                userRowMapper);
+    }
+
     public void changeLanguage(Long langId , Long userId) {
         jdbcTemplate.update(env.getProperty("set.user.language"),
                 langId, userId
         );
-
     }
 
 }

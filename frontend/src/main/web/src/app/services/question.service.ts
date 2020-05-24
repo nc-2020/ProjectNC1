@@ -43,7 +43,7 @@ export class QuestionService {
 
   deleteQuestion(question: Question | number): Observable<Question> {
     const id = typeof question === 'number' ? question : question.id;
-    const url = `${this.questionsUrl}/question/${id}`;
+    const url = `${this.questionsUrl}${id}`;
     return this.http.delete<Question>(url,
       { headers: this.httpHeader})
       .pipe(catchError(this.handleError<Question>('deleteQuestion'))

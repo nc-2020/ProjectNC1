@@ -15,7 +15,7 @@ public class DefOptionRowMapper implements RowMapper<DefaultQuest> {
         DefaultQuest defaultQuest = new DefaultQuest();
         defaultQuest.setId((long) resultSet.getInt("id"));
         defaultQuest.setAnswer( resultSet.getString("answer"));
-        defaultQuest.setImage(resultSet.getBytes("image"));
+        defaultQuest.setImage(resultSet.getString("image"));
         defaultQuest.setQuest_id((long) resultSet.getInt("quest_id"));
         return defaultQuest;
     }

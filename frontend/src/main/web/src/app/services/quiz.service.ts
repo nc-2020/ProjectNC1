@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {catchError} from "rxjs/operators";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {catchError, tap} from "rxjs/operators";
 import {Observable, of} from "rxjs";
 import {Quiz} from "../entities/quiz";
 import {UserService} from "./user.service";
 import {Session} from "../entities/session";
 import {SessionStats} from "../entities/session-stats";
 import {UserSessionResult} from "../entities/UserSessionResult";
+import {User} from "../entities/user";
 
 @Injectable({
   providedIn: 'root'
@@ -53,10 +54,22 @@ export class QuizService {
       .pipe(catchError(this.handleError('startSession')));
   }
 
-  joinSession(accessCode) {
-    return this.http.get(this.quizzesUrl + `/join/?user_id=${this.userId}&access_code=` + accessCode,
-      { headers: this.httpHeader})
-      .pipe(catchError(this.handleError('joinSession')));
+
+  joinSession(accessCode): Observable<Session> {
+    return this.http.get<Session>(this.quizzesUrl + `/join/?user_id=${this.userId}&access_code=` + accessCode,
+      { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+      .pipe(
+        catchError(this.handleError<any>('joinSession')
+        ));
+  }
+
+  getAccessCode(sessionId): Observable<string> {
+    return this.http.get<string>(this.quizzesUrl + `/access_code/${sessionId}`,{ headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)})
+      .pipe(
+        catchError(this.handleError<string>('getAccessCode')
+        ));
   }
 
   getStatsSession(sessionId): Observable<SessionStats[]> {
@@ -88,6 +101,7 @@ export class QuizService {
       { headers: this.httpHeader})
       .pipe(catchError(this.handleError<Quiz[]>('getFavoriteQuizzes', [])));
   }
+
 
   addFavoriteQuiz(quizId) {
     return this.http.post(this.quizzesUrl + '/favorite/' + quizId + '/' + this.userId,'Add favorite quiz',
@@ -128,13 +142,14 @@ export class QuizService {
       .pipe(catchError(this.handleError<any>('deleteQuiz')));
   }
 
-  searchQuizzes(term: string): Observable<Quiz[]> {
+  searchQuizzes(term: string, cat: string[], date: number, userName: string): Observable<Quiz[]> {
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.get<Quiz[]>(`${this.quizzesUrl}/search/${term}`,
-      { headers: this.httpHeader})
-      .pipe(catchError(this.handleError<Quiz[]>('searchQuizzes', [])));
+    return this.http.post<Quiz[]>(this.quizzesUrl + '/search', { title: term, categories: cat, dateOption: date, user: userName }, { headers: new HttpHeaders()
+        .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
+      catchError(this.handleError<Quiz[]>('searchQuizzes', []))
+    );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

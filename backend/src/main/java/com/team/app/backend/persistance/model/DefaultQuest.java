@@ -11,5 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class DefaultQuest extends OptionObj  {
     private String answer;
-    private byte[] image;
+    private String image;
 }
