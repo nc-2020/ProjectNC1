@@ -34,8 +34,10 @@ export class UserProfileComponent implements OnInit {
               private uploadFilesService: UploadFilesService) { }
 
   ngOnInit(): void {
+    if (this.user.image != null) {
+      this.imageUrl = this.user.image;
+    }
     this.setUserForm();
-
     this.form = this.fb.group({
       avatar: new FormControl('', [FileValidator.validate, Validators.required])
     });
@@ -50,18 +52,18 @@ export class UserProfileComponent implements OnInit {
       const nextSibling = event.target.nextElementSibling;
       nextSibling.innerText = fileName;
       file = event.target.files[0];
-      let image;
-
-      if (file) {
-        image = new Image();
-        image.src = _URL.createObjectURL(file);
-      }
-      image.onload = function () {
-        if (this.width != 150 && this.height != 150) {
-          alert("The image width should be " + 150 + " and image height is " + 150);
-          alert("The image width is " + this.width + " and image height is " + this.height);
-        }
-      }
+      // let image;
+      //
+      // if (file) {
+      //   image = new Image();
+      //   image.src = _URL.createObjectURL(file);
+      // }
+      // image.onload = function () {
+      //   if (this.width != 150 && this.height != 150) {
+      //     alert("The image width should be " + 150 + " and image height is " + 150);
+      //     alert("The image width is " + this.width + " and image height is " + this.height);
+      //   }
+      // }
     }
     this.form.get('avatar').setValue(file);
   }
@@ -71,7 +73,12 @@ export class UserProfileComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.form.get('avatar').value);
     this.uploadFilesService.upload(formData).subscribe(
-      (res : string) => this.imageUrl = res,
+      (res: string) => {
+        this.imageUrl = res;
+        this.user.image = res;
+        console.log(this.user.image);
+        this.setImage();
+      },
       error => {
         console.log(error.text);
       }
@@ -92,6 +99,7 @@ export class UserProfileComponent implements OnInit {
       email: [this.user.email, [Validators.required, Validators.minLength(3), Validators.email]],
       username: [this.user.username, [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(3)]],
+      image: [this.user.image],
       confirmPassword: ['', [Validators.required, Validators.minLength(3)]],
       role: [{value: null, disabled: this.userRole() === 'super admin' ? false : true}],
     } );
@@ -114,6 +122,14 @@ export class UserProfileComponent implements OnInit {
     this.user.role.name = this.userRole() === 'admin' ? 'moderator' : this.userForm.get('role').value;
     this.userService.createUser(this.user).subscribe(
       response => {this.message = 'User has been added!';},
+      error => {this.error = error.message});
+  }
+
+
+  setImage() {
+    console.log('setImage');
+    this.userService.updateUser(this.user).subscribe(
+      response => {this.user = response; this.message = 'User has been updated!'},
       error => {this.error = error.message});
   }
 
