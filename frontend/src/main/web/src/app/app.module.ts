@@ -39,6 +39,8 @@ import { AchievementCreateComponent } from './achievement-create/achievement-cre
 import { PassRecoveryComponent } from './pass-recovery/pass-recovery.component';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {FileValidator} from "./user-profile/_helpers/file-input.validator";
+import {FileValueAccessor} from "./user-profile/_helpers/file-control-value-accessor";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -72,7 +74,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserActivityComponent,
     AchievementDashboardComponent,
     AchievementCreateComponent,
-    PassRecoveryComponent
+    PassRecoveryComponent,
+    FileValidator,
+    FileValueAccessor
   ],
   imports: [
     BrowserModule,

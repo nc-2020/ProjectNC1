@@ -7,6 +7,7 @@ import {DashboardComponent} from "../dashboard/dashboard.component";
 import {MustMatchValidator} from "../registration/_helpers/must-match.validator";
 import {HashBcrypt} from "../util/hashBcrypt";
 import {UploadFilesService} from "../services/upload-files.service";
+import {FileValidator} from "./_helpers/file-input.validator";
 
 @Component({
   selector: 'app-user-profile',
@@ -37,14 +38,16 @@ export class UserProfileComponent implements OnInit {
     this.setUserForm();
 
     this.form = this.fb.group({
-      avatar: ['']
+      avatar: ['', [FileValidator.validate]]
     });
   }
 
-
-
   onFileChange(event) {
     if (event.target.files.length > 0) {
+      // @ts-ignore
+      const fileName = document.getElementById("fileInput").files[0].name;
+      const nextSibling = event.target.nextElementSibling;
+      nextSibling.innerText = fileName;
       const file = event.target.files[0];
       this.form.get('avatar').setValue(file);
     }
@@ -59,6 +62,7 @@ export class UserProfileComponent implements OnInit {
         console.log(error.text);
       }
     );
+    this.form.reset();
   }
 
 
