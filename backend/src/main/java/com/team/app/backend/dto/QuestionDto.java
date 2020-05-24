@@ -4,7 +4,7 @@ import com.team.app.backend.persistance.model.QuestionType;
 
 public class QuestionDto {
     private String text;
-    private byte[] image;
+    private String image;
     private Integer time;
     private Integer max_points;
     private Integer quiz_id;
@@ -26,11 +26,11 @@ public class QuestionDto {
         this.text = text;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

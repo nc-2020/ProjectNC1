@@ -14,7 +14,7 @@ public class SeqOptionRowMapper implements RowMapper<SeqOption> {
         return new SeqOption((long) resultSet.getInt("id"),
                 resultSet.getInt("serial_num"),
                 resultSet.getString("text"),
-                resultSet.getBytes("image"),
+                resultSet.getString("image"),
                 (long) resultSet.getInt("quest_id"));
     }
 }

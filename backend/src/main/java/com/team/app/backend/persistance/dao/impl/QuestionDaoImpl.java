@@ -56,7 +56,7 @@ public class QuestionDaoImpl implements QuestionDao {
                     ps.setInt(1, question.getTime());
                     ps.setString(2, question.getText());
                     ps.setInt(3, question.getMax_points());
-                    ps.setBytes(4, question.getImage());
+                    ps.setString(4, question.getImage());
                     ps.setLong(5, question.getType().getId());
                     ps.setLong(6, question.getQuiz_id());
 

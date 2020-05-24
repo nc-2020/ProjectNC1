@@ -20,7 +20,7 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private byte[] image;
+    private String image;
     private Date registr_date;
     private String activate_link;
     private UserStatus status;

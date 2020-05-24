@@ -3,7 +3,7 @@ package com.team.app.backend.dto;
 public class OptionDto {
     private Boolean is_correct;
     private String text;
-    private byte[] image;
+    private String image;
 
     public OptionDto() {
     }
@@ -24,11 +24,11 @@ public class OptionDto {
         this.text = text;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

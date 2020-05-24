@@ -16,7 +16,7 @@ public class QuestionRowMapper implements RowMapper<Question> {
                 resultSet.getInt("time"),
                 resultSet.getString("text"),
                 resultSet.getInt("max_points"),
-                resultSet.getBytes("image"),
+                resultSet.getString("image"),
                 new QuestionType((long)resultSet.getInt("type_id"),resultSet.getString("type_name")),
                 (long) resultSet.getInt("quiz_id"));
     }

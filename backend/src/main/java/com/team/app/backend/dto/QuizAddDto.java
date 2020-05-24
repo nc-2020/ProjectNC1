@@ -8,7 +8,7 @@ import java.util.List;
 public class QuizAddDto {
     private String title;
     private String description;
-    private byte[] image;
+    private String image;
     private int user_id;
     private List<Long> categories;
 
@@ -36,11 +36,11 @@ public class QuizAddDto {
         this.description = description;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
