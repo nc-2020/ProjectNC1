@@ -39,7 +39,8 @@
       </div>
 
       <a *ngIf="authenticated()" class="btn bg-secondary btn-sm mr-3" routerLink="/quiz-create">{{'HEADER.BUTTON.CREATE QUIZ' | translate}}</a>
-<!--      <a *ngIf="authenticated()" class="btn bg-secondary btn-sm"  (click)="logout()">Logout</a>-->
+      <a *ngIf="authenticated()" class="btn bg-secondary btn-sm"  (click)="getNot()">Get</a>
+      <a *ngIf="authenticated()" class="btn bg-secondary btn-sm"  (click)="connect()">Connect</a>
       <a (click)="setTranslate('en')" class="btn btn-lg" role="button"><span class="flag-icon flag-icon-gb"></span></a>
       <a (click)="setTranslate('ua')" class="btn btn-lg" role="button"><span class="flag-icon flag-icon-ua"></span></a>
 

@@ -4,6 +4,7 @@ import com.team.app.backend.persistance.dao.UserDao;
 import com.team.app.backend.persistance.dao.mappers.UserRowMapper;
 import com.team.app.backend.persistance.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
@@ -17,6 +18,9 @@ public class UserDaoImpl implements UserDao {
 
     @Autowired
     private UserRowMapper userRowMapper;
+
+    @Autowired
+    Environment env;
 
     public UserDaoImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
@@ -105,8 +109,7 @@ public class UserDaoImpl implements UserDao {
     }
     @Override
     public String getUserLanguage(Long id) {
-        return jdbcTemplate.queryForObject(
-                "SELECT lan.name FROM users INNER JOIN languages lan ON COALESCE(users.lang_id,1) = lan.id WHERE users.id = ? ",
+        return jdbcTemplate.queryForObject(env.getProperty("get.user.language"),
                 new Object[]{id},String.class
         );
     }
@@ -138,8 +141,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void changeLanguage(Long langId , Long userId) {
-        jdbcTemplate.update(
-                "UPDATE users set lang_id = ? WHERE id = ?",
+        jdbcTemplate.update(env.getProperty("set.user.language"),
                 langId, userId
         );
 

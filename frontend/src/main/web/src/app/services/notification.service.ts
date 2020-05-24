@@ -26,7 +26,6 @@ export class NotificationService {
 
   delete(notification: Notification[]) {
     if (notification.length > 0) {
-      console.log('Looooolll')
       const options = {
         headers: new HttpHeaders()
           .set('Authorization', `Bearer_${this.userService.getToken()}`),

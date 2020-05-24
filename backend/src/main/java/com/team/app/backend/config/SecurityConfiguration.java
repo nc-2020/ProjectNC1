@@ -28,6 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_ENDPOINT = "/api/login";
     private static final String SIGN_UP_ENDPOINT = "/api/sign-up";
     private static final String ROOT_ENDPOINT = "/";
+    private static final String SOCKET_ENDPOINT = "/ws";
     private static final String ACTIVATE_ENDPOINT = "/api/user/activate*";
 
 
@@ -43,7 +44,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().and().csrf().disable()
+                .csrf().disable()
+                .headers()
+                .frameOptions().sameOrigin()
+                .and()
+                .authorizeRequests().and()
                 .httpBasic().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -52,6 +57,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/index.html").permitAll()
                 .antMatchers(SIGN_UP_ENDPOINT).permitAll()
                 .antMatchers(ROOT_ENDPOINT).permitAll()
+                .antMatchers(SOCKET_ENDPOINT).permitAll()
                 .antMatchers(HttpMethod.GET,ACTIVATE_ENDPOINT + "*")
                 .permitAll()
                 .anyRequest().authenticated()
@@ -87,7 +93,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/assets/i18n/ua.json",
                 "/assets/loader_brainduel.svg",
                 "/assets/logo_brainduel.png",
-                "/vendor*.js"
+                "/vendor*.js",
+                "/ws/**"
         );
     }
 }

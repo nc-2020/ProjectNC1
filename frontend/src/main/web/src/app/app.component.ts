@@ -6,6 +6,7 @@ import {NotificationService} from './services/notification.service';
 import {Notification} from './entities/notification';
 import {SettingsService} from "./services/settings.service";
 import {TranslateService} from "@ngx-translate/core";
+import {WebSocketService} from "./web-socket.service";
 
 
 
@@ -15,20 +16,25 @@ import {TranslateService} from "@ngx-translate/core";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnChanges, OnDestroy, OnInit{
+export class AppComponent implements  OnDestroy, OnInit{
 
   title = 'ui-app';
   deletedNotifications: Notification[] = [];
-
-  constructor(private http: HttpClient,
-              private userService: UserService,
+  constructor(private userService: UserService,
               private router: Router,
               public translate: TranslateService,
               public notificationService: NotificationService,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private webSocketService: WebSocketService) {
 
   }
+  getNot() {
+      this.webSocketService.getNotifications(+this.userService.user.id);
 
+  }
+  connect() {
+    this.webSocketService.initializeWebSocketConnection();
+  }
 
   setTranslate(language: string) {
     localStorage.setItem('language', language);

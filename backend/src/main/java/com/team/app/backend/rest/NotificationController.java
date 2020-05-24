@@ -5,6 +5,8 @@ import com.team.app.backend.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -13,12 +15,18 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("api/notification")
+//@RequestMapping("api/notification")
 public class NotificationController {
 
     @Autowired
     NotificationService notificationService;
 
+    private final SimpMessagingTemplate template;
+
+    @Autowired
+    NotificationController(SimpMessagingTemplate template){
+        this.template = template;
+    }
     
     @PostMapping("/create")
     public ResponseEntity create(@RequestBody Notification not) {
@@ -57,6 +65,14 @@ public class NotificationController {
 
     }
 
+
+
+
+    @MessageMapping("/get/topic")
+    public void sendMessage(Long userId){
+
+        this.template.convertAndSend("/topic",  "Pop");
+    }
     @GetMapping("/get/{id}")
     public ResponseEntity getAll (@PathVariable("id") Long user_id) {
         List<Notification>  notifications = null;
