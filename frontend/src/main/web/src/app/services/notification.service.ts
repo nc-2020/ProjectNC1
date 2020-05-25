@@ -27,12 +27,13 @@ export class NotificationService {
 
   public stompClient;
   initializeWebSocketConnection() {
-    if (userService.user.role.name === 'user')
+    if (this.userService.user.role.name === 'user') {
       const ws = new SockJS(this.serverUrl);
       this.stompClient = Stomp.over(ws);
       const that = this;
-      this.stompClient.connect({"Authorization" : "Bearer_"+this.userService.getToken()
-      }, function(frame) {
+      this.stompClient.connect({
+        "Authorization": "Bearer_" + this.userService.getToken()
+      }, function (frame) {
         that.getNotifications();
         that.stompClient.subscribe('/user/notification', (message) => {
           if (message.body) {
@@ -40,6 +41,7 @@ export class NotificationService {
           }
         });
       });
+    }
   }
   disconnect() {
     if(this.stompClient) {
