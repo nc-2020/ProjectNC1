@@ -38,6 +38,7 @@ export class NotificationService {
           that.notifications = JSON.parse(message.body);
         }
       });
+
     });
   }
   disconnect() {

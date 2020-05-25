@@ -383,7 +383,7 @@
   "PLAY_QUIZ": {
     "START_MENU": {
       "JOIN": "Waiting for host to start game...",
-      "TITLE": "Before start playing",
+      "TITLE": "Before starting to play",
       "ACCESS_CODE":"Access code",
       "BUTTON": {
         "START": "Start a new game!",
