@@ -1,7 +1,7 @@
 <div class="pt-4 col-lg-4 col-md-6 col-sm-6  align-self-center">
   <div  class="card  text-center text-white bg-primary mx-2 mx-sm-2 mx-md-2" style="width: 14rem; height: 17rem">
-    <div class="card-header">
-      <img src="../../assets/logo_brainduel.png" width="110" height="122">
+    <div class="card-header heading-footer" [ngStyle]="{'background-image':'url('+ imageUrl +')'}">
+<!--       <img [src]="imageUrl" width="200" height="115" class="card-img-top">-->
     </div>
     <div class="card-body">
       <h5 class="card-title">{{quiz.title}}</h5>
@@ -12,15 +12,15 @@
       <a *ngIf="getUserRole() === 'user'" style="color: black" class="btn btn-secondary" (click)="createSession()">{{'QUIZ_DASHBOARD.BUTTON.PLAY' | translate}}</a>
       <a *ngIf="isEdit" routerLink="/quiz-edit/{{quiz.id}}" class="btn btn-secondary">{{'QUIZ_DASHBOARD.BUTTON.EDIT' | translate}}</a>
       <button *ngIf="!isEdit && getUserRole() === 'user'" class="favourite_btn" mat-icon-button color="warn">
-        <mat-icon *ngIf="quiz.favorite"
-          (click)="deleteFavorite()"
-                  aria-label="Favorite quiz">
-          favorite
-        </mat-icon>
-        <mat-icon (click)="addFavorite()"
-                  *ngIf="!quiz.favorite"
+        <mat-icon *ngIf="!quiz.favorite"
+                  (click)="addFavorite()"
                   aria-label="Not favorite quiz">
           favorite_border
+        </mat-icon>
+        <mat-icon *ngIf="quiz.favorite"
+                  (click)="deleteFavorite()"
+                  aria-label="Favorite quiz">
+          favorite
         </mat-icon>
       </button>
     </div>
