@@ -13,6 +13,10 @@ import {UserService} from "../services/user.service";
 import {UserSessionResult} from "../entities/UserSessionResult";
 import {AchievementService} from "../services/achievement.service";
 import {SessionStats} from "../entities/session-stats";
+import {Notification} from "../entities/notification";
+import {NotificationService} from "../services/notification.service";
+declare var SockJS;
+declare var Stomp;
 
 @Component({
   selector: 'app-quiz',
@@ -21,6 +25,8 @@ import {SessionStats} from "../entities/session-stats";
 })
 export class QuizComponent implements OnInit, OnDestroy {
   private routeSub: Subscription;
+  public stompClient;
+  private serverUrl = 'http://localhost:8080/ws';
   questionOptionPoints = 0;
   quizId;
   sessionId;
@@ -51,15 +57,18 @@ export class QuizComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private questionService: QuestionService,
               private achievementService: AchievementService,
-              private userService: UserService) { }
+              private userService: UserService,
+              private notficationService:NotificationService) { }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
       this.quizId = params['id'];
       this.sessionId = params['sessionId'];
       this.getAccessCode();
+      this.initializeWebSocketConnection();
     });
     this.getQuestions();
+    console.log("join"+this.getUserJoin());
 
   }
 
@@ -206,7 +215,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   startNewGame() {
     if (this.getUserRole() === 'user') {
       this.quizService.startSession(this.sessionId).subscribe(data =>
-        console.log(data))
+        console.log(data));
     }
   }
 
@@ -247,6 +256,19 @@ export class QuizComponent implements OnInit, OnDestroy {
     });
     //this.getStats();
 
+  }
+
+  initializeWebSocketConnection() {
+    this.notficationService.stompClient.subscribe('/start/'+this.sessionId, (message) => {
+      if (message.body) {
+        this.startQuestionTimer();
+      }
+    });
+
+  }
+
+  startGame() {
+    this.notficationService.stompClient.send('/app/start/game' , {}, this.sessionId);
   }
 
 

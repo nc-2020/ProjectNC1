@@ -1,22 +1,22 @@
 <section  class="min-vh-100" id="cover">
   <div class="container text-white p-2 align-items-center w-50" id="bod0" style="height: 15rem" *ngIf="interval===null && indexQuestion === 0">
     <h2 class="mt-2">{{'PLAY_QUIZ.START_MENU.TITLE' | translate}}</h2>
-    <div class="row" >
-      <div class="col">
-        <button class="btn btn-primary my-2 w-50" (click)="startNewGame(); startQuestionTimer()" >{{'PLAY_QUIZ.START_MENU.BUTTON.START' | translate}}</button>
+    <div class="row" *ngIf="!getUserJoin(); else elseBlock">
+      <div class="col" >
+        <button class="btn btn-primary my-2 w-50" (click)="startNewGame();startGame()" >{{'PLAY_QUIZ.START_MENU.BUTTON.START' | translate}}</button>
       </div>
     </div>
 
-<!--    <div class="row" *ngIf="getUserJoin()===null">-->
-<!--      <div class="col">-->
-<!--        <h4>{{'PLAY_QUIZ.START_MENU.JOIN' | translate}}</h4>-->
-<!--      </div>-->
-<!--    </div>-->
+    <div #elseBlock class="row" [hidden]="!getUserJoin()">
+      <div class="col">
+        <h4>{{'PLAY_QUIZ.START_MENU.JOIN' | translate}}</h4>
+      </div>
+    </div>
     <div class="row">
       <div class="col">
         <button class="btn btn-primary mt-2 w-50" type="button" data-toggle="collapse" data-target="#inviteFriendCollapse" aria-expanded="false" aria-controls="collapseExample">{{'PLAY_QUIZ.START_MENU.BUTTON.INVITE' | translate}}</button>
         <div class="collapse" id="inviteFriendCollapse">
-          <h4>{{'PLAY_QUIZ.START_MENU.ACCESS_CODE' | translate}}{{access_code}}</h4>
+          <h4>{{'PLAY_QUIZ.START_MENU.ACCESS_CODE' | translate}} : {{access_code}}</h4>
         </div>
       </div>
     </div>
@@ -50,19 +50,19 @@
       </div>
     </div>
     <ng-template #elseBlock>
-      <h2>{{'PLAY_QUIZ.RESULT.TABLE.NO_RES' | translate}}You are the first one who played this quiz</h2>
+      <h2>{{'PLAY_QUIZ.RESULT.TABLE.NO_RES' | translate}}</h2>
     </ng-template>
 
     <h2 class="mt-2">{{'PLAY_QUIZ.RESULT.TEXT' | translate}} {{getScore()}}</h2>
     <h2 class="mt-2">{{'PLAY_QUIZ.RESULT.TIME' | translate}} {{timeSpent}} {{'PLAY_QUIZ.RESULT.SECONDS' | translate}}</h2>
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#sessionStats" aria-expanded="false" aria-controls="collapseExample">
-      Show stats
-    </button>
-    <div class="collapse" id="sessionStats">
-      <ul *ngFor="let stat of stats" >
-      {{stat.username}} : {{stat.score}}
-      </ul>
-    </div>
+    <!--<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#sessionStats" aria-expanded="false" aria-controls="collapseExample">-->
+      <!--Show stats-->
+    <!--</button>-->
+    <!--<div class="collapse" id="sessionStats">-->
+      <!--<ul *ngFor="let stat of stats" >-->
+      <!--{{stat.username}} : {{stat.score}}-->
+      <!--</ul>-->
+    <!--</div>-->
     <app-quiz-aprove-form *ngIf="getUserRole() !== 'user'" [userId]="72" [quizId]="quizId">
     </app-quiz-aprove-form>
     <a routerLink="/dashboard"><h3>{{'PLAY_QUIZ.RESULT.BUTTON' | translate}}</h3></a>
