@@ -49,6 +49,7 @@ testem.log
 .DS_Store
 Thumbs.db
 
+backend/src/main/resources/application.properties
 backend/backend.iml
 frontend/frontend.iml
 ProjectDiagram.drawio
