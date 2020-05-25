@@ -34,17 +34,6 @@ public class NotificationController {
         Thread.sleep(3000); // simulated delay
         return "Hello, " + message + "!";
     }
-//    public void getAll(Long userId, StompHeaderAccessor stompHeaderAccessor){
-//        notificationService.add(stompHeaderAccessor.getSessionId(), userId);
-//
-//    }
-
-    @MessageMapping("/hello")
-    @SendTo("/topic/greetings")
-    public String greeting2(String message) throws Exception {
-        Thread.sleep(3000); // simulated delay
-        return "Hello, " + message + "!";
-    }
 
 
     @PostMapping("/create")
