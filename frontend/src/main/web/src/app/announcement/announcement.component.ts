@@ -18,6 +18,7 @@ export class AnnouncementComponent implements OnInit {
   onChanged = new EventEmitter<Announcement>();
   error = '';
   message = '';
+  imageUrl = 'https://cdn.pixabay.com/photo/2020/04/09/12/28/dog-5021242_1280.jpg';
 
 
   constructor(private announcementService: AnnouncementService, private userService: UserService) { }
@@ -34,13 +35,15 @@ export class AnnouncementComponent implements OnInit {
         error => {this.error = error.message; });
   }
   ngOnInit(): void {
+    if (this.announcement.image != null) {
+      this.imageUrl = this.announcement.image;
+    }
   }
   approve(approved: boolean) {
     this.announcement.statusId = approved ? ANNOUNCEMENT_APPROVED : 0;
     this.announcementService.approve(this.announcement).
     subscribe(resp => {},
       error => {this.announcement.statusId = ANNOUNCEMENT_CREATED ; this.error = error.message; });
-
   }
 
 }

@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('closeModal') closeModal: ElementRef;
   tab = '';
   user: User;
+  imageUrl: string = 'https://img.icons8.com/plasticine/100/000000/user-male-circle.png';
   users$: Observable<User[]>;
   quizes$: Observable<Quiz[]>;
   categoriesList: Category[] = [];
@@ -48,6 +49,10 @@ export class DashboardComponent implements OnInit {
     this.getCategories();
     this.tab = this.route.snapshot.paramMap.get('tab');
     this.user = this.tab === 'Profile' ? this.userService.user : {role: {}} as User;
+    this.user.image = this.getUserImage();
+    if (this.user.image != null) {
+      this.imageUrl = this.user.image;
+    }
     this.quizes$ = this.searchQuizTerms.pipe(
       debounceTime(DEBOUNCE_TIME),
       distinctUntilChanged(),
@@ -93,6 +98,9 @@ export class DashboardComponent implements OnInit {
   }
   getUserRole() {
     return this.userService.user.role.name;
+  }
+  getUserImage() {
+    return this.userService.user.image;
   }
 
   getCategories() {

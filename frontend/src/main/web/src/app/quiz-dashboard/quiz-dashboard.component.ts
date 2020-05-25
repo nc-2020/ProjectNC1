@@ -15,6 +15,7 @@ export class QuizDashboardComponent implements OnInit {
   favoriteQuizzes: Quiz[] = [];
   suggestionQuizzes: Quiz[] = [];
   sessionStats:SessionStats[]=[];
+  completedQuizes:Quiz[]=[];
   currentTab = 'Quizzes';
 
   constructor(private quizService: QuizService, private userService: UserService) { }
@@ -24,6 +25,7 @@ export class QuizDashboardComponent implements OnInit {
       this.getQuizzes();
       this.getUserQuizzes();
       this.getSuggestions();
+      this.getCompletedQuizes();
     } else {
       this.getCreatedQuizzes();
     }
@@ -41,7 +43,10 @@ export class QuizDashboardComponent implements OnInit {
         this.quizzes = quizzes
       });
   }
-
+  getCompletedQuizes():void{
+    this.quizService.getCompletedQuizes()
+      .subscribe(quizzes => this.completedQuizes = quizzes);
+  }
   getUserQuizzes(): void {
     this.quizService.getUserQuizzes()
       .subscribe(quizzes => this.userQuizzes = quizzes);

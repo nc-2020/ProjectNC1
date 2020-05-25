@@ -5,6 +5,7 @@ import {AnnouncementService} from '../services/announcement.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from "@angular/router";
 import {ANNOUNCEMENT_APPROVED, ANNOUNCEMENT_CREATED, ANNOUNCEMENT_IMPORTANT} from "../parameters";
+import {UploadFilesService} from "../services/upload-files.service";
 
 @Component({
   selector: 'app-announcement-edit',
@@ -19,11 +20,13 @@ export class AnnouncementEditComponent implements OnInit {
   announcement: Announcement = {} as Announcement;
   error = '';
   message = '';
-
+  imageUrl = 'https://cdn.pixabay.com/photo/2020/04/09/12/28/dog-5021242_1280.jpg';
+  form: FormGroup;
   announcementForm: FormGroup;
 
   constructor(private fb: FormBuilder, private router: Router,
               private announcementService: AnnouncementService,
+              private uploadFilesService: UploadFilesService,
               private userService: UserService) { }
 
   ngOnInit(): void {
@@ -32,7 +35,6 @@ export class AnnouncementEditComponent implements OnInit {
       text: [this.announcement.text, [Validators.required, Validators.minLength(3), Validators.maxLength(499)]],
       important: [''],
       image: [this.announcement.image],
-
     });
   }
   getUserRole(): string {
@@ -83,5 +85,4 @@ export class AnnouncementEditComponent implements OnInit {
   submit() {
 
   }
-
 }

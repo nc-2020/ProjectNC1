@@ -21,8 +21,9 @@ public class UserToSessionDaoImpl implements UserToSessionDao {
 
     @Override
     public UserToSession save(UserToSession userToSession) {
-        String sql = "INSERT INTO user_to_ses (ses_id, user_id, score) VALUES ( ?, ?, ? )";
+        String sql = "INSERT INTO user_to_ses (ses_id, user_id, score, time) VALUES ( ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
+        System.out.println();
         jdbcTemplate.update(
                 connection -> {
                     PreparedStatement ps = connection.prepareStatement(
@@ -32,6 +33,8 @@ public class UserToSessionDaoImpl implements UserToSessionDao {
                     ps.setLong(1, userToSession.getSession_id());
                     ps.setLong(2, userToSession.getUser_id());
                     ps.setInt(3, userToSession.getScore());
+                    ps.setInt(4, userToSession.getTime());
+
                     return ps;
                 },
                 keyHolder
@@ -47,11 +50,12 @@ public class UserToSessionDaoImpl implements UserToSessionDao {
                 new Object[]{id},
                 (resultSet, i) -> {
                     UserToSession userToSession = new UserToSession();
-                    userToSession
-                            .setId(resultSet.getLong("id"))
-                            .setSession_id(resultSet.getLong("ses_id"))
-                            .setUser_id(resultSet.getLong("user_id"))
-                            .setScore(resultSet.getInt("score"));
+                    userToSession.setId(resultSet.getLong("id"));
+                    userToSession.setSession_id(resultSet.getLong("ses_id"));
+                    userToSession.setUser_id(resultSet.getLong("user_id"));
+                    userToSession.setScore(resultSet.getInt("score"));
+                    userToSession.setTime(resultSet.getInt("time"));
+
                     return userToSession;
                 });
     }
@@ -64,7 +68,7 @@ public class UserToSessionDaoImpl implements UserToSessionDao {
 
     @Override
     public UserToSession update(UserToSession userToSession) {
-        String sql = "UPDATE user_to_ses SET  score = ? WHERE ses_id = ? AND user_id = ? ";
+        String sql = "UPDATE user_to_ses SET  score = ? , time = ? WHERE ses_id = ? AND user_id = ? ";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(
                 connection -> {
@@ -73,8 +77,10 @@ public class UserToSessionDaoImpl implements UserToSessionDao {
                             new String[] {"id"}
                     );
                     ps.setInt(1, userToSession.getScore());
-                    ps.setLong(2, userToSession.getSession_id());
-                    ps.setLong(3, userToSession.getUser_id());
+                    ps.setInt(2,userToSession.getTime());
+                    ps.setLong(3, userToSession.getSession_id());
+                    ps.setLong(4, userToSession.getUser_id());
+
                     return ps;
                 },
                 keyHolder
@@ -90,11 +96,11 @@ public class UserToSessionDaoImpl implements UserToSessionDao {
                 new Object[]{ses_id},
                 (resultSet, i) -> {
                     UserToSession userToSession = new UserToSession();
-                    userToSession
-                            .setId(resultSet.getLong("id"))
-                            .setSession_id(resultSet.getLong("ses_id"))
-                            .setUser_id(resultSet.getLong("user_id"))
-                            .setScore(resultSet.getInt("score"));
+                    userToSession.setId(resultSet.getLong("id"));
+                    userToSession.setSession_id(resultSet.getLong("ses_id"));
+                    userToSession.setUser_id(resultSet.getLong("user_id"));
+                    userToSession.setScore(resultSet.getInt("score"));
+                    userToSession.setTime(resultSet.getInt("time"));
                     return userToSession;
                 });
 

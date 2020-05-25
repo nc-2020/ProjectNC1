@@ -9,10 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FinishedQuizDto {
-    long user_id;
-    long ses_id;
+public class SessionStatsDto {
+    int place;
+    String username;
     int score;
     int time;
-
 }
