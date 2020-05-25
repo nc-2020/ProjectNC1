@@ -6,8 +6,15 @@ import com.team.app.backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessageType;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -40,18 +47,30 @@ public class PlayQuizController {
     @Autowired
     MessageSource messageSource;
 
+
+    private final SimpMessagingTemplate template;
+
+    @Autowired
+    PlayQuizController(SimpMessagingTemplate template){
+        this.template = template;
+    }
+
+    @MessageMapping("/start/game")
+    public void sendMessage(Long sesId){
+        this.template.convertAndSend("/start/"+sesId,  "true");
+    }
+
+
     @GetMapping("play/{user_id}/{quiz_id}")
     public ResponseEntity playQuiz(
             @PathVariable("user_id") long user_id,
             @PathVariable("quiz_id") long quiz_id) {
         Quiz quiz = quizService.getQuiz(quiz_id);
         Session session = sessionService.newSessionForQuiz(quiz);
-        //String accessCode = AccessCodeProvider.createAccessCode(session, quiz);
-        session.setAccessCode(session.getId().toString());
+
         sessionService.updateSession(session);
         User user = userService.getUserById(user_id);
-
-        UserToSession userToSession = userToSessionService.createNewUserToSession(user, session);
+        userToSessionService.createNewUserToSession(user, session);
 
         return ResponseEntity.ok(session);
     }
@@ -64,22 +83,31 @@ public class PlayQuizController {
     }
 
 
-    @GetMapping("join")
-    public ResponseEntity joinQuiz(
-            @RequestParam("user_id") Long user_id,
-            @RequestParam("access_code") Long accessCode
+    @GetMapping("access_code/{ses_id}")
+    public ResponseEntity getAccessCode(
+            @PathVariable("ses_id") long ses_id
+
     ) {
-        //Quiz quiz = quizService.getQuiz(
-                //AccessCodeProvider.parseAccessCode(accessCode).get("quiz_id"));
-        //sessionService.getSessionById(
-         //       AccessCodeProvider.parseAccessCode(accessCode).get("session_id") Session session = );
-        Session session = sessionService.getSessionById(accessCode);
-        if(session.getStatus().getId()==1){
+        Session session = sessionService.getSessionById(ses_id);
+        return ResponseEntity.ok(session.getAccessCode());
+
+    }
+
+    @GetMapping("join")
+    public ResponseEntity getAccessCode(
+            @RequestParam("user_id") Long user_id,
+            @RequestParam("access_code") String accessCode
+    ) {
+        Session session = sessionService.getSessionByAccessCode(accessCode);
+        System.out.println(session);
+        if(session != null){
+            System.out.println("not null ses");
             User user = userService.getUserById(user_id);
-            UserToSession userToSession = userToSessionService.createNewUserToSession(user, session);
-            return ResponseEntity.ok("");
+            userToSessionService.createNewUserToSession(user, session);
+            return ResponseEntity.ok(session);
         }else{
-            throw new BadCredentialsException(messageSource.getMessage("session.start", null, LocaleContextHolder.getLocale()));
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(messageSource.getMessage("session.start", null, LocaleContextHolder.getLocale()));
         }
 
     }
@@ -89,21 +117,27 @@ public class PlayQuizController {
             @PathVariable("ses_id") long ses_id
     ) {
 
-        sessionService.setSesionStatus(ses_id,new SessionStatus(2L,"ended"));
-        Map<String, Integer> response = new HashMap();
+        Map response = new HashMap();
 
         List<UserToSession> userToSessionList = new ArrayList<>(userToSessionService.getAllBySessionId(ses_id));
 
         userToSessionList.forEach(
-                uts -> {
-                    response.put(userService.getUserById(uts.getUser_id()).getUsername(), uts.getScore());
-                }
+                uts -> {response.put("username",userService.getUserById(uts.getUser_id()).getUsername());
+                    response.put("score",uts.getScore());
+                    response.put("time",uts.getTime()); }
         );
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("topstats/{quiz_id}")
+    public ResponseEntity topStats(@PathVariable("quiz_id") long quiz_id) {
+        return ResponseEntity.ok(quizService.getTopStats(quiz_id));
+    }
+
     @PostMapping("finish")
     public ResponseEntity finishQuiz(@RequestBody FinishedQuizDto finishedQuizDto) {
+        System.out.println(finishedQuizDto.getUser_id()+" "+finishedQuizDto.getSes_id()+" "+finishedQuizDto.getTime()+" "+finishedQuizDto.getScore());
+        sessionService.setSesionStatus(finishedQuizDto.getSes_id(),new SessionStatus(2L,"ended"));
         userToSessionService.insertScore(finishedQuizDto);
         return ResponseEntity.ok(messageSource.getMessage("result.ok", null, LocaleContextHolder.getLocale()));
     }

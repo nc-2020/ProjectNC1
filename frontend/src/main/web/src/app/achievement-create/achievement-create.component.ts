@@ -19,7 +19,7 @@ export class AchievementCreateComponent implements OnInit {
   achievementForm = this.fb.group({
     'title': ['', [Validators.required, Validators.maxLength(50)]],
     'quantity': ['', [Validators.required, Validators.min(1), Validators.max(1000)]],
-    'category': ['', [Validators.required]]
+    'category': ['', [Validators.required]],
   })
 
 

@@ -32,14 +32,18 @@ import {FriendsComponent} from './friends/friends.component';
 import {UserInviteCardComponent} from './friends/user-invite-card/user-invite-card.component';
 import { AchievementsComponent } from './achievements/achievements.component';
 import { SettingsComponent } from './settings/settings.component';
+import { UserActivityDashboardComponent } from './user-activity-dashboard/user-activity-dashboard.component';
+import { UserActivityComponent } from './user-activity/user-activity.component';
 import { AchievementDashboardComponent } from './achievement-dashboard/achievement-dashboard.component';
 import { AchievementCreateComponent } from './achievement-create/achievement-create.component';
+import { PassRecoveryComponent } from './pass-recovery/pass-recovery.component';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {FileValidator} from "./user-profile/_helpers/file-input.validator";
+import {FileValueAccessor} from "./user-profile/_helpers/file-control-value-accessor";
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
-
-// AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -67,8 +71,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserInviteCardComponent,
     AchievementsComponent,
     SettingsComponent,
+    UserActivityDashboardComponent,
+    UserActivityComponent,
     AchievementDashboardComponent,
-    AchievementCreateComponent
+    AchievementCreateComponent,
+    PassRecoveryComponent,
+    FileValidator,
+    FileValueAccessor
   ],
   imports: [
     BrowserModule,
@@ -95,11 +104,12 @@ export function HttpLoaderFactory(http: HttpClient) {
   exports: [
     MatDatepickerModule
   ],
-  providers: [
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
     LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
 

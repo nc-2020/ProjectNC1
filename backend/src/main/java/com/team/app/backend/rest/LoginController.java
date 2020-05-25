@@ -1,5 +1,6 @@
 package com.team.app.backend.rest;
 
+import com.team.app.backend.dto.RecoveryDto;
 import com.team.app.backend.dto.UserLoginDto;
 import com.team.app.backend.exception.DisabledUserException;
 import com.team.app.backend.exception.NotActivatedUserException;
@@ -32,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api")
@@ -46,8 +48,6 @@ public class LoginController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
     MessageSource messageSource;
@@ -56,7 +56,8 @@ public class LoginController {
     public ResponseEntity login(@RequestBody UserLoginDto requestDto) {
         try {
             String username = requestDto.getUsername();
-            String password = passwordEncoder.encode(requestDto.getPassword());
+            System.out.println(username +" "+ requestDto.getPassword());
+
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
             User user = userService.findByUsername(username);
             String[] params = new String[]{username};
@@ -86,23 +87,42 @@ public class LoginController {
             response.put("token", token);
 
             return ResponseEntity.ok().body(response);
+
         } catch (AuthenticationException e) {
-            e.printStackTrace();
-            throw new BadCredentialsException(messageSource.getMessage("user.invalid", null, LocaleContextHolder.getLocale()));
+            return ResponseEntity
+                    .status(HttpStatus.FORBIDDEN)
+                    .body(messageSource.getMessage("user.invalid", null, LocaleContextHolder.getLocale()));
         } catch (DisabledUserException | NotActivatedUserException e) {
             e.printStackTrace();
-            throw new BadCredentialsException(messageSource.getMessage("user.noactive", null, LocaleContextHolder.getLocale()));
+            return ResponseEntity
+                    .status(HttpStatus.FORBIDDEN)
+                    .body(messageSource.getMessage("user.noactive", null, LocaleContextHolder.getLocale()));
         }
     }
 
 
+
+
+    @PostMapping("/recovery")
+    @ResponseBody
+
+    public ResponseEntity recovery(@RequestBody RecoveryDto recoveryDto){
+        String email = recoveryDto.getEmail();
+        System.out.println(email);
+        if(userService.isEmailRegistered(email)){
+            userService.sendRecoveryLetter(email);
+            return ResponseEntity.ok(true);
+        }
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body("No such email");
+    }
     //TO DO
     @PostMapping("/logout")
     public Map<String, Object> logout() {
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("content", "Hello World");
         return model;
-
     }
 
 

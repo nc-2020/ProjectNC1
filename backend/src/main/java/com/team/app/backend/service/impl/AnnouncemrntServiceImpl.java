@@ -2,8 +2,11 @@ package com.team.app.backend.service.impl;
 
 import com.team.app.backend.persistance.dao.AnnouncementDao;
 import com.team.app.backend.persistance.dao.NotificationDao;
+import com.team.app.backend.persistance.dao.UserActivityDao;
+import com.team.app.backend.persistance.dao.UserDao;
 import com.team.app.backend.persistance.model.Announcement;
 import com.team.app.backend.persistance.model.Notification;
+import com.team.app.backend.persistance.model.UserActivity;
 import com.team.app.backend.service.AnnouncementService;
 import com.team.app.backend.service.NotificationService;
 import com.team.app.backend.service.UserService;
@@ -24,8 +27,21 @@ import java.util.List;
 
 public class AnnouncemrntServiceImpl implements AnnouncementService {
 
+    private final long ANNOUNCEMENT_CREATE = 1L;
+
+    private final long ANNOUNCEMENT_APPROVED = 2L;
+
+    private final long NOTIFICATION_ANNOUNCEMENT = 1L;
+
+    private final long USER_ANNOUNCEMENT_ACTIVITY = 4L;
     @Autowired
     private AnnouncementDao announcementDao;
+
+    @Autowired
+    private UserActivityDao userActivityDao;
+
+    @Autowired
+    private UserDao userDao;
 
     @Autowired
     private NotificationService notificationService;
@@ -38,10 +54,19 @@ public class AnnouncemrntServiceImpl implements AnnouncementService {
 
     @Transactional
     public void createAnnouncement(Announcement announcement) {
-        announcement.setCategoryId(1L);
+
+        announcement.setCategoryId(ANNOUNCEMENT_CREATE);
         long millis=System.currentTimeMillis();
-        java.sql.Date date = new java.sql.Date(millis);
+        java.sql.Timestamp date = new java.sql.Timestamp(millis);
         announcement.setDate(date);
+
+        UserActivity userActivity=new UserActivity();
+        userActivity.setCategoryId(USER_ANNOUNCEMENT_ACTIVITY);
+        userActivity.setDate(date);
+        userActivity.setUserId(announcement.getUserId());
+        userActivity.setElem_id(announcement.getId());
+
+        userActivityDao.create(userActivity);
         announcementDao.create(announcement);
     }
 
@@ -52,21 +77,25 @@ public class AnnouncemrntServiceImpl implements AnnouncementService {
 
 
     @Override
-    public List<Announcement> getAll() {
-        return announcementDao.getAll();
+    public List<Announcement> getAll(Long userId) {
+        return announcementDao.getAll(userId);
     }
 
     @Override
     public void approve(Announcement announcement) {
         Notification notification = new Notification();
-        notification.setCategoryId(1L);
+        notification.setCategoryId(NOTIFICATION_ANNOUNCEMENT);
         notification.setUserId(announcement.getUserId());
         String[] params = new String[]{announcement.getTitle()};
-        if(announcement.getStatusId() == 2) {
+        if(announcement.getStatusId() == ANNOUNCEMENT_APPROVED) {
             announcementDao.approve(announcement.getId());
-            notification.setText(messageSource.getMessage("announcement.approved", params, userService.getUserLanguage(announcement.getUserId())));
+            notification.setText(messageSource.
+                    getMessage("announcement.approved", params,
+                            userService.getUserLanguage(announcement.getUserId())));
         } else {
-            notification.setText(messageSource.getMessage("announcement.not.approved", params, userService.getUserLanguage(announcement.getUserId())));
+            notification.setText(messageSource.
+                    getMessage("announcement.not.approved", params,
+                            userService.getUserLanguage(announcement.getUserId())));
             announcementDao.delete(announcement.getId());
         }
         notificationService.create(notification);

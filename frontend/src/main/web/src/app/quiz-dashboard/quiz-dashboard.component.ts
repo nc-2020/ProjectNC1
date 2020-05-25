@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Quiz} from '../entities/quiz';
 import {QuizService} from '../services/quiz.service';
 import {UserService} from "../services/user.service";
+import {SessionStats} from "../entities/session-stats";
 
 @Component({
   selector: 'app-quiz-dashboard',
@@ -13,6 +14,8 @@ export class QuizDashboardComponent implements OnInit {
   userQuizzes: Quiz[] = [];
   favoriteQuizzes: Quiz[] = [];
   suggestionQuizzes: Quiz[] = [];
+  sessionStats:SessionStats[]=[];
+  completedQuizes:Quiz[]=[];
   currentTab = 'Quizzes';
 
   constructor(private quizService: QuizService, private userService: UserService) { }
@@ -22,6 +25,7 @@ export class QuizDashboardComponent implements OnInit {
       this.getQuizzes();
       this.getUserQuizzes();
       this.getSuggestions();
+      this.getCompletedQuizes();
     } else {
       this.getCreatedQuizzes();
     }
@@ -36,11 +40,13 @@ export class QuizDashboardComponent implements OnInit {
   getQuizzes(): void {
     this.quizService.getQuizzes()
       .subscribe(quizzes => {
-        console.log(quizzes);
         this.quizzes = quizzes
       });
   }
-
+  getCompletedQuizes():void{
+    this.quizService.getCompletedQuizes()
+      .subscribe(quizzes => this.completedQuizes = quizzes);
+  }
   getUserQuizzes(): void {
     this.quizService.getUserQuizzes()
       .subscribe(quizzes => this.userQuizzes = quizzes);
@@ -54,7 +60,6 @@ export class QuizDashboardComponent implements OnInit {
   getSuggestions(): void {
     this.quizService.getSuggestionsQuizzes()
       .subscribe(quizzes => {
-        console.log(quizzes)
         this.suggestionQuizzes = quizzes
       })
   }

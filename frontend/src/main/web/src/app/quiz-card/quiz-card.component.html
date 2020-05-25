@@ -1,26 +1,37 @@
 <div class="pt-4 col-lg-4 col-md-6 col-sm-6  align-self-center">
   <div  class="card  text-center text-white bg-primary mx-2 mx-sm-2 mx-md-2" style="width: 14rem; height: 17rem">
-    <div class="card-header">
-      <img src="../../assets/logo_brainduel.png" width="110" height="122">
+
+<!--    <div class="card-header heading-footer" [ngStyle]="{'background-image':'url('+ imageUrl +')'}">-->
+<!--       <img [src]="imageUrl" width="200" height="115" class="card-img-top">-->
+
+    <svg *ngIf="quiz.completed" class="bi bi-check2" width="4em" height="4em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="align-self: flex-end;position: absolute;">
+      <path fill-rule="evenodd" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
+    </svg>
+    <div class="card-header heading-footer"
+         [ngStyle]="(!quiz.completed && {'background-image':'url('+ imageUrl +')'})
+               || (quiz.completed &&  {'background-image':'url('+ imageUrl +')', 'filter':'blur(3px)'})">
+<!--      <img src="../../assets/logo_brainduel.png" width="110" height="122">-->
+
     </div>
     <div class="card-body">
+
       <h5 class="card-title">{{quiz.title}}</h5>
       <p class="card-text"> {{quiz.description}}</p>
     </div>
     <div class="btn-group justify-content-between" role="group" aria-label="First group">
-      <a *ngIf="getUserRole() !== 'user'" routerLink="/quiz/{{quiz.id}}" class="btn btn-secondary">{{'QUIZ_DASHBOARD.BUTTON.TEST' | translate}}</a>
+      <a *ngIf="getUserRole() !== 'user'" routerLink="/quiz/{{quiz.id}}/0" class="btn btn-secondary">{{'QUIZ_DASHBOARD.BUTTON.TEST' | translate}}</a>
       <a *ngIf="getUserRole() === 'user'" style="color: black" class="btn btn-secondary" (click)="createSession()">{{'QUIZ_DASHBOARD.BUTTON.PLAY' | translate}}</a>
       <a *ngIf="isEdit" routerLink="/quiz-edit/{{quiz.id}}" class="btn btn-secondary">{{'QUIZ_DASHBOARD.BUTTON.EDIT' | translate}}</a>
       <button *ngIf="!isEdit && getUserRole() === 'user'" class="favourite_btn" mat-icon-button color="warn">
-        <mat-icon *ngIf="quiz.favorite"
-          (click)="deleteFavorite()"
-                  aria-label="Favorite quiz">
-          favorite
-        </mat-icon>
-        <mat-icon (click)="addFavorite()"
-                  *ngIf="!quiz.favorite"
+        <mat-icon *ngIf="!quiz.favorite"
+                  (click)="addFavorite()"
                   aria-label="Not favorite quiz">
           favorite_border
+        </mat-icon>
+        <mat-icon *ngIf="quiz.favorite"
+                  (click)="deleteFavorite()"
+                  aria-label="Favorite quiz">
+          favorite
         </mat-icon>
       </button>
     </div>

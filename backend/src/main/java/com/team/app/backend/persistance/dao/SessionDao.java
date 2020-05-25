@@ -13,4 +13,8 @@ public interface SessionDao {
     Session update(Session session);
 
     void setSesionStatus(Long ses_id,Long status_id);
+
+    boolean checkAccesCodeAvailability(String access_code);
+
+    Session getSessionByCode(String access_code);
 }

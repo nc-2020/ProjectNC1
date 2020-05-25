@@ -11,7 +11,7 @@ public class UserUpdateDto {
     private String username;
     private String email;
     private String password;
-    private byte[] image;
+    private String image;
     private Role role;
     private UserStatus status = new UserStatus(2L,"ACTIVATED");
 
@@ -84,11 +84,11 @@ public class UserUpdateDto {
         this.password = password;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

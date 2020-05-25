@@ -14,6 +14,9 @@
         <li *ngIf="getRole()==='user'" class="nav-item" (click)="quizTab('Suggestions')">
           <a  data-toggle="collapse" href="#collapseSuggestions" role="button" aria-expanded="false" aria-controls="collapseSuggestions" class="nav-link">{{'QUIZ_DASHBOARD.SUGGESTIONS.LABEL' | translate}}</a>
         </li>
+        <li *ngIf="getRole()==='user'" class="nav-item" (click)="quizTab('Completed')">
+          <a  data-toggle="collapse" href="#collapseCompleted" role="button" aria-expanded="false" aria-controls="collapseSuggestions" class="nav-link">{{'QUIZ_DASHBOARD.COMPLETED.LABEL' | translate}}</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -48,6 +51,14 @@
       </div>
       <ng-template #elseBlock>
         <h2>{{'QUIZ_DASHBOARD.SUGGESTIONS.NO_SHOW' | translate}}</h2>
+      </ng-template>
+    </div>
+    <div *ngIf="currentTab === 'Completed'" class="collapse" id="collapseCompleted">
+      <div *ngIf="completedQuizes.length > 0; else elseBlock" class="raw">
+        <app-quiz-card *ngFor="let completedQuiz of completedQuizes" class="col-lg-4 col-md-6 col-sm-6  align-self-center" [quiz]="completedQuiz" [isEdit]="false"></app-quiz-card>
+      </div>
+      <ng-template #elseBlock>
+        <h2>{{'QUIZ_DASHBOARD.COMPLETED.NO_SHOW' | translate}}</h2>
       </ng-template>
     </div>
   </div>

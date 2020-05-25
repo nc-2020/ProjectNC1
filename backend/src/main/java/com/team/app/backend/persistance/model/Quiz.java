@@ -14,13 +14,15 @@ public class Quiz {
     private String title;
     private Date date;
     private String description;
-    private byte[] image;
+    private String image;
     private QuizStatus status;
     private Long user_id;
     private String quiz_author;
     private Boolean favorite;
+    private Boolean completed;
 
-    public Quiz(Long id, String title, Date date, String description, byte[] image, QuizStatus status, Long user_id) {
+
+    public Quiz(Long id, String title, Date date, String description, String image, QuizStatus status, Long user_id) {
         this.id = id;
         this.title = title;
         this.date = date;

@@ -3,12 +3,32 @@
   <div class="container">
     <div class="row my-2">
       <div class="col-lg-4 order-lg-1 text-center">
-        <img src="https://img.icons8.com/plasticine/100/000000/user-male-circle.png" width="150" height="150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+        <img [src]="imageUrl" style="height: 200px; width: 200px" alt="avatar" class="img-thumbnail">
+<!--        <img [src]="imageUrl"  width="500" height="600" class="mx-auto img-fluid img-circle d-block" alt="avatar">-->
         <h6 class="mt-2">{{'DASHBOARD.PROFILE.PROFILE.UPLOAD' | translate}}</h6>
-        <label class="custom-file">
-          <input type="file" id="file" class="custom-file-input">
-          <span class="custom-file-control">{{'DASHBOARD.PROFILE.PROFILE.CHOOSE_FILE' | translate}}</span>
-        </label>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="custom-file text-left">
+            <input type="file" id="fileInput" class="custom-file-input" formControlName="avatar" placeholder="{{'DASHBOARD.PROFILE.PROFILE.CHOOSE_FILE' | translate}}" (change)="onFileChange($event)"/>
+            <label class="custom-file-label" for="fileInput">{{'DASHBOARD.PROFILE.PROFILE.CHOOSE_FILE' | translate}}</label>
+          </div>
+          <button class="btn btn-primary mt-4" type="submit" [disabled]="!form.valid">Upload</button>
+          <p *ngIf="form.controls.avatar.errors?.required && form.controls.avatar.touched" style="color: red">This field is required!</p>
+        </form>
+
+        <div>
+          <div *ngIf="uploadResponse.status === 'error'">
+            {{ uploadResponse.message }}
+          </div>
+          <div *ngIf="uploadResponse.status === 'progress'">
+            <div role="progressbar" [style.width.%]="uploadResponse.message" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+              {{uploadResponse.message}}%
+            </div>
+          </div>
+
+<!--            <input type="file" name="avatar" (change)="onFileChange($event)" />-->
+
+
+        </div>
       </div>
       <div class="col-lg-8 order-lg-2">
         <ul class="nav nav-tabs">

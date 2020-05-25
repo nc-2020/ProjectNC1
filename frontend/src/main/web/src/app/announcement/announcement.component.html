@@ -4,7 +4,7 @@
       <div class="col">
         <div class="row justify-content-center">
           <div class=" col-4 col-sm-3 col-md-3 col-lg-2 align-self-center pr-1 ">
-            <img src="https://cdn.pixabay.com/photo/2020/04/09/12/28/dog-5021242_1280.jpg" style="max-height: 350px;max-height: 350px" class="card-img" alt="news">
+            <img [src]="imageUrl" style="max-height: 350px;" class="card-img" alt="news">
           </div>
           <div class="col-10 col-sm-9 col-md-9 col-lg-10 align-self-center">
             <div class="row">
@@ -21,7 +21,8 @@
             </div>
             <div class="row justify-content-end">
               <div class="col align-self-end">
-                <p class="card-text mr-4 text-center"><small class="text-muted"><strong>{{'DASHBOARD.SIDEBAR.TABS.ANNOUNCEMENTS.TABS.ANNOUNCEMENT_APPROVE.CREATED' | translate}} {{announcement.date}}</strong></small></p>
+
+                <p class="card-text mr-4 text-center"><small class="text-muted"><strong>{{'DASHBOARD.SIDEBAR.TABS.ANNOUNCEMENTS.TABS.ANNOUNCEMENT_APPROVE.CREATED' | translate}} {{announcement.date | date:'MM/dd/yyyy'}}</strong></small></p>
               </div>
             </div>
             <div *ngIf="getRole() !== 'user'" class="mt-5 align-items-end" >

@@ -15,7 +15,7 @@ public class OptionRowMapper implements RowMapper<Option> {
         option.setId((long) resultSet.getInt("id"));
         option.setIs_correct(resultSet.getBoolean("is_correct"));
         option.setText(resultSet.getString("text"));
-        option.setImage(resultSet.getBytes("image"));
+        option.setImage(resultSet.getString("image"));
         option.setQuest_id((long) resultSet.getInt("quest_id"));
         return option;
     }

@@ -11,11 +11,10 @@ import {Session} from "../entities/session";
   styleUrls: ['./quiz-card.component.css']
 })
 export class QuizCardComponent implements OnInit {
-
   @Input() quiz: Quiz;
   @Input() isEdit = false;
   @Output() onChanged = new EventEmitter<Quiz>();
-
+  imageUrl = '';
   constructor(private userService: UserService,
               private router: Router,
               private quizService: QuizService) { }
@@ -24,10 +23,9 @@ export class QuizCardComponent implements OnInit {
     return this.userService.user.role.name;
   }
   ngOnInit(): void {
-  }
-
-  public toggleSelected(quiz: Quiz) {
-    quiz.favorite = !quiz.favorite;
+    if (this.quiz.image != null) {
+      this.imageUrl = this.quiz.image;
+    }
   }
 
   createSession() {

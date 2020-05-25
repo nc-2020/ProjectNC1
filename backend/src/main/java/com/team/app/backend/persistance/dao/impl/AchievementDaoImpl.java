@@ -57,4 +57,11 @@ public class AchievementDaoImpl implements AchievementDao {
                 achievement.getCreatorUserId(),
                 achievement.getCategoryId());
     }
+
+    @Override
+    public void setUserAchievement(long userId) {
+        @NonNull String sqlSetUserAchievement = env.getProperty("achievement.set");
+        jdbcTemplate.update(sqlSetUserAchievement, userId, userId);
+    }
+
 }

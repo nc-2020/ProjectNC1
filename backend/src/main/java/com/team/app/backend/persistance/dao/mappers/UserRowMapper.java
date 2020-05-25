@@ -22,7 +22,7 @@ public class UserRowMapper implements RowMapper<User> {
                 resultSet.getString("userName"),
                 resultSet.getString("password"),
                 resultSet.getString("email"),
-                resultSet.getBytes("image"),
+                resultSet.getString("image"),
                 resultSet.getDate("registr_date"),
                 resultSet.getString("activate_link"),
                 new UserStatus((long)resultSet.getInt("status_id"),resultSet.getString("status_name")),

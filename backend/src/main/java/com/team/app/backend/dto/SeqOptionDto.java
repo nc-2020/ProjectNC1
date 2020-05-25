@@ -3,7 +3,7 @@ package com.team.app.backend.dto;
 public class SeqOptionDto {
     private Integer serial_num;
     private String text;
-    private byte[] image;
+    private String image;
 
     public SeqOptionDto() {
     }
@@ -24,11 +24,11 @@ public class SeqOptionDto {
         this.text = text;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

@@ -40,7 +40,13 @@ export class AchievementService {
   createAchievement(achievement: Achievement) {
     return this.http.post<Achievement>(this.achievementUrl + '/create', achievement,
       { headers: this.httpHeader})
-      .pipe(catchError(this.handleError<Quiz>('createAchievement')));
+      .pipe(catchError(this.handleError<Achievement>('createAchievement')));
+  }
+
+  setUserAchievement() {
+    return this.http.post(this.achievementUrl + '/set' + `/${this.userService.user.id}`, '',
+      { headers: this.httpHeader})
+      .pipe(catchError(this.handleError('setUserAchievement')));
   }
 
 

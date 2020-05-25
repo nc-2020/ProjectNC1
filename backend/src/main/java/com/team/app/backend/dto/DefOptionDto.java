@@ -2,7 +2,7 @@ package com.team.app.backend.dto;
 
 public class DefOptionDto {
     private String answer;
-    private byte[] image;
+    private String image;
 
     public DefOptionDto() {
     }
@@ -15,11 +15,11 @@ public class DefOptionDto {
         this.answer = answer;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

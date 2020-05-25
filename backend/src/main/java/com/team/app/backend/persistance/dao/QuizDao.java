@@ -1,5 +1,6 @@
 package com.team.app.backend.persistance.dao;
 
+import com.team.app.backend.dto.SessionStatsDto;
 import com.team.app.backend.persistance.model.Quiz;
 
 import java.util.List;
@@ -14,6 +15,8 @@ public interface QuizDao {
     List<Quiz> getApprovedForUser(Long user_id);
 
     List<Quiz> getFavoriteQuizes(Long user_id);
+
+    List<Quiz> getCompletedQuizes(Long user_id);
 
     List<Quiz> getSuggestion(Long user_id);
 
@@ -35,7 +38,6 @@ public interface QuizDao {
 
     List<Quiz> getCreated();
 
-
-
+    List<SessionStatsDto>getTopStats(Long quizId);
 
 }

@@ -1,5 +1,4 @@
-import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
 import {UserService} from './services/user.service';
 import {NotificationService} from './services/notification.service';
@@ -10,43 +9,37 @@ import {TranslateService} from "@ngx-translate/core";
 
 
 
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent implements OnDestroy, OnInit{
 
   title = 'ui-app';
-  deletedNotifications: Notification[] = [];
-
-  constructor(private http: HttpClient,
-              private userService: UserService,
+  constructor(private userService: UserService,
               private router: Router,
               public translate: TranslateService,
               public notificationService: NotificationService,
               private settingsService: SettingsService) {
-
   }
 
 
   setTranslate(language: string) {
     localStorage.setItem('language', language);
     this.translate.use(language);
-    this.settingsService.setLanguage(language, this.userService.user).subscribe();
+    this.settingsService.setLanguage(language, this.userService.user);
   }
 
   ngOnInit(): void {
-    if(this.userService.user.role.name === 'user' && this.userService.authenticated) {
-      this.getNotifications();
-    }
     this.translate.use(localStorage.getItem('language'));
   }
 
-  @HostListener('window:beforeunload')
-  deleteNotifications() {
-    this.notificationService.delete(this.deletedNotifications).
-    subscribe(res => {this.deletedNotifications = []});
+  deleteNotification(notification) {
+    this.notificationService.delete([notification]);
   }
 
   ngOnDestroy(): void {
@@ -55,19 +48,15 @@ export class AppComponent implements OnDestroy, OnInit{
   getNewNotifications(): Notification[] {
     return this.notificationService.notifications.filter(x => !x.seen);
   }
-  getNotifications() {
-      this.notificationService.getAll(+this.userService.user.id).
-      subscribe(res => {},
-      error => this.notificationService.notifications = []);
-  }
+
   logout() {
     this.userService.logout().subscribe(
       _ => {this.router.navigateByUrl('/login');
-      this.notificationService.notifications = []});
+            this.notificationService.disconnect()});
   }
-getRole() {
+  getRole() {
     return this.userService.user.role.name;
-}
+  }
   authenticated() {
     return this.userService.authenticated;
   }

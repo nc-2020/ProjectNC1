@@ -68,14 +68,15 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
     }
     @Override
     public List<Announcement> getCreated() {
+
         return jdbcTemplate.query(env.getProperty("get.created.announcement")
                 ,announcementRowMapper);
 
     }
     @Override
-    public List<Announcement> getAll() {
-        return jdbcTemplate.query(env.getProperty("get.all.announcement")
-                ,announcementRowMapper);
+    public List<Announcement> getAll(Long userId) {
+        return jdbcTemplate.query(env.getProperty("get.all.announcement"),
+                announcementRowMapper);
 
     }
     @Override

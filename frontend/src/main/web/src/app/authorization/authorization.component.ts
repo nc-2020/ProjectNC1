@@ -21,7 +21,7 @@ import {NotificationService} from "../services/notification.service";
 export class AuthorizationComponent implements OnInit {
 
 
-  error = false;
+  error = '';
 
   userForm: FormGroup = this.fb.group({
     username: ['', [Validators.required, Validators.minLength(3)]],
@@ -37,12 +37,13 @@ export class AuthorizationComponent implements OnInit {
   }
 
   login() {
+    this.error = '';
     this.app.login({username: this.userForm.get('username').value,
       password: this.userForm.get('password').value}).
     subscribe(
       res => {this.router.navigateByUrl('/dashboard');
-              this.notification.getAll(+this.app.user.id)},
-      error => {this.error = error});
+              this.notification.initializeWebSocketConnection()},
+      error => {this.error = error.message});
 
   }
 

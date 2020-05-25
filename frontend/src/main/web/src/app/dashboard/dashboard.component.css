@@ -59,3 +59,20 @@ h2{
   padding-right: 0;
 }
 
+color-black{
+  color: black;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+input.ng-valid.ng-touched {
+  border: 1px solid green;
+}
+small{
+  color: red;
+}
+
+img {
+  border-radius: 50%;
+}

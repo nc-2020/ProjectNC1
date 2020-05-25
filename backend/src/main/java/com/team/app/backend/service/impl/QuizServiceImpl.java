@@ -1,13 +1,6 @@
 package com.team.app.backend.service.impl;
 
-import com.team.app.backend.dto.DefOptionDto;
-import com.team.app.backend.dto.OptionDto;
-import com.team.app.backend.dto.SeqOptionDto;
-import com.team.app.backend.dto.QuestionDefAddDto;
-import com.team.app.backend.dto.QuestionDto;
-import com.team.app.backend.dto.QuestionOptAddDto;
-import com.team.app.backend.dto.QuestionSeqAddDto;
-import com.team.app.backend.dto.QuizAddDto;
+import com.team.app.backend.dto.*;
 import com.team.app.backend.persistance.dao.*;
 import com.team.app.backend.persistance.model.*;
 import com.team.app.backend.service.QuizService;
@@ -26,11 +19,19 @@ import java.util.List;
 @Transactional
 public class QuizServiceImpl implements QuizService {
 
+    private final long NOTIFICATION_APPROVED = 2L;
+
     @Autowired
     private QuizDao quizDao;
 
     @Autowired
     private NotificationDao notificationDao;
+
+    @Autowired
+    private UserActivityDao userActivityDao;
+
+    @Autowired
+    private UserDao userDao;
 
     @Autowired
     private QuestionDao questionDao;
@@ -79,13 +80,7 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public Long addOptQuestion(QuestionOptAddDto questionOptAddDto) {
-//        Question question = new Question();
-//        question.setQuiz_id((long)questionOptAddDto.getQuiz_id());
-//        question.setType(questionOptAddDto.getType());
-//        question.setImage(questionOptAddDto.getImage());
-//        question.setText(questionOptAddDto.getText());
-//        question.setMax_points(questionOptAddDto.getMax_points());
-//        question.setTime(questionOptAddDto.getTime());
+
         Long id = addQuestion(questionOptAddDto);
         System.out.println(id);
         for (OptionDto optionDto: questionOptAddDto.getOptions()) {
@@ -101,13 +96,6 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public Long addSeqOptQuestion(QuestionSeqAddDto questionSeqAddDto) {
-//        Question question = new Question();
-//        question.setQuiz_id((long)questionSeqAddDto.getQuiz_id());
-//        question.setType(questionSeqAddDto.getType());
-//        question.setImage(questionSeqAddDto.getImage());
-//        question.setText(questionSeqAddDto.getText());
-//        question.setMax_points(questionSeqAddDto.getMax_points());
-//        question.setTime(questionSeqAddDto.getTime());
         Long id = addQuestion(questionSeqAddDto);
         System.out.println(id);
         for (SeqOptionDto seqOptionDto: questionSeqAddDto.getOptions()) {
@@ -123,7 +111,6 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public void deleteQuiz(Long id) {
-
         quizDao.delete(id);
     }
 
@@ -158,6 +145,11 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    public List<Quiz> getCompletedQuizes(Long user_id) {
+        return quizDao.getCompletedQuizes(user_id);
+    }
+
+    @Override
     public List<Quiz> getCategoryQuizes(String category) {
         return quizDao.getCategoryQuizes(category);
     }
@@ -187,18 +179,30 @@ public class QuizServiceImpl implements QuizService {
     public Long addQuiz(QuizAddDto quizAddDto) {
         long millis=System.currentTimeMillis();
         java.sql.Date date=new java.sql.Date(millis);
-        System.out.println((long)quizAddDto.getUser_id());
+
+        Long user_id=(long)quizAddDto.getUser_id();
+        String quiz_name = quizAddDto.getTitle();
         Quiz quiz = new Quiz();
-        quiz.setTitle(quizAddDto.getTitle());
+        quiz.setTitle(quiz_name);
         quiz.setDescription(quizAddDto.getDescription());
         quiz.setDate(date);
         quiz.setImage(quizAddDto.getImage());
-        quiz.setUser_id((long)quizAddDto.getUser_id());
+        quiz.setUser_id(user_id);
         quiz.setStatus(new QuizStatus( 1L,"created"));
+
         Long quiz_id= quizDao.save(quiz);
+
         for (Long cat_id:quizAddDto.getCategories()) {
             quizCategoryDao.addQuizToCategory(quiz_id,cat_id);
         }
+
+        UserActivity userActivity=new UserActivity();
+        userActivity.setCategoryId(2L);
+        userActivity.setDate(new java.sql.Timestamp(millis));
+        userActivity.setUserId(user_id);
+        userActivity.setElem_id(quiz.getId());
+        userActivity.setText(String.format("%s created quiz named \"%s\"",userDao.get(user_id).getUsername(),quiz_name));
+        userActivityDao.create(userActivity);
         return quiz_id;
     }
 
@@ -218,22 +222,29 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public void aproveQuiz(Quiz quiz) {
         Notification notification = new Notification();
-        notification.setCategoryId(2L);
+        notification.setCategoryId(NOTIFICATION_APPROVED);
         notification.setUserId(quiz.getUser_id());
         String[] params = new String[]{quiz.getTitle()};
         if(quiz.getStatus().getName().equals("approved")) {
             quizDao.approve(quiz.getId());
-            notification.setText(messageSource.getMessage("quiz.approved", params, userService.getUserLanguage(quiz.getUser_id())));
+            notification.setText(messageSource.
+                    getMessage("quiz.approved", params,
+                            userService.getUserLanguage(quiz.getUser_id())));
         } else {
             notification.setText(quiz.getDescription());
             quizDao.delete(quiz.getId());
         }
         notificationDao.create(notification);
-
     }
+
     @Transactional(propagation= Propagation.SUPPORTS)
     @Override
     public List<Quiz> getCreated() {
         return this.quizDao.getCreated();
+    }
+
+    @Override
+    public List<SessionStatsDto> getTopStats(Long quizId) {
+        return quizDao.getTopStats(quizId);
     }
 }

@@ -11,6 +11,12 @@ import {Option} from "../entities/option";
 import {Answer} from "../entities/answer";
 import {UserService} from "../services/user.service";
 import {UserSessionResult} from "../entities/UserSessionResult";
+import {AchievementService} from "../services/achievement.service";
+import {SessionStats} from "../entities/session-stats";
+import {Notification} from "../entities/notification";
+import {NotificationService} from "../services/notification.service";
+declare var SockJS;
+declare var Stomp;
 
 @Component({
   selector: 'app-quiz',
@@ -19,13 +25,20 @@ import {UserSessionResult} from "../entities/UserSessionResult";
 })
 export class QuizComponent implements OnInit, OnDestroy {
   private routeSub: Subscription;
+  public stompClient;
+  private serverUrl = 'http://localhost:8080/ws';
   questionOptionPoints = 0;
   quizId;
   sessionId;
+  access_code='';
+  finish=false;
   quizScore = 0;
+  timeSpent=0;
   questions: Question[] = [];
+  stats:SessionStats[]=[];
   userAnswers: Answer[] = [];
   optionalAnswers: Option[] = [];
+  topStats: SessionStats[]=[];
   questionOptions = new Map();
   indexQuestion: number = 0;
   timer = 0;
@@ -43,14 +56,19 @@ export class QuizComponent implements OnInit, OnDestroy {
               private optionService: OptionService,
               private route: ActivatedRoute,
               private questionService: QuestionService,
-              private userService: UserService) { }
+              private achievementService: AchievementService,
+              private userService: UserService,
+              private notficationService:NotificationService) { }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
       this.quizId = params['id'];
       this.sessionId = params['sessionId'];
+      this.getAccessCode();
+      this.initializeWebSocketConnection();
     });
     this.getQuestions();
+    console.log("join"+this.getUserJoin());
 
   }
 
@@ -67,7 +85,6 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
     this.optionSwitcher();
     if (this.indexQuestion === this.questions.length - 1) {
-
         this.finishSession();
     }
   }
@@ -109,12 +126,12 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
   defAnswer(answer: string) {
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id ,
-      points: this.questionOptions.get(this.questions[this.indexQuestion].id)[0].answer === answer ? 1 : 0});
+      points: this.questionOptions.get(this.questions[this.indexQuestion].id)[0].answer === answer ? 10 : 0});
+    this.timeSpent+=this.questions[this.indexQuestion].time-this.timer;
     this.nextQuestion(true);
   }
 
   addPoint(point: number, event?) {
-
     const coef = 1 / this.optionalAnswers.filter(x => x.is_correct).length;
     point *= coef;
     this.questionOptionPoints += event.target.checked ? point : -point;
@@ -123,8 +140,9 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   sendOptionAnswer() {
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id,
-      points: this.questionOptionPoints
-    })
+      points: this.questionOptionPoints*10
+    });
+    this.timeSpent+=this.questions[this.indexQuestion].time-this.timer;
     this.nextQuestion(true);
   }
 
@@ -134,12 +152,13 @@ export class QuizComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < this.optionsSequence.length; i++) {
       if (i + 1 === this.optionsSequence[i].serial_num) {
-        questionPoints += 0.25;
+        questionPoints += 1/this.optionsSequence.length;
       }
     }
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id,
-       points: questionPoints
-    })
+       points: questionPoints*10
+    });
+    this.timeSpent+=this.questions[this.indexQuestion].time-this.timer;
     this.nextQuestion(true);
   }
 
@@ -189,20 +208,69 @@ export class QuizComponent implements OnInit, OnDestroy {
     return this.userService.user.role.name;
   }
 
+  getUserJoin(){
+    return this.userService.user.joined;
+  }
+
   startNewGame() {
-    this.quizService.startSession(this.sessionId).subscribe(data =>
-      console.log(data))
+    if (this.getUserRole() === 'user') {
+      this.quizService.startSession(this.sessionId).subscribe(data =>
+        console.log(data));
+    }
+  }
+
+  getStats(){
+    this.quizService.getStatsSession(this.sessionId).subscribe(
+      data =>this.stats = data);
+  }
+
+  getTopStats(){
+    this.quizService.getTopStats(this.quizId).subscribe(
+      data=>   { this.topStats = data;});
+  }
+  getAccessCode(){
+    this.quizService.getAccessCode(this.sessionId).subscribe(data =>
+      this.access_code=data)
   }
 
   finishSession() {
+    this.userService.user.joined=null;
 
     this.quizService.sendSessionStats({
       ses_id : this.sessionId,
       user_id : +this.userService.user.id,
-      score : this.getScore()
+      score : this.getScore(),
+      time: this.timeSpent
     } as UserSessionResult).subscribe(data => {
       console.log(data);
-    })
+      this.getTopStats();
+      this.finish=true;
+      console.log('Session finished, check achievements');
+      this.achievementService.setUserAchievement().subscribe(data => {
+
+        console.log(data);
+        console.log('set achiv');
+        this.finish=true;
+      });
+
+    });
+    //this.getStats();
+
   }
+
+  initializeWebSocketConnection() {
+    this.notficationService.stompClient.subscribe('/start/'+this.sessionId, (message) => {
+      if (message.body) {
+        this.startQuestionTimer();
+      }
+    });
+
+  }
+
+  startGame() {
+    this.notficationService.stompClient.send('/app/start/game' , {}, this.sessionId);
+  }
+
+
 
 }

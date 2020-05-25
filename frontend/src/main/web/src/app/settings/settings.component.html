@@ -3,23 +3,51 @@
     <div class="col">
       <div *ngIf="getUserRole() === 'user'" class="row">
         <div class="col">
-          <h2 class="text-left">{{'DASHBOARD.SIDEBAR.TABS.SETTINGS.NOTIFICATIONS' | translate}}</h2>
-      <div class="form-group text-left">
-        <div class="custom-control custom-switch">
-          <input type="checkbox"  (change)="changeSetting(announcementCategoryId, $event)" class="custom-control-input" id="customSwitch1" [checked]="announcementNotificationsOn">
-          <label class="custom-control-label" for="customSwitch1">Announcement notifications</label>
+          <h2 class="text-left">{{'DASHBOARD.SIDEBAR.TABS.SETTINGS.NOTIFICATIONS.TITLE' | translate}}</h2>
+          <div class="form-group text-left">
+            <div class="custom-control custom-switch">
+              <input type="checkbox"  (change)="changeSetting(announcementCategoryId, $event)" class="custom-control-input" id="customSwitch1" [checked]="announcementNotificationsOn">
+              <label class="custom-control-label" for="customSwitch1">{{'DASHBOARD.SIDEBAR.TABS.SETTINGS.NOTIFICATIONS.ANN_SETTING' | translate}}</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox"  (change)="changeSetting(quizCategoryId, $event)" class="custom-control-input" id="customSwitch3" [checked]="quizNotificationsOn">
+              <label class="custom-control-label" for="customSwitch3">{{'DASHBOARD.SIDEBAR.TABS.SETTINGS.NOTIFICATIONS.QUIZ_SETTING' | translate}}</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" (change)="changeSetting(systemCategoryId, $event)" class="custom-control-input" id="customSwitch2"  [checked]="systemNotificationsOn">
+              <label class="custom-control-label" for="customSwitch2">{{'DASHBOARD.SIDEBAR.TABS.SETTINGS.NOTIFICATIONS.SYSTEM_SETTING' | translate}}</label>
+            </div>
+          </div>
         </div>
-        <div class="custom-control custom-switch">
-          <input type="checkbox"  (change)="changeSetting(quizCategoryId, $event)" class="custom-control-input" id="customSwitch3" [checked]="quizNotificationsOn">
-          <label class="custom-control-label" for="customSwitch3">Quiz notifications</label>
-        </div>
-        <div class="custom-control custom-switch">
-          <input type="checkbox" (change)="changeSetting(systemCategoryId, $event)" class="custom-control-input" id="customSwitch2"  [checked]="systemNotificationsOn">
-          <label class="custom-control-label" for="customSwitch2">System notifications</label>
+
+        <div class="col">
+          <h2 class="text-left">{{'DASHBOARD.SIDEBAR.TABS.SETTINGS.ACTIVITIES.TITLE' | translate}}</h2>
+          <div class="form-group text-left">
+            <div class="custom-control custom-switch">
+              <input type="checkbox"  (change)="changeActivitySetting(annCreateCatId, $event)" class="custom-control-input" id="customSwitch5" [checked]="annCreateOn">
+              <label class="custom-control-label" for="customSwitch5">{{'DASHBOARD.SIDEBAR.TABS.SETTINGS.ACTIVITIES.ANN_SETTING' | translate}}</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox"  (change)="changeActivitySetting(quizPlayCatId, $event)" class="custom-control-input" id="customSwitch6" [checked]="quizPlayOn">
+              <label class="custom-control-label" for="customSwitch6">{{'DASHBOARD.SIDEBAR.TABS.SETTINGS.ACTIVITIES.QUIZ_PLAY_SETTING' | translate}}</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" (change)="changeActivitySetting(quizCreateCatId, $event)" class="custom-control-input" id="customSwitch7"  [checked]="quizCreateOn">
+              <label class="custom-control-label" for="customSwitch7">{{'DASHBOARD.SIDEBAR.TABS.SETTINGS.ACTIVITIES.QUIZ_CREATE_SETTING' | translate}}</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" (change)="changeActivitySetting(quizLikeCatId, $event)" class="custom-control-input" id="customSwitch8"  [checked]="quizLikeOn">
+              <label class="custom-control-label" for="customSwitch8">{{'DASHBOARD.SIDEBAR.TABS.SETTINGS.ACTIVITIES.QUIZ_LIKE_SETTING' | translate}}</label>
+            </div>
+
+<!--            <div class="custom-control custom-switch">-->
+<!--              <input type="checkbox"  (change)="changeActivitySetting(achRecCatId, $event)" class="custom-control-input" id="customSwitch9" [checked]="achRecOn">-->
+<!--              <label class="custom-control-label" for="customSwitch9">Friends achievments</label>-->
+<!--            </div>-->
+
+          </div>
         </div>
       </div>
-      </div>
-    </div>
     </div>
   </div>
 </div>

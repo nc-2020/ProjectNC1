@@ -20,8 +20,8 @@ export class AnnouncementService {
     this.httpHeader = new HttpHeaders().set('Authorization',  `Bearer_${this.token}`);
   }
 
-  getAll() {
-    return this.http.get<Announcement[]>(this.apiURL + `/announcement/all`,  {
+  getAll(userId) {
+    return this.http.get<Announcement[]>(this.apiURL + `/announcement/all/${userId}`,  {
       headers: this.httpHeader
     }).pipe(
       catchError(this.handleError<any>('getAll'))
