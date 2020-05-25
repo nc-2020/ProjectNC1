@@ -30,7 +30,9 @@ export class DashboardComponent implements OnInit {
   isVisible = true;
   term: string = "";
   selectedCategories: string[] = [];
-  selectedDateOption: number = 4;
+  //selectedDateOption: number = 4;
+  dateFrom: Date;
+  dateTo: Date;
   quizUser: string = "";
 
 
@@ -50,7 +52,7 @@ export class DashboardComponent implements OnInit {
       debounceTime(DEBOUNCE_TIME),
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
-      switchMap((obj: any) => this.quizService.searchQuizzes(obj.title, obj.categories, obj.dateOption, obj.user)),
+      switchMap((obj: any) => this.quizService.searchQuizzes(obj.title, obj.categories, obj.dateFrom, obj.dateTo, obj.user)),
     );
     this.users$ = this.searchUserTerms.pipe(
       debounceTime(DEBOUNCE_TIME),
@@ -63,7 +65,7 @@ export class DashboardComponent implements OnInit {
   search(): void {
     this.isVisible = false;
     if (this.tab === 'Quizzes') {
-      this.searchQuizTerms.next({ title: this.term, categories: this.selectedCategories, dateOption: this.selectedDateOption, user: this.quizUser });
+      this.searchQuizTerms.next({ title: this.term, categories: this.selectedCategories, dateFrom: this.dateFrom, dateTo: this.dateTo, user: this.quizUser });
     } else {
       this.searchUserTerms.next(this.term);
     }

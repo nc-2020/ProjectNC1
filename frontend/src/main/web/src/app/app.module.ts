@@ -36,6 +36,7 @@ import { AchievementDashboardComponent } from './achievement-dashboard/achieveme
 import { AchievementCreateComponent } from './achievement-create/achievement-create.component';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 
 // AoT requires an exported function for factories
@@ -80,6 +81,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSelectModule,
     MatIconModule,
     MatButtonModule,
+    MatDatepickerModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -89,6 +91,9 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
       defaultLanguage: 'en'
     })
+  ],
+  exports: [
+    MatDatepickerModule
   ],
   providers: [
     LoaderService,

@@ -71,7 +71,7 @@
               </mat-select>
             </mat-form-field>
             <input [(ngModel)]="quizUser" name="quizUser" id="search-quiz-by-user"  class="form-control my-2 mr-3" type="text" placeholder="User name" style="width: 70%">
-            <mat-form-field color="Warn" id="dropListCategory">
+            <!-- <mat-form-field color="Warn" id="dropListCategory">
               <mat-label class="text-center">Time period</mat-label>
               <mat-select [(value)]="selectedDateOption">
                 <mat-option [value]="1">Today</mat-option>
@@ -79,7 +79,11 @@
                 <mat-option [value]="3">For month</mat-option>
                 <mat-option [value]="4">For all time</mat-option>
               </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
+            <label for="start">Date from:</label>
+            <input type="text" placeholder="Date from" onfocus="(this.type='date')" [ngModel] ="dateFrom | date:'yyyy-MM-dd'" (ngModelChange)="dateFrom = $event" id="start" name="quiz-start">
+            <label for="end">Date to:</label>
+            <input type="text" placeholder="Date to" onfocus="(this.type='date')" [ngModel] ="dateTo | date:'yyyy-MM-dd'" (ngModelChange)="dateTo = $event" id="end" name="quiz-end">
             <button for="search-box" class="btn btn-secondary my-2 mx-2 my-sm-0" (click)="search()" type="submit" style="width: auto">Search</button>
             <button *ngIf="getUserRole()==='admin' || getUserRole()==='super admin'" class="btn btn-success my-2 mx-2 my-sm-0"
                     (click)="profileSet(true)"  style="width: auto">{{'DASHBOARD.SEARCH.BUTTON.ADD' | translate}}</button>
