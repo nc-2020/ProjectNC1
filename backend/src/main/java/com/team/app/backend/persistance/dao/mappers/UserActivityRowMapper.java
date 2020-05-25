@@ -18,7 +18,7 @@ public class UserActivityRowMapper implements RowMapper<UserActivity> {
                 resultSet.getLong("user_id"),
                 resultSet.getLong("elem_id"),
                 resultSet.getString("username"),
-                resultSet.getString("elem_name"))
-        ;
+                resultSet.getString("elem_name"),
+                resultSet.getString("image"))        ;
     }
 }

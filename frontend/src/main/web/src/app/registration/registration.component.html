@@ -9,6 +9,9 @@
           <div class="col-lg-11 ml-lg-3 mt-5 alert alert-danger" [hidden]="!message">
             {{'SIGN_UP.ALERT' | translate}}{{message | json}}.
           </div>
+          <div  *ngIf="!message" class="alert alert-success" [hidden]="!success">
+            {{'SIGN_UP.SUCCESS' | translate}}
+          </div>
           <div class="form-group ">
             <input type="text" formControlName="username"  class="form-control text-center"  placeholder="{{'SIGN_UP.FORM.USER_NAME.LABEL' | translate}}" required maxlength="20">
 <!--            check unique username-->
