@@ -54,6 +54,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody UserLoginDto requestDto) {
+        Map<String, String> model = new HashMap<String, String>();
         try {
             String username = requestDto.getUsername();
             System.out.println(username +" "+ requestDto.getPassword());
@@ -89,14 +90,15 @@ public class LoginController {
             return ResponseEntity.ok().body(response);
 
         } catch (AuthenticationException e) {
+            model.put("message",messageSource.getMessage("user.invalid", null, LocaleContextHolder.getLocale()));
             return ResponseEntity
-                    .status(HttpStatus.FORBIDDEN)
-                    .body(messageSource.getMessage("user.invalid", null, LocaleContextHolder.getLocale()));
+                    .badRequest()
+                    .body(model);
         } catch (DisabledUserException | NotActivatedUserException e) {
             e.printStackTrace();
-            return ResponseEntity
-                    .status(HttpStatus.FORBIDDEN)
-                    .body(messageSource.getMessage("user.noactive", null, LocaleContextHolder.getLocale()));
+            model.put("message",messageSource.getMessage("user.noactive", null, LocaleContextHolder.getLocale()));
+            return ResponseEntity.badRequest()
+                    .body(model);
         }
     }
 
