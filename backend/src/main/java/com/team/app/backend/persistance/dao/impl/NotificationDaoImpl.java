@@ -66,7 +66,7 @@ public class NotificationDaoImpl implements NotificationDao {
     public List<Notification> getSetting(Long userId) {
         return jdbcTemplate.query(
                 env.getProperty("get.notification.settings"),
-                new Object[]{userId}
+              new Object[]{userId}
                 ,(resultSet, i) -> {
                     Notification not = new Notification();
                     not.setCategoryId(resultSet.getLong("cat_id"));

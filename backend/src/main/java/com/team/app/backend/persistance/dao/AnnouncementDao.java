@@ -10,6 +10,6 @@ public interface AnnouncementDao {
     void update(Announcement announcement);
     void delete(Long id);
     List<Announcement> getCreated();
-    List<Announcement> getAll();
+    List<Announcement> getAll(Long userId);
     void approve(Long id);
 }

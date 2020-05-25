@@ -26,6 +26,8 @@ import java.util.List;
 @Transactional
 public class QuizServiceImpl implements QuizService {
 
+    private final long NOTIFICATION_APPROVED = 2L;
+
     @Autowired
     private QuizDao quizDao;
 
@@ -222,7 +224,7 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public void aproveQuiz(Quiz quiz) {
         Notification notification = new Notification();
-        notification.setCategoryId(2L);
+        notification.setCategoryId(NOTIFICATION_APPROVED);
         notification.setUserId(quiz.getUser_id());
         String[] params = new String[]{quiz.getTitle()};
         if(quiz.getStatus().getName().equals("approved")) {

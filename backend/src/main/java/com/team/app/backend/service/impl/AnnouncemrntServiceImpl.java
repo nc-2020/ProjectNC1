@@ -27,6 +27,13 @@ import java.util.List;
 
 public class AnnouncemrntServiceImpl implements AnnouncementService {
 
+    private final long ANNOUNCEMENT_CREATE = 1L;
+
+    private final long ANNOUNCEMENT_APPROVED = 2L;
+
+    private final long NOTIFICATION_ANNOUNCEMENT = 1L;
+
+    private final long USER_ANNOUNCEMENT_ACTIVITY = 4L;
     @Autowired
     private AnnouncementDao announcementDao;
 
@@ -48,20 +55,18 @@ public class AnnouncemrntServiceImpl implements AnnouncementService {
     @Transactional
     public void createAnnouncement(Announcement announcement) {
 
-        announcement.setCategoryId(1L);
+        announcement.setCategoryId(ANNOUNCEMENT_CREATE);
         long millis=System.currentTimeMillis();
         java.sql.Timestamp date = new java.sql.Timestamp(millis);
         announcement.setDate(date);
 
         UserActivity userActivity=new UserActivity();
-        userActivity.setCategoryId(4L);
-        userActivity.setDate(new java.sql.Timestamp(millis));
+        userActivity.setCategoryId(USER_ANNOUNCEMENT_ACTIVITY);
+        userActivity.setDate(date);
         userActivity.setUserId(announcement.getUserId());
         userActivity.setElem_id(announcement.getId());
-        //userActivity.setText(String.format("%s created announcement titled \"%s\"",userDao.get(announcement.getUserId()).getUsername(),announcement.getTitle()));
 
         userActivityDao.create(userActivity);
-
         announcementDao.create(announcement);
     }
 
@@ -72,17 +77,17 @@ public class AnnouncemrntServiceImpl implements AnnouncementService {
 
 
     @Override
-    public List<Announcement> getAll() {
-        return announcementDao.getAll();
+    public List<Announcement> getAll(Long userId) {
+        return announcementDao.getAll(userId);
     }
 
     @Override
     public void approve(Announcement announcement) {
         Notification notification = new Notification();
-        notification.setCategoryId(1L);
+        notification.setCategoryId(NOTIFICATION_ANNOUNCEMENT);
         notification.setUserId(announcement.getUserId());
         String[] params = new String[]{announcement.getTitle()};
-        if(announcement.getStatusId() == 2) {
+        if(announcement.getStatusId() == ANNOUNCEMENT_APPROVED) {
             announcementDao.approve(announcement.getId());
             notification.setText(messageSource.
                     getMessage("announcement.approved", params,
