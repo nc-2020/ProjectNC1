@@ -6,10 +6,8 @@
       <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
         <img  src="https://img.icons8.com/plasticine/100/000000/user-male-circle.png"/>
         <div class="alert alert-danger" [hidden]="!error">
-          <a *ngIf="error_massage!=''">
-            {{error_massage}}
-            {{'LOGIN.ALERT' | translate}}
-          </a>
+            {{error}}
+<!--            {{'LOGIN.ALERT' | translate}}-->
         </div>
         <form [formGroup]="userForm" (ngSubmit)="login()">
           <div class="form-group ">

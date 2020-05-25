@@ -7,6 +7,5 @@ export interface Announcement {
   userId: string;
   categoryId?: string;
   statusId?: number;
-
 }
 

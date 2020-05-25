@@ -3,7 +3,7 @@
     <div class="row mt-2">
       <nav class="col-md-3 col-lg-3 col-sm-2  d-none d-md-block sidebar navbar-expand-md">
         <div class="sidebar-sticky">
-          <img src="https://img.icons8.com/plasticine/100/000000/user-male-circle.png"/>
+          <img [src]="imageUrl" style="height: 100px; width: 100px" alt="avatar" class="img-thumbnail mt-3">
           <h5>
             <span class="badge bg-primary">{{getUserName()}} {{getUserLastName()}}</span>
           </h5>
@@ -51,7 +51,7 @@
                 <mat-icon inline=true>gamepad</mat-icon><strong> {{'DASHBOARD.SIDEBAR.ACHIEVEMENTS' | translate}}</strong>
               </a>
             </li>
-            <li class="nav-item border-bottom">
+            <li *ngIf="getUserRole()=='user'" class="nav-item border-bottom">
               <a class="nav-link btn text-align-center" (click)="changeTab('Settings')">
                 <span data-feather="bar-chart-2"></span>
                 <mat-icon inline=true>settings</mat-icon><strong> {{'DASHBOARD.SIDEBAR.SETTINGS' | translate}}</strong>
@@ -93,7 +93,7 @@
         </div>
         <div *ngIf="tab === 'Users' || tab === 'Friends' || tab === 'Admins-Moderators' || tab==='Moderators' || tab === 'Quizzes' " class=" main-frame container-fluid my-5 ">
           <form *ngIf="tab !== 'Quizzes'" class="form-inline ml-3 my-2 my-lg-0" >
-            <input [(ngModel)]="term" name="term" id="search-box"  class="form-control my-2" type="text" placeholder="Search" style="width: 70%">
+            <input [(ngModel)]="term" name="term" id="search-box"  class="form-control my-2 mx-auto" type="text" placeholder="Search" style="width: 70%">
             <button for="search-box" class="btn btn-secondary my-2 my-sm-0" (click)="search()" type="submit" style="width: auto">Search</button>
             <button *ngIf="getUserRole()==='admin' || getUserRole()==='super admin'" class="btn btn-success my-2 mx-auto my-sm-0"
                     (click)="profileSet(true)"  style="width: auto">{{'DASHBOARD.SEARCH.BUTTON.ADD' | translate}}</button>

@@ -37,7 +37,7 @@ public class UserController {
 
 
     @PutMapping("/user/update")
-    public User createUser(
+    public User updateUser(
                            @RequestBody UserUpdateDto userUpdateDto) {
         System.out.println(userUpdateDto.getFirstName()+"   "+userUpdateDto.getLastName());
         return userService.updateUser(userUpdateDto);

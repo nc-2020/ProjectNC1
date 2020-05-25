@@ -10,7 +10,7 @@ public interface AnnouncementService {
     Announcement  getAnnouncement(Long id);
     void updateAnnouncement(Announcement announcement);
     void deleteAnnouncement(Long id);
-    List<Announcement> getAll();
+    List<Announcement> getAll(Long userId);
     List<Announcement> getCreated();
     void approve(Announcement announcement);
 }

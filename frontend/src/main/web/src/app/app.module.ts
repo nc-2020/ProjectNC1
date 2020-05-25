@@ -41,8 +41,8 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {FileValidator} from "./user-profile/_helpers/file-input.validator";
 import {FileValueAccessor} from "./user-profile/_helpers/file-control-value-accessor";
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
-// AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -99,11 +99,12 @@ export function HttpLoaderFactory(http: HttpClient) {
       defaultLanguage: 'en'
     })
   ],
-  providers: [
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
     LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
 

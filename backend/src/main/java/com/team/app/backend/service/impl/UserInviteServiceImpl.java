@@ -18,6 +18,9 @@ import java.util.List;
 @Service
 @Transactional
 public class UserInviteServiceImpl implements UserInviteService {
+
+    private final long NOTIFICATION_INVITE = 3L;
+
     @Autowired
     private UserInviteDao userInviteDao;
 
@@ -33,7 +36,7 @@ public class UserInviteServiceImpl implements UserInviteService {
     @Override
     public void sendUserInvite(UserInvite userInvite) {
         Notification notification = new Notification();
-        notification.setCategoryId(3L);
+        notification.setCategoryId(NOTIFICATION_INVITE);
         notification.setUserId(userInvite.getUserIdTo());
         String[] params = new String[]{userInvite.getUsernameFrom()};
         notification.setText(messageSource.getMessage("friend.invitation", params,

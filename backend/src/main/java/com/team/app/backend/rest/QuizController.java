@@ -29,8 +29,6 @@ public class QuizController {
     @Autowired
     UserQuizFavoriteService userQuizFavoriteService;
 
-
-
     @PostMapping("/quiz")
     public HashMap<String,Long> createMewQuiz(
             @RequestBody QuizAddDto quizDto) {
@@ -80,9 +78,6 @@ public class QuizController {
     public void deleteQuestion(@PathVariable("id") long id) {
         quizService.deleteQuestion(id);
     }
-
-
-
 
     @GetMapping("/questions/{quiz_id}")
     public List<Question> questions(@PathVariable("quiz_id") long id) {
@@ -156,7 +151,6 @@ public class QuizController {
         System.out.println(searchstring);
         return quizService.searchQuizes(searchstring);
     }
-
 
     @PostMapping("/quiz/approve")
     public ResponseEntity approveQuiz(@RequestBody Quiz quiz) {

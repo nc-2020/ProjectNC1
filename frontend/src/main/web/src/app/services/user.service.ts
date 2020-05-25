@@ -34,6 +34,9 @@ export class UserService {
     );
   }
   updateUser(user: User) {
+    console.log("url: " + user.image);
+
+
     return this.http.put<User>(this.userUrl + '/update', user,{ headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.getToken()}`)}).pipe(
       catchError(this.handleError<any>('updateUser'))

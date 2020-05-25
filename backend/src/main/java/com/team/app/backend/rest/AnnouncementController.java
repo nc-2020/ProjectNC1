@@ -31,10 +31,12 @@ public class AnnouncementController {
             announcementService.createAnnouncement(announcement);
         }
         catch(DataAccessException sqlEx){
-            response.put("message",messageSource.getMessage("announcement.fail", null, LocaleContextHolder.getLocale()));
+            response.put("message",messageSource
+                    .getMessage("announcement.fail", null, LocaleContextHolder.getLocale()));
             ResponseEntity.badRequest().body(response);
         }
-        response.put("message",messageSource.getMessage("announcement.success", null, LocaleContextHolder.getLocale()));
+        response.put("message",messageSource
+                .getMessage("announcement.success", null, LocaleContextHolder.getLocale()));
         return  ResponseEntity.ok(response);
     }
     @GetMapping("/created")
@@ -50,11 +52,11 @@ public class AnnouncementController {
         return ResponseEntity.ok(announcementList);
 
     }
-    @GetMapping("/all")
-    public ResponseEntity getAll() {
+    @GetMapping("/all/{id}")
+    public ResponseEntity getAll(@PathVariable("id") Long userId) {
         List<Announcement> announcementList;
         try {
-            announcementList = announcementService.getAll();
+            announcementList = announcementService.getAll(userId);
         }
         catch(DataAccessException sqlEx){
 
@@ -81,10 +83,12 @@ public class AnnouncementController {
             announcementService.updateAnnouncement(announcement);
         }
         catch(DataAccessException sqlEx){
-            model.put("message",messageSource.getMessage("announcement.fail.upd", null, LocaleContextHolder.getLocale()));
+            model.put("message",messageSource
+                    .getMessage("announcement.fail.upd", null, LocaleContextHolder.getLocale()));
             return ResponseEntity.badRequest().body(model);
         }
-        model.put("message",messageSource.getMessage("announcement.updated", null, LocaleContextHolder.getLocale()));
+        model.put("message",messageSource
+                .getMessage("announcement.updated", null, LocaleContextHolder.getLocale()));
         return ResponseEntity.ok(model);
     }
 
@@ -96,10 +100,12 @@ public class AnnouncementController {
 
         }
         catch(DataAccessException sqlEx){
-           model.put("message",messageSource.getMessage("announcement.fail.delete", null, LocaleContextHolder.getLocale()));
+           model.put("message",messageSource
+                   .getMessage("announcement.fail.delete", null, LocaleContextHolder.getLocale()));
             return ResponseEntity.badRequest().body(model);
         }
-        model.put("message",messageSource.getMessage("announcement.deleted", null, LocaleContextHolder.getLocale()));
+        model.put("message",messageSource
+                .getMessage("announcement.deleted", null, LocaleContextHolder.getLocale()));
         return ResponseEntity.ok(model);
     }
 }

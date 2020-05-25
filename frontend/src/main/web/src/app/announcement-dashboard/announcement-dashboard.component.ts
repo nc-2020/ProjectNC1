@@ -30,7 +30,7 @@ export class AnnouncementDashboardComponent implements OnInit {
     this.getCreated();
   }
   getAll() {
-    this.announcementService.getAll().
+    this.announcementService.getAll(this.userService.user.id).
     subscribe(res => {this.announcements = res},
               error => this.announcements = [] );
   }

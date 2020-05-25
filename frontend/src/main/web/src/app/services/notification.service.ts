@@ -27,19 +27,21 @@ export class NotificationService {
 
   public stompClient;
   initializeWebSocketConnection() {
-    const ws = new SockJS(this.serverUrl);
-    this.stompClient = Stomp.over(ws);
-    const that = this;
-    this.stompClient.connect({"Authorization" : "Bearer_"+this.userService.getToken()
-    }, function(frame) {
-      that.getNotifications();
-      that.stompClient.subscribe('/user/notification', (message) => {
-        if (message.body) {
-          that.notifications = JSON.parse(message.body);
-        }
+    if (this.userService.user.role.name === 'user') {
+      const ws = new SockJS(this.serverUrl);
+      this.stompClient = Stomp.over(ws);
+      const that = this;
+      this.stompClient.connect({
+        "Authorization": "Bearer_" + this.userService.getToken()
+      }, function (frame) {
+        that.getNotifications();
+        that.stompClient.subscribe('/user/notification', (message) => {
+          if (message.body) {
+            that.notifications = JSON.parse(message.body);
+          }
+        });
       });
-
-    });
+    }
   }
   disconnect() {
     if(this.stompClient) {

@@ -55,6 +55,6 @@ message = ''
     this.user.password = HashBcrypt.hash(this.registrationForm.get('password').value);
     this.registrationForm.reset();
     this.app.signUp(this.user).subscribe(
-      _ => this.router.navigateByUrl('/login'), error => this.message = error.message);
+      _ => this.router.navigateByUrl('/login'), error => this.message = error.error.message);
   }
 }
