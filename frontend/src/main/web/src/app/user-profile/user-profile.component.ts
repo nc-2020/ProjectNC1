@@ -20,77 +20,38 @@ export class UserProfileComponent implements OnInit {
 
   @Input()
   editOnly = false;
+
   error = '';
   message = '';
 
   uploadResponse = { status: '', message: '', filePath: '' };
-  form: FormGroup;
   userForm: FormGroup;
   imageUrl: string = 'https://img.icons8.com/plasticine/100/000000/user-male-circle.png';
 
   constructor(private fb: FormBuilder,
               private userService: UserService,
-              private router: Router,
-              private uploadFilesService: UploadFilesService) { }
+              private router: Router) { }
 
   ngOnInit(): void {
-    if (this.user.image != null) {
-      this.imageUrl = this.user.image;
-    }
     this.setUserForm();
-    this.form = this.fb.group({
-      avatar: new FormControl('', [FileValidator.validate, Validators.required])
-    });
   }
 
-  onFileChange(event) {
-    const _URL = window.URL || window.webkitURL;
-    let file;
-    if (event.target.files.length > 0) {
-      // @ts-ignore
-      const fileName = document.getElementById("fileInput").files[0].name;
-      const nextSibling = event.target.nextElementSibling;
-      nextSibling.innerText = fileName;
-      file = event.target.files[0];
-      // let image;
-      //
-      // if (file) {
-      //   image = new Image();
-      //   image.src = _URL.createObjectURL(file);
-      // }
-      // image.onload = function () {
-      //   if (this.width != 150 && this.height != 150) {
-      //     alert("The image width should be " + 150 + " and image height is " + 150);
-      //     alert("The image width is " + this.width + " and image height is " + this.height);
-      //   }
-      // }
-    }
-    this.form.get('avatar').setValue(file);
+  onChanged(url:string){
+    this.imageUrl = url;
+    this.setImage();
   }
 
-
-  onSubmit() {
-    const formData = new FormData();
-    formData.append('file', this.form.get('avatar').value);
-    this.uploadFilesService.upload(formData).subscribe(
-      (res: string) => {
-        this.imageUrl = res;
-        this.user.image = res;
-        console.log(this.user.image);
-        this.setImage();
-      },
-      error => {
-        console.log(error.text);
-      }
-    );
-    this.form.reset();
+  setImage() {
+    this.user.image = this.imageUrl;
+    console.log('setImage');
+    this.userService.updateUser(this.user).subscribe(
+      response => {this.user = response; this.message = 'User has been updated!'},
+      error => {this.error = error.message});
   }
-
 
   userRole() {
     return this.userService.user.role.name;
   }
-
 
   private setUserForm() {
     this.userForm = this.fb.group({
@@ -122,14 +83,6 @@ export class UserProfileComponent implements OnInit {
     this.user.role.name = this.userRole() === 'admin' ? 'moderator' : this.userForm.get('role').value;
     this.userService.createUser(this.user).subscribe(
       response => {this.message = 'User has been added!';},
-      error => {this.error = error.message});
-  }
-
-
-  setImage() {
-    console.log('setImage');
-    this.userService.updateUser(this.user).subscribe(
-      response => {this.user = response; this.message = 'User has been updated!'},
       error => {this.error = error.message});
   }
 

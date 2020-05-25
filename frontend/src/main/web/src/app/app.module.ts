@@ -42,6 +42,7 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {FileValidator} from "./user-profile/_helpers/file-input.validator";
 import {FileValueAccessor} from "./user-profile/_helpers/file-control-value-accessor";
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { UploadFileComponent } from './upload-file/upload-file.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -76,7 +77,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AchievementCreateComponent,
     PassRecoveryComponent,
     FileValidator,
-    FileValueAccessor
+    FileValueAccessor,
+    UploadFileComponent
   ],
   imports: [
     BrowserModule,

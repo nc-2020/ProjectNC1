@@ -3,18 +3,9 @@
   <div class="container">
     <div class="row my-2">
       <div class="col-lg-4 order-lg-1 text-center">
-        <img [src]="imageUrl" style="height: 200px; width: 200px" alt="avatar" class="img-thumbnail">
-<!--        <img [src]="imageUrl"  width="500" height="600" class="mx-auto img-fluid img-circle d-block" alt="avatar">-->
+        <img [src]="user.image || imageUrl" style="height: 200px; width: 200px" alt="avatar" class="img-thumbnail">
         <h6 class="mt-2">{{'DASHBOARD.PROFILE.PROFILE.UPLOAD' | translate}}</h6>
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-          <div class="custom-file text-left">
-            <input type="file" id="fileInput" class="custom-file-input" formControlName="avatar" placeholder="{{'DASHBOARD.PROFILE.PROFILE.CHOOSE_FILE' | translate}}" (change)="onFileChange($event)"/>
-            <label class="custom-file-label" for="fileInput">{{'DASHBOARD.PROFILE.PROFILE.CHOOSE_FILE' | translate}}</label>
-          </div>
-          <button class="btn btn-primary mt-4" type="submit" [disabled]="!form.valid">Upload</button>
-          <p *ngIf="form.controls.avatar.errors?.required && form.controls.avatar.touched" style="color: red">This field is required!</p>
-        </form>
-
+        <app-upload-file (onChanged)="onChanged($event)"></app-upload-file>
         <div>
           <div *ngIf="uploadResponse.status === 'error'">
             {{ uploadResponse.message }}
@@ -24,10 +15,6 @@
               {{uploadResponse.message}}%
             </div>
           </div>
-
-<!--            <input type="file" name="avatar" (change)="onFileChange($event)" />-->
-
-
         </div>
       </div>
       <div class="col-lg-8 order-lg-2">
