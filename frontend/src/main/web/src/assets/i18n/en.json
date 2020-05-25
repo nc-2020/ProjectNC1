@@ -79,7 +79,9 @@
         "SIGN_UP": "SIGN UP"
       }
     },
-    "ALERT": "There was a problem."
+    "ALERT": "There was a problem.",
+    "SUCCESS": "Your account was registered. Check you email to activate it."
+
   },
 
   "DASHBOARD": {

@@ -12,14 +12,16 @@ public class UserActivity extends Message{
     private String username;
     private Long elem_id;
     private String elem_name;
+    private String image;
 
     public UserActivity() {
     }
 
-    public UserActivity(Long id, String text, Timestamp date, Long categoryId, Long userId, Long elem_id,String username,String elem_name) {
+    public UserActivity(Long id, String text, Timestamp date, Long categoryId, Long userId, Long elem_id,String username,String elem_name,String image) {
         super(id, text, date, categoryId, userId);
         this.elem_id = elem_id;
         this.username=username;
         this.elem_name=elem_name;
+        this.image=image;
     }
 }

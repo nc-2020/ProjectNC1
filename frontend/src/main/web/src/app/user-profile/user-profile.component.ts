@@ -8,6 +8,7 @@ import {MustMatchValidator} from "../registration/_helpers/must-match.validator"
 import {HashBcrypt} from "../util/hashBcrypt";
 import {UploadFilesService} from "../services/upload-files.service";
 import {FileValidator} from "./_helpers/file-input.validator";
+import {USER_STATUS_ACTIVE, USER_STATUS_DEACTIVE} from '../parameters';
 
 @Component({
   selector: 'app-user-profile',
@@ -15,9 +16,11 @@ import {FileValidator} from "./_helpers/file-input.validator";
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
+
+  userStatusActive  = USER_STATUS_ACTIVE;
+  userStatusDeactive =  USER_STATUS_DEACTIVE;
   @Input()
   user: User;
-
   @Input()
   editOnly = false;
 
@@ -36,11 +39,11 @@ export class UserProfileComponent implements OnInit {
     this.setUserForm();
   }
 
+
   onChanged(url:string){
     this.imageUrl = url;
     this.setImage();
-  }
-
+}
   setImage() {
     this.user.image = this.imageUrl;
     console.log('setImage');
@@ -120,15 +123,15 @@ export class UserProfileComponent implements OnInit {
     this.userForm.get('password').reset();
     this.userForm.get('confirmPassword').reset();
   }
-  submit(){
+  submit() {
 
   }
 
-  delete() {
+  setStatus(statusId) {
     this.clearMessages();
-    this.userService.deleteUser(this.user).subscribe(response => {this.message = 'User has been deleted!';
-    this.userRole() === 'user' ? this.userService.logout().subscribe(
-      resp => {},error => this.error = error.message) : this.router.navigateByUrl('dashboard/AddProfile')},
-      error => { this.error = error.message});
+    this.user.status.id = statusId;
+    this.userService.setStatus(statusId, this.user.id).
+    subscribe(response => {this.message = 'User has been edited!'},
+    error => { this.error = error.error});
   }
 }

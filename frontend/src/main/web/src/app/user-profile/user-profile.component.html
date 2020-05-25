@@ -43,7 +43,7 @@
             <form [formGroup]="userForm" role="form" (ngSubmit)="submit()">
               <div class="form-group row">
                 <div class="col-lg-11 ml-lg-3 alert alert-danger" [hidden]="!error">
-                  {{'DASHBOARD.PROFILE.EDIT.ALERT'}} {{error}}.
+                  {{error}}.
                 </div>
                 <div class="col-lg-11 ml-lg-3 alert alert-success" [hidden]="!message">
                   {{message}}
@@ -161,7 +161,8 @@
                 <label class="col-lg-3 col-form-label form-control-label"></label>
                 <div class="col-lg-12">
                   <input  *ngIf="!editOnly" [disabled]="userForm.invalid" name="button_1" type="submit" class="btn btn-primary" (click)="update()" value="{{'DASHBOARD.PROFILE.EDIT.BUTTON.SAVE_CHANGES' | translate}}">
-<!--                  <input *ngIf="(!editOnly && user.role.name ==='admin' || user.role.name ==='moderator')  || userRole() ==='user'" name="button_2" type="submit" class="btn btn-danger ml-sm-2" (click)="delete()" value="Delete Account">-->
+                  <input *ngIf="(!editOnly && user.role.name ==='admin' || user.role.name ==='moderator')  && user.status.id == userStatusActive" name="button_2"  class="btn btn-danger ml-sm-2" (click)="setStatus(userStatusDeactive)" value="Deactivate Account">
+                  <input *ngIf="(!editOnly && user.role.name ==='admin' || user.role.name ==='moderator')  && user.status.id == userStatusDeactive" name="button_2"  class="btn btn-success ml-sm-2" (click)="setStatus(userStatusActive)" value="Activate Account">
                   <input *ngIf="editOnly" [disabled]="userForm.invalid" type="submit" name="button_3" class="btn btn-success mt-lg-3" (click)="add()"  value="{{'DASHBOARD.PROFILE.EDIT.BUTTON.ADD' | translate}}">
                 </div>
               </div>

@@ -7,4 +7,5 @@ export interface UserActivity {
   username:string;
   elem_id?:number;
   elem_name?:string;
+  image?:string;
 }
