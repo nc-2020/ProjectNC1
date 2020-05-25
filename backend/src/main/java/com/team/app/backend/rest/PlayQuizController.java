@@ -8,7 +8,13 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessageType;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -40,6 +46,20 @@ public class PlayQuizController {
 
     @Autowired
     MessageSource messageSource;
+
+
+    private final SimpMessagingTemplate template;
+
+    @Autowired
+    PlayQuizController(SimpMessagingTemplate template){
+        this.template = template;
+    }
+
+    @MessageMapping("/start/game")
+    public void sendMessage(Long sesId){
+        this.template.convertAndSend("/start/"+sesId,  "true");
+    }
+
 
     @GetMapping("play/{user_id}/{quiz_id}")
     public ResponseEntity playQuiz(

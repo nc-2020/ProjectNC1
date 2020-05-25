@@ -117,9 +117,9 @@ export class DashboardComponent implements OnInit {
     } );
   }
   connectToSession(accessCode:string){
-    // this.userService.user.joined=true;
     this.quizService.joinSession(accessCode).subscribe(res => {
-     this.router.navigate(['/quiz/' + res.quiz_id + '/' + res.id]);
+      this.userService.user.joined=true;
+      this.router.navigate(['/quiz/' + res.quiz_id + '/' + res.id]);
       this.closeModal.nativeElement.click()
     }, error => {console.log(error.error);console.log("JOIN MES"+this.join_message)})
   }

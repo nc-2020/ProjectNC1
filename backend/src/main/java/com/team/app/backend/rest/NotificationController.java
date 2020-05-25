@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.web.bind.annotation.*;
@@ -25,14 +26,12 @@ public class NotificationController {
 
     @MessageMapping("/delete/notifications")
     public void delete(List<Notification> notifications) {
-
         notificationService.delete(notifications);
     }
+
     @MessageMapping("/get/notifications")
     public void getAll(Long userId, StompHeaderAccessor stompHeaderAccessor){
-
         notificationService.add(stompHeaderAccessor.getSessionId(), userId);
-
     }
 
     @PostMapping("/create")
