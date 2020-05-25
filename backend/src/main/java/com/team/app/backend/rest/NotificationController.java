@@ -28,13 +28,11 @@ public class NotificationController {
     public void delete(List<Notification> notifications) {
         notificationService.delete(notifications);
     }
-    @MessageMapping("/get/notifications")
-    @SendTo("/topic/greetings")
-    public String greeting(Long message) throws Exception {
-        Thread.sleep(3000); // simulated delay
-        return "Hello, " + message + "!";
-    }
 
+    @MessageMapping("/get/notifications")
+    public void getAll(Long userId, StompHeaderAccessor stompHeaderAccessor){
+        notificationService.add(stompHeaderAccessor.getSessionId(), userId);
+    }
 
     @PostMapping("/create")
     public ResponseEntity create(@RequestBody Notification not) {
