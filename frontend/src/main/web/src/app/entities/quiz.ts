@@ -7,4 +7,5 @@ export interface Quiz {
   user_id: string;
   categories?: any;
   image?: string;
+  completed?:boolean;
 }

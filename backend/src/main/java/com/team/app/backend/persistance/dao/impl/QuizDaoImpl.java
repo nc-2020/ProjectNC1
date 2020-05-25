@@ -67,7 +67,7 @@ public class QuizDaoImpl implements QuizDao {
     public List<Quiz> getApprovedForUser(Long user_id) {
         return jdbcTemplate.query(
                 env.getProperty("get.approved.user.quizes"),
-                new Object[] { user_id }
+                new Object[] { user_id,user_id }
                 ,quizRowMapper);
     }
 
@@ -75,7 +75,15 @@ public class QuizDaoImpl implements QuizDao {
     public List<Quiz> getFavoriteQuizes(Long user_id) {
         return jdbcTemplate.query(
                 env.getProperty("get.favourite.quizes"),
-                new Object[] { user_id }
+                new Object[] { user_id,user_id }
+                ,quizRowMapper);
+    }
+
+    @Override
+    public List<Quiz> getCompletedQuizes(Long user_id) {
+        return jdbcTemplate.query(
+                env.getProperty("get.completed.quizes"),
+                new Object[] { user_id,user_id }
                 ,quizRowMapper);
     }
 

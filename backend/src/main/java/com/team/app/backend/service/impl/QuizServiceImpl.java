@@ -143,6 +143,11 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    public List<Quiz> getCompletedQuizes(Long user_id) {
+        return quizDao.getCompletedQuizes(user_id);
+    }
+
+    @Override
     public List<Quiz> getCategoryQuizes(String category) {
         return quizDao.getCategoryQuizes(category);
     }

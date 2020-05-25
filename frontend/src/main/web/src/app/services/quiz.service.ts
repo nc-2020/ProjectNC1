@@ -131,6 +131,13 @@ export class QuizService {
         catchError(this.handleError<Quiz[]>('getSuggestionsQuizzes', []))
       );
   }
+  getCompletedQuizes():Observable<Quiz[]> {
+    return this.http.get<Quiz[]>(this.quizzesUrl + '/completed/' + this.userId,
+      { headers: this.httpHeader })
+      .pipe(
+        catchError(this.handleError<Quiz[]>('getCompletedQuizes', []))
+      );
+  }
 
   /** POST: add a new quiz to the server */
 

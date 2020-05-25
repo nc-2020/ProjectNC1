@@ -1,6 +1,9 @@
 <div class="pt-4 col-lg-4 col-md-6 col-sm-6  align-self-center">
   <div  class="card  text-center text-white bg-primary mx-2 mx-sm-2 mx-md-2" style="width: 14rem; height: 17rem">
-    <div class="card-header">
+    <svg *ngIf="quiz.completed" class="bi bi-check2" width="4em" height="4em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="align-self: flex-end;position: absolute;">
+      <path fill-rule="evenodd" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
+    </svg>
+    <div  class="card-header" [ngStyle]="quiz.completed && {'filter':'blur(5px)'}">
       <img src="../../assets/logo_brainduel.png" width="110" height="122">
     </div>
     <div class="card-body">

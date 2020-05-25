@@ -290,6 +290,10 @@
       "LABEL": "Suggestions",
       "NO_SHOW": "No suggestions to show"
     },
+    "COMPLETED": {
+      "LABEL": "Completed",
+      "NO_SHOW": "No completed quiz to show"
+    },
     "BUTTON": {
       "PLAY": "Play",
       "TEST": "Test",

@@ -29,6 +29,8 @@ public interface QuizService {
 
     List<Quiz> getSuggestion(Long user_id);
 
+    List<Quiz> getCompletedQuizes(Long user_id);
+
     List<Quiz> getCategoryQuizes(String category);
 
     List<Quiz> searchQuizes(String[] categories, String searchstring, int dateOption, String user);
