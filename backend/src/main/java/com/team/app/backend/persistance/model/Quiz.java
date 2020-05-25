@@ -19,6 +19,8 @@ public class Quiz {
     private Long user_id;
     private String quiz_author;
     private Boolean favorite;
+    private Boolean completed;
+
 
     public Quiz(Long id, String title, Date date, String description, String image, QuizStatus status, Long user_id) {
         this.id = id;

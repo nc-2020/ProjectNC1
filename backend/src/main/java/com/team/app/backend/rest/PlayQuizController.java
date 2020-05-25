@@ -97,21 +97,27 @@ public class PlayQuizController {
             @PathVariable("ses_id") long ses_id
     ) {
 
-        sessionService.setSesionStatus(ses_id,new SessionStatus(2L,"ended"));
-        Map<String, Integer> response = new HashMap();
+        Map response = new HashMap();
 
         List<UserToSession> userToSessionList = new ArrayList<>(userToSessionService.getAllBySessionId(ses_id));
 
         userToSessionList.forEach(
-                uts -> {
-                    response.put(userService.getUserById(uts.getUser_id()).getUsername(), uts.getScore());
-                }
+                uts -> {response.put("username",userService.getUserById(uts.getUser_id()).getUsername());
+                    response.put("score",uts.getScore());
+                    response.put("time",uts.getTime()); }
         );
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("topstats/{quiz_id}")
+    public ResponseEntity topStats(@PathVariable("quiz_id") long quiz_id) {
+        return ResponseEntity.ok(quizService.getTopStats(quiz_id));
+    }
+
     @PostMapping("finish")
     public ResponseEntity finishQuiz(@RequestBody FinishedQuizDto finishedQuizDto) {
+        System.out.println(finishedQuizDto.getUser_id()+" "+finishedQuizDto.getSes_id()+" "+finishedQuizDto.getTime()+" "+finishedQuizDto.getScore());
+        sessionService.setSesionStatus(finishedQuizDto.getSes_id(),new SessionStatus(2L,"ended"));
         userToSessionService.insertScore(finishedQuizDto);
         return ResponseEntity.ok(messageSource.getMessage("result.ok", null, LocaleContextHolder.getLocale()));
     }

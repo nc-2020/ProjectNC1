@@ -87,7 +87,6 @@ public class QuizController {
 
     @GetMapping("/quiz/{id}")
     public Quiz quiz(@PathVariable("id") long id) {
-        //System.out.println(id);
         return quizService.getQuiz(id);
     }
 
@@ -111,6 +110,10 @@ public class QuizController {
     public List<Quiz> getFavoriteQuizes(@PathVariable("user_id") long user_id) {
         return quizService.getUserFavoritesQuizes(user_id);
     }
+    @GetMapping("quiz/completed/{user_id}")
+    public List<Quiz> getCompleted(@PathVariable("user_id") long user_id) {
+        return quizService.getCompletedQuizes(user_id);
+    }
 
     @GetMapping("quiz/suggestion/{user_id}")
     public List<Quiz> getSuggestionQuizes(@PathVariable("user_id") long user_id) {
@@ -130,7 +133,6 @@ public class QuizController {
 
     @DeleteMapping("quiz/favorite/{quiz_id}/{user_id}")
     public void deleteFavorite(@PathVariable("quiz_id") long quiz_id,@PathVariable("user_id") long user_id){
-        System.out.println("user"+user_id+"quiz"+quiz_id);
         userQuizFavoriteService.deleteFavorite(user_id,quiz_id);
     }
 
@@ -141,7 +143,6 @@ public class QuizController {
 
     @PostMapping("/quiz/search")
     public List<Quiz> searchQuizes(@RequestBody QuizCategoryDto quizCategoryDto) {
-        System.out.println(quizCategoryDto.getTitle());
         return quizService.searchQuizes(quizCategoryDto.getCategories(),quizCategoryDto.getTitle(),quizCategoryDto.getDateOption(),quizCategoryDto.getUser());
     }
 

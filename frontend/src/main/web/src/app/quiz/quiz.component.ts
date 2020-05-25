@@ -25,11 +25,14 @@ export class QuizComponent implements OnInit, OnDestroy {
   quizId;
   sessionId;
   access_code='';
+  finish=false;
   quizScore = 0;
+  timeSpent=0;
   questions: Question[] = [];
   stats:SessionStats[]=[];
   userAnswers: Answer[] = [];
   optionalAnswers: Option[] = [];
+  topStats: SessionStats[]=[];
   questionOptions = new Map();
   indexQuestion: number = 0;
   timer = 0;
@@ -114,12 +117,12 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
   defAnswer(answer: string) {
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id ,
-      points: this.questionOptions.get(this.questions[this.indexQuestion].id)[0].answer === answer ? 1 : 0});
+      points: this.questionOptions.get(this.questions[this.indexQuestion].id)[0].answer === answer ? 10 : 0});
+    this.timeSpent+=this.questions[this.indexQuestion].time-this.timer;
     this.nextQuestion(true);
   }
 
   addPoint(point: number, event?) {
-
     const coef = 1 / this.optionalAnswers.filter(x => x.is_correct).length;
     point *= coef;
     this.questionOptionPoints += event.target.checked ? point : -point;
@@ -128,8 +131,9 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   sendOptionAnswer() {
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id,
-      points: this.questionOptionPoints
-    })
+      points: this.questionOptionPoints*10
+    });
+    this.timeSpent+=this.questions[this.indexQuestion].time-this.timer;
     this.nextQuestion(true);
   }
 
@@ -143,8 +147,9 @@ export class QuizComponent implements OnInit, OnDestroy {
       }
     }
     this.userAnswers.push({questionId: this.questions[this.indexQuestion].id,
-       points: questionPoints
-    })
+       points: questionPoints*10
+    });
+    this.timeSpent+=this.questions[this.indexQuestion].time-this.timer;
     this.nextQuestion(true);
   }
 
@@ -207,8 +212,12 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   getStats(){
     this.quizService.getStatsSession(this.sessionId).subscribe(
-      data =>this.stats = data)
+      data =>this.stats = data);
+  }
 
+  getTopStats(){
+    this.quizService.getTopStats(this.quizId).subscribe(
+      data=>   { this.topStats = data;});
   }
   getAccessCode(){
     this.quizService.getAccessCode(this.sessionId).subscribe(data =>
@@ -221,16 +230,23 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.quizService.sendSessionStats({
       ses_id : this.sessionId,
       user_id : +this.userService.user.id,
-      score : this.getScore()
+      score : this.getScore(),
+      time: this.timeSpent
     } as UserSessionResult).subscribe(data => {
       console.log(data);
+      this.getTopStats();
+      this.finish=true;
       console.log('Session finished, check achievements');
       this.achievementService.setUserAchievement().subscribe(data => {
+
         console.log(data);
         console.log('set achiv');
+        this.finish=true;
       });
+
     });
-    this.getStats();
+    //this.getStats();
+
   }
 
 
