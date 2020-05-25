@@ -1,12 +1,13 @@
 import {Component, ContentChild, Input, OnInit} from '@angular/core';
 import {UserService} from "../services/user.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { User } from '../entities/user';
 import { Router } from '@angular/router';
 import {DashboardComponent} from "../dashboard/dashboard.component";
 import {MustMatchValidator} from "../registration/_helpers/must-match.validator";
 import {HashBcrypt} from "../util/hashBcrypt";
 import {UploadFilesService} from "../services/upload-files.service";
+import {FileValidator} from "./_helpers/file-input.validator";
 
 @Component({
   selector: 'app-user-profile',
@@ -23,7 +24,6 @@ export class UserProfileComponent implements OnInit {
   message = '';
 
   uploadResponse = { status: '', message: '', filePath: '' };
-
   form: FormGroup;
   userForm: FormGroup;
   imageUrl: string = 'https://img.icons8.com/plasticine/100/000000/user-male-circle.png';
@@ -37,18 +37,35 @@ export class UserProfileComponent implements OnInit {
     this.setUserForm();
 
     this.form = this.fb.group({
-      avatar: ['']
+      avatar: new FormControl('', [FileValidator.validate, Validators.required])
     });
   }
 
-
-
   onFileChange(event) {
+    const _URL = window.URL || window.webkitURL;
+    let file;
     if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.form.get('avatar').setValue(file);
+      // @ts-ignore
+      const fileName = document.getElementById("fileInput").files[0].name;
+      const nextSibling = event.target.nextElementSibling;
+      nextSibling.innerText = fileName;
+      file = event.target.files[0];
+      let image;
+
+      if (file) {
+        image = new Image();
+        image.src = _URL.createObjectURL(file);
+      }
+      image.onload = function () {
+        if (this.width != 150 && this.height != 150) {
+          alert("The image width should be " + 150 + " and image height is " + 150);
+          alert("The image width is " + this.width + " and image height is " + this.height);
+        }
+      }
     }
+    this.form.get('avatar').setValue(file);
   }
+
 
   onSubmit() {
     const formData = new FormData();
@@ -59,6 +76,7 @@ export class UserProfileComponent implements OnInit {
         console.log(error.text);
       }
     );
+    this.form.reset();
   }
 
 
@@ -133,6 +151,10 @@ export class UserProfileComponent implements OnInit {
     this.userForm.get('password').reset();
     this.userForm.get('confirmPassword').reset();
   }
+  submit(){
+
+  }
+
   delete() {
     this.clearMessages();
     this.userService.deleteUser(this.user).subscribe(response => {this.message = 'User has been deleted!';
@@ -140,8 +162,4 @@ export class UserProfileComponent implements OnInit {
       resp => {},error => this.error = error.message) : this.router.navigateByUrl('dashboard/AddProfile')},
       error => { this.error = error.message});
   }
-  submit() {
-
-  }
-
 }

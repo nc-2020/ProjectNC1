@@ -225,7 +225,9 @@ public class QuizServiceImpl implements QuizService {
         String[] params = new String[]{quiz.getTitle()};
         if(quiz.getStatus().getName().equals("approved")) {
             quizDao.approve(quiz.getId());
-            notification.setText(messageSource.getMessage("quiz.approved", params, userService.getUserLanguage(quiz.getUser_id())));
+            notification.setText(messageSource.
+                    getMessage("quiz.approved", params,
+                            userService.getUserLanguage(quiz.getUser_id())));
         } else {
             notification.setText(quiz.getDescription());
             quizDao.delete(quiz.getId());

@@ -84,9 +84,13 @@ public class AnnouncemrntServiceImpl implements AnnouncementService {
         String[] params = new String[]{announcement.getTitle()};
         if(announcement.getStatusId() == 2) {
             announcementDao.approve(announcement.getId());
-            notification.setText(messageSource.getMessage("announcement.approved", params, userService.getUserLanguage(announcement.getUserId())));
+            notification.setText(messageSource.
+                    getMessage("announcement.approved", params,
+                            userService.getUserLanguage(announcement.getUserId())));
         } else {
-            notification.setText(messageSource.getMessage("announcement.not.approved", params, userService.getUserLanguage(announcement.getUserId())));
+            notification.setText(messageSource.
+                    getMessage("announcement.not.approved", params,
+                            userService.getUserLanguage(announcement.getUserId())));
             announcementDao.delete(announcement.getId());
         }
         notificationService.create(notification);

@@ -7,14 +7,10 @@ import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Location} from '@angular/common';
-import {UserCardComponent} from '../user-card/user-card.component';
 import {CategoryService} from '../services/category.service';
 import {Category} from '../entities/category';
-import {Achievement} from "../entities/achievement";
 import {AchievementService} from "../services/achievement.service";
-import {UserAchievement} from "../entities/user-achievement";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Session} from "../entities/session";
 import {DEBOUNCE_TIME} from "../parameters";
 
 @Component({
