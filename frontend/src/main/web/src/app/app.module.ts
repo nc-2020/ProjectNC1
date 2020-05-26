@@ -45,6 +45,7 @@ import {FileValueAccessor} from "./user-profile/_helpers/file-control-value-acce
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
+import { UploadFileComponent } from './upload-file/upload-file.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -79,7 +80,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AchievementCreateComponent,
     PassRecoveryComponent,
     FileValidator,
-    FileValueAccessor
+    FileValueAccessor,
+    UploadFileComponent
   ],
   imports: [
     BrowserModule,

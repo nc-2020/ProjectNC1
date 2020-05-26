@@ -21,7 +21,8 @@ export class RegistrationComponent implements OnInit {
     role: {name: 'user'},
     password: ''
   };
-message = ''
+message = '';
+success;
   constructor(private app: UserService, private router: Router) { }
 
   ngOnInit(): void {
@@ -55,6 +56,8 @@ message = ''
     this.user.password = HashBcrypt.hash(this.registrationForm.get('password').value);
     this.registrationForm.reset();
     this.app.signUp(this.user).subscribe(
-      _ => this.router.navigateByUrl('/login'), error => this.message = error.message);
+       success=> {this.success=true;
+       //this.router.navigateByUrl('/login')
+       }, error => this.message = error.error.message);
   }
 }

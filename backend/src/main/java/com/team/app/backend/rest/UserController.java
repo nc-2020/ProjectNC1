@@ -8,8 +8,10 @@ import com.team.app.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,11 +52,10 @@ public class UserController {
     }
 
     @GetMapping("user/activate")
-    public ResponseEntity activateUser(
-            @RequestParam("token") String token){
-        if(userService.activateUserAccount(token))return ResponseEntity.
-                ok(messageSource.getMessage("registry.success", null, LocaleContextHolder.getLocale()));
-        else return ResponseEntity.ok(messageSource.getMessage("registry.bad", null, LocaleContextHolder.getLocale()));
+    public ModelAndView activateUser(@RequestParam("token") String token){
+        if(userService.activateUserAccount(token)) return new ModelAndView("redirect:" + "https://brainduel.herokuapp.com/login" );
+        return new ModelAndView("redirect:" + "https://brainduel.herokuapp.com/signup" );
+        //else return ResponseEntity.ok(messageSource.getMessage("registry.bad", null, LocaleContextHolder.getLocale()));
     }
 
 
@@ -63,13 +64,27 @@ public class UserController {
         Map<String, Object> model = new HashMap<String, Object>();
         if(userService.deleteUser(id)){
 
-            model.put("message", messageSource.getMessage("delete.user.success", null, LocaleContextHolder.getLocale()));
+            model.put("message", messageSource
+                    .getMessage("delete.user.success", null, LocaleContextHolder.getLocale()));
         }else{
-            model.put("message", messageSource.getMessage("delete.user.bad", null, LocaleContextHolder.getLocale()));
+            model.put("message", messageSource
+                    .getMessage("delete.user.bad", null, LocaleContextHolder.getLocale()));
         }
 
         return model;
     }
 
+    @PostMapping("/user/status/{id}/{user}")
+    public ResponseEntity setStatus(@PathVariable("id") Long statusId,
+                                    @PathVariable("user") Long userId) {
+        try{
+            userService.setStatus(statusId,userId);
+        }
+        catch (DataAccessException sqlEx) {
+           return ResponseEntity.badRequest().body(messageSource
+                   .getMessage("set.status.user.bad", null, LocaleContextHolder.getLocale()));
+        }
+        return ResponseEntity.ok().build();
+    }
 
 }

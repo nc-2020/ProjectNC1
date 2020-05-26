@@ -43,7 +43,7 @@ export class AuthorizationComponent implements OnInit {
     subscribe(
       res => {this.router.navigateByUrl('/dashboard');
               this.notification.initializeWebSocketConnection()},
-      error => {this.error = error.message});
+      error => {this.error = error.error.message});
 
   }
 
