@@ -158,7 +158,7 @@ export class QuizService {
       .pipe(catchError(this.handleError<any>('deleteQuiz')));
   }
 
-  searchQuizzes(term: string, cat: string[], dateFrom: Date, dateTo: Date, userName: string): Observable<Quiz[]> {
+  searchQuizzes(term: string, cat: string[], dateFrom: string, dateTo: string, userName: string): Observable<Quiz[]> {
     return this.http.post<Quiz[]>(this.quizzesUrl + '/search', { title: term, categories: cat, dateFrom: dateFrom, dateTo: dateTo, user: userName }, { headers: new HttpHeaders()
         .set('Authorization',  `Bearer_${this.userService.getToken()}`)}).pipe(
       catchError(this.handleError<Quiz[]>('searchQuizzes', []))

@@ -1,4 +1,5 @@
 import {Component, OnInit, Input, ViewChild, AfterViewChecked, AfterViewInit, ElementRef} from '@angular/core';
+import {FormControl} from '@angular/forms';
 import {UserService} from '../services/user.service';
 import { QuizService } from '../services/quiz.service';
 import { User } from '../entities/user';
@@ -35,6 +36,7 @@ export class DashboardComponent implements OnInit {
   quizUser: string = "";
   joinForm: FormGroup;
   join_message=false;
+  isMoreFiltersVisible = false;
 
 
   private searchQuizTerms = new Subject<any>();
@@ -71,9 +73,24 @@ export class DashboardComponent implements OnInit {
   }
 
   search(): void {
+    let date_from;
+    let date_to;
+    if (this.dateFrom === undefined) {
+      date_from = "2020-01-01";
+    } else {
+      date_from = this.dateFrom.toJSON().slice(0, 8) + (this.dateFrom.getDate() < 10 ? "0" + this.dateFrom.getDate() : this.dateFrom.getDate());
+    }
+    if (this.dateTo === undefined) {
+      this.dateTo = new Date();
+      date_to = this.dateTo.toJSON().slice(0, 8) + (this.dateTo.getDate() < 10 ? "0" + this.dateTo.getDate() : this.dateTo.getDate());
+    } else {
+      date_to = this.dateTo.toJSON().slice(0, 8) + (this.dateTo.getDate() < 10 ? "0" + this.dateTo.getDate() : this.dateTo.getDate());
+    }
+    console.log(date_from);
+    console.log(date_to);
     this.isVisible = false;
     if (this.tab === 'Quizzes') {
-      this.searchQuizTerms.next({ title: this.term, categories: this.selectedCategories, dateFrom: this.dateFrom, dateTo: this.dateTo, user: this.quizUser });
+      this.searchQuizTerms.next({ title: this.term, categories: this.selectedCategories, dateFrom: date_from, dateTo: date_to, user: this.quizUser });
     } else {
       this.searchUserTerms.next(this.term);
     }
@@ -87,6 +104,10 @@ export class DashboardComponent implements OnInit {
     this.tab = tab;
     this.router.navigateByUrl(`dashboard/${tab}`);
     this.isVisible = true;
+  }
+
+  showMoreFilters() {
+    this.isMoreFiltersVisible = !this.isMoreFiltersVisible;
   }
 
   getUser() {

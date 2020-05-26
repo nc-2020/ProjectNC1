@@ -43,6 +43,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FileValidator} from "./user-profile/_helpers/file-input.validator";
 import {FileValueAccessor} from "./user-profile/_helpers/file-control-value-accessor";
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatInputModule} from '@angular/material/input';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -91,6 +93,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatIconModule,
     MatButtonModule,
     MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -106,6 +110,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
     LoaderService,
+    MatNativeDateModule,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
