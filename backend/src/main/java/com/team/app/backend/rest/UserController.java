@@ -53,8 +53,8 @@ public class UserController {
 
     @GetMapping("user/activate")
     public ModelAndView activateUser(@RequestParam("token") String token){
-        if(userService.activateUserAccount(token)) return new ModelAndView("redirect:" + "https://brainduel.herokuapp.com/login" );
-        return new ModelAndView("redirect:" + "https://brainduel.herokuapp.com/signup" );
+        if(userService.activateUserAccount(token)) return new ModelAndView("redirect:" + "https://brainduel.herokuapp.com/#/login" );
+        return new ModelAndView("redirect:" + "https://brainduel.herokuapp.com/#/signup" );
         //else return ResponseEntity.ok(messageSource.getMessage("registry.bad", null, LocaleContextHolder.getLocale()));
     }
 
