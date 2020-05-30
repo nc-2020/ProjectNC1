@@ -27,6 +27,10 @@ import java.util.UUID;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+
+    private final long ENGLISH_ID = 1L;
+    private final long UKRAINE_ID = 1L;
+
     @Autowired
     private UserDao userDao;
 
@@ -103,10 +107,9 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userCreateDto.getEmail());
         user.setUsername(userCreateDto.getUsername());
         user.setPassword(userCreateDto.getPassword());
-        //user.setImage(userDto.getImage());
         user.setActivate_link("ttest");
         user.setRegistr_date(new Date());
-        user.setRole(new Role(userCreateDto.getRole().getName() =="admin" ? 3L : 2L ,userCreateDto.getRole().getName()));
+        user.setRole(new Role(userCreateDto.getRole().getName().equals("admin") ? 3L : 2L ,userCreateDto.getRole().getName()));
         user.setStatus(new UserStatus(2L,"ativated"));
         userDao.save(user);
         return userDao.findByUsername(userCreateDto.getUsername());
@@ -193,9 +196,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changeLanguage(String lang , Long userId) {
         if(lang.equals("en"))
-            userDao.changeLanguage(1L,userId);
+            userDao.changeLanguage(ENGLISH_ID,userId);
         else
-            userDao.changeLanguage(2L,userId);
+            userDao.changeLanguage(UKRAINE_ID,userId);
     }
     @Override
     public Locale getUserLanguage(Long id) {

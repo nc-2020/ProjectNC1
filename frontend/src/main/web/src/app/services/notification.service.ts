@@ -1,29 +1,26 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {UserService} from "./user.service";
 import {Observable, of, throwError} from "rxjs";
-import {Announcement} from "../entities/announcement";
-import {catchError, tap} from "rxjs/operators";
 import {Notification} from '../entities/notification';
 declare var SockJS;
 declare var Stomp;
+
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
 
-  private apiUrl = 'http://localhost:8080/api/notification';
-
-  // private apiUrl = '/api/notification'
 
   private serverUrl = 'http://localhost:8080/ws';
+  notifications: Notification[] = [];
+
   constructor(private http: HttpClient, private userService: UserService) {
     if (userService.authenticated && userService.user.role.name === 'user') {
       this.initializeWebSocketConnection();
     }
   }
 
-  notifications: Notification[] = [];
 
   public stompClient;
   initializeWebSocketConnection() {

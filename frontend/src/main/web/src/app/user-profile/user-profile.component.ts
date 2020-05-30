@@ -144,6 +144,7 @@ export class UserProfileComponent implements OnInit {
     this.error = '';
     this.message = '';
   }
+
   private checkPassword() {
     if(this.userForm.get('password').dirty && this.userForm.get('confirmPassword').dirty) {
       if(HashBcrypt.compare(this.userForm.get('confirmPassword').value, this.userService.user.password)){
@@ -154,6 +155,7 @@ export class UserProfileComponent implements OnInit {
       return this.user.password;
     }
   }
+
   clearPass() {
     this.userForm.get('password').reset();
     this.userForm.get('confirmPassword').reset();
