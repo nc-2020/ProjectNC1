@@ -34,6 +34,7 @@ public class AnnouncemrntServiceImpl implements AnnouncementService {
     private final long NOTIFICATION_ANNOUNCEMENT = 1L;
 
     private final long USER_ANNOUNCEMENT_ACTIVITY = 4L;
+
     @Autowired
     private AnnouncementDao announcementDao;
 

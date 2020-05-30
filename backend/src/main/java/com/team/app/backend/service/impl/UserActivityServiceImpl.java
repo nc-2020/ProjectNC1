@@ -62,8 +62,5 @@ public class UserActivityServiceImpl implements UserActivityService {
         userActivityDao.setFriendActivitiesSetting(setting);
     }
 
-//    @Override
-//    public void setAchievmentActivity(Long user_id) {
-//        userActivityDao.setAchievmentActivity(user_id);
-//    }
+
 }

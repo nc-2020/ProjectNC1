@@ -189,6 +189,18 @@ public class QuizDaoImpl implements QuizDao {
     }
 
     @Override
+    public Long getUserIdByQuiz(Long quizId) {
+        return jdbcTemplate.queryForObject(
+                env.getProperty("get.userId.by.quiz"),new Object[]{quizId},
+                Long.class);
+    }
+    @Override
+    public String getTitle(Long quizId) {
+        return jdbcTemplate.queryForObject(
+                env.getProperty("get.title.by.quiz"),new Object[]{quizId},
+                String.class);
+    }
+    @Override
     public List<Quiz> getCreated() {
         return jdbcTemplate.query(
                 env.getProperty("get.created.quizes"),
@@ -208,7 +220,6 @@ public class QuizDaoImpl implements QuizDao {
                     sessionStatsDto.setUsername(resultSet.getString("username"));
                     return sessionStatsDto;
                 });
-
 
     }
 
