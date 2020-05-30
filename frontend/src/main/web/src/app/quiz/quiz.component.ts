@@ -61,7 +61,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.routeSub = this.route.params.subscribe(params => {
       this.quizId = params['id'];
       this.sessionId = params['sessionId'];
-      this.getAccessCode();
+      if(this.userService.user.role.name === "user"){ this.getAccessCode();}
       this.initializeWebSocketConnection();
     });
     this.getQuestions();
@@ -198,8 +198,16 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   startNewGame() {
     if (this.getUserRole() === 'user') {
-      this.quizService.startSession(this.sessionId).subscribe();
-    }
+      this.quizService.startSession(this.sessionId).subscribe(data =>
+        console.log(data));
+      this.notficationService.stompClient.send('/app/start/game' , {}, this.sessionId);
+    }else {this.startQuestionTimer();}
+  }
+
+
+  getStats(){
+    this.quizService.getStatsSession(this.sessionId).subscribe(
+      data =>this.stats = data);
   }
 
   getTopStats(){
@@ -227,17 +235,14 @@ export class QuizComponent implements OnInit, OnDestroy {
       });
 
     });
-
   }
 
   initializeWebSocketConnection() {
     this.notficationService.stompClient.subscribe('/start/'+this.sessionId, (message) => {
-      if (message.body) {
-        this.startQuestionTimer();
-      }
+      if (message.body) {this.startQuestionTimer();}
     });
-
   }
+
 
   startGame() {
     this.notficationService.stompClient.send('/app/start/game' , {}, this.sessionId);
