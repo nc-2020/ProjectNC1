@@ -59,14 +59,13 @@ public class NotificationServiceImpl implements NotificationService {
     @Transactional
     @Override
     public void create(Notification not) {
-        dispatch(getKey(not.getUserId()));
         notificationDao.create(not);
+        dispatch(getKey(not.getUserId()));
     }
     @Transactional
     @Override
     public void update(Notification not) {
         notificationDao.update(not);
-
     }
     @Transactional
     @Override

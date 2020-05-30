@@ -3,6 +3,7 @@ package com.team.app.backend.service.impl;
 import com.team.app.backend.dto.*;
 import com.team.app.backend.persistance.dao.*;
 import com.team.app.backend.persistance.model.*;
+import com.team.app.backend.service.NotificationService;
 import com.team.app.backend.service.QuizService;
 import com.team.app.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class QuizServiceImpl implements QuizService {
     private QuizDao quizDao;
 
     @Autowired
-    private NotificationDao notificationDao;
+    private NotificationService notificationService;
 
     @Autowired
     private UserActivityDao userActivityDao;
@@ -223,7 +224,7 @@ public class QuizServiceImpl implements QuizService {
     public void approveQuiz(Quiz quiz) {
         Notification notification = new Notification();
         notification.setCategoryId(NOTIFICATION_APPROVED);
-        notification.setUserId(quiz.getUser_id());
+        notification.setUserId(getUserIdByQuiz(quiz.getId()));
         String[] params = new String[]{getTitle(quiz.getId())};
         if(quiz.getStatus().getName().equals("approved")) {
             quizDao.approve(quiz.getId());
@@ -234,7 +235,7 @@ public class QuizServiceImpl implements QuizService {
             notification.setText(quiz.getDescription());
             quizDao.delete(quiz.getId());
         }
-        notificationDao.create(notification);
+        notificationService.create(notification);
     }
 
     @Transactional(propagation= Propagation.SUPPORTS)
