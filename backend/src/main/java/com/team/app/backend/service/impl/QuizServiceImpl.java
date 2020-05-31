@@ -217,6 +217,7 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public Quiz getQuiz(Long id) {
+
         return quizDao.get(id);
     }
 
@@ -238,7 +239,7 @@ public class QuizServiceImpl implements QuizService {
         notificationService.create(notification);
     }
 
-    @Transactional(propagation= Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public List<Quiz> getCreated() {
         return this.quizDao.getCreated();
@@ -249,13 +250,13 @@ public class QuizServiceImpl implements QuizService {
         return quizDao.getTopStats(quizId);
     }
 
-    @Transactional(propagation= Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public Long getUserIdByQuiz(Long quizId) {
         return quizDao.getUserIdByQuiz(quizId);
     }
 
-    @Transactional(propagation= Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public String getTitle(Long quizId) {
         return quizDao.getTitle(quizId);

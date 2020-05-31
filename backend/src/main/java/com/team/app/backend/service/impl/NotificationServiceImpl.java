@@ -8,7 +8,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
@@ -56,6 +55,7 @@ public class NotificationServiceImpl implements NotificationService {
         String sessionId = event.getSessionId();
         remove(sessionId);
     }
+
     @Transactional
     @Override
     public void create(Notification not) {
