@@ -149,7 +149,6 @@ public class QuizController {
 
 	@GetMapping("/quiz/search/{searchstring}")
     public List<Quiz> searchQuizes(@PathVariable("searchstring") String searchstring) {
-        System.out.println(searchstring);
         return quizService.searchQuizes(searchstring);
     }
 
